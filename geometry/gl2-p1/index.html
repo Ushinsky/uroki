@@ -1,0 +1,1276 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="theme-color" content="#1d4f91">
+<link rel="apple-touch-icon" href="../../assets/icon-180.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Геометрия 7: Треугольники</title>
+<link rel="stylesheet" href="../../assets/fonts.css">
+<style>
+  :root{
+    --bg:#eef2f7; --paper:#ffffff; --ink:#15202e; --muted:#566273; --line:#d5dde8;
+    --blue:#1d4f91; --blue-soft:#e3ecf8; --red:#b0182f; --red-soft:#f8e6ea;
+    --green:#1f6b4f; --green-soft:#e2f2eb; --gold:#6f550c; --gold-soft:#f5efd9; --grid:#cfdcee;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "PT Sans",system-ui,sans-serif}
+  .wrap{max-width:920px;margin:0 auto;padding:0 16px}
+  h1,h2,h3{line-height:1.2;margin:0}
+  h2{font-size:clamp(24px,3.6vw,32px);margin-bottom:8px}
+  h3{font-size:21px;margin:26px 0 8px}
+  p{margin:0 0 12px}
+  .m{font-family:"PT Serif",Georgia,serif;white-space:nowrap}
+  .m i, i.m{font-style:italic}
+  section,[id]{scroll-margin-top:64px}
+
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:none}
+  nav a{flex:none;text-decoration:none;color:var(--ink);font-size:14px;font-weight:700;padding:6px 11px;border-radius:7px}
+  nav a:hover{background:var(--blue-soft);color:var(--blue)}
+
+  header{padding:40px 0 18px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end}
+  header h1{font-size:clamp(28px,4.6vw,42px);margin:6px 0 10px}
+  header p{color:var(--muted);max-width:620px;margin:0}
+  .hi{font-family:"PT Serif",serif;font-size:22px;color:var(--blue);margin:0 0 4px}
+  @media (max-width:640px){header{grid-template-columns:1fr}}
+
+  .para{font-family:"PT Serif",serif;font-size:15px;font-weight:700;color:#fff;background:var(--ink);display:inline-block;border-radius:8px;padding:4px 12px;margin:22px 0 0}
+  section{background:var(--paper);border-radius:18px;padding:28px 24px;margin:16px 0 20px;box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(21,32,46,.25)}
+  .tag{display:inline-block;font-weight:700;font-size:14px;color:var(--blue);margin-bottom:6px}
+  .block{margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+  .block:first-of-type{border-top:0;padding-top:0;margin-top:14px}
+  .bn{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;font-weight:700;font-size:15px;margin-right:8px;vertical-align:2px}
+
+  .rule{background:var(--blue-soft);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .rule b.t{color:var(--blue)}
+  .rule.book{background:#f3f5f9}
+  .rule.book .src{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .imp{background:var(--red-soft);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .imp b.t{color:var(--red)}
+  .imp b.t::before{content:"❗ ";}
+  .trap{background:var(--gold-soft);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .trap b.t{color:var(--gold)}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center}
+  @media (max-width:700px){.two{grid-template-columns:1fr}}
+  figure{margin:14px 0}
+  svg{display:block;max-width:100%;height:auto;margin:0 auto}
+  figcaption{font-size:14px;color:var(--muted);text-align:center;margin-top:4px}
+  .svgtxt{font-family:"PT Serif",serif;font-style:italic}
+
+  table.cmp{border-collapse:collapse;width:100%;font-size:16px;margin:10px 0}
+  .cmp th,.cmp td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  .cmp th{font-size:14px;color:var(--muted)}
+  .cmp td:first-child{font-weight:700;width:30%}
+
+  .say{background:var(--gold-soft);border-radius:12px;padding:14px 18px;margin-top:22px}
+  .say h3{margin:0 0 6px;font-size:14px;text-transform:uppercase;letter-spacing:.05em;color:var(--gold)}
+  .say ul{margin:0;padding-left:20px}
+
+  /* тест */
+  .quiz{margin-top:26px;background:#f3f6fa;border-radius:16px;padding:20px}
+  .quiz > h3{margin:0 0 4px}
+  .quiz .lead{color:var(--muted);font-size:15px;margin:0 0 6px}
+  .q{background:#fff;border-radius:14px;padding:16px 18px;margin-top:14px}
+  .q .qn{font-size:13px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.05em}
+  .q .qt{font-size:18px;margin:4px 0 10px}
+  .opts{display:grid;gap:8px}
+  .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;font:inherit;font-size:16.5px;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer;min-height:48px}
+  .opt:hover{border-color:var(--blue)}
+  .opt .l{flex:none;width:26px;height:26px;border-radius:50%;background:var(--blue-soft);color:var(--blue);font-weight:700;display:grid;place-items:center;font-size:14px;margin-top:1px}
+  .q.done .opt{cursor:default}
+  .q.done .opt:hover{border-color:var(--line)}
+  .opt.right{border-color:var(--green);background:var(--green-soft)}
+  .opt.right .l{background:var(--green);color:#fff}
+  .opt.wrong{border-color:var(--red);background:var(--red-soft)}
+  .opt.wrong .l{background:var(--red);color:#fff}
+  .expl{display:none;margin-top:10px;border-radius:12px;padding:12px 14px;font-size:16px}
+  .q.done .expl{display:block}
+  .expl.ok{background:var(--green-soft)} .expl.no{background:var(--red-soft)}
+  .expl b.h{display:block;margin-bottom:2px}
+  .expl.ok b.h{color:var(--green)} .expl.no b.h{color:var(--red)}
+  .score{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:14px;font-weight:700}
+  .btn{background:var(--blue);color:#fff;border:0;border-radius:10px;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer;min-height:44px}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+
+  /* спойлеры параграфов */
+  details.par{margin:16px 0}
+  details.par > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:16px;background:var(--paper);border-radius:18px;padding:18px 20px;
+    box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(21,32,46,.25);-webkit-user-select:none;user-select:none}
+  details.par > summary::-webkit-details-marker{display:none}
+  details.par > summary:hover{box-shadow:0 0 0 2px var(--blue-soft),0 10px 30px -18px rgba(21,32,46,.25)}
+  details.par .pn{flex:none;font-family:"PT Serif",serif;font-weight:700;font-size:22px;color:#fff;background:var(--ink);border-radius:10px;padding:6px 12px}
+  details.par .pt{flex:1;font-size:21px;font-weight:700;line-height:1.25}
+  details.par .pt small{display:block;font-size:14.5px;font-weight:400;color:var(--muted);margin-top:4px}
+  details.par .chev{flex:none;font-size:32px;line-height:1;color:var(--blue);transition:transform .2s ease}
+  details.par[open] > summary{background:var(--ink);color:#fff}
+  details.par[open] > summary .pn{background:#fff;color:var(--ink)}
+  details.par[open] > summary .pt small{color:#b9c3d2}
+  details.par[open] > summary .chev{transform:rotate(90deg);color:#fff}
+  details.par > section{margin:14px 0 18px}
+  .src2{color:var(--muted);font-size:14px}
+  .tools{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .toolc{background:#f3f6fa;border-radius:12px;padding:12px 14px}
+  .toolc b{display:block}
+  .toolc span{font-size:15px;color:var(--muted)}
+  @media (max-width:640px){.tools{grid-template-columns:1fr}}
+  .lab{background:#f3f6fa;border-radius:14px;padding:18px;margin:14px 0}
+  .lab input[type=range]{width:100%;accent-color:var(--blue);height:28px}
+  .vvals{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;text-align:center;font-family:"PT Serif",serif;font-size:19px}
+  .vvals div{background:#fff;border-radius:10px;padding:6px}
+  @media (max-width:520px){.vvals{grid-template-columns:repeat(2,1fr)}}
+  .steps{counter-reset:s;list-style:none;padding:0;margin:10px 0}
+  .steps li{counter-increment:s;position:relative;padding:4px 0 8px 40px}
+  .steps li::before{content:counter(s);position:absolute;left:0;top:3px;width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-weight:700;display:grid;place-items:center;font-size:15px}
+  .note{background:var(--blue-soft);border-radius:14px;padding:16px 20px;margin:0 0 8px}
+  .note b{color:var(--blue)}
+  .note ul{margin:6px 0 0;padding-left:20px}
+  .note li{margin:3px 0}
+
+  /* виджеты урока */
+  .wbtns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+  .chipbtn[aria-pressed=true]{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .wtxt{background:#fff;border-radius:12px;padding:10px 14px;margin-top:10px;font-size:17px;min-height:48px}
+  .lab > b:first-child{display:inline-block;margin-bottom:2px}
+  .sus{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:10px;margin:14px 0 8px}
+  .chip{border-radius:14px;padding:14px 10px;text-align:center;font-weight:700;font-size:18px}
+  .chip small{display:block;font-weight:400;font-size:14px;margin-top:2px}
+  .chip.s{background:var(--red-soft);color:var(--red)}
+  .chip.u{background:var(--green-soft);color:var(--green)}
+  @media (max-width:560px){.sus{grid-template-columns:1fr}}
+  .stepline{font-weight:700;color:var(--blue);margin-top:8px}
+  details.mini{margin:12px 0}
+  details.mini summary{cursor:pointer;font-weight:700;color:var(--blue);padding:10px 0;min-height:44px}
+  .gcard{background:#f3f6fa;border-radius:14px;padding:16px 18px;margin:12px 0}
+  .gcard .gq{font-weight:700;margin:4px 0 8px}
+  .gcard .btn.okb{background:var(--green);color:#fff;border-color:var(--green)}
+  .gcard .btn.nob{background:var(--red);color:#fff;border-color:var(--red)}
+  .gfb{margin-top:10px;border-radius:12px;padding:0}
+  .gfb.ok,.gfb.no{padding:12px 14px}
+  .gfb.ok{background:var(--green-soft)} .gfb.no{background:var(--red-soft)}
+  .ex .ansrow{margin:12px 0}
+  .ans{display:inline-block;background:var(--green-soft);color:var(--green);font-weight:700;border-radius:8px;padding:4px 12px;font-family:"PT Serif",serif}
+  .task{background:#f3f6fa;border-radius:12px;padding:14px 18px;margin:8px 0}
+  .sub{font-weight:400;color:var(--muted);font-size:16px}
+  .unit{color:var(--muted)}
+  .selrow{display:flex;gap:12px;align-items:center;margin:8px 0;flex-wrap:wrap}
+  .selrow .m{min-width:150px;font-size:18px}
+  select{font:inherit;font-size:16px;padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:#fff;min-height:44px;max-width:100%}
+
+  .c-red{color:var(--red)} .c-blue{color:var(--blue)}
+  .simple-tip{background:var(--green-soft);border-radius:12px;padding:12px 16px;margin:12px 0}
+  .simple-tip b{color:var(--green)}
+  .lab input[type=range]:disabled{opacity:.4}
+
+  .hints{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
+  .hints > div{background:#f3f6fa;border-radius:14px;padding:12px 14px}
+  .hints svg{max-width:200px;margin:0 auto 6px}
+  .hints b{display:block;font-size:17px}
+  .hints span{font-size:16px}
+  @media (max-width:600px){.hints{grid-template-columns:1fr}}
+  .sur{display:grid;gap:8px;margin:8px 0 12px}
+  .sur .r{display:flex;gap:12px;align-items:center;background:#f3f6fa;border-radius:12px;padding:10px 12px}
+  .sur .k{flex:none;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-weight:700;font-size:18px;color:#fff}
+  .sur .k.s1{background:var(--red)} .sur .k.s2{background:var(--blue)} .sur .k.u{background:var(--green)}
+
+  /* доска */
+  .board{margin:14px 0 10px;border-radius:14px;background:#fff;box-shadow:0 0 0 1px var(--line)}
+  .toolbar{display:flex;flex-wrap:wrap;gap:6px;padding:8px;border-bottom:1px solid var(--line);align-items:center}
+  .tool{display:inline-flex;align-items:center;gap:6px;border:1px solid transparent;background:#f3f6fa;color:var(--ink);border-radius:9px;padding:8px 12px;font:inherit;font-size:15px;font-weight:700;cursor:pointer;min-height:42px}
+  .tool svg{width:20px;height:20px;margin:0}
+  .tool[aria-pressed=true]{background:var(--blue);color:#fff}
+  .tool:hover{border-color:var(--blue)}
+  .tool .dot{width:14px;height:14px;border-radius:50%;box-shadow:0 0 0 2px #fff}
+  .spacer{flex:1}
+  .grip{display:flex;align-items:center;justify-content:center;gap:10px;height:34px;cursor:ns-resize;touch-action:none;-webkit-user-select:none;user-select:none;
+    background:#f3f6fa;border-top:1px solid var(--line);border-radius:0 0 14px 14px;font-size:13px;color:var(--muted)}
+  .grip span{width:56px;height:6px;border-radius:3px;background:#9fb3cf}
+  .grip:hover span,.grip.drag span{background:var(--blue)}
+  .pen-state{font-size:13px;color:var(--muted);padding:0 6px}
+  .canvas-box{position:relative;overflow:hidden;background-color:#fdfeff;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+  .canvas-box canvas{display:block;width:100%;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:crosshair}
+  .check{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0}
+  .check label{font-weight:700;min-width:28px}
+  .check input{font:inherit;font-size:20px;width:140px;padding:8px 12px;border:2px solid var(--line);border-radius:10px;font-family:"PT Serif",serif}
+  .check input:focus{outline:none;border-color:var(--blue)}
+  .btn:hover{background:#163f75}
+  .btn.ghost:hover{background:#e8eef6}
+  .btn:disabled{opacity:.4;cursor:default}
+  .fb{font-weight:700;min-height:26px}
+  .fb.ok{color:var(--green)} .fb.no{color:var(--red)}
+  .hidden-sol{display:none;background:#f3f6fa;border-radius:12px;padding:12px 16px;margin-top:8px}
+  .hidden-sol.show{display:block}
+  .sol{margin:0 0 6px}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding:6px 0 40px}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a href="../../" style="color:#1d4f91">← Все уроки</a>
+  <a href="#t14">14. Треугольник</a>
+  <a href="#t15">15. Первый признак</a>
+  <a href="#razbor">Разбор задач</a>
+  <a href="#trening">Тренировка</a>
+</div></nav>
+
+<div class="wrap">
+
+<header>
+  <div>
+    <p class="hi">Алиса, привет!</p>
+    <h1>Глава II. Треугольники</h1>
+    <p>§ 1. Первый признак равенства треугольников. Это уже не повторение, а новая тема, поэтому разбираем её по шагам, с картинками, а в конце ты сама решишь задачи. Не торопись: после темы 14 можно сделать перерыв.</p>
+  </div>
+  <svg width="170" height="120" viewBox="0 0 170 120" aria-hidden="true">
+    <polygon points="14,104 96,14 156,96" fill="#e3ecf8" stroke="#1d4f91" stroke-width="3" stroke-linejoin="round"/>
+    <g fill="#b0182f"><circle cx="14" cy="104" r="6"/><circle cx="96" cy="14" r="6"/><circle cx="156" cy="96" r="6"/></g>
+  </svg>
+</header>
+
+<div class="note">
+  <b>Что ты сможешь после урока</b>
+  <ul>
+    <li>назвать стороны, углы и периметр треугольника и правильно записать «треугольник ABC»;</li>
+    <li>объяснить, какие треугольники называются равными;</li>
+    <li>сформулировать первый признак равенства и доказать его своими словами;</li>
+    <li>решить задачи № 95 и 96 на периметр и № 98 и 99 на первый признак.</li>
+  </ul>
+</div>
+
+<!-- ======================= ТЕМА 14 ======================= -->
+<section id="t14">
+  <span class="tag">Пункт 14 · учебник, с. 29–30</span>
+  <h2>Треугольник</h2>
+
+  <div class="block">
+    <h3><span class="bn">1</span>Что такое треугольник</h3>
+    <div class="rule book"><span class="src">Как в учебнике</span>Многоугольник с тремя вершинами называется <b>треугольником</b>; он имеет три стороны. Треугольник является простейшим многоугольником.</div>
+    <p>Говоря проще, это три точки, которые <b>не лежат на одной прямой</b>, и три отрезка, которые их соединяют. Точки называют <b>вершинами</b>, отрезки — <b>сторонами</b>.</p>
+    <figure>
+      <svg viewBox="0 0 440 230" style="max-width:440px" role="img" aria-label="Треугольник ABC">
+        <polygon points="70,196 170,36 360,150" fill="#e3ecf8" stroke="#1d4f91" stroke-width="3.5" stroke-linejoin="round"/>
+        <g fill="#b0182f"><circle cx="70" cy="196" r="7"/><circle cx="170" cy="36" r="7"/><circle cx="360" cy="150" r="7"/></g>
+        <g class="svgtxt" font-size="24" fill="#15202e"><text x="44" y="216">A</text><text x="158" y="26">B</text><text x="372" y="156">C</text></g>
+        <g font-family="PT Sans" font-size="15" font-weight="700" fill="#1d4f91">
+          <text x="92" y="104" text-anchor="end">сторона AB</text><text x="290" y="82">сторона BC</text><text x="215" y="190" text-anchor="middle">сторона CA</text>
+        </g>
+      </svg>
+      <figcaption>Треугольник с вершинами <i>A</i>, <i>B</i>, <i>C</i> и сторонами <i>AB</i>, <i>BC</i>, <i>CA</i></figcaption>
+    </figure>
+    <p>Записывают так: <span class="m">△<i>ABC</i></span>, читается «треугольник <i class="m">ABC</i>». Буквы можно менять местами: <span class="m">△<i>BCA</i></span> и <span class="m">△<i>CBA</i></span> — это тот же самый треугольник.</p>
+  </div>
+
+  <div class="block">
+    <h3><span class="bn">2</span>Углы треугольника и «против» чего они лежат</h3>
+    <div class="rule book"><span class="src">Как в учебнике</span>Три угла — <i>∠BAC</i>, <i>∠CBA</i> и <i>∠ACB</i> — называются <b>углами треугольника</b> <i>ABC</i>. Часто их обозначают одной буквой: <i>∠A</i>, <i>∠B</i>, <i>∠C</i>.</div>
+    <p>В задачах всё время говорят «угол, лежащий <b>против</b> стороны» или «угол, <b>прилежащий</b> к стороне». Это совсем просто.</p>
+    <ul>
+      <li><b>Против стороны</b> лежит угол в противоположной вершине, той, что не касается этой стороны.</li>
+      <li><b>Прилежит к стороне</b> угол, вершина которого — один из концов этой стороны.</li>
+    </ul>
+    <div class="lab">
+      <b>Попробуй сама.</b> Нажимай на стороны и смотри, какой угол лежит против неё.
+      <div class="wbtns" id="wOppBtns"></div>
+      <svg id="wOpp" viewBox="0 0 440 240" style="max-width:440px" role="img" aria-label="Угол против стороны"></svg>
+      <div class="wtxt" id="wOppTxt">Выбери сторону.</div>
+    </div>
+    <div class="imp"><b class="t">Запомни.</b> Против стороны <i class="m">BC</i> лежит угол <i class="m">A</i>. Угол <b>против</b> стороны — тот, до которого сторона «не дотягивается».</div>
+  </div>
+
+  <div class="block">
+    <h3><span class="bn">3</span>Периметр</h3>
+    <div class="rule book"><span class="src">Как в учебнике</span>Сумма длин трёх сторон треугольника называется его <b>периметром</b>.</div>
+    <p>Представь, что ты идёшь по границе участка в форме треугольника. Длина всего пути и есть периметр.</p>
+    <figure>
+      <svg viewBox="0 0 520 210" style="max-width:520px" role="img" aria-label="Периметр: 3, 4 и 5 см">
+        <polygon points="60,170 60,40 320,170" fill="#e3ecf8" stroke="#1d4f91" stroke-width="3.5" stroke-linejoin="round"/>
+        <path d="M60 158h12v12" fill="none" stroke="#b0182f" stroke-width="2"/>
+        <g font-family="PT Sans" font-size="17" font-weight="700" fill="#15202e">
+          <text x="46" y="110" text-anchor="end">3 см</text><text x="190" y="194" text-anchor="middle">4 см</text><text x="206" y="96">5 см</text>
+        </g>
+        <text x="350" y="106" font-family="PT Serif" font-size="19" fill="#15202e">P = 3 + 4 + 5</text>
+        <text x="350" y="134" font-family="PT Serif" font-size="19" font-weight="700" fill="#b0182f">P = 12 см</text>
+      </svg>
+    </figure>
+    <div class="imp"><b class="t">Запомни.</b> Периметр — это одно число: сумма <b>трёх</b> сторон. Он измеряется в сантиметрах, а не в квадратных сантиметрах.</div>
+  </div>
+
+  <div class="block">
+    <h3><span class="bn">4</span>Равные треугольники</h3>
+    <div class="rule book"><span class="src">Как в учебнике</span>Две фигуры, в частности два треугольника, называются <b>равными</b>, если их можно <b>совместить наложением</b>.</div>
+    <p>Представь два одинаковых бумажных треугольника. Один можно положить на другой так, что они совпадут полностью, без остатка. Подвигай ползунок и посмотри.</p>
+    <div class="lab">
+      <b>Накладываем.</b> Тяни ползунок вправо.
+      <svg id="ovEq" viewBox="0 0 600 270" style="max-width:600px" role="img" aria-label="Наложение равных треугольников"></svg>
+      <input type="range" id="ovEqS" min="0" max="100" value="0" aria-label="Наложение">
+      <div class="wtxt" id="ovEqTxt"></div>
+    </div>
+    <div class="rule book"><span class="src">Как в учебнике</span><b>Если два треугольника равны, то элементы (т. е. стороны и углы) одного треугольника соответственно равны элементам другого треугольника.</b></div>
+    <p>«Соответственно» значит: <b>тот, что совпал с тем</b>. Сторона совпала со стороной, угол с углом. Поэтому у равных треугольников равны все шесть элементов: три стороны и три угла.</p>
+    <div class="rule book"><span class="src">Как в учебнике</span>В равных треугольниках <b>против соответственно равных сторон лежат равные углы</b>, и обратно: <b>против соответственно равных углов лежат равные стороны</b>.</div>
+    <p>Посмотри на картинку выше. У стороны с одной чёрточкой напротив угол с одной дужкой, у стороны с двумя чёрточками — угол с двумя дужками. Так и должно быть.</p>
+    <p>Равенство записывают так: <span class="m">△<i>ABC</i> = △<i>A</i><sub>1</sub><i>B</i><sub>1</sub><i>C</i><sub>1</sub></span>.</p>
+    <div class="trap"><b class="t">Ловушка с порядком букв.</b> В записи <span class="m">△<i>ABC</i> = △<i>DEF</i></span> буквы стоят «друг под другом»: <i class="m">A</i> совпадает с <i class="m">D</i>, <i class="m">B</i> с <i class="m">E</i>, <i class="m">C</i> с <i class="m">F</i>. Значит, <i class="m">AB = DE</i>, <i class="m">BC = EF</i>, <i class="m">∠B = ∠E</i>. Если буквы перепутать, получится неверная запись.</div>
+    <div class="rule book"><span class="src">Зачем это нужно, пишет учебник</span>Равенство двух треугольников можно установить, <b>не накладывая</b> один треугольник на другой, а сравнивая только некоторые их элементы. Это важно для практики, например для сравнения двух земельных участков, которые нельзя наложить друг на друга.</div>
+    <p>Именно об этом следующий пункт: какие элементы достаточно проверить, чтобы быть уверенной в равенстве.</p>
+  </div>
+
+  <div class="say">
+    <h3>Коротко: тема 14</h3>
+    <ul>
+      <li>Треугольник — три вершины (не на одной прямой) и три стороны. Запись: △ABC.</li>
+      <li>Против стороны BC лежит угол A; к стороне BC прилегают углы B и C.</li>
+      <li>Периметр — сумма длин трёх сторон.</li>
+      <li>Равные треугольники совмещаются наложением; у них равны все стороны и все углы, которые совпали.</li>
+      <li>В записи △ABC = △DEF порядок букв важен: A и D, B и E, C и F стоят «друг под другом».</li>
+    </ul>
+  </div>
+  <div class="quiz" data-quiz="q14">
+    <h3>Проверь себя: тема 14</h3>
+    <p class="lead">Выбери один ответ. После ответа появится объяснение.</p>
+  </div>
+</section>
+
+<!-- ======================= ТЕМА 15 ======================= -->
+<section id="t15">
+  <span class="tag">Пункт 15 · учебник, с. 30–31</span>
+  <h2>Первый признак равенства треугольников</h2>
+  <p>Зачем он нужен? Чтобы узнать, что два треугольника равны, <b>не надо проверять всё</b>. Хватит трёх вещей. Сейчас увидишь, каких.</p>
+
+  <div class="block">
+    <h3><span class="bn">1</span>Опыт с двумя палочками</h3>
+    <p>Представь: у тебя две палочки, <b class="c-red">красная</b> и <b class="c-blue">синяя</b>. Их концы скреплены в точке <i class="m">A</i>, как ножницы. Третью сторону <i class="m">BC</i> натягиваем резинкой.</p>
+    <div class="lab">
+      <b>Двигай ползунок</b> — раскрывай «ножницы».
+      <svg id="scis" viewBox="0 0 600 250" style="max-width:600px" role="img" aria-label="Две стороны и угол между ними"></svg>
+      <input type="range" id="scisS" min="25" max="120" value="60" aria-label="Угол A">
+      <div class="wbtns">
+        <button class="btn" id="scisLock">🔒 Закрепить угол</button>
+        <button class="btn ghost" id="scisFree">Открепить</button>
+      </div>
+      <div class="wtxt" id="scisTxt"></div>
+    </div>
+    <div class="imp"><b class="t">Вывод из опыта.</b> Если знаешь <b>две стороны</b> и <b>угол между ними</b>, то треугольник получается только один. Поменять его уже нельзя.</div>
+  </div>
+
+  <div class="block">
+    <h3><span class="bn">2</span>Это и есть первый признак</h3>
+    <div class="rule book"><span class="src">Теорема · как в учебнике</span><b>Если две стороны и угол между ними одного треугольника соответственно равны двум сторонам и углу между ними другого треугольника, то такие треугольники равны.</b></div>
+    <p>Коротко запомни три буквы:</p>
+    <div class="sus">
+      <div class="chip s">С<small>сторона</small></div>
+      <div class="chip u">У<small>угол между ними</small></div>
+      <div class="chip s">С<small>сторона</small></div>
+    </div>
+    <p style="text-align:center">Угол стоит <b>в середине</b>, как начинка в бутерброде между двумя кусками хлеба.</p>
+    <figure>
+      <svg id="susPic" viewBox="0 0 600 230" style="max-width:600px" role="img" aria-label="Два треугольника: две стороны и угол между ними равны"></svg>
+      <figcaption>Одинаковые чёрточки — равные стороны, дужка — равные углы</figcaption>
+    </figure>
+  </div>
+
+  <div class="block">
+    <h3><span class="bn">3</span>Какой угол «между»?</h3>
+    <p>Угол между двумя сторонами — это угол в той вершине, <b>где они встречаются</b>. Нажми на пару сторон и проверь.</p>
+    <div class="lab">
+      <div class="wbtns" id="wBetBtns"></div>
+      <svg id="wBet" viewBox="0 0 440 240" style="max-width:440px" role="img" aria-label="Угол между двумя сторонами"></svg>
+      <div class="wtxt" id="wBetTxt">Выбери две стороны.</div>
+    </div>
+    <div class="trap"><b class="t">Осторожно.</b> Если равный угол стоит <b>не</b> между равными сторонами, первый признак <b>не работает</b>.</div>
+  </div>
+
+  <div class="block">
+    <h3><span class="bn">4</span>Почему это правда</h3>
+    <p>Докажем так же, как в пункте 14: <b>наложим</b> один треугольник на другой. Нажимай «Дальше».</p>
+    <div class="lab">
+      <svg id="ovPr" viewBox="0 0 600 270" style="max-width:600px" role="img" aria-label="Доказательство наложением"></svg>
+      <div class="stepline" id="prNum">Шаг 0 из 4</div>
+      <div class="wtxt" id="prTxt"></div>
+      <div class="wbtns" style="margin-top:10px">
+        <button class="btn ghost" id="prBack">← Назад</button>
+        <button class="btn" id="prNext">Дальше →</button>
+        <button class="btn ghost" id="prReset">С начала</button>
+      </div>
+    </div>
+    <details class="mini">
+      <summary>Доказательство словами учебника</summary>
+      <div class="rule book"><span class="src">Как в учебнике</span>
+        Рассмотрим треугольники <i>ABC</i> и <i>A</i><sub>1</sub><i>B</i><sub>1</sub><i>C</i><sub>1</sub>, у которых <i>AB = A</i><sub>1</sub><i>B</i><sub>1</sub>, <i>AC = A</i><sub>1</sub><i>C</i><sub>1</sub>, углы <i>A</i> и <i>A</i><sub>1</sub> равны (рис. 57). Докажем, что △<i>ABC</i> = △<i>A</i><sub>1</sub><i>B</i><sub>1</sub><i>C</i><sub>1</sub>.<br>
+        Так как ∠<i>A</i> = ∠<i>A</i><sub>1</sub>, то треугольник <i>ABC</i> можно наложить на треугольник <i>A</i><sub>1</sub><i>B</i><sub>1</sub><i>C</i><sub>1</sub> так, что вершина <i>A</i> совместится с вершиной <i>A</i><sub>1</sub>, а стороны <i>AB</i> и <i>AC</i> наложатся соответственно на лучи <i>A</i><sub>1</sub><i>B</i><sub>1</sub> и <i>A</i><sub>1</sub><i>C</i><sub>1</sub>. Поскольку <i>AB = A</i><sub>1</sub><i>B</i><sub>1</sub>, <i>AC = A</i><sub>1</sub><i>C</i><sub>1</sub>, то сторона <i>AB</i> совместится со стороной <i>A</i><sub>1</sub><i>B</i><sub>1</sub>, а сторона <i>AC</i> — со стороной <i>A</i><sub>1</sub><i>C</i><sub>1</sub>; в частности, совместятся точки <i>B</i> и <i>B</i><sub>1</sub>, <i>C</i> и <i>C</i><sub>1</sub>. Следовательно, совместятся стороны <i>BC</i> и <i>B</i><sub>1</sub><i>C</i><sub>1</sub>. Итак, треугольники <i>ABC</i> и <i>A</i><sub>1</sub><i>B</i><sub>1</sub><i>C</i><sub>1</sub> полностью совместятся, значит, они равны.<br><b>Теорема доказана.</b>
+      </div>
+    </details>
+  </div>
+
+  <div class="block">
+    <h3><span class="bn">5</span>Как решать задачу</h3>
+    <p>Ищи на рисунке три вещи и записывай их столбиком:</p>
+    <div class="rule"><b class="t">Образец</b><br>
+      <span class="m">1) <i>AB = DE</i> — сторона;</span><br>
+      <span class="m">2) <i>AC = DF</i> — сторона;</span><br>
+      <span class="m">3) ∠<i>A</i> = ∠<i>D</i> — угол между ними.</span><br>
+      <span class="m">Значит, △<i>ABC</i> = △<i>DEF</i> по первому признаку.</span>
+    </div>
+    <p><b>Где искать равные стороны и углы?</b> Чаще всего выручают две вещи.</p>
+    <div class="hints">
+      <div>
+        <svg viewBox="0 0 200 140" role="img" aria-label="Общая сторона">
+          <polygon points="20,70 180,70 110,10" fill="#e3ecf8" stroke="#566273" stroke-width="2"/>
+          <polygon points="20,70 180,70 110,130" fill="#f8e6ea" stroke="#566273" stroke-width="2"/>
+          <line x1="20" y1="70" x2="180" y2="70" stroke="#1d4f91" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+        <b>Общая сторона</b>
+        <span>Синяя сторона — <b>одна на двоих</b>: она есть и в верхнем треугольнике, и в нижнем. Длина у неё одна, значит, это уже готовая пара равных сторон.</span>
+      </div>
+      <div>
+        <svg viewBox="0 0 200 140" role="img" aria-label="Крестик: вертикальные углы">
+          <line x1="20" y1="20" x2="180" y2="120" stroke="#566273" stroke-width="3"/>
+          <line x1="20" y1="120" x2="180" y2="20" stroke="#566273" stroke-width="3"/>
+          <path d="M100 70 L74.6 54.1 A30 30 0 0 0 74.6 85.9 Z" fill="rgba(31,107,79,.35)" stroke="#1f6b4f" stroke-width="2"/>
+          <path d="M100 70 L125.4 54.1 A30 30 0 0 1 125.4 85.9 Z" fill="rgba(31,107,79,.35)" stroke="#1f6b4f" stroke-width="2"/>
+        </svg>
+        <b>Крестик</b>
+        <span>Когда два отрезка пересекаются крестиком, углы <b>напротив друг друга</b> равны (два зелёных). Это вертикальные углы из главы I.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3><span class="bn">6</span>Потренируйся: хватает ли данных?</h3>
+    <p>Смотри на чёрточки и дужки. Есть ли тут С — У — С?</p>
+    <div id="game"></div>
+    <div class="score" id="gameScore"></div>
+  </div>
+
+  <div class="say">
+    <h3>Запомни</h3>
+    <ul>
+      <li>Две стороны и угол <b>между ними</b> равны — значит, треугольники равны.</li>
+      <li>Схема: <b>С — У — С</b>, угол посередине.</li>
+      <li>Угол «между» — в той вершине, где встречаются эти две стороны.</li>
+    </ul>
+  </div>
+  <div class="quiz" data-quiz="q15a">
+    <h3>Проверь себя</h3>
+    <p class="lead">Выбери один ответ. После ответа появится объяснение.</p>
+  </div>
+</section>
+
+
+<!-- ======================= РАЗБОР ЗАДАЧ ======================= -->
+<section id="razbor">
+  <span class="tag">Учебник, с. 32 · задачи</span>
+  <h2>Разбираем задачи</h2>
+  <p>Берём четыре задачи. Первые две (№ 95 и № 96) на периметр, две другие (№ 98 и № 99) на первый признак. В каждой сначала понимаем, что нам дано, потом решаем по шагам.</p>
+
+  <!-- 95 -->
+  <div class="block ex">
+    <h3><span class="bn">№</span>Задача 95</h3>
+    <div class="rule book"><span class="src">Условие</span>Сторона <i>AB</i> треугольника <i>ABC</i> равна 17 см, сторона <i>AC</i> вдвое больше стороны <i>AB</i>, а сторона <i>BC</i> на 10 см меньше стороны <i>AC</i>. Найдите периметр треугольника <i>ABC</i>.</div>
+    <p><b>Что дано.</b> Одна сторона известна. Остальные выражены через неё: «вдвое больше» и «на 10 см меньше». Найти нужно периметр, то есть сумму трёх сторон. Значит, сначала найдём каждую сторону.</p>
+    <figure>
+      <svg viewBox="0 0 560 190" style="max-width:560px" role="img" aria-label="Три отрезка: AB 17, AC 34, BC 24">
+        <g font-family="PT Sans" font-size="16" font-weight="700" fill="#15202e">
+          <text x="10" y="36">AB</text><text x="10" y="86">AC</text><text x="10" y="136">BC</text>
+        </g>
+        <rect x="50" y="16" width="170" height="30" rx="5" fill="#e3ecf8" stroke="#1d4f91" stroke-width="2"/>
+        <text x="135" y="37" text-anchor="middle" font-family="PT Serif" font-size="17" fill="#1d4f91">17</text>
+        <rect x="50" y="66" width="170" height="30" rx="5" fill="#e3ecf8" stroke="#1d4f91" stroke-width="2"/>
+        <rect x="220" y="66" width="170" height="30" rx="5" fill="#e3ecf8" stroke="#1d4f91" stroke-width="2"/>
+        <text x="135" y="87" text-anchor="middle" font-family="PT Serif" font-size="17" fill="#1d4f91">17</text>
+        <text x="305" y="87" text-anchor="middle" font-family="PT Serif" font-size="17" fill="#1d4f91">17</text>
+        <text x="410" y="87" font-family="PT Sans" font-size="15" fill="#566273">вдвое больше, чем AB</text>
+        <rect x="50" y="116" width="260" height="30" rx="5" fill="#e3ecf8" stroke="#1d4f91" stroke-width="2"/>
+        <rect x="310" y="116" width="80" height="30" rx="5" fill="none" stroke="#b0182f" stroke-width="2" stroke-dasharray="5 4"/>
+        <text x="180" y="137" text-anchor="middle" font-family="PT Serif" font-size="17" fill="#1d4f91">на 10 см короче</text>
+        <text x="350" y="137" text-anchor="middle" font-family="PT Serif" font-size="17" fill="#b0182f">10</text>
+        <text x="410" y="137" font-family="PT Sans" font-size="15" fill="#566273">от AC отрезали 10</text>
+      </svg>
+    </figure>
+    <ol class="steps">
+      <li><b>Сторона AC.</b> «Вдвое больше» значит умножить на 2. <span class="m"><i>AC</i> = 17 · 2 = 34 см.</span></li>
+      <li><b>Сторона BC.</b> «На 10 меньше, чем AC» значит вычесть 10. <span class="m"><i>BC</i> = 34 − 10 = 24 см.</span></li>
+      <li><b>Периметр.</b> Складываем три стороны. <span class="m"><i>P</i> = 17 + 34 + 24 = 75 см.</span></li>
+    </ol>
+    <div class="ansrow"><span class="ans">Ответ: 75 см</span></div>
+    <div class="trap"><b class="t">Где ошибаются.</b> Вычитают 10 не из <i class="m">AC</i>, а из <i class="m">AB</i>, потому что та сторона стоит в условии первой. Читай внимательно: «на 10 см меньше стороны <i class="m">AC</i>».</div>
+  </div>
+
+  <!-- 96 -->
+  <div class="block ex">
+    <h3><span class="bn">№</span>Задача 96</h3>
+    <div class="rule book"><span class="src">Условие</span>Периметр треугольника равен 48 см, а одна из сторон равна 18 см. Найдите две другие стороны, если их разность равна 4,6 см.</div>
+    <p><b>Что дано.</b> Всё вместе 48 см, одна сторона 18. Про две оставшиеся известно, что они разные и одна длиннее другой на 4,6 см. Их надо найти.</p>
+    <figure>
+      <svg viewBox="0 0 560 230" style="max-width:560px" role="img" aria-label="Периметр 48 разбит на 18 и две стороны с разностью 4,6">
+        <rect x="20" y="14" width="450" height="30" rx="5" fill="#fff" stroke="#15202e" stroke-width="2"/>
+        <rect x="20" y="14" width="169" height="30" rx="5" fill="#f5efd9" stroke="#6f550c" stroke-width="2"/>
+        <text x="104" y="35" text-anchor="middle" font-family="PT Serif" font-size="17" fill="#6f550c">18</text>
+        <text x="330" y="35" text-anchor="middle" font-family="PT Serif" font-size="17" fill="#15202e">две другие стороны вместе: 48 − 18 = 30</text>
+        <text x="488" y="35" font-family="PT Sans" font-size="14" fill="#566273">P = 48</text>
+        <g font-family="PT Sans" font-size="15" font-weight="700" fill="#15202e"><text x="20" y="92">большая</text><text x="20" y="142">меньшая</text></g>
+        <rect x="100" y="72" width="270" height="30" rx="5" fill="#e3ecf8" stroke="#1d4f91" stroke-width="2"/>
+        <rect x="100" y="122" width="270" height="30" rx="5" fill="#e3ecf8" stroke="#1d4f91" stroke-width="2"/>
+        <text x="185" y="92" text-anchor="middle" font-family="PT Serif" font-size="16" fill="#1d4f91">равная часть</text>
+        <text x="185" y="142" text-anchor="middle" font-family="PT Serif" font-size="16" fill="#1d4f91">равная часть</text>
+        <rect x="370" y="72" width="60" height="30" rx="5" fill="#f8e6ea" stroke="#b0182f" stroke-width="2"/>
+        <text x="400" y="93" text-anchor="middle" font-family="PT Serif" font-size="16" fill="#b0182f">4,6</text>
+        <text x="448" y="93" font-family="PT Sans" font-size="14" fill="#566273">лишек</text>
+        <text x="20" y="196" font-family="PT Serif" font-size="17" fill="#15202e">Уберём «лишек»: останутся две равные части, вместе 30 − 4,6 = 25,4</text>
+      </svg>
+    </figure>
+    <ol class="steps">
+      <li><b>Сколько на две неизвестные стороны.</b> <span class="m">48 − 18 = 30 см.</span></li>
+      <li><b>Уберём «лишек».</b> Большая сторона длиннее меньшей на 4,6 см. Отрежем эти 4,6 от большей: останутся две равные части. <span class="m">30 − 4,6 = 25,4 см.</span></li>
+      <li><b>Одна равная часть</b> — это меньшая сторона. Делим 25,4 пополам: <span class="m">25,4 ÷ 2 = 12,7 см.</span></li>
+      <li><b>Большая сторона</b> на 4,6 длиннее. <span class="m">12,7 + 4,6 = 17,3 см.</span></li>
+    </ol>
+    <p><b>Проверка.</b> <span class="m">18 + 12,7 + 17,3 = 48</span>, и <span class="m">17,3 − 12,7 = 4,6</span>. Всё сходится.</p>
+    <div class="ansrow"><span class="ans">Ответ: 12,7 см и 17,3 см</span></div>
+  </div>
+
+  <!-- 98 -->
+  <div class="block ex">
+    <h3><span class="bn">№</span>Задача 98</h3>
+    <div class="rule book"><span class="src">Условие</span>Отрезки <i>AE</i> и <i>DC</i> пересекаются в точке <i>B</i>, являющейся серединой каждого из них. а) Докажите, что треугольники <i>ABC</i> и <i>EBD</i> равны; б) найдите углы <i>A</i> и <i>C</i> треугольника <i>ABC</i>, если в треугольнике <i>BDE</i> ∠<i>D</i> = 47°, ∠<i>E</i> = 42°.</div>
+    <p><b>Рисуем.</b> Два отрезка пересекаются крестиком. <i class="m">B</i> — середина каждого, значит, каждый отрезок точка <i class="m">B</i> делит на две равные половинки.</p>
+    <figure>
+      <svg id="ex98" viewBox="0 0 360 200" style="max-width:420px" role="img" aria-label="Задача 98"></svg>
+    </figure>
+    <p><b>а) Ищем С — У — С.</b></p>
+    <div class="sur">
+      <div class="r"><span class="k s1">С</span><span><span class="m"><i>AB = BE</i></span> — половинки отрезка <i class="m">AE</i> (красные чёрточки)</span></div>
+      <div class="r"><span class="k s2">С</span><span><span class="m"><i>CB = BD</i></span> — половинки отрезка <i class="m">DC</i> (синие чёрточки)</span></div>
+      <div class="r"><span class="k u">У</span><span><span class="m">∠<i>ABC</i> = ∠<i>EBD</i></span> — это углы «крестика», они напротив друг друга и равны (зелёные дужки)</span></div>
+    </div>
+    <p>Всё есть. Значит, <span class="m">△<i>ABC</i> = △<i>EBD</i></span> по первому признаку.</p>
+    <p><b>б) Находим углы.</b> Нажми кнопку: левый треугольник повернётся вокруг точки <i class="m">B</i> и ляжет на правый.</p>
+    <div class="wbtns"><button class="btn" id="ex98go">↻ Повернуть</button><button class="btn ghost" id="ex98back">Вернуть</button></div>
+    <p>Видно: точка <i class="m">A</i> попадает в <i class="m">E</i>, а точка <i class="m">C</i> — в <i class="m">D</i>. Значит, угол <i class="m">A</i> такой же, как угол <i class="m">E</i>, а угол <i class="m">C</i> — как угол <i class="m">D</i>.</p>
+    <div class="ansrow"><span class="ans">Ответ: ∠A = 42°, ∠C = 47°</span></div>
+  </div>
+
+  <!-- 99 -->
+  <div class="block ex">
+    <h3><span class="bn">№</span>Задача 99</h3>
+    <div class="rule book"><span class="src">Условие (рис. 58)</span><i>AB = AC</i>, ∠1 = ∠2. а) Докажите, что треугольники <i>ABD</i> и <i>ACD</i> равны; б) найдите <i>BD</i> и <i>AB</i>, если <i>AC</i> = 15 см, <i>DC</i> = 5 см.</div>
+    <figure>
+      <svg id="ex99" viewBox="0 0 360 210" style="max-width:420px" role="img" aria-label="Задача 99"></svg>
+    </figure>
+    <p><b>а) Ищем С — У — С.</b></p>
+    <div class="sur">
+      <div class="r"><span class="k s1">С</span><span><span class="m"><i>AB = AC</i></span> — так сказано в условии (красные чёрточки)</span></div>
+      <div class="r"><span class="k s2">С</span><span><span class="m"><i>AD</i></span> — синяя сторона. Она <b>одна на двоих</b>: и в верхнем треугольнике, и в нижнем. Значит, в обоих она одинаковой длины</span></div>
+      <div class="r"><span class="k u">У</span><span><span class="m">∠1 = ∠2</span> — так сказано в условии (зелёные дужки). Они как раз между красной и синей сторонами</span></div>
+    </div>
+    <p>Всё есть. Значит, <span class="m">△<i>ABD</i> = △<i>ACD</i></span> по первому признаку.</p>
+    <p><b>б) Находим стороны.</b> Нажми кнопку: верхний треугольник сложится по синей линии, как листок бумаги, и ляжет на нижний.</p>
+    <div class="wbtns"><button class="btn" id="ex99go">⇣ Сложить</button><button class="btn ghost" id="ex99back">Развернуть</button></div>
+    <p>Точка <i class="m">B</i> попадает в <i class="m">C</i>. Значит, <span class="m"><i>BD</i> = <i>DC</i> = 5 см</span>. А <span class="m"><i>AB</i> = <i>AC</i> = 15 см</span> — это было в условии.</p>
+    <div class="ansrow"><span class="ans">Ответ: BD = 5 см, AB = 15 см</span></div>
+  </div>
+</section>
+
+<!-- ======================= ТРЕНИРОВКА ======================= -->
+<section id="trening">
+  <span class="tag">Сама</span>
+  <h2>Тренировка</h2>
+  <p>Три задания, похожие на разобранные. Решай на листе ниже (можно писать стилусом), потом впиши ответ. Подсказка появится после второй ошибки. Решение можно посмотреть в конце.</p>
+
+  <h3>Задание 1 <span class="sub">(похоже на № 95)</span></h3>
+  <div class="task">Сторона <i class="m">PQ</i> треугольника <i class="m">PQR</i> равна 14 см, сторона <i class="m">PR</i> втрое больше стороны <i class="m">PQ</i>, а сторона <i class="m">QR</i> на 8 см меньше стороны <i class="m">PR</i>. Найдите периметр треугольника <i class="m">PQR</i>.</div>
+  <div class="board" data-board="z1" data-height="320"></div>
+  <div class="check" data-answer="90" data-hint="Сначала найди PR (14 умножь на 3), потом QR (вычти 8 из PR). Потом сложи три стороны.">
+    <label for="a1">P =</label><input id="a1" inputmode="decimal" autocomplete="off"><span class="unit">см</span>
+    <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
+  </div>
+  <button class="btn ghost show-sol" data-for="sol1">Показать решение</button>
+  <div class="hidden-sol" id="sol1">
+    <p class="sol"><span class="m"><i>PR</i> = 14 · 3 = 42 см; &nbsp; <i>QR</i> = 42 − 8 = 34 см; &nbsp; <i>P</i> = 14 + 42 + 34 = 90 см.</span></p>
+  </div>
+
+  <h3>Задание 2 <span class="sub">(похоже на № 96)</span></h3>
+  <div class="task">Периметр треугольника равен 56 см, одна из сторон равна 20 см. Найдите две другие стороны, если их разность равна 3,2 см.</div>
+  <div class="board" data-board="z2" data-height="320"></div>
+  <div class="check" data-answer="19.6" data-hint="На две неизвестные стороны остаётся 56 − 20. Потом убери разность 3,2 и раздели пополам, получится меньшая сторона.">
+    <label for="a2">большая</label><input id="a2" inputmode="decimal" autocomplete="off"><span class="unit">см</span>
+    <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
+  </div>
+  <div class="check" data-answer="16.4" data-hint="Меньшая сторона — это (56 − 20 − 3,2) пополам.">
+    <label for="a3">меньшая</label><input id="a3" inputmode="decimal" autocomplete="off"><span class="unit">см</span>
+    <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
+  </div>
+  <button class="btn ghost show-sol" data-for="sol2">Показать решение</button>
+  <div class="hidden-sol" id="sol2">
+    <p class="sol"><span class="m">56 − 20 = 36 см на две стороны. &nbsp; 36 − 3,2 = 32,8. &nbsp; 32,8 ÷ 2 = 16,4 см — меньшая. &nbsp; 16,4 + 3,2 = 19,6 см — большая.</span></p>
+    <p class="sol"><span class="m">Проверка: 20 + 16,4 + 19,6 = 56. &nbsp; 19,6 − 16,4 = 3,2.</span></p>
+  </div>
+
+  <h3>Задание 3 <span class="sub">(похоже на № 98)</span></h3>
+  <div class="task">Отрезки <i class="m">MK</i> и <i class="m">PT</i> пересекаются в точке <i class="m">O</i>, которая является серединой каждого из них. а) Докажите, что △<i class="m">MOP</i> = △<i class="m">KOT</i>. б) Найдите ∠<i class="m">M</i> и ∠<i class="m">P</i> треугольника <i class="m">MOP</i>, если в △<i class="m">KOT</i> ∠<i class="m">K</i> = 64°, ∠<i class="m">T</i> = 38°.</div>
+  <figure>
+    <svg viewBox="0 0 400 200" style="max-width:400px" role="img" aria-label="Отрезки MK и PT пересекаются в точке O">
+      <polygon points="60,40 180,100 60,160" fill="#e3ecf8" stroke="#1d4f91" stroke-width="3" stroke-linejoin="round"/>
+      <polygon points="300,160 180,100 300,40" fill="#f8e6ea" stroke="#b0182f" stroke-width="3" stroke-linejoin="round"/>
+      <g fill="#15202e"><circle cx="60" cy="40" r="5"/><circle cx="180" cy="100" r="5"/><circle cx="60" cy="160" r="5"/><circle cx="300" cy="160" r="5"/><circle cx="300" cy="40" r="5"/></g>
+      <g class="svgtxt" font-size="22" fill="#15202e"><text x="36" y="38">M</text><text x="178" y="124">O</text><text x="36" y="182">P</text><text x="306" y="182">K</text><text x="306" y="42">T</text></g>
+    </svg>
+  </figure>
+  <div class="board" data-board="z3" data-height="320"></div>
+  <p><b>а)</b> Для каждого равенства выбери, почему оно верно.</p>
+  <div class="selrow"><span class="m"><i>MO = OK</i></span><select data-a="1"></select></div>
+  <div class="selrow"><span class="m"><i>PO = OT</i></span><select data-a="1"></select></div>
+  <div class="selrow"><span class="m">∠<i>MOP</i> = ∠<i>KOT</i></span><select data-a="2"></select></div>
+  <div class="check"><button class="btn" id="selCheck">Проверить доказательство</button><span class="fb" id="selFb" aria-live="polite"></span></div>
+  <p><b>б)</b> Впиши углы.</p>
+  <div class="check" data-answer="64" data-hint="∠M лежит в треугольнике MOP на месте, которое совпадает с K. Стоят друг под другом M и K.">
+    <label for="a4">∠M =</label><input id="a4" inputmode="decimal" autocomplete="off"><span class="unit">°</span>
+    <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
+  </div>
+  <div class="check" data-answer="38" data-hint="Запись равенства △MOP = △KOT: P стоит под T.">
+    <label for="a5">∠P =</label><input id="a5" inputmode="decimal" autocomplete="off"><span class="unit">°</span>
+    <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
+  </div>
+  <button class="btn ghost show-sol" data-for="sol3">Показать решение</button>
+  <div class="hidden-sol" id="sol3">
+    <p class="sol"><b>а)</b> <span class="m"><i>MO = OK</i></span> (<i class="m">O</i> — середина <i class="m">MK</i>); <span class="m"><i>PO = OT</i></span> (<i class="m">O</i> — середина <i class="m">PT</i>); <span class="m">∠<i>MOP</i> = ∠<i>KOT</i></span> как вертикальные. Значит, △<i class="m">MOP</i> = △<i class="m">KOT</i> по первому признаку.</p>
+    <p class="sol"><b>б)</b> Буквы стоят друг под другом: <i class="m">M</i> и <i class="m">K</i>, <i class="m">O</i> и <i class="m">O</i>, <i class="m">P</i> и <i class="m">T</i>. Поэтому ∠<i class="m">M</i> = ∠<i class="m">K</i> = 64°, ∠<i class="m">P</i> = ∠<i class="m">T</i> = 38°.</p>
+  </div>
+</section>
+
+<footer>Геометрия, 7 класс · Глава II · § 1 · первый признак равенства треугольников</footer>
+</div>
+
+<script>
+/* ================= общие помощники для рисунков ================= */
+var NS='http://www.w3.org/2000/svg';
+function E(parent,tag,attrs,txt){
+  var e=document.createElementNS(NS,tag);
+  for(var k in attrs) e.setAttribute(k,attrs[k]);
+  if(txt!=null) e.textContent=txt;
+  if(parent) parent.appendChild(e);
+  return e;
+}
+/* подпись с индексом: main + нижний индекс */
+function lab(parent,main,subs,size){
+  var t=E(parent,'text',{'class':'svgtxt','font-size':size||22,fill:'#15202e','text-anchor':'middle'},main);
+  if(subs){ var s=E(t,'tspan',{dy:5,'font-size':(size||22)*0.62},subs); }
+  return t;
+}
+function arcPath(V,P1,P2,r){
+  var a1=Math.atan2(P1[1]-V[1],P1[0]-V[0]), a2=Math.atan2(P2[1]-V[1],P2[0]-V[0]);
+  var d=a2-a1; while(d>Math.PI) d-=2*Math.PI; while(d<=-Math.PI) d+=2*Math.PI;
+  var x1=V[0]+r*Math.cos(a1), y1=V[1]+r*Math.sin(a1), x2=V[0]+r*Math.cos(a2), y2=V[1]+r*Math.sin(a2);
+  return {d:'M'+x1+' '+y1+' A'+r+' '+r+' 0 0 '+(d>0?1:0)+' '+x2+' '+y2, x1:x1,y1:y1,x2:x2,y2:y2};
+}
+function wedge(parent,V,P1,P2,r,fill,stroke){
+  var a=arcPath(V,P1,P2,r);
+  return E(parent,'path',{d:'M'+V[0]+' '+V[1]+' L'+a.x1+' '+a.y1+' '+a.d.replace(/^M[^A]*/,'')+' Z',fill:fill,stroke:stroke||'none','stroke-width':2});
+}
+function ticks(parent,P,Q,n,color){
+  var mx=(P[0]+Q[0])/2, my=(P[1]+Q[1])/2, dx=Q[0]-P[0], dy=Q[1]-P[1], L=Math.sqrt(dx*dx+dy*dy);
+  dx/=L; dy/=L; var nx=-dy, ny=dx;
+  for(var i=0;i<n;i++){
+    var off=(i-(n-1)/2)*6, cx=mx+dx*off, cy=my+dy*off;
+    E(parent,'line',{x1:cx-nx*7,y1:cy-ny*7,x2:cx+nx*7,y2:cy+ny*7,stroke:color||'#15202e','stroke-width':2.6,'stroke-linecap':'round'});
+  }
+}
+/* заготовка треугольника: A в начале координат */
+var SH={A:[0,0],B:[190,0],C:[60,-110]};
+var OTHER={A:['B','C'],B:['A','C'],C:['A','B']};
+function drawTri(g,o){
+  o=o||{};
+  E(g,'polygon',{points:[SH.A,SH.B,SH.C].map(function(p){return p.join(',');}).join(' '),fill:o.fill||'#e3ecf8',stroke:o.stroke||'#1d4f91','stroke-width':3,'stroke-linejoin':'round'});
+  var pairs={AB:['A','B'],AC:['A','C'],BC:['B','C']};
+  for(var s in (o.ticks||{})) ticks(g,SH[pairs[s][0]],SH[pairs[s][1]],o.ticks[s],'#15202e');
+  for(var v in (o.arcs||{})){
+    var k=o.arcs[v], ot=OTHER[v];
+    for(var i=0;i<k;i++){ E(g,'path',{d:arcPath(SH[v],SH[ot[0]],SH[ot[1]],24+7*i).d,fill:'none',stroke:o.arcColor||'#1f6b4f','stroke-width':3}); }
+  }
+  if(o.between){ var ov=o.between, ot2=OTHER[ov]; wedge(g,SH[ov],SH[ot2[0]],SH[ot2[1]],40,'rgba(31,107,79,.22)'); }
+  E(g,'g',{fill:o.stroke||'#1d4f91'}).innerHTML='<circle cx="0" cy="0" r="5"/><circle cx="190" cy="0" r="5"/><circle cx="60" cy="-110" r="5"/>';
+}
+var LP={A:[-16,18],B:[14,20],C:[-2,-16]};
+var LPM={A:[-16,44],B:[16,46],C:[-2,-42]};
+function addLabels(g,suffix,alt){
+  var out=[];
+  ['A','B','C'].forEach(function(v){
+    var p=alt?LPM[v]:LP[v], t=lab(g,v,suffix||'',22); t.setAttribute('transform','translate('+p[0]+' '+p[1]+')');
+    out.push({el:t,x:p[0],y:p[1]});
+  });
+  return out;
+}
+
+/* ================= картинка «два треугольника» ================= */
+function pairSvg(cfg){
+  var svg=document.createElementNS(NS,'svg'); svg.setAttribute('viewBox','0 0 600 200'); svg.setAttribute('style','max-width:520px');
+  var s1=cfg.s1||0.85, s2=cfg.s2||0.85;
+  var g1=E(svg,'g',{transform:'translate(60 160) scale('+s1+')'}); drawTri(g1,{ticks:cfg.ticks,arcs:cfg.arcs});
+  var g2=E(svg,'g',{transform:'translate(350 160) scale('+s2+')'}); drawTri(g2,{ticks:cfg.ticks,arcs:cfg.arcs,fill:'#f8e6ea',stroke:'#b0182f'});
+  function putLabels(gx,x0,s,suf){
+    ['A','B','C'].forEach(function(v){
+      var t=lab(svg,v,suf,20); t.setAttribute('transform','translate('+(x0+SH[v][0]*s+LP[v][0]*0.9)+' '+(160+SH[v][1]*s+LP[v][1]*0.9)+')');
+    });
+  }
+  putLabels(g1,60,s1,''); putLabels(g2,350,s2,'1');
+  return svg;
+}
+
+/* ================= наложение (общее для двух рисунков) ================= */
+function makeOverlay(svg,cfg){
+  var fixed=cfg.fixed, start=cfg.start, theta=cfg.theta;
+  var gF=E(svg,'g',{transform:'translate('+fixed[0]+' '+fixed[1]+')'});
+  var extra=E(gF,'g',{});
+  drawTri(gF,{ticks:cfg.ticks,arcs:cfg.arcs});
+  var labF=addLabels(gF,'1');
+  var gM=E(svg,'g',{});
+  drawTri(gM,{ticks:cfg.ticks,arcs:cfg.arcs,fill:'rgba(176,24,47,.20)',stroke:'#b0182f'});
+  var labM=addLabels(gM,'',true);
+  function set(u,r){
+    var x=start[0]+(fixed[0]-start[0])*u, y=start[1]+(fixed[1]-start[1])*u, deg=theta*(1-r);
+    gM.setAttribute('transform','translate('+x+' '+y+') rotate('+deg+')');
+    labM.forEach(function(l){ l.el.setAttribute('transform','translate('+l.x+' '+l.y+') rotate('+(-deg)+')'); });
+  }
+  set(0,0);
+  return {set:set,gF:gF,extra:extra,svg:svg};
+}
+
+/* ================= тема 14: «против / между» ================= */
+var TP={A:[80,200],B:[170,40],C:[360,170]};
+var SIDES={AB:['A','B'],BC:['B','C'],CA:['C','A']};
+function triWidget(svgId,btnsId,txtId,mode){
+  var svg=document.getElementById(svgId), btns=document.getElementById(btnsId), txt=document.getElementById(txtId);
+  var base=E(svg,'g',{}), dyn=E(svg,'g',{}), top=E(svg,'g',{});
+  E(base,'polygon',{points:['A','B','C'].map(function(v){return TP[v].join(',');}).join(' '),fill:'#e3ecf8',stroke:'#1d4f91','stroke-width':3.5,'stroke-linejoin':'round'});
+  ['A','B','C'].forEach(function(v){ E(top,'circle',{cx:TP[v][0],cy:TP[v][1],r:6.5,fill:'#15202e'}); });
+  var LPOS={A:[56,222],B:[156,30],C:[374,188]};
+  ['A','B','C'].forEach(function(v){ var t=E(top,'text',{'class':'svgtxt','font-size':24,fill:'#15202e',x:LPOS[v][0],y:LPOS[v][1]},v); });
+  function clear(){ while(dyn.firstChild) dyn.removeChild(dyn.firstChild); }
+  function sideLine(name){ var s=SIDES[name]; E(dyn,'line',{x1:TP[s[0]][0],y1:TP[s[0]][1],x2:TP[s[1]][0],y2:TP[s[1]][1],stroke:'#b0182f','stroke-width':7,'stroke-linecap':'round'}); }
+  function ang(v,fill,stroke,r){ var o=OTHER[v]; wedge(dyn,TP[v],TP[o[0]],TP[o[1]],r||40,fill,stroke); }
+  var opts, pressed=null;
+  if(mode==='opp') opts=[['BC',['BC']],['CA',['CA']],['AB',['AB']]];
+  else opts=[['AB и AC',['AB','CA']],['AB и BC',['AB','BC']],['BC и CA',['BC','CA']]];
+  opts.forEach(function(o){
+    var b=document.createElement('button'); b.className='btn ghost chipbtn'; b.textContent=o[0]; b.setAttribute('aria-pressed','false');
+    b.addEventListener('click',function(){
+      Array.prototype.forEach.call(btns.children,function(x){ x.setAttribute('aria-pressed','false'); }); b.setAttribute('aria-pressed','true');
+      clear();
+      if(mode==='opp'){
+        var name=o[1][0], s=SIDES[name], opp=['A','B','C'].filter(function(v){ return s.indexOf(v)<0; })[0];
+        sideLine(name);
+        s.forEach(function(v){ ang(v,'rgba(31,107,79,.28)','#1f6b4f',34); });
+        ang(opp,'rgba(176,24,47,.30)','#b0182f',44);
+        txt.innerHTML='Против стороны <b class="m">'+name+'</b> лежит угол <b class="m" style="color:#b0182f">∠'+opp+'</b> (красный). К этой стороне прилегают углы <b class="m" style="color:#1f6b4f">∠'+s[0]+'</b> и <b class="m" style="color:#1f6b4f">∠'+s[1]+'</b> (зелёные).';
+      } else {
+        var a=o[1][0], b2=o[1][1], sa=SIDES[a], sb=SIDES[b2], com=sa.filter(function(v){ return sb.indexOf(v)>=0; })[0];
+        sideLine(a); sideLine(b2); ang(com,'rgba(31,107,79,.35)','#1f6b4f',46);
+        txt.innerHTML='Стороны <b class="m">'+a+'</b> и <b class="m">'+b2+'</b> встречаются в вершине <b class="m">'+com+'</b>. Значит, угол между ними — <b class="m" style="color:#1f6b4f">∠'+com+'</b> (зелёный).';
+      }
+    });
+    btns.appendChild(b);
+  });
+}
+triWidget('wOpp','wOppBtns','wOppTxt','opp');
+triWidget('wBet','wBetBtns','wBetTxt','between');
+
+/* ================= тема 14: наложение равных ================= */
+(function(){
+  var svg=document.getElementById('ovEq'); if(!svg) return;
+  var ov=makeOverlay(svg,{fixed:[330,225],start:[60,40],theta:60,ticks:{AB:1,AC:2,BC:3},arcs:{C:1,B:2,A:3}});
+  var s=document.getElementById('ovEqS'), t=document.getElementById('ovEqTxt');
+  function upd(){
+    var v=+s.value/100; ov.set(v,v);
+    t.innerHTML = v===0 ? 'Два одинаковых треугольника лежат отдельно. Красный — <b class="m">△ABC</b>, синий — <b class="m">△A<sub>1</sub>B<sub>1</sub>C<sub>1</sub></b>.'
+      : v<1 ? 'Накладываем красный треугольник на синий…'
+      : '<b>Совпали полностью.</b> Вершины <i class="m">A</i> и <i class="m">A<sub>1</sub></i>, <i class="m">B</i> и <i class="m">B<sub>1</sub></i>, <i class="m">C</i> и <i class="m">C<sub>1</sub></i> легли друг на друга, и стороны тоже. Значит, <span class="m">△ABC = △A<sub>1</sub>B<sub>1</sub>C<sub>1</sub></span>.';
+  }
+  s.addEventListener('input',upd); upd();
+})();
+
+/* ================= тема 15: две палочки ================= */
+(function(){
+  var svg=document.getElementById('scis'); if(!svg) return;
+  var s=document.getElementById('scisS'), txt=document.getElementById('scisTxt'), locked=false;
+  var K=34, AB=5, AC=4, g=E(svg,'g',{});
+  function tri(A,ang,col,fill,lab){
+    var t=ang*Math.PI/180, B=[A[0]+AB*K,A[1]], C=[A[0]+AC*K*Math.cos(t),A[1]-AC*K*Math.sin(t)];
+    E(g,'polygon',{points:[A,B,C].map(function(p){return p.join(',');}).join(' '),fill:fill,stroke:'none'});
+    E(g,'line',{x1:B[0],y1:B[1],x2:C[0],y2:C[1],stroke:'#1f6b4f','stroke-width':3,'stroke-dasharray':'7 5'});
+    E(g,'line',{x1:A[0],y1:A[1],x2:B[0],y2:B[1],stroke:'#b0182f','stroke-width':6,'stroke-linecap':'round'});
+    E(g,'line',{x1:A[0],y1:A[1],x2:C[0],y2:C[1],stroke:'#1d4f91','stroke-width':6,'stroke-linecap':'round'});
+    E(g,'path',{d:arcPath(A,B,C,30).d,fill:'none',stroke:'#1f6b4f','stroke-width':3.5});
+    E(g,'circle',{cx:A[0],cy:A[1],r:7,fill:'#15202e'});
+    var f='PT Serif';
+    E(g,'text',{x:A[0]-8,y:A[1]+24,'font-family':f,'font-style':'italic','font-size':20,'text-anchor':'end'},'A'+lab);
+    E(g,'text',{x:B[0]+6,y:B[1]+22,'font-family':f,'font-style':'italic','font-size':20},'B'+lab);
+    E(g,'text',{x:C[0]-4,y:C[1]-10,'font-family':f,'font-style':'italic','font-size':20,'text-anchor':'middle'},'C'+lab);
+    E(g,'text',{x:A[0]+38*Math.cos(t/2)+4,y:A[1]-38*Math.sin(t/2)+5,'font-family':'PT Sans','font-weight':700,'font-size':15,fill:'#1f6b4f'},ang+'°');
+    return Math.sqrt(AB*AB+AC*AC-2*AB*AC*Math.cos(t));
+  }
+  function draw(){
+    g.innerHTML=''; var a=+s.value;
+    var bc=tri([110,215],a,'#b0182f','rgba(227,236,248,.9)','');
+    E(g,'text',{x:20,y:24,'font-family':'PT Sans','font-size':15,fill:'#566273'},'красная 5 см, синяя 4 см');
+    var bcT=bc.toFixed(1).replace('.',',');
+    if(locked){
+      tri([400,215],a,'#b0182f','rgba(248,230,234,.9)','₁');
+      E(g,'text',{x:470,y:24,'font-family':'PT Sans','font-weight':700,'font-size':15,fill:'#1f6b4f','text-anchor':'middle'},'копия: такие же палочки и угол');
+      txt.innerHTML='🔒 Угол закреплён на <b>'+a+'°</b>. Треугольник «застыл»: резинка <i class="m">BC</i> = <b>'+bcT+' см</b>, и по-другому никак. Справа копия из таких же палочек с таким же углом — она получилась <b>точно такой же</b>. Такие треугольники равны.';
+    } else {
+      txt.innerHTML='Угол <i class="m">A</i> = <b>'+a+'°</b>, резинка <i class="m">BC</i> = <b>'+bcT+' см</b>. Палочки те же, а угол меняется — и треугольник получается то узкий, то широкий. Теперь нажми «Закрепить угол».';
+    }
+  }
+  s.addEventListener('input',draw);
+  document.getElementById('scisLock').addEventListener('click',function(){ locked=true; s.disabled=true; draw(); });
+  document.getElementById('scisFree').addEventListener('click',function(){ locked=false; s.disabled=false; draw(); });
+  draw();
+})();
+
+/* ================= разбор 98 и 99: поворот и складывание ================= */
+function tween(dur,fn){ var t0=Date.now(); (function f(){ var k=Math.min(1,(Date.now()-t0)/dur), e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2; fn(e); if(k<1) requestAnimationFrame(f); })(); }
+function lbl(p,x,y,t){ return E(p,'text',{x:x,y:y,'font-family':'PT Serif','font-style':'italic','font-size':22,fill:'#15202e','text-anchor':'middle'},t); }
+(function(){
+  var svg=document.getElementById('ex98'); if(!svg) return;
+  var A=[60,40],B=[180,100],C=[60,160],D=[300,40],Ee=[300,160];
+  E(svg,'polygon',{points:[Ee,B,D].map(function(p){return p.join(',');}).join(' '),fill:'#f3f6fa',stroke:'#566273','stroke-width':2.5});
+  var mv=E(svg,'g',{});
+  E(mv,'polygon',{points:[A,B,C].map(function(p){return p.join(',');}).join(' '),fill:'rgba(29,79,145,.18)',stroke:'#1d4f91','stroke-width':3});
+  var marks=E(svg,'g',{});
+  ticks(marks,A,B,1,'#b0182f'); ticks(marks,B,Ee,1,'#b0182f'); ticks(marks,C,B,2,'#1d4f91'); ticks(marks,B,D,2,'#1d4f91');
+  E(marks,'path',{d:arcPath(B,A,C,26).d,fill:'none',stroke:'#1f6b4f','stroke-width':3.5});
+  E(marks,'path',{d:arcPath(B,Ee,D,26).d,fill:'none',stroke:'#1f6b4f','stroke-width':3.5});
+  [A,B,C,D,Ee].forEach(function(p){ E(svg,'circle',{cx:p[0],cy:p[1],r:4.5,fill:'#15202e'}); });
+  lbl(svg,40,40,'A'); lbl(svg,180,130,'B'); lbl(svg,40,172,'C'); lbl(svg,322,42,'D'); lbl(svg,322,172,'E');
+  var mA=lbl(mv,A[0]+20,A[1]+12,'A'), mC=lbl(mv,C[0]+20,C[1]-4,'C');
+  [mA,mC].forEach(function(t){ t.setAttribute('fill','#1d4f91'); t.setAttribute('font-size',18); t.setAttribute('font-weight',700); });
+  var cur=0;
+  function set(a){ cur=a; mv.setAttribute('transform','rotate('+a+' '+B[0]+' '+B[1]+')'); marks.setAttribute('opacity',a>5?0.25:1);
+    [mA,mC].forEach(function(t){ var x=+t.getAttribute('x'), y=+t.getAttribute('y'); t.setAttribute('transform','rotate('+(-a)+' '+x+' '+(y-6)+')'); }); }
+  document.getElementById('ex98go').addEventListener('click',function(){ var f=cur; tween(1200,function(e){ set(f+(180-f)*e); }); });
+  document.getElementById('ex98back').addEventListener('click',function(){ var f=cur; tween(900,function(e){ set(f*(1-e)); }); });
+})();
+(function(){
+  var svg=document.getElementById('ex99'); if(!svg) return;
+  var A=[40,105],B=[270,30],D=[190,105],C=[270,180];
+  E(svg,'polygon',{points:[A,D,C].map(function(p){return p.join(',');}).join(' '),fill:'#f3f6fa',stroke:'#566273','stroke-width':2.5});
+  var mv=E(svg,'g',{});
+  E(mv,'polygon',{points:[A,B,D].map(function(p){return p.join(',');}).join(' '),fill:'rgba(29,79,145,.18)',stroke:'#1d4f91','stroke-width':3});
+  var mB=lbl(mv,250,58,'B'); mB.setAttribute('fill','#1d4f91'); mB.setAttribute('font-size',18); mB.setAttribute('font-weight',700);
+  var marks=E(svg,'g',{});
+  ticks(marks,A,B,1,'#b0182f'); ticks(marks,A,C,1,'#b0182f');
+  E(marks,'path',{d:arcPath(A,B,D,44).d,fill:'none',stroke:'#1f6b4f','stroke-width':3.5});
+  E(marks,'path',{d:arcPath(A,D,C,50).d,fill:'none',stroke:'#1f6b4f','stroke-width':3.5});
+  E(marks,'text',{x:96,y:97,'font-family':'PT Sans','font-weight':700,'font-size':14,fill:'#1f6b4f'},'1');
+  E(marks,'text',{x:96,y:124,'font-family':'PT Sans','font-weight':700,'font-size':14,fill:'#1f6b4f'},'2');
+  E(svg,'line',{x1:A[0],y1:A[1],x2:D[0],y2:D[1],stroke:'#1d4f91','stroke-width':6,'stroke-linecap':'round'});
+  [A,B,C,D].forEach(function(p){ E(svg,'circle',{cx:p[0],cy:p[1],r:4.5,fill:'#15202e'}); });
+  lbl(svg,22,112,'A'); lbl(svg,288,30,'B'); lbl(svg,206,98,'D'); lbl(svg,288,194,'C');
+  E(svg,'text',{x:344,y:150,'font-family':'PT Sans','font-size':14,fill:'#566273','text-anchor':'end'},'DC = 5 см');
+  var cur=1;
+  function set(k){ cur=k; mv.setAttribute('transform','translate(0 '+(105*(1-k))+') scale(1 '+k+')'); marks.setAttribute('opacity',k<0.95?0.25:1);
+    mB.setAttribute('transform','translate(0 '+(k<0?2*(58-6):0)+') scale(1 '+(k<0?-1:1)+')'); if(k<0){ mB.setAttribute('transform','scale(1 -1) translate(0 -116)'); } else mB.removeAttribute('transform'); }
+  document.getElementById('ex99go').addEventListener('click',function(){ var f=cur; tween(1200,function(e){ set(f+(-1-f)*e); }); });
+  document.getElementById('ex99back').addEventListener('click',function(){ var f=cur; tween(900,function(e){ set(f+(1-f)*e); }); });
+})();
+
+/* ================= тема 15: картинка С — У — С ================= */
+(function(){
+  var svg=document.getElementById('susPic'); if(!svg) return;
+  var s=0.95;
+  var g1=E(svg,'g',{transform:'translate(50 190) scale('+s+')'}); drawTri(g1,{ticks:{AB:1,AC:2},arcs:{A:1},between:'A'});
+  var g2=E(svg,'g',{transform:'translate(340 190) scale('+s+')'}); drawTri(g2,{ticks:{AB:1,AC:2},arcs:{A:1},between:'A',fill:'#f8e6ea',stroke:'#b0182f'});
+  function put(x0,suf){ ['A','B','C'].forEach(function(v){ var t=lab(svg,v,suf,20); t.setAttribute('transform','translate('+(x0+SH[v][0]*s+LP[v][0])+' '+(190+SH[v][1]*s+LP[v][1])+')'); }); }
+  put(50,''); put(340,'1');
+  var t=E(svg,'text',{x:300,y:210,'text-anchor':'middle','font-family':'PT Sans','font-size':14,fill:'#566273'}); t.textContent='';
+})();
+
+/* ================= тема 15: контрпример (два разных треугольника) ================= */
+(function(){
+  var svg=document.getElementById('ssaPic'); if(!svg) return;
+  var A=[30,170], C=[193.8,55.3], B=[113.5,170], B2=[274.1,170];
+  E(svg,'line',{x1:A[0],y1:A[1],x2:410,y2:170,stroke:'#566273','stroke-width':1.5});
+  E(svg,'polygon',{points:[A,C,B].map(function(p){return p.join(',');}).join(' '),fill:'#f8e6ea',stroke:'#b0182f','stroke-width':2.8,'stroke-linejoin':'round'});
+  E(svg,'polygon',{points:[A,C,B2].map(function(p){return p.join(',');}).join(' '),fill:'none',stroke:'#1d4f91','stroke-width':3,'stroke-linejoin':'round','stroke-dasharray':'7 5'});
+  E(svg,'path',{d:arcPath(A,B,C,40).d,fill:'none',stroke:'#1f6b4f','stroke-width':3});
+  ticks(svg,A,C,1); ticks(svg,B,C,2); ticks(svg,B2,C,2);
+  [A,C,B,B2].forEach(function(p){ E(svg,'circle',{cx:p[0],cy:p[1],r:5,fill:'#15202e'}); });
+  var t;
+  t=E(svg,'text',{'class':'svgtxt','font-size':22,fill:'#15202e',x:12,y:196},'A');
+  t=E(svg,'text',{'class':'svgtxt','font-size':22,fill:'#15202e',x:198,y:50},'C');
+  t=E(svg,'text',{'class':'svgtxt','font-size':22,fill:'#15202e',x:106,y:196},'B');
+  t=E(svg,'text',{'class':'svgtxt','font-size':22,fill:'#15202e',x:268,y:196},"B'");
+})();
+
+/* ================= тема 15: доказательство по шагам ================= */
+(function(){
+  var svg=document.getElementById('ovPr'); if(!svg) return;
+  var ov=makeOverlay(svg,{fixed:[330,225],start:[60,40],theta:60,ticks:{AB:1,AC:2},arcs:{A:1}});
+  var gF=ov.gF;
+  /* лучи A1B1 и A1C1 */
+  var ray1=E(ov.extra,'line',{x1:0,y1:0,x2:250,y2:0,stroke:'#9fb3cf','stroke-width':2,'stroke-dasharray':'6 6'});
+  var L=Math.sqrt(60*60+110*110), ray2=E(ov.extra,'line',{x1:0,y1:0,x2:60/L*250,y2:-110/L*250,stroke:'#9fb3cf','stroke-width':2,'stroke-dasharray':'6 6'});
+  var hl=E(gF,'g',{display:'none'});
+  E(hl,'circle',{cx:190,cy:0,r:13,fill:'none',stroke:'#1f6b4f','stroke-width':3.5});
+  E(hl,'circle',{cx:60,cy:-110,r:13,fill:'none',stroke:'#1f6b4f','stroke-width':3.5});
+  var bc=E(gF,'line',{x1:190,y1:0,x2:60,y2:-110,stroke:'#1f6b4f','stroke-width':7,'stroke-linecap':'round',display:'none',opacity:.55});
+  var STEPS=[
+    'Два треугольника. Мы знаем только: две стороны равны (одна и две чёрточки) и угол между ними равен (дужка).',
+    '<b>Шаг 1.</b> Ставим точку <i class="m">A</i> на точку <i class="m">A<sub>1</sub></i>.',
+    '<b>Шаг 2.</b> Поворачиваем. Углы равны, поэтому стороны красного треугольника ложатся точно на стороны синего (на серые лучи).',
+    '<b>Шаг 3.</b> Длины сторон тоже равны, поэтому <i class="m">B</i> попадает ровно в <i class="m">B<sub>1</sub></i>, а <i class="m">C</i> — ровно в <i class="m">C<sub>1</sub></i> (зелёные кружки).',
+    '<b>Шаг 4.</b> Значит, и третья сторона <i class="m">BC</i> легла на <i class="m">B<sub>1</sub>C<sub>1</sub></i>. Треугольники совпали полностью — они <b>равны</b>.'
+  ];
+  var TARGET=[[0,0],[1,0],[1,1],[1,1],[1,1]];
+  var cur=0, u=0, r=0, timer=null;
+  var num=document.getElementById('prNum'), txt=document.getElementById('prTxt');
+  var bBack=document.getElementById('prBack'), bNext=document.getElementById('prNext'), bReset=document.getElementById('prReset');
+  function show(){
+    num.textContent='Шаг '+cur+' из 4'; txt.innerHTML=STEPS[cur];
+    hl.setAttribute('display',cur>=3?'inline':'none'); bc.setAttribute('display',cur>=4?'inline':'none');
+    bBack.disabled=cur===0; bNext.disabled=cur===4;
+  }
+  function go(n){
+    cur=n; var tu=TARGET[n][0], tr=TARGET[n][1], u0=u, r0=r, t0=Date.now(), dur=900;
+    if(timer) clearInterval(timer);
+    timer=setInterval(function(){
+      var k=Math.min(1,(Date.now()-t0)/dur), e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+      u=u0+(tu-u0)*e; r=r0+(tr-r0)*e; ov.set(u,r);
+      if(k>=1){ clearInterval(timer); timer=null; }
+    },16);
+    show();
+  }
+  bNext.addEventListener('click',function(){ if(cur<4) go(cur+1); });
+  bBack.addEventListener('click',function(){ if(cur>0) go(cur-1); });
+  bReset.addEventListener('click',function(){ go(0); });
+  window.__prGo=function(n){ cur=n; u=TARGET[n][0]; r=TARGET[n][1]; ov.set(u,r); show(); };
+  show();
+})();
+
+/* ================= тема 15: игра «хватает ли данных» ================= */
+(function(){
+  var box=document.getElementById('game'); if(!box) return;
+  var CASES=[
+    {eq:'<i class="m">AB = A<sub>1</sub>B<sub>1</sub></i>, <i class="m">AC = A<sub>1</sub>C<sub>1</sub></i>, <i class="m">∠A = ∠A<sub>1</sub></i>', ticks:{AB:1,AC:2}, arcs:{A:1}, yes:true,
+     why:'Две пары равных сторон (<i class="m">AB</i> и <i class="m">AC</i>), а угол <i class="m">A</i> как раз зажат между ними. Это точно С — У — С.'},
+    {eq:'<i class="m">AB = A<sub>1</sub>B<sub>1</sub></i>, <i class="m">BC = B<sub>1</sub>C<sub>1</sub></i>, <i class="m">∠A = ∠A<sub>1</sub></i>', ticks:{AB:1,BC:2}, arcs:{A:1}, yes:false,
+     why:'Равны стороны <i class="m">AB</i> и <i class="m">BC</i>. Между ними стоит угол <i class="m">B</i>, а равен угол <i class="m">A</i>. Он лежит против стороны <i class="m">BC</i>, то есть не между. Первый признак здесь не работает.'},
+    {eq:'<i class="m">AB = A<sub>1</sub>B<sub>1</sub></i>, <i class="m">BC = B<sub>1</sub>C<sub>1</sub></i>, <i class="m">∠B = ∠B<sub>1</sub></i>', ticks:{AB:1,BC:2}, arcs:{B:1}, yes:true,
+     why:'Равны <i class="m">AB</i> и <i class="m">BC</i>, и угол <i class="m">B</i> зажат именно между ними. Буквы другие, чем в первой карточке, а схема та же: С — У — С.'}
+  ];
+  var right=0, done=0, score=document.getElementById('gameScore');
+  function upd(){ score.innerHTML='<span>Верно: '+right+' из '+CASES.length+(done===CASES.length?(right===CASES.length?'. Отлично!':'. Перечитай объяснения и попробуй ещё раз.'):'')+'</span>'; }
+  CASES.forEach(function(c,i){
+    var card=document.createElement('div'); card.className='gcard';
+    var h=document.createElement('div'); h.className='gh'; h.innerHTML='<b>Карточка '+(i+1)+'.</b> Известно: '+c.eq+'.';
+    var q=document.createElement('div'); q.className='gq'; q.textContent='Можно ли по первому признаку сказать, что треугольники равны?';
+    var row=document.createElement('div'); row.className='wbtns';
+    var fb=document.createElement('div'); fb.className='gfb';
+    card.appendChild(h); card.appendChild(pairSvg({ticks:c.ticks,arcs:c.arcs,s2:c.s2,s1:c.s2?0.72:0.85})); card.appendChild(q);
+    [['Да, равны',true],['Нельзя сказать',false]].forEach(function(o){
+      var b=document.createElement('button'); b.className='btn ghost'; b.textContent=o[0];
+      b.addEventListener('click',function(){
+        if(card.classList.contains('done')) return; card.classList.add('done'); done++;
+        var ok=o[1]===c.yes; if(ok) right++;
+        b.classList.add(ok?'okb':'nob');
+        fb.className='gfb '+(ok?'ok':'no');
+        fb.innerHTML='<b>'+(ok?'Верно. ':'Не так. ')+(c.yes?'Да, равны.':'По первому признаку сказать нельзя.')+'</b> '+c.why;
+        upd();
+      });
+      row.appendChild(b);
+    });
+    card.appendChild(row); card.appendChild(fb); box.appendChild(card);
+  });
+  upd();
+})();
+
+/* ================= тесты ================= */
+function picPair(t,a){ var s=pairSvg({ticks:t,arcs:a,s1:.7,s2:.7}); s.setAttribute('style','max-width:440px;margin:4px 0 10px'); return s.outerHTML; }
+function picKLM(){
+  return '<svg viewBox="0 0 260 150" style="max-width:260px;margin:4px 0 10px"><polygon points="30,126 220,126 110,24" fill="#e3ecf8" stroke="#1d4f91" stroke-width="3" stroke-linejoin="round"/><g class="svgtxt" font-size="20" fill="#15202e"><text x="12" y="142">K</text><text x="224" y="142">L</text><text x="104" y="18">M</text></g></svg>';
+}
+function picKite(){
+  return '<svg viewBox="0 0 300 160" style="max-width:300px;margin:4px 0 10px"><polygon points="30,80 220,22 150,80" fill="#e3ecf8" stroke="#1d4f91" stroke-width="3" stroke-linejoin="round"/><polygon points="30,80 150,80 220,138" fill="#f8e6ea" stroke="#b0182f" stroke-width="3" stroke-linejoin="round"/><g stroke="#15202e" stroke-width="2.4"><line x1="122" y1="46" x2="126" y2="58"/><line x1="126" y1="102" x2="122" y2="114"/></g><path d="M70 69 A40 40 0 0 1 68 80" fill="none" stroke="#1f6b4f" stroke-width="3"/><path d="M70 80 A40 40 0 0 1 68 91" fill="none" stroke="#1f6b4f" stroke-width="3"/><g class="svgtxt" font-size="20" fill="#15202e"><text x="10" y="86">A</text><text x="226" y="22">B</text><text x="152" y="102">D</text><text x="226" y="148">C</text></g><g font-family="PT Sans" font-size="14" font-weight="700" fill="#1f6b4f"><text x="80" y="72">1</text><text x="80" y="98">2</text></g></svg>';
+}
+var QUIZ={
+  q14:[
+    {q:'В △PQR сторона PQ = 6 см, сторона QR = 9 см, а периметр равен 25 см. Чему равна сторона PR?',
+     opts:['16 см','10 см','19 см','31 см'], a:1,
+     why:['Это 25 − 9: вычли только одну сторону, хотя известны две.',
+          'Периметр — сумма трёх сторон: 6 + 9 + PR = 25. Значит, PR = 25 − 6 − 9 = 10 см.',
+          'Это 25 − 6: вычли только PQ и забыли про QR.',
+          'Это 25 + 6. Периметр больше любой из сторон, и ничего прибавлять к нему не нужно.']},
+    {q:'В △KLM какой угол лежит против стороны KL?', pic:picKLM(),
+     opts:['∠K','∠L','∠KLM','∠M'], a:3,
+     why:['Вершина K — конец стороны KL, этот угол прилегает к стороне, а не лежит против неё.',
+          'Вершина L — тоже конец стороны KL, значит, угол L прилежит к ней.',
+          '∠KLM — это просто другая запись угла L (вершина в середине). Он прилегает к стороне KL.',
+          'M — единственная вершина, которая не касается стороны KL. Значит, против KL лежит ∠M.']},
+    {q:'Известно, что △ABC = △DEF (записано именно в таком порядке), ∠B = 70° и AB = 5 см. Что верно?',
+     opts:['∠D = 70° и DE = 5 см','∠E = 70° и DE = 5 см','∠E = 70° и EF = 5 см','∠B = ∠F и AB = DF'], a:1,
+     why:['Буквы стоят друг под другом: A и D, B и E, C и F. Поэтому с ∠B совпадает ∠E, а не ∠D.',
+          'B совпадает с E, значит ∠E = ∠B = 70°. Сторона AB совпадает с DE, поэтому DE = 5 см.',
+          '∠E = 70° верно, но сторона EF соответствует стороне BC, а не AB. Стороне AB соответствует DE.',
+          '∠B соответствует ∠E, а не ∠F; сторона AB соответствует DE, а не DF.']}
+  ],
+  q15a:[
+    {q:'Две стороны и угол одного треугольника равны двум сторонам и углу другого треугольника. Можно ли сразу сказать, что треугольники равны?',
+     opts:['Да, всегда: два равенства сторон и одно равенство углов','Только если угол лежит между этими равными сторонами','Только если этот угол прямой','Нет, обязательно нужны ещё равенства всех трёх углов'], a:1,
+     why:['Не всегда. Важно, где стоит угол: он должен быть именно между этими двумя сторонами (С — У — С).',
+          'Верно. В первом признаке нужны именно две стороны и угол между ними.',
+          'Прямой угол здесь ни при чём. Важно положение угла, а не его величина.',
+          'Углы проверять не нужно: в признаке достаточно трёх равенств, они-то и дают всё остальное.']},
+    {q:'В △ABC и △DEF известно, что AB = DE и BC = EF. Какое ещё равенство позволит применить первый признак?',
+     pic:picPair({AB:1,BC:2},{}),
+     opts:['∠A = ∠D','∠C = ∠F','AC = DF','∠B = ∠E'], a:3,
+     why:['Угол A стоит между AB и AC, а равны AB и BC. Угол A лежит против BC, значит не между.',
+          'Угол C стоит между BC и CA, а равенство CA не дано. Не между равными сторонами AB и BC.',
+          'Тогда будут равны все три стороны. Это другой признак (третий), а не первый.',
+          'Угол B зажат ровно между сторонами AB и BC. Получается С — У — С.']},
+    {q:'Известно: AB = DE, AC = DF, ∠A = ∠D. Как правильно записать вывод?',
+     opts:['△ABC = △EFD по первому признаку','△ABC = △DEF, потому что у них три равных элемента','△ABC = △DEF по первому признаку (две стороны и угол между ними)','△ABC = △DFE по первому признаку'], a:2,
+     why:['Порядок букв неверен: вершина A должна стоять под D, а здесь под E.',
+          'Равенство верное, но причина названа неправильно: три любых равных элемента не годятся, нужна схема С — У — С.',
+          'Верно: A под D, B под E, C под F, и названа правильная причина.',
+          'Тут B стоит под F, то есть утверждается AB = DF. А по условию AB = DE.']}
+  ],
+  q15b:[
+    {q:'На рисунке AB = AC и ∠1 = ∠2. Что ещё нужно заметить, чтобы доказать △ABD = △ACD по первому признаку?', pic:picKite(),
+     opts:['BD = CD','∠B = ∠C','AD — общая сторона, поэтому AD = AD','Больше ничего: двух равенств уже достаточно'], a:2,
+     why:['BD = CD — это то, что нужно получить уже после доказательства, как следствие равенства треугольников.',
+          '∠B и ∠C не лежат между равными сторонами, и доказать их равенство сейчас нечем.',
+          'Верно. Сторона AD принадлежит обоим треугольникам, поэтому AD = AD. Теперь есть AB = AC, AD = AD и угол между ними: ∠1 = ∠2.',
+          'Это два равенства: стороны AB и AC и углы. Нужны ещё и вторая пара сторон. Её дала общая сторона AD.']},
+    {q:'В △ABC и △MNK: AB = MN = 5 см, AC = MK = 8 см, ∠B = ∠N = 40°. Можно ли сказать, что △ABC = △MNK?',
+     opts:['Да, по первому признаку: две стороны и угол равны','По первому признаку вывод сделать нельзя: ∠B лежит не между AB и AC','Нет, такие треугольники точно разные','Да, потому что 5 + 8 = 5 + 8'], a:1,
+     why:['Угол B стоит между AB и BC. А равны AB и AC. Значит, угол не между равными сторонами.',
+          'Верно. Угол B лежит не между AB и AC, поэтому признак не работает. Это ещё не значит, что треугольники разные, просто вывода сделать нельзя.',
+          'Тоже вывод без оснований: треугольники могут оказаться и равными, и разными. Мы этого не знаем.',
+          'Сумма сторон ничего не доказывает. Равенство сумм не делает треугольники равными.']},
+    {q:'Отрезки AE и DC пересекаются в точке B, середине каждого из них. Почему ∠ABC = ∠EBD?',
+     opts:['Потому что B — середина обоих отрезков','Потому что это смежные углы','Потому что AB = BE','Потому что это вертикальные углы'], a:3,
+     why:['Из того, что B — середина, получается равенство сторон AB = BE и CB = BD. А равенство углов — другая причина.',
+          'Смежные углы вместе дают 180°, они не равны (кроме случая, когда оба прямые).',
+          'Это равенство сторон, оно к углам отношения не имеет.',
+          'Верно. Прямые AE и DC пересеклись, ∠ABC и ∠EBD лежат напротив друг друга и равны как вертикальные.']}
+  ]
+};
+
+(function(){
+  var L='АБВГ';
+  document.querySelectorAll('.quiz').forEach(function(box){
+    var list=QUIZ[box.dataset.quiz], answered=0, right=0;
+    var score=document.createElement('div'); score.className='score';
+    function updScore(){
+      score.innerHTML='<span>Верно: '+right+' из '+list.length+(answered<list.length?' · осталось '+(list.length-answered):'')+'</span>';
+      if(answered===list.length){
+        var msg = right===list.length ? '. Отлично!' : '. Посмотри объяснения и попробуй ещё раз.';
+        score.firstChild.textContent+=msg;
+        var b=document.createElement('button'); b.className='btn ghost'; b.textContent='Пройти заново';
+        b.addEventListener('click',build); score.appendChild(b);
+      }
+    }
+    function build(){
+      box.querySelectorAll('.q, .score').forEach(function(x){ x.remove(); });
+      answered=0; right=0;
+      list.forEach(function(it,qi){
+        var q=document.createElement('div'); q.className='q';
+        q.innerHTML='<div class="qn">Вопрос '+(qi+1)+'</div><div class="qt">'+it.q+'</div>'+(it.pic||'')+'<div class="opts"></div><div class="expl"></div>';
+        var opts=q.querySelector('.opts'), ex=q.querySelector('.expl');
+        it.opts.forEach(function(t,oi){
+          var b=document.createElement('button'); b.className='opt';
+          b.innerHTML='<span class="l">'+L[oi]+'</span><span>'+t+'</span>';
+          b.addEventListener('click',function(){
+            if(q.classList.contains('done')) return;
+            q.classList.add('done'); answered++;
+            var ok=oi===it.a; if(ok) right++;
+            b.classList.add(ok?'right':'wrong');
+            opts.children[it.a].classList.add('right');
+            ex.className='expl '+(ok?'ok':'no');
+            ex.innerHTML = ok
+              ? '<b class="h">Верно!</b>'+it.why[it.a]
+              : '<b class="h">Не совсем.</b>'+it.why[oi]+'<br><b>Правильный ответ — '+L[it.a]+'.</b> '+it.why[it.a];
+            updScore();
+          });
+          opts.appendChild(b);
+        });
+        box.appendChild(q);
+      });
+      box.appendChild(score); updScore();
+    }
+    build();
+  });
+})();
+
+/* ================= проверка ответов ================= */
+function norm(v){ return parseFloat(String(v).replace(/[\s°]/g,'').replace(',','.').replace('−','-')); }
+document.querySelectorAll('.check[data-answer]').forEach(function(box){
+  var inp=box.querySelector('input'), btn=box.querySelector('button'), fb=box.querySelector('.fb'), tries=0;
+  function go(){
+    var v=norm(inp.value);
+    if(isNaN(v)){ fb.className='fb no'; fb.textContent='Впиши число'; return; }
+    if(Math.abs(v-norm(box.dataset.answer))<1e-9){
+      fb.className='fb ok'; fb.textContent='Верно! 🎉'; inp.style.borderColor='#1f6b4f';
+    } else {
+      tries++; fb.className='fb no'; inp.style.borderColor='#b0182f';
+      fb.textContent = tries<2 ? 'Пока нет, проверь вычисления' : 'Подсказка. '+box.dataset.hint;
+    }
+  }
+  btn.addEventListener('click',go);
+  inp.addEventListener('keydown',function(e){ if(e.key==='Enter') go(); });
+});
+document.querySelectorAll('.show-sol').forEach(function(b){
+  b.addEventListener('click',function(){
+    var el=document.getElementById(b.dataset.for), on=el.classList.toggle('show');
+    b.textContent = on ? 'Скрыть решение' : 'Показать решение';
+  });
+});
+/* выбор обоснований в задании 3 */
+(function(){
+  var sels=document.querySelectorAll('.selrow select'); if(!sels.length) return;
+  var OPT=['— выбери —','по условию (середина отрезка)','как вертикальные углы','как смежные углы','это общая сторона'];
+  // индекс верного: 1 = по условию, 2 = вертикальные
+  sels.forEach(function(s){ OPT.forEach(function(t,i){ var o=document.createElement('option'); o.value=i; o.textContent=t; s.appendChild(o); }); });
+  var fb=document.getElementById('selFb');
+  document.getElementById('selCheck').addEventListener('click',function(){
+    var ok=true, empty=false;
+    sels.forEach(function(s){
+      if(s.value==='0'){ empty=true; ok=false; s.style.borderColor='#b0182f'; return; }
+      var good = s.value===s.dataset.a; if(!good) ok=false;
+      s.style.borderColor = good ? '#1f6b4f' : '#b0182f';
+    });
+    if(empty){ fb.className='fb no'; fb.textContent='Выбери причину для каждого равенства'; }
+    else if(ok){ fb.className='fb ok'; fb.textContent='Верно! Две стороны и угол между ними, значит треугольники равны по первому признаку.'; }
+    else { fb.className='fb no'; fb.textContent='Есть ошибка. Подумай: из чего следует равенство сторон, а из чего равенство углов при пересечении прямых?'; }
+  });
+})();
+
+/* ================= доска для письма стилусом ================= */
+var penSeen=false;
+var ICON={
+  eraser:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20h12"/><path d="M5 15l9-9 5 5-8 8H8z"/></svg>',
+  undo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 010 12h-3"/></svg>',
+  clear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>',
+  more:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>'
+};
+function Board(root){
+  var id=root.dataset.board, key='geo2-board-'+id, self=this;
+  this.h=+root.dataset.height||420; this.strokes=[]; this.tool='pen'; this.color='#1d3f8f';
+  root.innerHTML=
+    '<div class="toolbar">'+
+      '<button class="tool" data-t="pen" data-c="#1d3f8f" aria-pressed="true"><span class="dot" style="background:#1d3f8f"></span>Синяя</button>'+
+      '<button class="tool" data-t="pen" data-c="#c21a33" aria-pressed="false"><span class="dot" style="background:#c21a33"></span>Красная</button>'+
+      '<button class="tool" data-t="eraser" aria-pressed="false">'+ICON.eraser+'Ластик</button>'+
+      '<button class="tool" data-act="undo">'+ICON.undo+'Назад</button>'+
+      '<span class="spacer"></span><span class="pen-state"></span>'+
+      '<button class="tool" data-act="more">'+ICON.more+'Место</button>'+
+      '<button class="tool" data-act="clear">'+ICON.clear+'Стереть всё</button>'+
+    '</div><div class="canvas-box"><canvas></canvas></div>'+
+    '<div class="grip" title="Потяни вниз, чтобы удлинить лист"><span></span>потяни вниз, чтобы удлинить лист<span></span></div>';
+  var cv=root.querySelector('canvas'), ctx=cv.getContext('2d'), state=root.querySelector('.pen-state');
+  try{ var saved=JSON.parse(localStorage.getItem(key)||'null'); if(saved){ this.strokes=saved.s||[]; if(saved.h) this.h=Math.max(240,saved.h); } }catch(e){}
+  function save(){ try{ localStorage.setItem(key,JSON.stringify({s:self.strokes,h:self.h})); }catch(e){} }
+  function showState(){ state.textContent = penSeen ? 'Стилус подключён: ладонь не рисует' : ''; }
+  showState(); document.addEventListener('pen-seen',showState);
+
+  function size(){
+    var w=cv.parentElement.clientWidth, d=window.devicePixelRatio||1;
+    cv.width=Math.round(w*d); cv.height=Math.round(self.h*d); cv.style.height=self.h+'px';
+    ctx.setTransform(d,0,0,d,0,0); redraw();
+  }
+  function seg(st,i){
+    var a=st.p[i-1], b=st.p[i];
+    ctx.strokeStyle=st.c; ctx.lineWidth=(a[2]+b[2])/2;
+    ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.stroke();
+  }
+  function dot(st){ var a=st.p[0]; ctx.fillStyle=st.c; ctx.beginPath(); ctx.arc(a[0],a[1],a[2]/2,0,Math.PI*2); ctx.fill(); }
+  function redraw(){
+    ctx.clearRect(0,0,cv.width,cv.height); ctx.lineCap='round'; ctx.lineJoin='round';
+    self.strokes.forEach(function(st){ if(st.p.length===1) dot(st); for(var i=1;i<st.p.length;i++) seg(st,i); });
+  }
+  function pt(e){
+    var r=cv.getBoundingClientRect(), pr=e.pointerType==='pen' ? (e.pressure||0.5) : 0.5;
+    var w = e.pointerType==='pen' ? 1.2+pr*3.2 : 2.6;
+    return [Math.round((e.clientX-r.left)*10)/10, Math.round((e.clientY-r.top)*10)/10, Math.round(w*10)/10];
+  }
+  function eraseAt(p){
+    var R=14, n=self.strokes.length;
+    self.strokes=self.strokes.filter(function(st){
+      return !st.p.some(function(q){ var dx=q[0]-p[0], dy=q[1]-p[1]; return dx*dx+dy*dy<R*R; });
+    });
+    if(self.strokes.length!==n) redraw();
+  }
+  var active=null, cur=null;
+  cv.addEventListener('pointerdown',function(e){
+    if(e.pointerType==='pen' && !penSeen){ penSeen=true; document.dispatchEvent(new Event('pen-seen')); }
+    if(e.pointerType==='touch' && penSeen) return;
+    if(active!==null) return;
+    e.preventDefault(); try{ cv.setPointerCapture(e.pointerId); }catch(err){} active=e.pointerId;
+    var eraser = self.tool==='eraser' || e.button===5;
+    if(eraser){ cur=null; eraseAt(pt(e)); }
+    else { cur={c:self.color,p:[pt(e)]}; self.strokes.push(cur); ctx.lineCap='round'; dot(cur); }
+  });
+  cv.addEventListener('pointermove',function(e){
+    if(e.pointerId!==active) return;
+    e.preventDefault();
+    var list = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
+    if(!list.length) list=[e];
+    list.forEach(function(ev){
+      var p=pt(ev);
+      if(!cur){ eraseAt(p); return; }
+      var last=cur.p[cur.p.length-1];
+      if(Math.abs(last[0]-p[0])+Math.abs(last[1]-p[1])<0.8) return;
+      cur.p.push(p); seg(cur,cur.p.length-1);
+    });
+  });
+  function end(e){ if(e.pointerId!==active) return; active=null; cur=null; save(); }
+  cv.addEventListener('pointerup',end); cv.addEventListener('pointercancel',end);
+  cv.addEventListener('contextmenu',function(e){ e.preventDefault(); });
+
+  root.querySelectorAll('.tool').forEach(function(b){
+    b.addEventListener('click',function(){
+      if(b.dataset.t){
+        self.tool=b.dataset.t; if(b.dataset.c) self.color=b.dataset.c;
+        root.querySelectorAll('.tool[data-t]').forEach(function(x){ x.setAttribute('aria-pressed', x===b ? 'true':'false'); });
+        cv.style.cursor = self.tool==='eraser' ? 'cell' : 'crosshair';
+      } else if(b.dataset.act==='undo'){ self.strokes.pop(); redraw(); save(); }
+      else if(b.dataset.act==='clear'){ if(self.strokes.length && confirm('Стереть всё, что написано на этом листе?')){ self.strokes=[]; redraw(); save(); } }
+      else if(b.dataset.act==='more'){ self.h+=240; size(); save(); }
+    });
+  });
+  var grip=root.querySelector('.grip'), gy=null, gh=0;
+  grip.addEventListener('pointerdown',function(e){
+    e.preventDefault(); try{ grip.setPointerCapture(e.pointerId); }catch(err){}
+    gy=e.clientY; gh=self.h; grip.classList.add('drag');
+  });
+  grip.addEventListener('pointermove',function(e){
+    if(gy===null) return; e.preventDefault();
+    var nh=Math.max(240, Math.round(gh+e.clientY-gy));
+    if(nh!==self.h){ self.h=nh; size(); }
+  });
+  function gripEnd(){ if(gy===null) return; gy=null; grip.classList.remove('drag'); save(); }
+  grip.addEventListener('pointerup',gripEnd); grip.addEventListener('pointercancel',gripEnd);
+  var lastW=0;
+  window.addEventListener('resize',function(){ var w=cv.parentElement.clientWidth; if(w!==lastW){ lastW=w; size(); } });
+  lastW=cv.parentElement.clientWidth; size();
+}
+document.querySelectorAll('.board').forEach(function(b){ new Board(b); });
+
+/* ================= ссылки меню ================= */
+document.addEventListener('click',function(e){
+  var a=e.target.closest && e.target.closest('a[href^="#"]'); if(!a) return;
+  var el=document.getElementById(a.getAttribute('href').slice(1)); if(!el) return;
+  e.preventDefault(); el.scrollIntoView({behavior:'smooth',block:'start'}); history.replaceState(null,'',a.getAttribute('href'));
+});
+
+</script>
+<script>
+try{var v=JSON.parse(localStorage.getItem('uroki-visited')||'{}');v['geometry/gl2-p1']=new Date().toISOString().slice(0,10);localStorage.setItem('uroki-visited',JSON.stringify(v));}catch(e){}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('../../sw.js',{scope:'../../'}).catch(function(){});}
+</script>
+</body>
+</html>

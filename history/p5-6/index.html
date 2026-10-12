@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="theme-color" content="#1d4f91">
+<link rel="apple-touch-icon" href="../../assets/icon-180.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Реформация и абсолютизм</title>
+<link rel="stylesheet" href="../../assets/fonts.css">
+<style>
+  :root{
+    --bg:#eef2f7; --paper:#ffffff; --ink:#15202e; --muted:#566273;
+    --line:#d5dde8; --blue:#1d4f91; --blue-soft:#e3ecf8;
+    --red:#a3152f; --red-soft:#f8e6ea; --green:#1f6b4f; --green-soft:#e2f2eb;
+    --gold:#6f550c; --gold-soft:#f5efd9;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "PT Sans",system-ui,sans-serif;
+    background-image:radial-gradient(circle at 1px 1px,#d6dee9 1px,transparent 0);background-size:22px 22px}
+  h1,h2,h3{font-family:"Old Standard TT",Georgia,serif;line-height:1.15;margin:0}
+  a{color:var(--blue)}
+  .wrap{max-width:900px;margin:0 auto;padding:0 16px}
+
+  /* навигация */
+  nav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:none}
+  nav a{flex:none;text-decoration:none;color:var(--ink);font-size:14px;font-weight:700;padding:6px 11px;border-radius:7px}
+  nav a:hover{background:var(--blue-soft);color:var(--blue)}
+
+  header{padding:48px 0 28px}
+  header .date{font-family:"Old Standard TT",serif;font-size:clamp(64px,14vw,132px);color:var(--red);line-height:.9;letter-spacing:-2px}
+  header h1{font-size:clamp(30px,5vw,46px);margin:10px 0 12px}
+  header p{max-width:640px;color:var(--muted);margin:0}
+
+  section{background:var(--paper);border-radius:18px;padding:30px 26px;margin:22px 0;box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(21,32,46,.25)}
+  section>h2{font-size:clamp(26px,4vw,34px);margin-bottom:6px}
+  .q{display:inline-block;font-weight:700;font-size:14px;color:var(--blue);margin-bottom:8px}
+  .lead{color:var(--muted);margin:0 0 18px}
+
+  .def{background:var(--blue-soft);border-radius:12px;padding:16px 18px;margin:16px 0}
+  .def b.term{color:var(--blue);font-size:19px}
+  .def.red{background:var(--red-soft)} .def.red b.term{color:var(--red)}
+
+  .say{background:var(--gold-soft);border-radius:12px;padding:16px 18px;margin-top:20px}
+  .say h3{font-family:"PT Sans",sans-serif;font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);margin-bottom:6px}
+  .say p{margin:0}
+
+  .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin:16px 0}
+  .card{border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .card h3{font-size:20px;margin-bottom:4px}
+  .card p{margin:0;font-size:16px}
+  .emoji{font-size:26px;line-height:1;margin-bottom:6px;display:block}
+
+  figure{margin:18px 0}
+  figcaption{font-size:14px;color:var(--muted);text-align:center;margin-top:6px}
+  svg{display:block;max-width:100%;height:auto;margin:0 auto}
+
+  ul.clean{padding-left:20px;margin:8px 0} ul.clean li{margin:5px 0}
+
+  /* дверь */
+  .door-box{display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:22px;align-items:center}
+  @media (max-width:640px){.door-box{grid-template-columns:1fr}}
+  .thesis{position:absolute}
+  #door .sheet{transition:transform .35s cubic-bezier(.2,.8,.2,1);transform-origin:center top}
+  #door .sheet.off{transform:translateY(-14px) scale(.9);opacity:.18}
+  button{font:inherit;cursor:pointer}
+  .btn{background:var(--red);color:#fff;border:0;border-radius:10px;padding:10px 16px;font-weight:700}
+  .btn:hover{background:#86101f}
+  .btn:active{transform:translateY(1px)}
+  .thesis-list{margin:12px 0 0;padding:0;list-style:none}
+  .thesis-list li{padding:9px 12px;border-radius:9px;background:#f3f5f9;margin:7px 0;font-size:15.5px;display:none}
+  .thesis-list li.show{display:block;animation:drop .35s ease-out}
+  @keyframes drop{from{transform:translateY(-6px)}to{transform:none}}
+
+  /* сравнение */
+  .table-wrap{overflow-x:auto;margin:14px 0}
+  table{border-collapse:collapse;width:100%;min-width:600px;font-size:15.5px}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-family:"Old Standard TT",serif;font-size:18px}
+  td:first-child{font-weight:700;color:var(--muted);width:24%}
+
+  /* карточки-перевертыши */
+  .flips{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .flip{border:1px solid var(--line);border-radius:12px;background:#fff;text-align:left;padding:14px 16px;min-height:120px;color:var(--ink);position:relative}
+  .flip:hover{border-color:var(--blue)}
+  .flip .a{display:none;color:var(--green)}
+  .flip.open{background:var(--green-soft);border-color:var(--green-soft)}
+  .flip.open .qq{font-size:14px;color:var(--muted)}
+  .flip.open .a{display:block;margin-top:6px}
+  .flip .hint{position:absolute;right:12px;bottom:8px;font-size:12px;color:var(--muted)}
+  .flip.open .hint{display:none}
+  .qq{font-weight:700}
+
+  /* иллюстрации */
+  .pic{margin:18px 0}
+  .pic img{display:block;width:100%;height:auto;border-radius:12px;background:#e6ebf2}
+  .pic figcaption{text-align:left}
+  .pic figcaption b{color:var(--ink)}
+  .side{display:grid;grid-template-columns:1fr 250px;gap:22px;align-items:center}
+  .side .pic{margin:0}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+  .pair .pic{margin:0}
+  @media (max-width:640px){.side,.pair{grid-template-columns:1fr}}
+
+  /* досье личности */
+  .dossier{display:grid;grid-template-columns:180px 1fr;gap:22px;align-items:start;margin:18px 0 6px}
+  .dossier img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;border-radius:12px;background:#e6ebf2}
+  .dossier h3{font-size:26px;margin-bottom:2px}
+  .dossier .years{color:var(--muted);font-size:15px;margin-bottom:10px}
+  .dossier dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:16px}
+  .dossier dt{color:var(--muted)}
+  .dossier dd{margin:0}
+  .dossier .who{font-size:13px;color:var(--muted);margin-top:6px}
+  @media (max-width:560px){.dossier{grid-template-columns:1fr;gap:12px}.dossier>div:first-child{max-width:170px}.dossier dl{grid-template-columns:1fr;gap:2px}.dossier dt{margin-top:6px}}
+
+  .hi{font-family:"Old Standard TT",serif;font-size:22px;color:var(--blue);margin:0 0 4px}
+  .note-alisa{background:var(--blue-soft);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:16px}
+
+  footer{text-align:center;color:var(--muted);font-size:14px;padding:10px 0 40px}
+  .credits{font-size:13px;color:var(--muted);text-align:left;max-width:760px;margin:0 auto 10px;line-height:1.5}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a href="../../" style="color:#1d4f91">← Все уроки</a>
+  <a href="#p5">§5 Абсолютизм и сословия</a>
+  <a href="#q1">1. Реформация</a>
+  <a href="#q2">2. Причины</a>
+  <a href="#q3">3. Лютер</a>
+  <a href="#q4">4. Мюнцер</a>
+  <a href="#q5">5. Кальвинизм</a>
+  <a href="#test">Проверь себя</a>
+</div></nav>
+
+<div class="wrap">
+
+<header>
+  <div class="date">1517</div>
+  <h1>Как один монах расколол церковь</h1>
+  <p class="hi">Алиса, привет!</p>
+  <p>Это твой урок по §5 и §6. Сначала разберём два слова из §5, потом пять вопросов из §6. Здесь много картин тех времён: так ты увидишь людей, о которых идёт речь, в лицо. В конце каждого вопроса есть жёлтый блок «Как ответить у доски». Это готовый устный ответ, перескажи его своими словами, и всё получится.</p>
+</header>
+
+<!-- ====================== §5 ====================== -->
+<section id="p5">
+  <span class="q">§5 · два главных слова</span>
+  <h2>Абсолютизм и сословия</h2>
+
+  <div class="def">
+    <b class="term">Абсолютизм</b>: форма правления, при которой <b>вся власть принадлежит одному монарху</b> (королю) и ничем не ограничена. Король сам издаёт законы, назначает чиновников, собирает налоги, командует армией и судит. Парламент (собрание представителей сословий) он может вообще не созывать.
+  </div>
+  <div class="side">
+    <div>
+      <p>Проще: король как директор школы, у которого нет ни завуча, ни родительского комитета. Решает только он.</p>
+      <p>Самый известный абсолютный монарх — французский король <b>Людовик XIV</b>, «король-солнце». Он правил 72 года, и ему приписывают фразу <i>«Государство — это я»</i>.</p>
+      <p><b>На что опирается абсолютный монарх:</b> постоянная армия, множество чиновников, единые налоги по всей стране, поддержка дворян и церкви.</p>
+      <p>Посмотри на портрет: мантия с лилиями (знак французских королей), корона, скипетр, меч. Художник специально показал, что вся власть здесь, в одних руках.</p>
+    </div>
+    <figure class="pic">
+      <img loading="lazy" src="img/efb474a159.jpg" alt="Людовик XIV в коронационной мантии">
+      <figcaption><b>Людовик XIV.</b> Портрет работы Иасинта Риго, 1701</figcaption>
+    </figure>
+  </div>
+
+  <div class="def red">
+    <b class="term">Сословия</b>: большие группы людей, у которых <b>права и обязанности закреплены законом и передаются по наследству</b>. Родился в семье крестьянина, значит, скорее всего, крестьянином и останешься.
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 560 300" role="img" aria-label="Пирамида трёх сословий">
+      <defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#d5dde8" stroke-width="2"/></pattern></defs>
+      <!-- король -->
+      <path d="M280 8 L318 70 L242 70 Z" fill="#8a6a12"/>
+      <text x="280" y="58" text-anchor="middle" fill="#fff" font-size="15" font-weight="700" font-family="PT Sans">КОРОЛЬ</text>
+      <!-- 1 -->
+      <path d="M238 76 L322 76 L362 140 L198 140 Z" fill="#1d4f91"/>
+      <text x="280" y="106" text-anchor="middle" fill="#fff" font-size="15" font-weight="700" font-family="PT Sans">1. Духовенство</text>
+      <text x="280" y="126" text-anchor="middle" fill="#dbe6f5" font-size="13" font-family="PT Sans">«молятся»</text>
+      <!-- 2 -->
+      <path d="M194 146 L366 146 L406 210 L154 210 Z" fill="#a3152f"/>
+      <text x="280" y="176" text-anchor="middle" fill="#fff" font-size="15" font-weight="700" font-family="PT Sans">2. Дворянство</text>
+      <text x="280" y="196" text-anchor="middle" fill="#f6d9df" font-size="13" font-family="PT Sans">«воюют»</text>
+      <!-- 3 -->
+      <path d="M150 216 L410 216 L452 292 L108 292 Z" fill="#1f6b4f"/>
+      <text x="280" y="248" text-anchor="middle" fill="#fff" font-size="15" font-weight="700" font-family="PT Sans">3. Третье сословие</text>
+      <text x="280" y="270" text-anchor="middle" fill="#d5eee3" font-size="13" font-family="PT Sans">крестьяне и горожане, «трудятся»</text>
+      <!-- подписи -->
+      <text x="470" y="112" font-size="13" fill="#566273" font-family="PT Sans">налогов</text>
+      <text x="470" y="128" font-size="13" fill="#566273" font-family="PT Sans">не платят</text>
+      <path d="M462 108 C 440 108, 440 150, 420 176" fill="none" stroke="#566273" stroke-width="1.5"/>
+      <path d="M462 108 C 420 104, 400 110, 364 112" fill="none" stroke="#566273" stroke-width="1.5"/>
+      <text x="14" y="248" font-size="13" fill="#566273" font-family="PT Sans">платят</text>
+      <text x="14" y="264" font-size="13" fill="#566273" font-family="PT Sans">все налоги</text>
+      <path d="M88 252 L128 252" stroke="#566273" stroke-width="1.5"/>
+    </svg>
+    <figcaption>Три сословия. Первые два привилегированные, третье самое многочисленное и бесправное.</figcaption>
+  </figure>
+
+  <div class="side">
+    <div>
+      <p>А вот как три сословия рисовали сами люди Средневековья. Это миниатюра, маленькая картинка внутри заглавной буквы в рукописной книге XIII века.</p>
+      <p>Найди всех троих: <b>слева священник</b> (молится за всех), <b>в центре рыцарь</b> в шлеме и со щитом (защищает всех), <b>справа крестьянин</b> с лопатой (кормит всех). Каждый занят своим делом и передаёт его детям.</p>
+    </div>
+    <figure class="pic">
+      <img loading="lazy" src="img/d6b32cbd4a.jpg" alt="Средневековая миниатюра: священник, рыцарь и крестьянин">
+      <figcaption><b>Священник, рыцарь и крестьянин.</b> Миниатюра, XIII век</figcaption>
+    </figure>
+  </div>
+
+  <div class="say">
+    <h3>Как ответить у доски</h3>
+    <p>Абсолютизм — это неограниченная власть монарха: он сам издаёт законы, собирает налоги, командует армией, опирается на чиновников и может не созывать парламент. Сословия — это группы людей с правами и обязанностями, которые закреплены законом и передаются по наследству. Их три: духовенство, дворянство и третье сословие (крестьяне и горожане). Налоги платило только третье сословие.</p>
+  </div>
+</section>
+
+<!-- ====================== 1 ====================== -->
+<section id="q1">
+  <span class="q">Вопрос 1</span>
+  <h2>Что такое Реформация и Контрреформация</h2>
+
+  <div class="def">
+    <b class="term">Реформация</b> (от лат. «преобразование»): движение в Европе в XVI веке за <b>изменение католической церкви</b>. Итог: часть христиан вышла из подчинения папе римскому, и появились новые, <b>протестантские</b> церкви.
+  </div>
+  <div class="def red">
+    <b class="term">Контрреформация</b> («против Реформации»): ответ католической церкви, её <b>борьба с Реформацией</b> и попытка вернуть утраченное.
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 600 250" role="img" aria-label="Схема раскола западной церкви">
+      <rect x="200" y="10" width="200" height="50" rx="10" fill="#1d4f91"/>
+      <text x="300" y="32" text-anchor="middle" fill="#fff" font-size="15" font-weight="700" font-family="PT Sans">Единая католическая</text>
+      <text x="300" y="50" text-anchor="middle" fill="#fff" font-size="15" font-weight="700" font-family="PT Sans">церковь (глава — папа)</text>
+      <text x="300" y="86" text-anchor="middle" fill="#a3152f" font-size="14" font-weight="700" font-family="PT Sans">1517 — Реформация</text>
+      <path d="M300 60 L300 100 M300 100 L100 100 L100 130 M300 100 L500 100 L500 130 M300 100 L300 130" stroke="#566273" stroke-width="2" fill="none"/>
+      <rect x="10" y="130" width="180" height="56" rx="10" fill="#e3ecf8"/>
+      <text x="100" y="154" text-anchor="middle" font-size="15" font-weight="700" fill="#1d4f91" font-family="PT Sans">Католики</text>
+      <text x="100" y="174" text-anchor="middle" font-size="13" fill="#15202e" font-family="PT Sans">остались с папой</text>
+      <rect x="210" y="130" width="180" height="56" rx="10" fill="#f8e6ea"/>
+      <text x="300" y="154" text-anchor="middle" font-size="15" font-weight="700" fill="#a3152f" font-family="PT Sans">Лютеране</text>
+      <text x="300" y="174" text-anchor="middle" font-size="13" fill="#15202e" font-family="PT Sans">Германия, Скандинавия</text>
+      <rect x="410" y="130" width="180" height="56" rx="10" fill="#e2f2eb"/>
+      <text x="500" y="154" text-anchor="middle" font-size="15" font-weight="700" fill="#1f6b4f" font-family="PT Sans">Кальвинисты</text>
+      <text x="500" y="174" text-anchor="middle" font-size="13" fill="#15202e" font-family="PT Sans">Швейцария, Голландия…</text>
+      <path d="M210 212 L590 212" stroke="#566273" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <text x="400" y="236" text-anchor="middle" font-size="14" fill="#566273" font-family="PT Sans">все вместе — протестанты</text>
+    </svg>
+    <figcaption>После Реформации западные христиане разделились</figcaption>
+  </figure>
+
+  <p><b>Откуда слово «протестанты»?</b> В 1529 году князья-сторонники Лютера заявили <i>протест</i> против решения императора запретить новое учение. С тех пор их и называют протестантами.</p>
+
+  <p><b>Чем боролась Контрреформация:</b></p>
+  <div class="grid">
+    <div class="card"><span class="emoji">⚖️</span><h3>Инквизиция</h3><p>Церковный суд. Искал и жестоко наказывал «еретиков», то есть несогласных.</p></div>
+    <div class="card"><span class="emoji">📕</span><h3>Индекс запрещённых книг</h3><p>Список книг, которые католикам нельзя читать. Их изымали и сжигали.</p></div>
+    <div class="card"><span class="emoji">✝️</span><h3>Орден иезуитов</h3><p>Основал Игнатий Лойола. «Солдаты папы»: открывали школы, проповедовали, дисциплина как в армии.</p></div>
+    <div class="card"><span class="emoji">🏛️</span><h3>Тридентский собор</h3><p>1545–1563. Подтвердил: папа главный, таинства и святые нужны. Навёл порядок среди священников.</p></div>
+  </div>
+
+  <figure class="pic">
+    <img loading="lazy" src="img/9998ceb36b.jpg" alt="Заседание Тридентского собора">
+    <figcaption><b>Заседание Тридентского собора.</b> Старинная картина из замка Буонконсильо в Тренто. Посмотри: сотни епископов в соборе сидят амфитеатром, впереди кардиналы в красном. Так католическая церковь собралась, чтобы дать ответ Лютеру.</figcaption>
+  </figure>
+
+  <div class="pair">
+    <figure class="pic">
+      <img loading="lazy" src="img/0e54ddaca5.jpg" alt="Игнатий Лойола, картина Рубенса">
+      <figcaption><b>Игнатий Лойола</b> (1491–1556), основатель ордена иезуитов. Бывший испанский офицер, поэтому в ордене армейская дисциплина. Картина Рубенса</figcaption>
+    </figure>
+    <figure class="pic">
+      <img loading="lazy" src="img/4c80512189.jpg" alt="Обложка Индекса запрещённых книг, 1564">
+      <figcaption><b>«Индекс запрещённых книг»</b>, издание 1564 года. Вверху папская тиара и ключи святого Петра: список утвердил сам папа. Книги Лютера и Кальвина были в нём</figcaption>
+    </figure>
+  </div>
+
+  <div class="say">
+    <h3>Как ответить у доски</h3>
+    <p>Реформация — это движение в XVI веке за преобразование католической церкви. Оно началось в Германии в 1517 году с выступления Мартина Лютера, и в результате появились протестантские церкви: лютеранская, кальвинистская и другие. Контрреформация — это борьба католической церкви против Реформации. Для неё усилили инквизицию, составили Индекс запрещённых книг, создали орден иезуитов, а Тридентский собор подтвердил главенство папы.</p>
+  </div>
+</section>
+
+<!-- ====================== 2 ====================== -->
+<section id="q2">
+  <span class="q">Вопрос 2</span>
+  <h2>Причины Реформации</h2>
+  <p class="lead">Коротко: церковь стала очень богатой и жадной, а люди стали грамотнее и начали это замечать.</p>
+
+  <div class="side">
+    <div>
+      <div class="def red" style="margin-top:0">
+        <b class="term">Индульгенция</b>: бумага о прощении грехов, которую церковь <b>продавала за деньги</b>. Выходило, что грехи можно купить. Продавцы кричали: <i>«Как только монета в ящике звенит, душа из чистилища вылетает!»</i>
+      </div>
+      <p>Самым известным продавцом индульгенций был монах <b>Иоганн Тецель</b>. Именно из-за него Лютер и написал свои тезисы.</p>
+      <p>Посмотри на картину: Тецель сидит за столом и выписывает индульгенции, за ним монах держит крест. Люди толпятся, чтобы заплатить, а девушки справа смотрят с сомнением.</p>
+    </div>
+    <figure class="pic">
+      <img loading="lazy" src="img/05d1432125.jpg" alt="Тецель продаёт индульгенции">
+      <figcaption><b>Тецель продаёт индульгенции.</b> Людвиг Бургер, около 1881</figcaption>
+    </figure>
+  </div>
+
+  <div class="grid">
+    <div class="card"><span class="emoji">💰</span><h3>Жадность церкви</h3><p>Продажа индульгенций и церковных должностей, десятина (десятая часть урожая церкви), огромные земли у монастырей.</p></div>
+    <div class="card"><span class="emoji">🍷</span><h3>Плохие священники</h3><p>Многие священники жили в роскоши и нарушали то, чему сами учили. Некоторые были почти неграмотными.</p></div>
+    <div class="card"><span class="emoji">📜</span><h3>Непонятная Библия</h3><p>Службы и Библия были на латыни. Простые люди не понимали, что там написано, и верили священнику на слово.</p></div>
+    <div class="card"><span class="emoji">🖨️</span><h3>Книгопечатание и гуманизм</h3><p>Книги подешевели, люди стали читать и думать сами. Критика церкви быстро расходилась по стране.</p></div>
+  </div>
+
+  <div class="side">
+    <div>
+      <p><b>Почему книгопечатание так важно?</b> Раньше каждую книгу переписывали от руки месяцами. Когда Иоганн Гутенберг около 1450 года изобрёл печатный станок, за день стали печатать сотни страниц.</p>
+      <p>Это как интернет того времени: листовки с идеями Лютера за считанные недели разлетелись по всей Германии, и заставить всех замолчать церковь уже не могла.</p>
+    </div>
+    <figure class="pic">
+      <img loading="lazy" src="img/71876f3ff1.png" alt="Типография XVI века, гравюра">
+      <figcaption><b>Типография.</b> Гравюра Йоста Аммана, 1568. Справа пресс, впереди печатник вынимает готовый лист</figcaption>
+    </figure>
+  </div>
+
+  <p><b>Кто чего хотел от Реформации</b> (это частый вопрос):</p>
+  <ul class="clean">
+    <li><b>Князья и короли</b>: забрать себе богатые церковные земли и не зависеть от папы.</li>
+    <li><b>Горожане</b>: «дешёвую церковь» без лишних поборов.</li>
+    <li><b>Крестьяне</b>: облегчить повинности и налоги.</li>
+  </ul>
+
+  <div class="say">
+    <h3>Как ответить у доски</h3>
+    <p>Первая причина — богатство и жадность католической церкви: она продавала индульгенции и должности, собирала десятину, владела огромными землями. Вторая — поведение духовенства: многие священники жили в роскоши и грешили. Третья — Библия и службы на латыни, непонятной народу. Четвёртая — книгопечатание и гуманизм: люди стали грамотнее и начали критиковать церковь. Кроме того, князья хотели забрать церковные земли, горожане хотели дешёвую церковь, а крестьяне — меньше повинностей.</p>
+  </div>
+</section>
+
+<!-- ====================== 3 ====================== -->
+<section id="q3">
+  <span class="q">Вопрос 3</span>
+  <h2>Мартин Лютер и его идеи</h2>
+  <div class="dossier">
+    <div>
+      <img loading="lazy" src="img/b205722e3e.jpg" alt="Портрет Мартина Лютера работы Лукаса Кранаха">
+      <div class="who">Лукас Кранах Старший, 1528</div>
+    </div>
+    <div>
+      <h3>Мартин Лютер</h3>
+      <div class="years">1483–1546 · Германия</div>
+      <dl>
+        <dt>Кто он</dt><dd>Монах и профессор богословия (науки о Боге) в университете города Виттенберг</dd>
+        <dt>Чем знаменит</dt><dd>Начал Реформацию, перевёл Библию на немецкий язык</dd>
+        <dt>Последователи</dt><dd>Лютеране</dd>
+      </dl>
+      <p style="margin:12px 0 0;font-size:16px">Этот портрет написал друг Лютера, художник Кранах. Он нарисовал Лютера много раз, и благодаря этим портретам всю Европу облетело его лицо: простая чёрная одежда, никакой роскоши.</p>
+    </div>
+  </div>
+
+  <div class="door-box">
+    <figure style="margin:0">
+      <svg id="door" viewBox="0 0 300 380" role="img" aria-label="Дверь церкви в Виттенберге с тезисами">
+        <path d="M20 370 L20 150 A130 130 0 0 1 280 150 L280 370 Z" fill="#6b4a33"/>
+        <path d="M40 370 L40 152 A110 110 0 0 1 260 152 L260 370 Z" fill="#83593c"/>
+        <line x1="150" y1="44" x2="150" y2="370" stroke="#5a3d29" stroke-width="4"/>
+        <g stroke="#5a3d29" stroke-width="2" opacity=".6">
+          <line x1="40" y1="200" x2="260" y2="200"/><line x1="40" y1="300" x2="260" y2="300"/>
+        </g>
+        <circle cx="132" cy="250" r="7" fill="#c9a44a"/><circle cx="168" cy="250" r="7" fill="#c9a44a"/>
+        <g class="sheet" id="sheet">
+          <rect x="75" y="118" width="150" height="190" rx="3" fill="#fbfcfe" stroke="#b9c3d2"/>
+          <text x="150" y="146" text-anchor="middle" font-family="Old Standard TT" font-size="18" font-weight="700" fill="#15202e">95 тезисов</text>
+          <g stroke="#b9c3d2" stroke-width="3" stroke-linecap="round">
+            <line x1="90" y1="166" x2="210" y2="166"/><line x1="90" y1="180" x2="200" y2="180"/>
+            <line x1="90" y1="194" x2="210" y2="194"/><line x1="90" y1="208" x2="185" y2="208"/>
+            <line x1="90" y1="222" x2="210" y2="222"/><line x1="90" y1="236" x2="196" y2="236"/>
+            <line x1="90" y1="250" x2="210" y2="250"/><line x1="90" y1="264" x2="178" y2="264"/>
+            <line x1="90" y1="278" x2="205" y2="278"/>
+          </g>
+          <circle cx="150" cy="124" r="4" fill="#566273"/>
+        </g>
+      </svg>
+      <figcaption>31 октября 1517 года, дверь церкви в Виттенберге</figcaption>
+    </figure>
+    <div>
+      <p>По преданию, <b>31 октября 1517 года</b> Лютер прибил к двери церкви <b>95 тезисов</b> (коротких утверждений) против продажи индульгенций. Этот день считается <b>началом Реформации</b>. Благодаря книгопечатанию тезисы за несколько недель узнала вся Германия.</p>
+      <button class="btn" id="nail">Прибить тезис 🔨</button>
+      <ul class="thesis-list" id="theses">
+        <li>Когда Христос сказал «покайтесь», он хотел, чтобы вся жизнь верующего была покаянием, а не разовой покупкой.</li>
+        <li>Кто искренне раскаялся, получает прощение и без индульгенции.</li>
+        <li>Лгут те, кто учит, что душа вылетает из чистилища, едва звякнет монета.</li>
+        <li>Лучше отдать деньги бедному, чем купить индульгенцию.</li>
+        <li>Папа богаче всех богачей, так почему бы ему не построить собор на свои деньги, а не на деньги бедняков?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="side">
+    <div>
+      <p>Так эту сцену представил художник через 350 лет. Лютер в монашеской рясе прибивает лист молотком, а горожане рядом читают и обсуждают.</p>
+      <p>Запомни дату: <b>31 октября 1517</b>. В Германии этот день до сих пор отмечают как <b>День Реформации</b>.</p>
+    </div>
+    <figure class="pic">
+      <img loading="lazy" src="img/7fc2292817.jpg" alt="Лютер прибивает 95 тезисов к двери церкви">
+      <figcaption><b>Лютер прибивает тезисы.</b> Фердинанд Паувельс, 1872</figcaption>
+    </figure>
+  </div>
+
+  <h3 style="margin:26px 0 8px;font-size:24px">Главные идеи Лютера</h3>
+  <div class="grid">
+    <div class="card"><span class="emoji">🙏</span><h3>Спасение верой</h3><p>Человек спасается <b>искренней верой в Бога</b>, а не покупкой индульгенций. Поэтому индульгенции не нужны.</p></div>
+    <div class="card"><span class="emoji">📖</span><h3>Только Библия</h3><p>Главный авторитет — Священное Писание, а не указы папы. Чего нет в Библии, то не обязательно.</p></div>
+    <div class="card"><span class="emoji">🤝</span><h3>Без посредников</h3><p>Человек может обращаться к Богу сам. Роскошная церковь и власть папы не нужны.</p></div>
+    <div class="card"><span class="emoji">⛪</span><h3>Дешёвая церковь</h3><p>Простая служба на родном языке. Нет монастырей, почитания святых и икон, из семи таинств оставлены два: крещение и причастие.</p></div>
+  </div>
+
+  <p><b>Что было дальше:</b></p>
+  <ul class="clean">
+    <li><b>1520</b>: папа грозит Лютеру отлучением, Лютер при народе <b>сжигает папскую грамоту</b> (буллу).</li>
+    <li><b>1521</b>: император Карл V вызывает его на собрание в Вормсе и требует отречься. Лютер отвечает: <i>«На том стою и не могу иначе»</i>.</li>
+    <li>Его объявляют вне закона. Лютера прячет князь Фридрих Мудрый в замке Вартбург, и там он <b>переводит Библию на немецкий язык</b>.</li>
+    <li><b>1525</b>: Лютер <b>выступил против восставших крестьян</b> и призвал князей их подавить. Он хотел мирных перемен, а не бунта.</li>
+    <li><b>1555</b>: Аугсбургский мир. Принцип <b>«Чья власть, того и вера»</b>: князь выбирает веру, подданные следуют за ним.</li>
+  </ul>
+
+  <figure class="pic">
+    <img loading="lazy" src="img/e17ce05dbe.jpg" alt="Лютер перед императором в Вормсе">
+    <figcaption><b>Лютер в Вормсе, 1521.</b> Антон фон Вернер, 1877. Найди Лютера: он в центре, в чёрной рясе, прижал руку к груди. Вокруг князья, епископы и кардинал в красном. Один монах против всех, и он не отступил.</figcaption>
+  </figure>
+
+  <div class="side">
+    <div>
+      <p><b>Почему перевод Библии так важен?</b> До Лютера Библию читали на латыни, и её понимали только священники и учёные. Лютер перевёл её на немецкий язык. Теперь любой грамотный немец мог сам прочитать, что там написано, и проверить, правду ли говорят священники.</p>
+      <p>Посмотри на титульный лист: крупно «Biblia», ниже имя «Mart. Luth.» и город «Wittemberg». Полную Библию на немецком напечатали в 1534 году.</p>
+    </div>
+    <figure class="pic">
+      <img loading="lazy" src="img/f3b7f81637.png" alt="Титульный лист Библии Лютера 1534 года">
+      <figcaption><b>Библия Лютера</b>, первое полное издание, Виттенберг, 1534</figcaption>
+    </figure>
+  </div>
+
+  <div class="say">
+    <h3>Как ответить у доски</h3>
+    <p>Мартин Лютер — немецкий монах и профессор богословия из Виттенберга. В 1517 году он выступил с 95 тезисами против продажи индульгенций, и с этого началась Реформация. Он учил, что человек спасается верой, а не покупкой индульгенций; что главный авторитет — Библия, а не папа; что человек может обращаться к Богу без посредников, а церковь должна быть простой и дешёвой. Лютер сжёг папскую буллу, отказался отречься перед императором и перевёл Библию на немецкий язык. Его последователей называют лютеранами. Народное восстание он не поддержал.</p>
+  </div>
+</section>
+
+<!-- ====================== 4 ====================== -->
+<section id="q4">
+  <span class="q">Вопрос 4</span>
+  <h2>Томас Мюнцер и его идеи</h2>
+  <div class="dossier">
+    <div>
+      <img loading="lazy" src="img/b6436e47f6.jpg" alt="Гравюра с портретом Томаса Мюнцера">
+      <div class="who">Гравюра Кристофеля ван Сихема</div>
+    </div>
+    <div>
+      <h3>Томас Мюнцер</h3>
+      <div class="years">около 1489–1525 · Германия</div>
+      <dl>
+        <dt>Кто он</dt><dd>Священник и проповедник, сначала сторонник Лютера, потом его противник</dd>
+        <dt>Чем знаменит</dt><dd>Вождь восставших крестьян в Крестьянской войне</dd>
+        <dt>Главное отличие</dt><dd>Лютер хотел изменить только церковь, а Мюнцер — <b>всю жизнь общества</b></dd>
+      </dl>
+      <p style="margin:12px 0 0;font-size:16px">Внизу гравюры подпись по-старонемецки: «Томас Мюнцер, проповедник в Альштедте в Тюрингии». А на заднем плане справа художник нарисовал битву: так он напомнил, чем закончилась жизнь Мюнцера.</p>
+    </div>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 600 190" role="img" aria-label="Сравнение Лютера и Мюнцера">
+      <rect x="10" y="10" width="270" height="170" rx="14" fill="#f8e6ea"/>
+      <text x="145" y="42" text-anchor="middle" font-family="Old Standard TT" font-size="22" font-weight="700" fill="#a3152f">Лютер</text>
+      <text x="145" y="74" text-anchor="middle" font-family="PT Sans" font-size="15" fill="#15202e">Меняем церковь</text>
+      <text x="145" y="98" text-anchor="middle" font-family="PT Sans" font-size="15" fill="#15202e">Мирно, с помощью князей</text>
+      <text x="145" y="122" text-anchor="middle" font-family="PT Sans" font-size="15" fill="#15202e">Бедные и богатые остаются</text>
+      <text x="145" y="156" text-anchor="middle" font-family="PT Sans" font-size="14" fill="#566273">«реформация бюргеров и князей»</text>
+      <text x="300" y="104" text-anchor="middle" font-family="Old Standard TT" font-size="30" font-weight="700" fill="#566273">≠</text>
+      <rect x="320" y="10" width="270" height="170" rx="14" fill="#15202e"/>
+      <text x="455" y="42" text-anchor="middle" font-family="Old Standard TT" font-size="22" font-weight="700" fill="#fff">Мюнцер</text>
+      <text x="455" y="74" text-anchor="middle" font-family="PT Sans" font-size="15" fill="#fff">Меняем всё общество</text>
+      <text x="455" y="98" text-anchor="middle" font-family="PT Sans" font-size="15" fill="#fff">Силой, восстанием народа</text>
+      <text x="455" y="122" text-anchor="middle" font-family="PT Sans" font-size="15" fill="#fff">Все равны, всё общее</text>
+      <text x="455" y="156" text-anchor="middle" font-family="PT Sans" font-size="14" fill="#b9c3d2">«народная реформация»</text>
+    </svg>
+  </figure>
+
+  <p><b>Идеи Мюнцера:</b></p>
+  <ul class="clean">
+    <li>Построить <b>«Царство Божие на земле»</b> прямо сейчас, а не ждать рая после смерти.</li>
+    <li>В этом царстве <b>нет богатых и бедных</b>, нет угнетателей, нет частной собственности: всё общее, все равны.</li>
+    <li>Добиться этого нужно <b>силой</b>: народ должен восстать против князей и богачей.</li>
+  </ul>
+  <div class="side">
+    <div>
+      <p><b>Судьба:</b> Мюнцер стал одним из вождей <b>Крестьянской войны в Германии (1524–1525)</b>. В 1525 году восставших разбили у города Франкенхаузен, Мюнцера схватили и казнили.</p>
+      <p>Посмотри на картину: перед битвой в небе появилась радуга. Мюнцер указал на неё и сказал крестьянам, что это знак: Бог на их стороне. Радуга и так была на его знамени. Но крестьяне с косами и вилами не устояли против княжеского войска.</p>
+    </div>
+    <figure class="pic">
+      <img loading="lazy" src="img/579789bbb4.jpg" alt="Мюнцер проповедует крестьянам перед битвой, в небе радуга">
+      <figcaption><b>Мюнцер перед битвой при Франкенхаузене.</b> Йозеф Тренквальд, около 1880</figcaption>
+    </figure>
+  </div>
+
+  <div class="say">
+    <h3>Как ответить у доски</h3>
+    <p>Томас Мюнцер — священник, сначала сторонник Лютера, затем его противник. Он считал, что менять нужно не только церковь, но и всё общество: построить «Царство Божие на земле», где нет богатых и бедных, нет частной собственности, все равны и всё общее. Добиваться этого он предлагал силой, через народное восстание. Мюнцер возглавил крестьян в Крестьянской войне 1524–1525 годов, восставшие были разбиты, а сам он казнён.</p>
+  </div>
+</section>
+
+<!-- ====================== 5 ====================== -->
+<section id="q5">
+  <span class="q">Вопрос 5</span>
+  <h2>Кальвинизм</h2>
+  <div class="dossier">
+    <div>
+      <img loading="lazy" src="img/6068c8f464.jpg" alt="Портрет Жана Кальвина">
+      <div class="who">Неизвестный художник, около 1550</div>
+    </div>
+    <div>
+      <h3>Жан Кальвин</h3>
+      <div class="years">1509–1564 · француз, жил в Швейцарии</div>
+      <dl>
+        <dt>Кто он</dt><dd>Богослов и проповедник в швейцарском городе <b>Женева</b></dd>
+        <dt>Чем знаменит</dt><dd>Создал учение, ещё более строгое, чем у Лютера</dd>
+        <dt>Последователи</dt><dd>Кальвинисты (во Франции — гугеноты, в Англии — пуритане)</dd>
+      </dl>
+      <p style="margin:12px 0 0;font-size:16px">Сравни с портретом Людовика XIV из §5: там шелка и золото, здесь простая тёмная одежда, чёрная шапочка и строгое лицо. Вверху по-латыни написано имя: «Иоаннес Кальвинус». Кальвин и одеждой показывал то, чему учил.</p>
+    </div>
+  </div>
+
+  <div class="def">
+    <b class="term">Предопределение</b>: главная идея Кальвина. Бог <b>заранее, ещё до рождения, решил</b>, кто из людей спасётся, а кто нет. Изменить это нельзя, но можно понять по признакам, избран ли ты.
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 600 170" role="img" aria-label="Признаки избранности по Кальвину">
+      <rect x="10" y="55" width="150" height="60" rx="30" fill="#1d4f91"/>
+      <text x="85" y="82" text-anchor="middle" font-family="PT Sans" font-size="15" font-weight="700" fill="#fff">Бог заранее</text>
+      <text x="85" y="100" text-anchor="middle" font-family="PT Sans" font-size="15" font-weight="700" fill="#fff">выбрал тебя?</text>
+      <path d="M160 85 L220 85" stroke="#566273" stroke-width="2"/><path d="M212 79 L222 85 L212 91" fill="none" stroke="#566273" stroke-width="2"/>
+      <text x="225" y="30" font-family="PT Sans" font-size="14" fill="#566273">признаки избранности:</text>
+      <rect x="225" y="42" width="170" height="36" rx="8" fill="#e2f2eb"/>
+      <text x="310" y="65" text-anchor="middle" font-family="PT Sans" font-size="14" fill="#15202e">🔨 трудолюбие</text>
+      <rect x="225" y="86" width="170" height="36" rx="8" fill="#e2f2eb"/>
+      <text x="310" y="109" text-anchor="middle" font-family="PT Sans" font-size="14" fill="#15202e">💼 успех в делах</text>
+      <rect x="225" y="130" width="170" height="36" rx="8" fill="#e2f2eb"/>
+      <text x="310" y="153" text-anchor="middle" font-family="PT Sans" font-size="14" fill="#15202e">🪙 бережливость, честность</text>
+      <path d="M400 104 L450 104" stroke="#566273" stroke-width="2"/><path d="M442 98 L452 104 L442 110" fill="none" stroke="#566273" stroke-width="2"/>
+      <rect x="455" y="64" width="135" height="80" rx="12" fill="#f5efd9"/>
+      <text x="522" y="96" text-anchor="middle" font-family="PT Sans" font-size="14" font-weight="700" fill="#8a6a12">Значит, Бог</text>
+      <text x="522" y="116" text-anchor="middle" font-family="PT Sans" font-size="14" font-weight="700" fill="#8a6a12">тебя, скорее</text>
+      <text x="522" y="136" text-anchor="middle" font-family="PT Sans" font-size="14" font-weight="700" fill="#8a6a12">всего, избрал</text>
+    </svg>
+    <figcaption>Поэтому кальвинисты много работали и копили деньги, а не тратили их</figcaption>
+  </figure>
+
+  <div class="grid">
+    <div class="card"><span class="emoji">🚫</span><h3>Строгая жизнь</h3><p>Осуждали роскошь, танцы, театр, азартные игры, нарядную одежду. В Женеве за этим следили очень строго, Кальвина даже прозвали «женевским папой».</p></div>
+    <div class="card"><span class="emoji">🗳️</span><h3>Церковь без епископов</h3><p>Общиной руководят выборные старейшины (пресвитеры) и проповедники. В храмах нет икон, статуй и пышности.</p></div>
+    <div class="card"><span class="emoji">🌍</span><h3>Где распространился</h3><p>Нидерланды, Шотландия, Англия (<b>пуритане</b>), Франция (<b>гугеноты</b>).</p></div>
+    <div class="card"><span class="emoji">🏦</span><h3>Кому понравился</h3><p>Купцам, ремесленникам, предпринимателям (буржуазии): богатство, заработанное трудом, считалось делом угодным Богу.</p></div>
+  </div>
+
+  <div class="pair">
+    <figure class="pic">
+      <img loading="lazy" src="img/a40fe977db.jpg" alt="Белый пустой интерьер протестантской церкви">
+      <figcaption><b>Протестантская церковь.</b> Питер Санредам, 1648. Церковь святого Бавона в Харлеме после Реформации: белые стены, ни икон, ни статуй, ни золота.</figcaption>
+    </figure>
+    <div>
+      <p><b>Как отличить кальвинистскую церковь от католической?</b></p>
+      <p>Вспомни картину с Тридентским собором: там роспись, золото, кардиналы в красном. А здесь пусто и светло. Кальвинисты убрали из храмов всё, что, по их мнению, отвлекает от Бога. Главное в такой церкви — проповедь и Библия.</p>
+      <p>Это и есть «простая» и «дешёвая» церковь, о которой мечтали Лютер и Кальвин.</p>
+    </div>
+  </div>
+
+  <div class="say">
+    <h3>Как ответить у доски</h3>
+    <p>Кальвинизм — это учение Жана Кальвина, который проповедовал в Женеве. Главная его идея — предопределение: Бог заранее решил, кто спасётся. Признаками избранности считались трудолюбие, успех в делах, честность и бережливость. Кальвинисты осуждали роскошь и развлечения, их церковь была простой, без епископов, общиной управляли выборные старейшины. Кальвинизм понравился буржуазии и распространился в Нидерландах, Англии (пуритане), Шотландии и Франции (гугеноты).</p>
+  </div>
+</section>
+
+<!-- ====================== сравнение ====================== -->
+<section id="compare">
+  <span class="q">Шпаргалка</span>
+  <h2>Всё на одной таблице</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th></th><th style="color:#1d4f91">Католики</th><th style="color:#a3152f">Лютер</th><th>Мюнцер</th><th style="color:#1f6b4f">Кальвин</th></tr>
+      <tr><td>Как спастись</td><td>Вера + добрые дела + таинства (и индульгенции)</td><td>Верой</td><td>Построить справедливое общество</td><td>Бог уже решил (предопределение)</td></tr>
+      <tr><td>Главный авторитет</td><td>Папа и церковь</td><td>Библия</td><td>Библия и «внутреннее откровение»</td><td>Библия</td></tr>
+      <tr><td>Церковь</td><td>Богатая, пышная, на латыни</td><td>Дешёвая, на родном языке</td><td>Народная</td><td>Строгая, без епископов, выборные старейшины</td></tr>
+      <tr><td>Как менять</td><td>Ничего не менять</td><td>Мирно, с князьями</td><td>Восстанием</td><td>Строгой дисциплиной</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ====================== тест ====================== -->
+<section id="test">
+  <span class="q">Проверь себя</span>
+  <h2>Нажми на карточку, чтобы увидеть ответ</h2>
+  <p class="lead">Алиса, сначала ответь вслух сама, потом проверь. Если ответила на все 9 — ты готова.</p>
+  <div class="flips">
+    <button class="flip"><div class="qq">Что такое абсолютизм?</div><div class="a">Неограниченная власть монарха: законы, налоги, армия, суд — всё решает он.</div><span class="hint">ответ ↵</span></button>
+    <button class="flip"><div class="qq">Что такое сословия? Назови три.</div><div class="a">Группы с наследственными правами и обязанностями по закону: духовенство, дворянство, третье сословие.</div><span class="hint">ответ ↵</span></button>
+    <button class="flip"><div class="qq">Когда и с чего началась Реформация?</div><div class="a">31 октября 1517 года, с 95 тезисов Лютера в Виттенберге.</div><span class="hint">ответ ↵</span></button>
+    <button class="flip"><div class="qq">Что такое индульгенция?</div><div class="a">Грамота о прощении грехов, которую церковь продавала за деньги.</div><span class="hint">ответ ↵</span></button>
+    <button class="flip"><div class="qq">Главная идея Лютера о спасении?</div><div class="a">Человек спасается верой, а не покупкой индульгенций.</div><span class="hint">ответ ↵</span></button>
+    <button class="flip"><div class="qq">Чем Мюнцер отличался от Лютера?</div><div class="a">Хотел изменить всё общество (равенство, всё общее) и силой, через восстание. Лютер — только церковь и мирно.</div><span class="hint">ответ ↵</span></button>
+    <button class="flip"><div class="qq">Что такое предопределение?</div><div class="a">Учение Кальвина: Бог заранее решил, кто спасётся. Признаки избранности — трудолюбие, успех, бережливость.</div><span class="hint">ответ ↵</span></button>
+    <button class="flip"><div class="qq">Назови три средства Контрреформации.</div><div class="a">Инквизиция, Индекс запрещённых книг, орден иезуитов (+ Тридентский собор).</div><span class="hint">ответ ↵</span></button>
+    <button class="flip"><div class="qq">«Чья власть, того и вера» — что это?</div><div class="a">Принцип Аугсбургского мира 1555 г.: веру подданных выбирает их князь.</div><span class="hint">ответ ↵</span></button>
+  </div>
+</section>
+
+<footer>
+  <p>Удачи у доски! §5–6 · История Нового времени, 7 класс</p>
+  <p class="credits">Иллюстрации: Викисклад (Wikimedia Commons). Все картины и гравюры находятся в общественном достоянии, кроме фотографии картины «Тридентский собор» (автор фото Laurom, лицензия CC BY-SA 3.0).</p>
+</footer>
+</div>
+
+<script>
+  // тезисы на двери
+  (function(){
+    var items = document.querySelectorAll('#theses li');
+    var sheet = document.getElementById('sheet');
+    var btn = document.getElementById('nail');
+    var n = 0;
+    btn.addEventListener('click', function(){
+      if (n < items.length){
+        items[n].classList.add('show'); n++;
+        sheet.classList.add('off');
+        setTimeout(function(){ sheet.classList.remove('off'); }, 180);
+        if (n === items.length) btn.textContent = 'Все 5 из 95 прибиты. Сначала ↺';
+      } else {
+        items.forEach(function(li){ li.classList.remove('show'); });
+        n = 0; btn.textContent = 'Прибить тезис 🔨';
+      }
+    });
+  })();
+  // карточки
+  document.querySelectorAll('.flip').forEach(function(b){
+    b.addEventListener('click', function(){ b.classList.toggle('open'); });
+  });
+</script>
+<script>
+try{var v=JSON.parse(localStorage.getItem('uroki-visited')||'{}');v['history/p5-6']=new Date().toISOString().slice(0,10);localStorage.setItem('uroki-visited',JSON.stringify(v));}catch(e){}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('../../sw.js',{scope:'../../'}).catch(function(){});}
+</script>
+</body>
+</html>

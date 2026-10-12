@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="theme-color" content="#1d4f91">
+<link rel="apple-touch-icon" href="../../assets/icon-180.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Свойства действий над числами</title>
+<link rel="stylesheet" href="../../assets/fonts.css">
+<style>
+  :root{
+    --bg:#eef2f7; --paper:#ffffff; --ink:#15202e; --muted:#566273; --line:#d5dde8;
+    --blue:#1d4f91; --blue-soft:#e3ecf8; --red:#b0182f; --red-soft:#f8e6ea;
+    --green:#1f6b4f; --green-soft:#e2f2eb; --gold:#6f550c; --gold-soft:#f5efd9;
+    --grid:#cfdcee;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "PT Sans",system-ui,sans-serif}
+  .wrap{max-width:920px;margin:0 auto;padding:0 16px}
+  h1,h2,h3{line-height:1.2;margin:0}
+  h2{font-size:clamp(24px,3.6vw,32px);margin-bottom:8px}
+  h3{font-size:21px;margin:22px 0 8px}
+  p{margin:0 0 12px}
+  .m{font-family:"PT Serif",Georgia,serif;white-space:nowrap}
+  .m i{font-style:italic}
+  .big{font-family:"PT Serif",Georgia,serif;font-size:24px;text-align:center;margin:14px 0;line-height:1.5}
+  .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;font-size:.85em;line-height:1.1;margin:0 2px}
+  .frac span:first-child{border-bottom:1.5px solid currentColor;padding:0 2px}
+  .c-blue{color:var(--blue)} .c-red{color:var(--red)} .c-green{color:var(--green)}
+
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:none}
+  nav a{flex:none;text-decoration:none;color:var(--ink);font-size:14px;font-weight:700;padding:6px 11px;border-radius:7px}
+  nav a:hover{background:var(--blue-soft);color:var(--blue)}
+
+  header{padding:40px 0 20px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end}
+  header .signs{font-family:"PT Serif",serif;font-size:clamp(44px,8vw,80px);line-height:1;color:var(--blue);white-space:nowrap}
+  header .signs span{color:var(--red)}
+  header h1{font-size:clamp(28px,4.6vw,42px);margin:6px 0 10px}
+  header p{color:var(--muted);max-width:620px;margin:0}
+  .hi{font-family:"PT Serif",serif;font-size:22px;color:var(--blue);margin:0 0 4px}
+  @media (max-width:640px){header{grid-template-columns:1fr}}
+
+  section{background:var(--paper);border-radius:18px;padding:28px 24px;margin:20px 0;box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(21,32,46,.25)}
+  .tag{display:inline-block;font-weight:700;font-size:14px;color:var(--blue);margin-bottom:6px}
+
+  .rule{background:var(--blue-soft);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .rule b.t{color:var(--blue)}
+  .rule.red{background:var(--red-soft)} .rule.red b.t{color:var(--red)}
+  .rule.gold{background:var(--gold-soft)} .rule.gold b.t{color:var(--gold)}
+  .rule.book{background:#f3f5f9}
+  .rule.book .src{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .rule.book .f{font-family:"PT Serif",serif;font-size:21px;text-align:center;margin:6px 0 2px}
+  .book{font-size:14px;color:var(--muted)}
+  .rule.book{font-size:17px;color:var(--ink)}
+
+  .steps{counter-reset:s;list-style:none;padding:0;margin:10px 0}
+  .steps li{counter-increment:s;position:relative;padding:4px 0 8px 40px}
+  .steps li::before{content:counter(s);position:absolute;left:0;top:3px;width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-weight:700;display:grid;place-items:center;font-size:15px}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center}
+  @media (max-width:700px){.two{grid-template-columns:1fr}}
+  figure{margin:14px 0}
+  svg{display:block;max-width:100%;height:auto;margin:0 auto}
+  figcaption{font-size:14px;color:var(--muted);text-align:center;margin-top:4px}
+
+  /* лаборатории */
+  .lab{background:#f3f6fa;border-radius:14px;padding:18px;margin:14px 0}
+  .lab input[type=range]{width:100%;accent-color:var(--blue);height:28px}
+  #area{max-width:340px;margin-top:8px}
+  .lab .said{text-align:center;margin-top:12px;font-family:"PT Serif",serif;font-size:21px;line-height:1.5}
+  .quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;justify-content:center}
+  .chip{border:1px solid var(--line);background:#fff;border-radius:9px;padding:6px 12px;font:inherit;font-size:15px;cursor:pointer}
+  .chip:hover{border-color:var(--blue);color:var(--blue)}
+
+  .pairs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:12px 0}
+  .num{font-family:"PT Serif",serif;font-size:24px;min-width:84px;min-height:56px;padding:8px 14px;border-radius:12px;border:2px solid var(--line);background:#fff;cursor:pointer;color:var(--ink)}
+  .num:hover{border-color:var(--blue)}
+  .num.sel{border-color:var(--blue);background:var(--blue-soft)}
+  .num.done{border-color:var(--green);background:var(--green-soft);color:var(--green);cursor:default}
+  .pair-msg{text-align:center;font-weight:700;min-height:28px;font-size:18px}
+  .pair-msg.ok{color:var(--green)} .pair-msg.no{color:var(--red)}
+
+  .say{background:var(--gold-soft);border-radius:12px;padding:14px 18px;margin-top:16px}
+  .say h3{margin:0 0 6px;font-size:14px;text-transform:uppercase;letter-spacing:.05em;color:var(--gold)}
+  .say ul{margin:0;padding-left:20px}
+
+  .task{font-family:"PT Serif",serif;font-size:18px;background:#f3f6fa;border-radius:12px;padding:12px 16px;margin:8px 0 14px}
+  .task b{font-family:"PT Sans",sans-serif}
+  .ans{display:inline-block;background:var(--green-soft);color:var(--green);font-weight:700;border-radius:8px;padding:2px 10px;font-family:"PT Serif",serif}
+  .calc{font-family:"PT Serif",serif;font-size:19px;background:#f8fafc;border-radius:10px;padding:10px 14px;margin:8px 0;line-height:1.7;overflow-x:auto}
+  .calc .u{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+  .calc .u.b{text-decoration-color:var(--blue)} .calc .u.r{text-decoration-color:var(--red)}
+
+  /* доска */
+  .board{margin:14px 0 10px;border-radius:14px;background:#fff;box-shadow:0 0 0 1px var(--line)}
+  .toolbar{display:flex;flex-wrap:wrap;gap:6px;padding:8px;border-bottom:1px solid var(--line);align-items:center}
+  .tool{display:inline-flex;align-items:center;gap:6px;border:1px solid transparent;background:#f3f6fa;color:var(--ink);border-radius:9px;padding:8px 12px;font:inherit;font-size:15px;font-weight:700;cursor:pointer;min-height:42px}
+  .tool svg{width:20px;height:20px;margin:0}
+  .tool[aria-pressed=true]{background:var(--blue);color:#fff}
+  .tool:hover{border-color:var(--blue)}
+  .tool .dot{width:14px;height:14px;border-radius:50%;box-shadow:0 0 0 2px #fff}
+  .spacer{flex:1}
+  .grip{display:flex;align-items:center;justify-content:center;gap:10px;height:34px;cursor:ns-resize;touch-action:none;-webkit-user-select:none;user-select:none;
+    background:#f3f6fa;border-top:1px solid var(--line);border-radius:0 0 14px 14px;font-size:13px;color:var(--muted)}
+  .grip span{width:56px;height:6px;border-radius:3px;background:#9fb3cf}
+  .grip:hover span,.grip.drag span{background:var(--blue)}
+  .pen-state{font-size:13px;color:var(--muted);padding:0 6px}
+  .canvas-box{position:relative;overflow:hidden;background-color:#fdfeff;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+  .canvas-box canvas{display:block;width:100%;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:crosshair}
+
+  .check{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0}
+  .check label{font-weight:700;min-width:28px}
+  .check input{font:inherit;font-size:20px;width:140px;padding:8px 12px;border:2px solid var(--line);border-radius:10px;font-family:"PT Serif",serif}
+  .check input:focus{outline:none;border-color:var(--blue)}
+  .btn{background:var(--blue);color:#fff;border:0;border-radius:10px;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer;min-height:44px}
+  .btn:hover{background:#163f75}
+  .btn.ghost{background:#f3f6fa;color:var(--ink)}
+  .fb{font-weight:700;min-height:26px}
+  .fb.ok{color:var(--green)} .fb.no{color:var(--red)}
+  .hidden-sol{display:none;background:#f3f6fa;border-radius:12px;padding:12px 16px;margin-top:8px}
+  .hidden-sol.show{display:block}
+  .sol{margin:0 0 6px}
+
+  footer{text-align:center;color:var(--muted);font-size:14px;padding:6px 0 40px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a href="../../" style="color:#1d4f91">← Все уроки</a>
+  <a href="#s1">Переставлять</a>
+  <a href="#s2">Группировать</a>
+  <a href="#s3">Дружные пары</a>
+  <a href="#s4">Минус</a>
+  <a href="#s5">Раскрыть скобки</a>
+  <a href="#e91">№ 91</a>
+  <a href="#e96">№ 96</a>
+  <a href="#self">Реши сама</a>
+</div></nav>
+
+<div class="wrap">
+
+<header>
+  <div>
+    <p class="hi">Алиса, привет!</p>
+    <h1>5. Свойства действий над числами</h1>
+    <p>В этом пункте нет ничего нового. Это три правила, которые ты знаешь с начальной школы. Но если ими пользоваться с умом, длинные примеры с дробями решаются в уме за секунды. Сначала разберём правила, потом № 91 и № 96, а в конце две задачи, чтобы ты решила их сама.</p>
+  </div>
+  <div class="signs" aria-hidden="true">a+b<span>=</span>b+a</div>
+</header>
+
+<!-- ============ 1 ============ -->
+<section id="s1">
+  <span class="tag">Свойство 1</span>
+  <h2>Переместительное: можно менять местами</h2>
+  <p>«Переместительное» — от слова «переместить». <b>Если поменять числа местами, ответ не изменится.</b></p>
+  <div class="two">
+    <div>
+      <p><b>При сложении:</b> 3 яблока и 5 груш — это столько же фруктов, сколько 5 груш и 3 яблока. <span class="m">3 + 5 = 5 + 3 = 8</span>.</p>
+      <p><b>При умножении:</b> посмотри на картинку. Это одни и те же 15 точек. Если считать по строкам, получится <span class="m">3 · 5</span>, а если по столбцам — <span class="m">5 · 3</span>. Точек от этого не прибавилось.</p>
+    </div>
+    <figure style="margin:0">
+      <svg viewBox="0 0 260 150" role="img" aria-label="15 точек: 3 ряда по 5">
+        <g id="dots35"></g>
+        <text x="120" y="20" text-anchor="middle" font-family="PT Serif" font-size="17" fill="#1d4f91">5 в ряду</text>
+        <text x="235" y="88" text-anchor="middle" font-family="PT Serif" font-size="17" fill="#b0182f">3</text>
+        <text x="235" y="106" text-anchor="middle" font-family="PT Serif" font-size="14" fill="#b0182f">ряда</text>
+      </svg>
+      <figcaption>3 · 5 = 5 · 3 = 15</figcaption>
+    </figure>
+  </div>
+  <div class="rule book">
+    <span class="src">Как в учебнике</span>
+    <b>Переместительное свойство:</b> для любых чисел <i class="m">a</i> и <i class="m">b</i> верны равенства
+    <div class="f"><i>a</i> + <i>b</i> = <i>b</i> + <i>a</i>, &nbsp;&nbsp; <i>ab</i> = <i>ba</i>.</div>
+  </div>
+  <p class="book">Напоминание: <span class="m"><i>ab</i></span> — это <span class="m"><i>a</i> · <i>b</i></span>. Между буквами знак умножения обычно не пишут.</p>
+</section>
+
+<!-- ============ 2 ============ -->
+<section id="s2">
+  <span class="tag">Свойство 2</span>
+  <h2>Сочетательное: можно выбирать, что считать первым</h2>
+  <p>«Сочетательное» — от слова «сочетать», то есть объединять. <b>Скобки показывают, что считаем первым.</b> И если всё — сложение (или всё — умножение), то неважно, какую пару сложить первой: ответ будет тем же.</p>
+  <div class="big">
+    (<span class="c-blue">2 + 8</span>) + 5 = 10 + 5 = 15<br>
+    2 + (<span class="c-red">8 + 5</span>) = 2 + 13 = 15
+  </div>
+  <p>Видишь? Первый способ удобнее: сначала получили круглое 10, и дальше считать легко.</p>
+  <div class="rule book">
+    <span class="src">Как в учебнике</span>
+    <b>Сочетательное свойство:</b> для любых чисел <i class="m">a</i>, <i class="m">b</i> и <i class="m">c</i> верны равенства
+    <div class="f">(<i>a</i> + <i>b</i>) + <i>c</i> = <i>a</i> + (<i>b</i> + <i>c</i>), &nbsp;&nbsp; (<i>ab</i>)<i>c</i> = <i>a</i>(<i>bc</i>).</div>
+  </div>
+</section>
+
+<!-- ============ 3 ============ -->
+<section id="s3">
+  <span class="tag">Вывод из свойств 1 и 2</span>
+  <h2>Ищи «дружные пары»</h2>
+  <p>Соединим два свойства: числа можно <b>менять местами</b> и <b>объединять в любые пары</b>. Значит, в длинной сумме можно сначала сложить те числа, которые вместе дают <b>круглое число</b>: 1, 10, 100. Такие числа будем называть <b>дружной парой</b>.</p>
+  <div class="rule book">
+    <span class="src">Как в учебнике</span>
+    В любой сумме можно как угодно переставлять слагаемые и произвольным образом объединять их в группы.
+  </div>
+
+  <p><b>Как узнать дружную пару у десятичных дробей:</b> посмотри на хвостики после запятой. Если они вместе дают ровно 1 (например, ,23 и ,77, или ,7 и ,3), то в сумме будет целое число.</p>
+
+  <div class="lab">
+    <p style="margin:0;text-align:center"><b>Попробуй! Нажимай по два числа и найди обе дружные пары.</b></p>
+    <div class="pairs" id="pairs1" data-nums="2.7,3.6,7.3,6.4"></div>
+    <div class="pair-msg" id="pairs1-msg" aria-live="polite"></div>
+    <div class="quick"><button class="chip" data-reset="pairs1">Начать заново</button></div>
+  </div>
+
+  <h3>Пример 1 из учебника</h3>
+  <div class="task">Вычислим сумму 1,23 + 13,5 + 4,27.</div>
+  <p>Хвостики <span class="m">,23</span> и <span class="m">,27</span> вместе дают <span class="m">,50</span>: в сумме получится ровно 5,5. Объединяем <b>первое слагаемое с третьим</b>:</p>
+  <div class="calc">1,23 + 13,5 + 4,27 = (<span class="u b">1,23 + 4,27</span>) + 13,5 = 5,5 + 13,5 = 19</div>
+
+  <h3>С умножением — то же самое</h3>
+  <div class="rule book">
+    <span class="src">Как в учебнике</span>
+    В любом произведении можно как угодно переставлять множители и произвольным образом объединять их в группы.
+  </div>
+  <p>Дружные пары при умножении — те, что дают 1, 10, 100. Их стоит запомнить:</p>
+  <div class="big" style="font-size:21px">
+    0,5 · 2 = 1 &nbsp;·&nbsp; 0,25 · 4 = 1 &nbsp;·&nbsp; 0,2 · 5 = 1<br>
+    25 · 4 = 100 &nbsp;·&nbsp; 20 · 5 = 100 &nbsp;·&nbsp; 50 · 2 = 100
+  </div>
+  <h3>Пример 2 из учебника</h3>
+  <div class="task">Найдём значение произведения 1,8 · 0,25 · 64 · 0,5.</div>
+  <p>Объединим первый множитель с четвёртым, а второй с третьим. Умножать на 0,5 — всё равно что делить пополам, а умножать на 0,25 — всё равно что делить на 4:</p>
+  <div class="calc">1,8 · 0,25 · 64 · 0,5 = (<span class="u b">1,8 · 0,5</span>) · (<span class="u r">0,25 · 64</span>) = 0,9 · 16 = 14,4</div>
+</section>
+
+<!-- ============ 4 ============ -->
+<section id="s4">
+  <span class="tag">Важная хитрость</span>
+  <h2>А если есть минус?</h2>
+  <p>Свойства говорят про сложение. А как быть, если в примере есть вычитание? Учебник отвечает так: <b>вычитание — это сложение с противоположным числом</b>.</p>
+  <div class="rule book">
+    <span class="src">Как в учебнике</span>
+    <div class="f"><i>a</i> − <i>b</i> = <i>a</i> + (−<i>b</i>)</div>
+    Поэтому выражение <span class="m"><i>a</i> + <i>b</i> − <i>c</i> − <i>d</i></span> можно считать суммой чисел <span class="m"><i>a</i>, <i>b</i>, −<i>c</i>, −<i>d</i></span>, и все свойства для него тоже верны.
+  </div>
+  <p>Проще говоря: <b>знак, который стоит перед числом, — это его «рюкзак»</b>. Число можно переставлять куда угодно, но рюкзак оно всегда несёт с собой. Если перед числом минус, оно переезжает вместе с минусом.</p>
+  <figure>
+    <svg viewBox="0 0 600 120" role="img" aria-label="Числа переезжают вместе со своими знаками">
+      <g font-family="PT Serif" font-size="24" text-anchor="middle">
+        <rect x="20" y="14" width="120" height="44" rx="10" fill="#e3ecf8"/><text x="80" y="44" fill="#1d4f91">3,27</text>
+        <rect x="160" y="14" width="120" height="44" rx="10" fill="#f8e6ea"/><text x="220" y="44" fill="#b0182f">− 6,5</text>
+        <rect x="300" y="14" width="120" height="44" rx="10" fill="#f8e6ea"/><text x="360" y="44" fill="#b0182f">− 2,5</text>
+        <rect x="440" y="14" width="140" height="44" rx="10" fill="#e3ecf8"/><text x="510" y="44" fill="#1d4f91">+ 1,73</text>
+      </g>
+      <g font-family="PT Sans" font-size="15" fill="#566273" text-anchor="middle">
+        <text x="80" y="84">с плюсом</text><text x="220" y="84">с минусом</text><text x="360" y="84">с минусом</text><text x="510" y="84">с плюсом</text>
+      </g>
+      <text x="300" y="112" text-anchor="middle" font-family="PT Sans" font-size="15" fill="#15202e">синие — с плюсом, красные — со своим минусом</text>
+    </svg>
+  </figure>
+  <h3>Пример 3 из учебника</h3>
+  <div class="task">Найдём значение выражения 3,27 − 6,5 − 2,5 + 1,73.</div>
+  <p>Это сумма чисел <span class="m">3,27</span>, <span class="m">−6,5</span>, <span class="m">−2,5</span> и <span class="m">1,73</span>. Соберём синих вместе и красных вместе:</p>
+  <div class="calc">3,27 − 6,5 − 2,5 + 1,73 = (<span class="u b">3,27 + 1,73</span>) + (<span class="u r">−6,5 − 2,5</span>) = 5 + (−9) = −4</div>
+  <p>Синие дали 5, а красные вместе «отняли» 9. Пять минус девять — получилось −4.</p>
+  <div class="rule gold"><b class="t">Частая ошибка:</b> переставить число, а минус оставить на старом месте. Минус всегда переезжает вместе со своим числом!</div>
+</section>
+
+<!-- ============ 5 ============ -->
+<section id="s5">
+  <span class="tag">Свойство 3</span>
+  <h2>Распределительное: умножить на скобку</h2>
+  <p>«Распределительное» — потому что множитель перед скобкой <b>распределяется на каждое число в скобке</b>.</p>
+  <p><b>Пример из жизни.</b> Три подруги купили каждая ручку за 4 рубля и ластик за 2 рубля. Сколько они заплатили? Можно посчитать двумя способами:</p>
+  <ul>
+    <li>каждая потратила <span class="m">4 + 2 = 6</span> рублей, а их трое: <span class="m">3 · (4 + 2) = 18</span>;</li>
+    <li>ручки стоили <span class="m">3 · 4 = 12</span>, ластики <span class="m">3 · 2 = 6</span>, вместе <span class="m">12 + 6 = 18</span>.</li>
+  </ul>
+  <p>Ответ одинаковый. Значит, <span class="m">3 · (4 + 2) = 3 · 4 + 3 · 2</span>. Подвигай ползунок и убедись, что так при любом числе подруг:</p>
+
+  <div class="lab">
+    <label for="rows"><b>Подруг: <span id="rowsVal">3</span></b></label>
+    <input type="range" id="rows" min="1" max="6" step="1" value="3">
+    <svg id="area" viewBox="0 0 300 230" role="img" aria-label="Прямоугольник из клеток: синие — ручки, красные — ластики"></svg>
+    <div class="said" id="areaSaid"></div>
+  </div>
+
+  <div class="rule book">
+    <span class="src">Как в учебнике</span>
+    <b>Распределительное свойство:</b> для любых чисел <i class="m">a</i>, <i class="m">b</i> и <i class="m">c</i> верно равенство
+    <div class="f"><i>a</i>(<i>b</i> + <i>c</i>) = <i>ab</i> + <i>ac</i>.</div>
+    Оно верно и тогда, когда в скобке три слагаемых и больше: <span class="m"><i>a</i>(<i>b</i> + <i>c</i> + <i>d</i>) = <i>ab</i> + <i>ac</i> + <i>ad</i></span>.
+  </div>
+  <p>Умножаем число перед скобкой <b>на каждое</b> число в скобке. Нарисуй стрелочки от множителя к каждому слагаемому, тогда ты точно ничего не забудешь:</p>
+  <figure>
+    <svg viewBox="0 0 400 130" role="img" aria-label="Стрелки от a к b и к c" style="max-width:420px">
+      <g font-family="PT Serif" font-size="38" fill="#15202e" text-anchor="middle">
+        <text x="110" y="112" font-style="italic">a</text>
+        <text x="145" y="112">·</text>
+        <text x="178" y="112">(</text>
+        <text x="206" y="112" font-style="italic" fill="#1d4f91">b</text>
+        <text x="248" y="112">+</text>
+        <text x="290" y="112" font-style="italic" fill="#b0182f">c</text>
+        <text x="318" y="112">)</text>
+      </g>
+      <path d="M110 80 C 125 40, 185 40, 204 74" fill="none" stroke="#1d4f91" stroke-width="2.5"/>
+      <path d="M195 68 L204 76 L207 64" fill="none" stroke="#1d4f91" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M110 78 C 140 4, 260 4, 288 74" fill="none" stroke="#b0182f" stroke-width="2.5"/>
+      <path d="M279 68 L288 76 L291 63" fill="none" stroke="#b0182f" stroke-width="2.5" stroke-linejoin="round"/>
+      <text x="160" y="30" font-family="PT Sans" font-size="15" fill="#1d4f91" text-anchor="middle">ab</text>
+      <text x="252" y="18" font-family="PT Sans" font-size="15" fill="#b0182f" text-anchor="middle">ac</text>
+    </svg>
+  </figure>
+
+  <h3>Пример 4 из учебника: со скобкой, где минус</h3>
+  <div class="task">Вычислим произведение 36 · (<span class="frac"><span>1</span><span>4</span></span> − <span class="frac"><span>5</span><span>18</span></span>).</div>
+  <p>Если сначала вычитать дроби, придётся приводить их к общему знаменателю. Долго! А по распределительному свойству умножим 36 на каждую дробь (минус едет вместе со своей дробью):</p>
+  <div class="calc">36 · (<span class="frac"><span>1</span><span>4</span></span> − <span class="frac"><span>5</span><span>18</span></span>) = 36 · <span class="frac"><span>1</span><span>4</span></span> − 36 · <span class="frac"><span>5</span><span>18</span></span> = 9 − 10 = −1</div>
+  <p>Ведь <span class="m">36 : 4 = 9</span>, а <span class="m">36 : 18 · 5 = 2 · 5 = 10</span>.</p>
+
+  <h3>И в обратную сторону: «вынести за скобку»</h3>
+  <p>Равенство <span class="m"><i>a</i>(<i>b</i> + <i>c</i>) = <i>ab</i> + <i>ac</i></span> можно читать и справа налево: <span class="m"><i>ab</i> + <i>ac</i> = <i>a</i>(<i>b</i> + <i>c</i>)</span>. Это очень пригодится в № 96.</p>
+  <p>Если в двух произведениях есть <b>одинаковый множитель</b>, его можно написать один раз перед скобкой, а в скобку собрать то, что осталось:</p>
+  <div class="calc"><span class="c-blue">7</span> · 13 + <span class="c-blue">7</span> · 7 = <span class="c-blue">7</span> · (13 + 7) = 7 · 20 = 140</div>
+  <p>Вместо двух трудных умножений получилось одно лёгкое. С минусом так же: <span class="m"><span class="c-blue">5</span> · 23 − <span class="c-blue">5</span> · 3 = 5 · (23 − 3) = 5 · 20 = 100</span>.</p>
+
+  <div class="say">
+    <h3>Коротко весь пункт 5</h3>
+    <ul>
+      <li><b>Переместительное:</b> <span class="m"><i>a</i> + <i>b</i> = <i>b</i> + <i>a</i></span>, <span class="m"><i>ab</i> = <i>ba</i></span>. Местами менять можно.</li>
+      <li><b>Сочетательное:</b> <span class="m">(<i>a</i> + <i>b</i>) + <i>c</i> = <i>a</i> + (<i>b</i> + <i>c</i>)</span>, <span class="m">(<i>ab</i>)<i>c</i> = <i>a</i>(<i>bc</i>)</span>. Группировать можно как угодно.</li>
+      <li>Поэтому в сумме и в произведении ищем дружные пары, которые дают круглые числа.</li>
+      <li>Вычитание — это сложение с противоположным числом: минус переезжает вместе с числом.</li>
+      <li><b>Распределительное:</b> <span class="m"><i>a</i>(<i>b</i> + <i>c</i>) = <i>ab</i> + <i>ac</i></span>. И обратно: одинаковый множитель выносим за скобку.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 91 ============ -->
+<section id="e91">
+  <span class="tag">Разбор упражнения</span>
+  <h2>№ 91. Найдите значение выражения</h2>
+  <div class="task"><b>91.</b> а) 8,91 + 25,7 + 1,09; &nbsp; в) 7,15 − 9,42 + 12,85 − 0,58.</div>
+  <p>План для каждого примера один: <b>1)</b> найти дружную пару по хвостикам после запятой; <b>2)</b> переставить и сгруппировать; <b>3)</b> досчитать.</p>
+
+  <h3>а) 8,91 + 25,7 + 1,09</h3>
+  <p>Хвостики <span class="m">,91</span> и <span class="m">,09</span> вместе дают ровно 1: дружная пара — первое и третье числа.</p>
+  <div class="calc">8,91 + 25,7 + 1,09 = (<span class="u b">8,91 + 1,09</span>) + 25,7 = 10 + 25,7 = 35,7</div>
+  <p>Ответ: <span class="ans">35,7</span></p>
+
+  <h3>в) 7,15 − 9,42 + 12,85 − 0,58</h3>
+  <p>Здесь есть минусы. Вспоминаем про рюкзаки: <span class="m">7,15</span> и <span class="m">12,85</span> с плюсом, <span class="m">9,42</span> и <span class="m">0,58</span> с минусом. Хвостики тоже дружат: <span class="m">,15 + ,85 = 1</span> и <span class="m">,42 + ,58 = 1</span>. Собираем синих вместе, красных вместе:</p>
+  <div class="calc">7,15 − 9,42 + 12,85 − 0,58 = (<span class="u b">7,15 + 12,85</span>) + (<span class="u r">−9,42 − 0,58</span>) = 20 + (−10) = 10</div>
+  <p>Синие дали 20, красные отняли 10. Ответ: <span class="ans">10</span></p>
+
+</section>
+
+<!-- ============ 96 ============ -->
+<section id="e96">
+  <span class="tag">Разбор упражнения</span>
+  <h2>№ 96. Найдите значение выражения</h2>
+  <div class="task"><b>96.</b> а) 3,5 · 6,8 + 3,5 · 3,2; &nbsp;&nbsp; б) 12,4 · 14,3 − 12,4 · 4,3.</div>
+  <p>Можно честно умножить каждое произведение столбиком, но это долго, и легко ошибиться. Хитрость — в распределительном свойстве, прочитанном <b>справа налево</b>: ищем одинаковый множитель и выносим его за скобку.</p>
+
+  <h3>а) 3,5 · 6,8 + 3,5 · 3,2</h3>
+  <ol class="steps">
+    <li><b>Что повторяется?</b> В обоих произведениях есть <span class="m c-blue">3,5</span>.</li>
+    <li><b>Выносим его за скобку</b>, а в скобку пишем то, что осталось: <span class="m">6,8</span> и <span class="m">3,2</span>, с тем же знаком «+» между ними.</li>
+    <li><b>Считаем скобку:</b> <span class="m">6,8 + 3,2 = 10</span>. Дружная пара!</li>
+  </ol>
+  <div class="calc"><span class="c-blue">3,5</span> · 6,8 + <span class="c-blue">3,5</span> · 3,2 = <span class="c-blue">3,5</span> · (6,8 + 3,2) = 3,5 · 10 = 35</div>
+  <p>Ответ: <span class="ans">35</span></p>
+
+  <h3>б) 12,4 · 14,3 − 12,4 · 4,3</h3>
+  <ol class="steps">
+    <li><b>Что повторяется?</b> <span class="m c-blue">12,4</span>.</li>
+    <li><b>Выносим за скобку.</b> Между произведениями стоял минус, значит, и в скобке будет минус: <span class="m">(14,3 − 4,3)</span>.</li>
+    <li><b>Считаем скобку:</b> <span class="m">14,3 − 4,3 = 10</span>.</li>
+  </ol>
+  <div class="calc"><span class="c-blue">12,4</span> · 14,3 − <span class="c-blue">12,4</span> · 4,3 = <span class="c-blue">12,4</span> · (14,3 − 4,3) = 12,4 · 10 = 124</div>
+  <p>Ответ: <span class="ans">124</span></p>
+  <div class="rule gold"><b class="t">Подсказка на будущее:</b> если в задании «найдите значение» стоят два произведения с одинаковым числом, почти всегда в скобке получится круглое число. Это авторы учебника так задумали.</div>
+</section>
+
+<!-- ============ самопроверка ============ -->
+<section id="self">
+  <span class="tag">Реши сама</span>
+  <h2>Две задачи для самопроверки</h2>
+  <p>Алиса, реши задачи прямо в клеточках стилусом, как в тетради. Потом впиши ответы и нажми «Проверить». Записи сохранятся, даже если закрыть страницу.</p>
+
+  <h3>Задание 1 <span style="font-weight:400;color:var(--muted);font-size:16px">(похоже на № 91)</span></h3>
+  <div class="task">Найдите значение выражения: а) 4,73 + 12,6 + 5,27; &nbsp; б) 9,36 − 2,8 + 0,64 − 5,2.</div>
+  <div class="board" data-board="z1" data-height="440"></div>
+  <div class="check" data-answer="22.6" data-hint="Ищи дружную пару по хвостикам: ,73 и ,27.">
+    <label for="a1">а)</label><input id="a1" inputmode="decimal" autocomplete="off">
+    <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
+  </div>
+  <div class="check" data-answer="2" data-hint="Собери числа с плюсом вместе (9,36 и 0,64), а с минусом — вместе (2,8 и 5,2).">
+    <label for="a2">б)</label><input id="a2" inputmode="decimal" autocomplete="off">
+    <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
+  </div>
+  <button class="btn ghost show-sol" data-for="sol1">Показать решение</button>
+  <div class="hidden-sol" id="sol1">
+    <p class="sol"><b>а)</b> <span class="m">4,73 + 12,6 + 5,27 = (4,73 + 5,27) + 12,6 = 10 + 12,6 = 22,6</span></p>
+    <p class="sol"><b>б)</b> <span class="m">9,36 − 2,8 + 0,64 − 5,2 = (9,36 + 0,64) + (−2,8 − 5,2) = 10 + (−8) = 2</span></p>
+  </div>
+
+  <h3>Задание 2 <span style="font-weight:400;color:var(--muted);font-size:16px">(похоже на № 96)</span></h3>
+  <div class="task">Найдите значение выражения: а) 2,7 · 4,6 + 2,7 · 5,4; &nbsp; б) 8,3 · 17,5 − 8,3 · 7,5.</div>
+  <div class="board" data-board="z2" data-height="440"></div>
+  <div class="check" data-answer="27" data-hint="Какое число повторяется в обоих произведениях? Вынеси его за скобку.">
+    <label for="a3">а)</label><input id="a3" inputmode="decimal" autocomplete="off">
+    <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
+  </div>
+  <div class="check" data-answer="83" data-hint="Вынеси 8,3 за скобку. В скобке останется 17,5 − 7,5.">
+    <label for="a4">б)</label><input id="a4" inputmode="decimal" autocomplete="off">
+    <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
+  </div>
+  <button class="btn ghost show-sol" data-for="sol2">Показать решение</button>
+  <div class="hidden-sol" id="sol2">
+    <p class="sol"><b>а)</b> <span class="m">2,7 · 4,6 + 2,7 · 5,4 = 2,7 · (4,6 + 5,4) = 2,7 · 10 = 27</span></p>
+    <p class="sol"><b>б)</b> <span class="m">8,3 · 17,5 − 8,3 · 7,5 = 8,3 · (17,5 − 7,5) = 8,3 · 10 = 83</span></p>
+  </div>
+</section>
+
+<footer>Алгебра, 7 класс · § 2, п. 5 «Свойства действий над числами»</footer>
+</div>
+
+<script>
+function fmt(n){ return String(Math.round(n*1000)/1000).replace('.',','); }
+
+/* ---------- точки 3×5 ---------- */
+(function(){
+  var g=document.getElementById('dots35'), ns='http://www.w3.org/2000/svg';
+  for(var r=0;r<3;r++) for(var c=0;c<5;c++){
+    var d=document.createElementNS(ns,'circle');
+    d.setAttribute('cx',40+c*40); d.setAttribute('cy',54+r*36); d.setAttribute('r',13);
+    d.setAttribute('fill','#1d4f91'); g.appendChild(d);
+  }
+})();
+
+/* ---------- дружные пары ---------- */
+function setupPairs(id){
+  var box=document.getElementById(id), msg=document.getElementById(id+'-msg');
+  var nums=box.dataset.nums.split(',').map(Number), sel=null, found=0, pairsTotal=0;
+  for(var i=0;i<nums.length;i++) for(var j=i+1;j<nums.length;j++){ var s=Math.round((nums[i]+nums[j])*1000)/1000; if(s===Math.round(s)) pairsTotal++; }
+  function build(){
+    box.innerHTML=''; sel=null; found=0; msg.textContent=''; msg.className='pair-msg';
+    nums.forEach(function(n){
+      var b=document.createElement('button'); b.className='num'; b.textContent=fmt(n); b.dataset.v=n;
+      b.addEventListener('click',function(){
+        if(b.classList.contains('done')) return;
+        if(sel===b){ b.classList.remove('sel'); sel=null; msg.textContent=''; return; }
+        if(!sel){ sel=b; b.classList.add('sel'); msg.className='pair-msg'; msg.textContent='Теперь выбери второе число'; return; }
+        var a=+sel.dataset.v, c=+b.dataset.v, s=Math.round((a+c)*1000)/1000;
+        if(s===Math.round(s)){
+          sel.classList.remove('sel'); sel.classList.add('done'); b.classList.add('done'); found++;
+          msg.className='pair-msg ok';
+          msg.textContent=fmt(a)+' + '+fmt(c)+' = '+fmt(s)+'. Дружная пара!'+(found===pairsTotal?' Все пары найдены, сумма всех чисел = '+fmt(nums.reduce(function(x,y){return x+y},0)):'');
+        } else {
+          sel.classList.remove('sel'); msg.className='pair-msg no';
+          msg.textContent=fmt(a)+' + '+fmt(c)+' = '+fmt(s)+'. Не круглое, попробуй другую пару';
+        }
+        sel=null;
+      });
+      box.appendChild(b);
+    });
+  }
+  build();
+  document.querySelector('[data-reset="'+id+'"]').addEventListener('click',build);
+}
+setupPairs('pairs1');
+
+/* ---------- прямоугольник a·(4+2) ---------- */
+(function(){
+  var svg=document.getElementById('area'), s=document.getElementById('rows'), v=document.getElementById('rowsVal'), said=document.getElementById('areaSaid'), ns='http://www.w3.org/2000/svg';
+  var B=4, C=2, cell=30, x0=48, y0=34;
+  function el(t,a){ var e=document.createElementNS(ns,t); for(var k in a) e.setAttribute(k,a[k]); return e; }
+  function draw(){
+    var a=+s.value; v.textContent=a; svg.innerHTML='';
+    svg.appendChild(el('text',{x:x0+B*cell/2,y:22,'text-anchor':'middle','font-family':'PT Sans','font-size':15,fill:'#1d4f91'})).textContent='ручки по 4 ₽';
+    svg.appendChild(el('text',{x:x0+B*cell+12+C*cell/2,y:22,'text-anchor':'middle','font-family':'PT Sans','font-size':15,fill:'#b0182f'})).textContent='ластики по 2 ₽';
+    for(var r=0;r<a;r++){
+      svg.appendChild(el('text',{x:20,y:y0+r*cell+20,'text-anchor':'middle','font-family':'PT Sans','font-size':14,fill:'#566273'})).textContent=(r+1);
+      for(var c=0;c<B;c++) svg.appendChild(el('rect',{x:x0+c*cell,y:y0+r*cell,width:cell-4,height:cell-4,rx:5,fill:'#1d4f91'}));
+      for(var c2=0;c2<C;c2++) svg.appendChild(el('rect',{x:x0+B*cell+12+c2*cell,y:y0+r*cell,width:cell-4,height:cell-4,rx:5,fill:'#b0182f'}));
+    }
+    svg.setAttribute('viewBox','0 0 300 '+(y0+a*cell+6));
+    said.innerHTML='<span class="m">'+a+' · (4 + 2) = '+a+' · <span class="c-blue">4</span> + '+a+' · <span class="c-red">2</span></span><br>'+
+      '<span class="m">'+a+' · 6 = <span class="c-blue">'+(a*4)+'</span> + <span class="c-red">'+(a*2)+'</span> = '+(a*6)+'</span>';
+  }
+  s.addEventListener('input',draw); draw();
+})();
+
+/* ---------- проверка ответов ---------- */
+function norm(v){ return parseFloat(String(v).replace(/\s/g,'').replace(',','.').replace('−','-')); }
+document.querySelectorAll('.check').forEach(function(box){
+  var inp=box.querySelector('input'), btn=box.querySelector('button'), fb=box.querySelector('.fb'), tries=0;
+  function go(){
+    var v=norm(inp.value);
+    if(isNaN(v)){ fb.className='fb no'; fb.textContent='Впиши число'; return; }
+    if(Math.abs(v-norm(box.dataset.answer))<1e-9){
+      fb.className='fb ok'; fb.textContent='Верно! 🎉'; inp.style.borderColor='#1f6b4f';
+    } else {
+      tries++; fb.className='fb no'; inp.style.borderColor='#b0182f';
+      fb.textContent = tries<2 ? 'Пока нет, проверь вычисления' : 'Подсказка: '+box.dataset.hint;
+    }
+  }
+  btn.addEventListener('click',go);
+  inp.addEventListener('keydown',function(e){ if(e.key==='Enter') go(); });
+});
+document.querySelectorAll('.show-sol').forEach(function(b){
+  b.addEventListener('click',function(){
+    var el=document.getElementById(b.dataset.for), on=el.classList.toggle('show');
+    b.textContent = on ? 'Скрыть решение' : 'Показать решение';
+  });
+});
+
+/* ---------- доска для письма стилусом ---------- */
+var penSeen=false;
+var ICON={
+  eraser:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20h12"/><path d="M5 15l9-9 5 5-8 8H8z"/></svg>',
+  undo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 010 12h-3"/></svg>',
+  clear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>',
+  more:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>'
+};
+function Board(root){
+  var id=root.dataset.board, key='alg5-board-'+id, self=this;
+  this.h=+root.dataset.height||420; this.strokes=[]; this.tool='pen'; this.color='#1d3f8f';
+  root.innerHTML=
+    '<div class="toolbar">'+
+      '<button class="tool" data-t="pen" data-c="#1d3f8f" aria-pressed="true"><span class="dot" style="background:#1d3f8f"></span>Синяя</button>'+
+      '<button class="tool" data-t="pen" data-c="#c21a33" aria-pressed="false"><span class="dot" style="background:#c21a33"></span>Красная</button>'+
+      '<button class="tool" data-t="eraser" aria-pressed="false">'+ICON.eraser+'Ластик</button>'+
+      '<button class="tool" data-act="undo">'+ICON.undo+'Назад</button>'+
+      '<span class="spacer"></span><span class="pen-state"></span>'+
+      '<button class="tool" data-act="more">'+ICON.more+'Место</button>'+
+      '<button class="tool" data-act="clear">'+ICON.clear+'Стереть всё</button>'+
+    '</div><div class="canvas-box"><canvas></canvas></div>'+
+    '<div class="grip" title="Потяни вниз, чтобы удлинить лист"><span></span>потяни вниз, чтобы удлинить лист<span></span></div>';
+  var cv=root.querySelector('canvas'), ctx=cv.getContext('2d'), state=root.querySelector('.pen-state');
+  try{ var saved=JSON.parse(localStorage.getItem(key)||'null'); if(saved){ this.strokes=saved.s||[]; if(saved.h) this.h=Math.max(240,saved.h); } }catch(e){}
+  function save(){ try{ localStorage.setItem(key,JSON.stringify({s:self.strokes,h:self.h})); }catch(e){} }
+  function showState(){ state.textContent = penSeen ? 'Стилус подключён: ладонь не рисует' : ''; }
+  showState(); document.addEventListener('pen-seen',showState);
+
+  function size(){
+    var w=cv.parentElement.clientWidth, d=window.devicePixelRatio||1;
+    cv.width=Math.round(w*d); cv.height=Math.round(self.h*d); cv.style.height=self.h+'px';
+    ctx.setTransform(d,0,0,d,0,0); redraw();
+  }
+  function seg(st,i){
+    var a=st.p[i-1], b=st.p[i];
+    ctx.strokeStyle=st.c; ctx.lineWidth=(a[2]+b[2])/2;
+    ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.stroke();
+  }
+  function dot(st){ var a=st.p[0]; ctx.fillStyle=st.c; ctx.beginPath(); ctx.arc(a[0],a[1],a[2]/2,0,Math.PI*2); ctx.fill(); }
+  function redraw(){
+    ctx.clearRect(0,0,cv.width,cv.height); ctx.lineCap='round'; ctx.lineJoin='round';
+    self.strokes.forEach(function(st){ if(st.p.length===1) dot(st); for(var i=1;i<st.p.length;i++) seg(st,i); });
+  }
+  function pt(e){
+    var r=cv.getBoundingClientRect(), pr=e.pointerType==='pen' ? (e.pressure||0.5) : 0.5;
+    var w = e.pointerType==='pen' ? 1.2+pr*3.2 : 2.6;
+    return [Math.round((e.clientX-r.left)*10)/10, Math.round((e.clientY-r.top)*10)/10, Math.round(w*10)/10];
+  }
+  function eraseAt(p){
+    var R=14, n=self.strokes.length;
+    self.strokes=self.strokes.filter(function(st){
+      return !st.p.some(function(q){ var dx=q[0]-p[0], dy=q[1]-p[1]; return dx*dx+dy*dy<R*R; });
+    });
+    if(self.strokes.length!==n) redraw();
+  }
+  var active=null, cur=null;
+  cv.addEventListener('pointerdown',function(e){
+    if(e.pointerType==='pen' && !penSeen){ penSeen=true; document.dispatchEvent(new Event('pen-seen')); }
+    if(e.pointerType==='touch' && penSeen) return;
+    if(active!==null) return;
+    e.preventDefault(); try{ cv.setPointerCapture(e.pointerId); }catch(err){} active=e.pointerId;
+    var eraser = self.tool==='eraser' || e.button===5;
+    if(eraser){ cur=null; eraseAt(pt(e)); }
+    else { cur={c:self.color,p:[pt(e)]}; self.strokes.push(cur); ctx.lineCap='round'; dot(cur); }
+  });
+  cv.addEventListener('pointermove',function(e){
+    if(e.pointerId!==active) return;
+    e.preventDefault();
+    var list = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
+    if(!list.length) list=[e];
+    list.forEach(function(ev){
+      var p=pt(ev);
+      if(!cur){ eraseAt(p); return; }
+      var last=cur.p[cur.p.length-1];
+      if(Math.abs(last[0]-p[0])+Math.abs(last[1]-p[1])<0.8) return;
+      cur.p.push(p); seg(cur,cur.p.length-1);
+    });
+  });
+  function end(e){ if(e.pointerId!==active) return; active=null; cur=null; save(); }
+  cv.addEventListener('pointerup',end); cv.addEventListener('pointercancel',end);
+  cv.addEventListener('contextmenu',function(e){ e.preventDefault(); });
+
+  root.querySelectorAll('.tool').forEach(function(b){
+    b.addEventListener('click',function(){
+      if(b.dataset.t){
+        self.tool=b.dataset.t; if(b.dataset.c) self.color=b.dataset.c;
+        root.querySelectorAll('.tool[data-t]').forEach(function(x){ x.setAttribute('aria-pressed', x===b ? 'true':'false'); });
+        cv.style.cursor = self.tool==='eraser' ? 'cell' : 'crosshair';
+      } else if(b.dataset.act==='undo'){ self.strokes.pop(); redraw(); save(); }
+      else if(b.dataset.act==='clear'){ if(self.strokes.length && confirm('Стереть всё, что написано на этом листе?')){ self.strokes=[]; redraw(); save(); } }
+      else if(b.dataset.act==='more'){ self.h+=240; size(); save(); }
+    });
+  });
+  var grip=root.querySelector('.grip'), gy=null, gh=0;
+  grip.addEventListener('pointerdown',function(e){
+    e.preventDefault(); try{ grip.setPointerCapture(e.pointerId); }catch(err){}
+    gy=e.clientY; gh=self.h; grip.classList.add('drag');
+  });
+  grip.addEventListener('pointermove',function(e){
+    if(gy===null) return; e.preventDefault();
+    var nh=Math.max(240, Math.round(gh+e.clientY-gy));
+    if(nh!==self.h){ self.h=nh; size(); }
+  });
+  function gripEnd(){ if(gy===null) return; gy=null; grip.classList.remove('drag'); save(); }
+  grip.addEventListener('pointerup',gripEnd); grip.addEventListener('pointercancel',gripEnd);
+  var lastW=0;
+  window.addEventListener('resize',function(){ var w=cv.parentElement.clientWidth; if(w!==lastW){ lastW=w; size(); } });
+  lastW=cv.parentElement.clientWidth; size();
+}
+document.querySelectorAll('.board').forEach(function(b){ new Board(b); });
+</script>
+<script>
+try{var v=JSON.parse(localStorage.getItem('uroki-visited')||'{}');v['algebra/p5']=new Date().toISOString().slice(0,10);localStorage.setItem('uroki-visited',JSON.stringify(v));}catch(e){}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('../../sw.js',{scope:'../../'}).catch(function(){});}
+</script>
+</body>
+</html>

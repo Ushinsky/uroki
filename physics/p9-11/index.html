@@ -1,0 +1,729 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="theme-color" content="#1d4f91">
+<link rel="apple-touch-icon" href="../../assets/icon-180.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Физика 7: движение молекул</title>
+<link rel="stylesheet" href="../../assets/fonts.css">
+<style>
+  :root{
+    --bg:#eef2f7; --paper:#ffffff; --ink:#15202e; --muted:#566273; --line:#d5dde8;
+    --blue:#1d4f91; --blue-soft:#e3ecf8; --red:#b0182f; --red-soft:#f8e6ea;
+    --green:#1f6b4f; --green-soft:#e2f2eb; --gold:#6f550c; --gold-soft:#f5efd9;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.65 "PT Sans",system-ui,sans-serif}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px}
+  h1,h2,h3{line-height:1.2;margin:0}
+  p{margin:0 0 14px}
+  section,[id]{scroll-margin-top:64px}
+
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:none}
+  nav a{flex:none;text-decoration:none;color:var(--ink);font-size:14px;font-weight:700;padding:6px 11px;border-radius:7px}
+  nav a:hover{background:var(--blue-soft);color:var(--blue)}
+
+  header{padding:40px 0 18px}
+  .hi{font-family:"PT Serif",serif;font-size:22px;color:var(--blue);margin:0 0 4px}
+  header h1{font-size:clamp(30px,5vw,44px);margin:4px 0 10px}
+  header p{color:var(--muted);max-width:660px;margin:0}
+
+  .par{background:var(--paper);border-radius:20px;padding:30px 26px 26px;margin:20px 0 26px;box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(21,32,46,.25)}
+  @media (max-width:560px){.par{padding:22px 16px 18px}}
+  .pnum{display:inline-block;font-family:"PT Serif",serif;font-weight:700;font-size:15px;color:#fff;background:var(--ink);border-radius:8px;padding:3px 11px}
+  .par > h2{font-size:clamp(26px,4.2vw,34px);margin:10px 0 6px}
+  .src{font-size:14px;color:var(--muted);margin:0 0 14px}
+  h3{font-size:22px;margin:32px 0 12px;padding-top:22px;border-top:1px solid var(--line)}
+  h3 .n{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--blue);color:#fff;font-size:16px;margin-right:10px;vertical-align:3px}
+
+  .def{background:var(--blue-soft);border-radius:12px;padding:14px 18px;margin:16px 0}
+  .def b{color:var(--blue)}
+  .key{background:var(--ink);color:#fff;border-radius:12px;padding:16px 20px;margin:18px 0;font-weight:700;font-size:18px;line-height:1.45}
+  .key::before{content:"Главное";display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#9fb3cf;margin-bottom:4px}
+  .simple{background:var(--green-soft);border-radius:12px;padding:12px 18px;margin:14px 0}
+  .simple::before{content:"Проще говоря";display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);font-weight:700;margin-bottom:2px}
+  .trap{background:var(--gold-soft);border-radius:12px;padding:12px 18px;margin:14px 0}
+  .trap::before{content:"Не перепутай";display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:2px}
+  .term{font-style:italic}
+
+  .person{display:grid;grid-template-columns:170px 1fr;gap:18px;align-items:start;margin:8px 0 16px}
+  .person img{width:100%;border-radius:12px;display:block}
+  .person .cap{font-size:14px;color:var(--muted);margin-top:6px;line-height:1.35}
+  .person .cap b{display:block;color:var(--ink);font-size:15px}
+  @media (max-width:560px){.person{grid-template-columns:110px 1fr;gap:12px}}
+
+  figure{margin:16px 0}
+  figure img{display:block;max-width:100%;height:auto;border-radius:12px;margin:0 auto;background:#fff}
+  figcaption{font-size:14.5px;color:var(--muted);margin-top:6px;text-align:center}
+  .row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+  .row figure{margin:0}
+  .row img{width:100%;aspect-ratio:4/3;object-fit:cover}
+  @media (max-width:560px){.row{grid-template-columns:1fr 1fr}}
+
+  .lab{background:#f3f6fa;border-radius:16px;padding:16px;margin:18px 0}
+  .lab .lt{font-weight:700;margin:0 0 2px}
+  .lab .ls{font-size:15px;color:var(--muted);margin:0 0 10px}
+  .lab canvas{display:block;width:100%;background:#fff;border-radius:12px;touch-action:pan-y}
+  .lab svg{display:block;width:100%;height:auto;background:#fff;border-radius:12px}
+  .ctrls{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:12px}
+  .ctrls label{display:flex;align-items:center;gap:8px;font-size:15.5px;font-weight:700;min-height:44px;cursor:pointer}
+  .ctrls input[type=checkbox]{width:22px;height:22px;accent-color:var(--blue)}
+  .ctrls .rng{flex:1 1 260px;display:flex;align-items:center;gap:10px;font-size:15.5px;font-weight:700}
+  .ctrls input[type=range]{flex:1;accent-color:var(--blue);height:30px;min-width:120px}
+  .btn{background:var(--blue);color:#fff;border:0;border-radius:10px;padding:10px 16px;font:inherit;font-size:16px;font-weight:700;cursor:pointer;min-height:44px}
+  .btn.ghost{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+  .btn[aria-pressed=true]{background:var(--ink);color:#fff}
+  .say{background:#fff;border-radius:12px;padding:10px 14px;margin-top:10px;font-size:16.5px;min-height:46px}
+  .stages{display:flex;gap:6px;margin-top:10px}
+  .stages span{flex:1;text-align:center;font-size:13.5px;font-weight:700;padding:6px 4px;border-radius:8px;background:#fff;color:var(--muted)}
+  .stages span.on{background:var(--blue);color:#fff}
+  .zones{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px;font-size:13.5px;font-weight:700;text-align:center}
+  .zones span{padding:6px 4px;border-radius:8px;background:#fff;color:var(--muted)}
+  .zones span.on.r{background:var(--red);color:#fff} .zones span.on.g{background:var(--green);color:#fff} .zones span.on.n{background:var(--muted);color:#fff}
+
+  .cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+  .cmp > div{border-radius:12px;padding:12px 14px}
+  .cmp .a{background:var(--blue-soft)} .cmp .b{background:var(--gold-soft)}
+  .cmp b{display:block;margin-bottom:4px}
+  @media (max-width:600px){.cmp{grid-template-columns:1fr}}
+
+  footer{text-align:center;color:var(--muted);font-size:14px;padding:6px 0 40px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a href="../../" style="color:#1d4f91">← Все уроки</a>
+  <a href="#p9">§ 9. Броуновское движение</a>
+  <a href="#p10">§ 10. Диффузия</a>
+  <a href="#p11">§ 11. Притяжение и отталкивание</a>
+</div></nav>
+
+<div class="wrap">
+<header>
+  <p class="hi">Алиса, привет!</p>
+  <h1>Молекулы движутся и притягиваются</h1>
+  <p>Физика, 7 класс, параграфы 9, 10 и 11. Здесь весь текст учебника, разложенный по полочкам, и живые схемы: их можно запускать, двигать ползунки и смотреть, как ведут себя молекулы. Синие рамки — определения, тёмные — главное, зелёные — пояснения простыми словами.</p>
+</header>
+
+<!-- ======================= § 9 ======================= -->
+<article class="par" id="p9">
+  <span class="pnum">§ 9</span>
+  <h2>Броуновское движение</h2>
+  <p class="src">Учебник, с. 25–27</p>
+
+  <div class="person">
+    <div>
+      <img src="img/f81070d41f.jpg" alt="Роберт Броун, фотография 1850-х годов">
+    </div>
+    <div>
+      <p class="cap"><b>Роберт Броун (1773–1858)</b>Британский ботаник. Первооткрыватель броуновского движения.</p>
+      <p>Одно из главных опытных доказательств того, что молекулы <b>движутся</b>, — это явление, которое первым наблюдал в <b>1827 году</b> английский ботаник <b>Роберт Броун</b>. Он рассматривал в микроскоп споры растений, плававшие в жидкости.</p>
+    </div>
+  </div>
+
+  <h3><span class="n">1</span>Что увидел Броун</h3>
+  <p>Похожий опыт можно сделать и самим. Берут краску или тушь и растирают её до таких мельчайших крупинок, что их видно только в микроскоп. Краску размешивают в воде и рассматривают эту смесь в микроскоп.</p>
+  <p>Видно, что крупинки краски <b>непрерывно движутся</b>:</p>
+  <ul>
+    <li>самые мелкие беспорядочно (хаотически) перемещаются с одного места в другое;</li>
+    <li>более крупные только беспорядочно колеблются, «дрожат» на месте.</li>
+  </ul>
+  <p>Точно так же, только споры растений в жидкости, двигались и у Броуна.</p>
+  <div class="def">Движение очень мелких твёрдых частиц, находящихся в жидкости, называют <b>броуновским движением</b>, а саму частицу — <b>броуновской частицей</b>.</div>
+
+  <div class="lab" id="labBrown">
+    <p class="lt">Живая схема: смотрим «в микроскоп»</p>
+    <p class="ls">Три крупинки краски разного размера в воде. Молекулы воды обычно не видны, но их можно показать галочкой.</p>
+    <canvas id="cvBrown" height="340"></canvas>
+    <div class="ctrls">
+      <label><input type="checkbox" id="bMol"> показать молекулы воды</label>
+      <label><input type="checkbox" id="bTrail" checked> рисовать путь</label>
+      <button class="btn ghost" id="bClear">Стереть путь</button>
+      <div class="rng">холодно <input type="range" id="bTemp" min="0.4" max="2" step="0.1" value="1" aria-label="Температура"> горячо</div>
+    </div>
+    <div class="say" id="bSay"></div>
+  </div>
+
+  <h3><span class="n">2</span>Броуновское движение никогда не прекращается</h3>
+  <p>Наблюдения показывают, что броуновское движение <b>не прекращается никогда</b>. В капле воды (если не дать ей высохнуть) движение крупинок можно наблюдать много дней, месяцев, лет. Оно не останавливается ни летом, ни зимой, ни днём, ни ночью.</p>
+  <p>В кусках кварца, которые пролежали в земле тысячи лет, иногда попадаются замурованные капельки воды. В этих капельках тоже наблюдали броуновское движение плавающих в воде частиц.</p>
+
+  <h3><span class="n">3</span>Почему крупинки движутся</h3>
+  <p>Причина броуновского движения — <b>непрерывное, никогда не прекращающееся движение молекул</b> жидкости (или газа), в которой находятся крупинки твёрдого тела.</p>
+  <div class="trap">Крупинки во много раз крупнее самих молекул. Когда мы видим в микроскоп движение крупинок, мы видим <b>не молекулы</b>. Молекулы нельзя увидеть в обычный микроскоп. О том, что они существуют и движутся, мы судим по их ударам: молекулы толкают крупинки краски и заставляют их двигаться.</div>
+  <p>Можно привести такое сравнение. Группа людей играет на воде огромным мячом. Они толкают мяч, и от толчков он движется то в одну, то в другую сторону. Если смотреть на игру издали, людей не видно, и кажется, что мяч движется беспорядочно и сам по себе, без причины.</p>
+  <figure>
+    <svg viewBox="0 0 640 220" role="img" aria-label="Сравнение: мяч и люди, крупинка и молекулы" style="max-width:640px">
+      <rect x="0" y="0" width="640" height="220" rx="12" fill="#e3ecf8"/>
+      <text x="160" y="28" text-anchor="middle" font-family="PT Sans" font-weight="700" font-size="16" fill="#15202e">Вблизи: видно, кто толкает</text>
+      <text x="480" y="28" text-anchor="middle" font-family="PT Sans" font-weight="700" font-size="16" fill="#15202e">Издали: виден только мяч</text>
+      <line x1="320" y1="40" x2="320" y2="205" stroke="#9fb3cf" stroke-dasharray="5 5"/>
+      <circle cx="160" cy="122" r="42" fill="#f5a440" stroke="#b0182f" stroke-width="3"/>
+      <g fill="#1d4f91">
+        <circle cx="86" cy="90" r="11"/><circle cx="232" cy="98" r="11"/><circle cx="118" cy="182" r="11"/><circle cx="212" cy="174" r="11"/><circle cx="160" cy="56" r="11"/>
+      </g>
+      <g stroke="#b0182f" stroke-width="3" marker-end="url(#ah)">
+        <line x1="96" y1="96" x2="116" y2="106"/><line x1="222" y1="102" x2="204" y2="110"/><line x1="126" y1="174" x2="136" y2="160"/>
+      </g>
+      <circle cx="480" cy="122" r="42" fill="#f5a440" stroke="#b0182f" stroke-width="3"/>
+      <path d="M430 160 C 400 130, 450 90, 470 70 S 540 100, 520 150 S 470 190, 455 175" fill="none" stroke="#566273" stroke-width="2" stroke-dasharray="4 4"/>
+      <text x="480" y="208" text-anchor="middle" font-family="PT Sans" font-size="14" fill="#566273">кажется, что мяч движется «сам»</text>
+      <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#b0182f"/></marker></defs>
+    </svg>
+    <figcaption>Мяч — как крупинка краски, люди — как молекулы воды</figcaption>
+  </figure>
+  <p>Так же и мы не видим самих молекул, но понимаем: непрерывное и беспорядочное движение крупинок краски происходит из-за толчков молекул.</p>
+  <div class="simple">Мелкую крупинку молекулы со всех сторон бьют неодинаково: то с одной стороны ударов больше, то с другой. Поэтому её и бросает туда-сюда. Большую крупинку бьёт столько молекул сразу, что удары почти уравновешивают друг друга, и она только слегка дрожит.</div>
+
+  <h3><span class="n">4</span>Что доказало открытие Броуна</h3>
+  <p>Открытие броуновского движения имело большое значение для изучения строения вещества.</p>
+  <div class="key">Броуновское движение показало, что тела действительно состоят из отдельных частиц — молекул, и что молекулы находятся в непрерывном беспорядочном движении.</div>
+</article>
+
+<!-- ======================= § 10 ======================= -->
+<article class="par" id="p10">
+  <span class="pnum">§ 10</span>
+  <h2>Диффузия в газах, жидкостях и твёрдых телах</h2>
+  <p class="src">Учебник, с. 27–29</p>
+
+  <h3><span class="n">1</span>Диффузия в газах: почему запах разносится по комнате</h3>
+  <p>Всем хорошо известно: если внести в комнату какое-нибудь пахучее вещество, например духи или кофе, запах скоро будет чувствоваться во всей комнате.</p>
+  <p>Запахи распространяются потому, что молекулы духов (или кофе) <span class="term">движутся</span>. По пути они сталкиваются с молекулами газов, из которых состоит воздух. Молекулы постоянно меняют направление движения и, беспорядочно перемещаясь, разлетаются по комнате.</p>
+  <div class="lab" id="labGas">
+    <p class="lt">Живая схема: запах из аромалампы</p>
+    <p class="ls">Оранжевые точки — молекулы ароматного масла, серые — молекулы воздуха. Следи за одной молекулой, выделенной красным: её путь — ломаная линия.</p>
+    <canvas id="cvGas" height="320"></canvas>
+    <div class="ctrls">
+      <button class="btn" id="gRun">▶ Открыть аромалампу</button>
+      <button class="btn ghost" id="gReset">Заново</button>
+      <label><input type="checkbox" id="gAir" checked> показать воздух</label>
+    </div>
+    <div class="say" id="gSay">Нажми «Открыть аромалампу».</div>
+  </div>
+  <div class="key">Распространение запаха — доказательство непрерывного и беспорядочного движения молекул.</div>
+
+  <h3><span class="n">2</span>Диффузия в жидкостях: опыт с медным купоросом</h3>
+  <p>Проделаем опыт, который можно объяснить только тем, что тела состоят из молекул, находящихся в непрерывном движении.</p>
+  <p>Нальём в мензурку (или стакан) раствор <b>медного купороса</b> — он тёмно-голубого цвета. Сверху осторожно добавим <b>чистую воду</b> (рис. 23).</p>
+  <figure>
+    <img src="img/cd155d1b92.jpg" alt="Рис. 23. Диффузия в жидкостях: пять мензурок" style="max-width:520px">
+    <figcaption>Рис. 23. Диффузия в жидкостях: слева направо проходят дни и недели</figcaption>
+  </figure>
+  <ol>
+    <li>Сначала между водой и медным купоросом видна <b>резкая граница</b>.</li>
+    <li>Через несколько дней граница становится <b>слегка размытой</b>.</li>
+    <li>Через 2–3 недели граница, отделяющая одну жидкость от другой, <b>исчезает</b>. В сосуде получается однородная жидкость бледно-голубого цвета. Значит, жидкости перемешались.</li>
+  </ol>
+  <p>Объясняется это так. Молекулы воды и медного купороса, которые находились возле границы двух жидкостей, <b>поменялись местами</b> (рис. 24). Граница стала расплывчатой: молекулы медного купороса оказались в нижнем слое воды, а молекулы воды — в верхнем слое медного купороса. Постепенно молекулы медного купороса и воды, двигаясь непрерывно и беспорядочно, распространяются по всему объёму, и жидкость в сосуде становится однородной.</p>
+
+  <div class="lab" id="labLiq">
+    <p class="lt">Живая схема: рис. 24 в движении</p>
+    <p class="ls">Голубые шарики — молекулы медного купороса, белые — молекулы воды. Справа — как это видно глазом: цвет жидкости на разной высоте.</p>
+    <canvas id="cvLiq" height="360"></canvas>
+    <div class="ctrls">
+      <button class="btn" id="lRun">▶ Пуск</button>
+      <button class="btn ghost" id="lReset">Заново</button>
+      <div class="rng">холодная <input type="range" id="lTemp" min="0.5" max="2.5" step="0.1" value="1" aria-label="Температура"> тёплая</div>
+    </div>
+    <div class="stages" id="lStages"><span>резкая граница</span><span>граница размыта</span><span>однородная жидкость</span></div>
+    <div class="say" id="lSay"></div>
+  </div>
+  <div class="def">Явление, при котором происходит взаимное проникновение молекул одного вещества между молекулами другого, называют <b>диффузией</b>.</div>
+
+  <h3><span class="n">3</span>Диффузия в твёрдых телах</h3>
+  <p>В твёрдых телах диффузия тоже происходит, но <b>ещё медленнее</b>.</p>
+  <p>Например, очень гладко отшлифованные пластинки <b>свинца</b> и <b>золота</b> кладут одну на другую и ставят на них груз. При комнатной температуре (20 °С) за <b>4–5 лет</b> золото и свинец взаимно проникают друг в друга на глубину около <b>1 мм</b> (рис. 25).</p>
+  <div class="lab">
+    <p class="lt">Живая схема: свинец и золото под грузом</p>
+    <p class="ls">Двигай ползунок времени. Серые шарики — атомы свинца, жёлтые — атомы золота.</p>
+    <svg id="svSolid" viewBox="0 0 600 300" role="img" aria-label="Диффузия свинца и золота"></svg>
+    <div class="ctrls"><div class="rng">0 лет <input type="range" id="sYears" min="0" max="5" step="0.1" value="0" aria-label="Прошло лет"> 5 лет</div></div>
+    <div class="say" id="sSay"></div>
+  </div>
+  <p>В этих опытах мы наблюдаем взаимное проникновение молекул веществ, то есть <span class="term">диффузию</span>.</p>
+
+  <div class="cmp">
+    <div class="a"><b>Газ</b>запах духов разносится по комнате быстро</div>
+    <div class="a"><b>Жидкость</b>купорос и вода — за 2–3 недели</div>
+    <div class="b"><b>Твёрдое тело</b>свинец и золото — 1 мм за 4–5 лет</div>
+    <div class="b"><b>Вывод</b>быстрее всего диффузия идёт в газах, медленнее всего — в твёрдых телах</div>
+  </div>
+
+  <h3><span class="n">4</span>Диффузия и температура</h3>
+  <p>Чем выше температура, тем быстрее идёт диффузия. Так происходит потому, что при повышении температуры <b>увеличивается скорость движения молекул</b>. Проверь это на живых схемах выше: передвинь ползунок к «тёплая» — и жидкости перемешаются заметно быстрее.</p>
+  <div class="key">Диффузия ускоряется с повышением температуры, потому что молекулы начинают двигаться быстрее.</div>
+
+  <h3><span class="n">5</span>Диффузия в природе</h3>
+  <p>Диффузия играет большую роль в природе. Например:</p>
+  <ul>
+    <li>благодаря диффузии у поверхности Земли поддерживается <b>однородный состав воздуха</b>;</li>
+    <li>диффузия растворов разных солей в почве помогает <b>нормальному питанию растений</b>.</li>
+  </ul>
+</article>
+
+<!-- ======================= § 11 ======================= -->
+<article class="par" id="p11">
+  <span class="pnum">§ 11</span>
+  <h2>Взаимное притяжение и отталкивание молекул</h2>
+  <p class="src">Учебник, с. 30–32</p>
+
+  <h3><span class="n">1</span>Почему тела не рассыпаются на молекулы</h3>
+  <p>Если все тела состоят из мельчайших частиц (молекул или атомов), почему твёрдые тела и жидкости не рассыпаются на отдельные молекулы? Что удерживает их вместе — ведь молекулы разделены промежутками и находятся в непрерывном беспорядочном движении?</p>
+  <p>Дело в том, что <b>между молекулами существует взаимное притяжение</b>. Каждая молекула притягивает к себе все соседние молекулы и сама притягивается ими.</p>
+  <p>Когда мы рвём нить, ломаем палку или отрываем кусочек бумаги, мы <b>преодолеваем силы притяжения</b> между молекулами.</p>
+  <p>Притяжение между двумя отдельными молекулами заметить совершенно невозможно. Но когда притягиваются многие миллионы таких частиц, взаимное притяжение становится значительным. Поэтому верёвку или стальную проволоку так трудно разорвать руками.</p>
+  <p>Притяжение между молекулами в разных веществах <b>неодинаково</b>. Этим объясняется разная прочность тел. Например, стальная проволока прочнее медной. Это значит, что частицы стали притягиваются друг к другу сильнее, чем частицы меди.</p>
+
+  <h3><span class="n">2</span>Притяжение заметно только вблизи</h3>
+  <p>Притяжение между молекулами становится заметным, только когда они находятся <b>очень близко</b> друг к другу. На расстоянии больше размеров самих молекул притяжение ослабевает.</p>
+  <ul>
+    <li>Две капли воды сливаются в одну, если они соприкоснутся.</li>
+    <li>Два свинцовых цилиндра сцепляются вместе, если их плотно прижать друг к другу ровными, только что срезанными поверхностями. Сцепление может быть таким прочным, что цилиндры не удаётся оторвать друг от друга даже при большой нагрузке (рис. 26).</li>
+  </ul>
+  <figure>
+    <img src="img/1542634cc0.jpg" alt="Рис. 26. Сцепление свинцовых цилиндров" style="max-width:170px">
+    <figcaption>Рис. 26. Сцепление свинцовых цилиндров: они держат даже гирю</figcaption>
+  </figure>
+  <p>Однако осколки стекла <b>нельзя срастить</b>, даже если плотно прижимать их друг к другу. Из-за неровностей их не удаётся сблизить на то расстояние, на котором частицы могут притянуться. Но если размягчить стекло, нагрев его, то части можно сблизить, и стекло в этом случае <b>спаивается</b>. Значит, частицы стекла оказались на таком расстоянии, когда действует притяжение.</p>
+
+  <div class="lab">
+    <p class="lt">Живая схема: два осколка стекла под «микроскопом»</p>
+    <p class="ls">Края осколков неровные. Прижми их или нагрей и посмотри, где молекулы оказываются достаточно близко.</p>
+    <svg id="svGlass" viewBox="0 0 600 220" role="img" aria-label="Неровные края осколков стекла"></svg>
+    <div class="ctrls">
+      <button class="btn" id="glPress">Прижать холодные</button>
+      <button class="btn" id="glHeat">Нагреть и прижать</button>
+      <button class="btn ghost" id="glReset">Разъединить</button>
+    </div>
+    <div class="say" id="glSay">Осколки лежат рядом, но не касаются.</div>
+  </div>
+
+  <p>На притяжении молекул друг к другу основано соединение кусков металла при <b>сварке</b> или <b>пайке</b>, а также <b>склеивание</b>.</p>
+  <div class="row">
+    <figure><img src="img/49615d3ec6.jpg" alt="Сварка"><figcaption>а) сварка</figcaption></figure>
+    <figure><img src="img/5443d872ea.jpg" alt="Пайка"><figcaption>б) пайка</figcaption></figure>
+    <figure><img src="img/4274d3995b.jpg" alt="Склеивание"><figcaption>в) склеивание</figcaption></figure>
+  </div>
+  <div class="key">Между молекулами (атомами) существует взаимное притяжение, которое заметно только на расстояниях, сравнимых с размерами самих молекул (атомов).</div>
+
+  <h3><span class="n">3</span>Почему молекулы не слипаются: отталкивание</h3>
+  <p>Попробуем выяснить, почему между молекулами есть промежутки. Если молекулы притягиваются друг к другу, они как будто должны слипнуться. Этого не происходит потому, что <b>между молекулами (атомами) в то же время существует отталкивание</b>.</p>
+  <div class="def"><b>На расстояниях, сравнимых с размерами самих молекул (атомов), заметнее проявляется притяжение, а при дальнейшем сближении — отталкивание.</b></div>
+
+  <div class="lab">
+    <p class="lt">Живая схема: подвигай молекулы</p>
+    <p class="ls">Тяни ползунок и смотри, как меняется взаимодействие двух молекул.</p>
+    <svg id="svForce" viewBox="0 0 600 200" role="img" aria-label="Две молекулы и сила между ними"></svg>
+    <div class="ctrls"><div class="rng">вплотную <input type="range" id="fDist" min="0" max="100" value="45" aria-label="Расстояние"> далеко</div></div>
+    <div class="zones" id="fZones"><span class="r">отталкивание</span><span class="g">притяжение</span><span class="n">почти не действуют</span></div>
+    <div class="say" id="fSay"></div>
+  </div>
+
+  <p>Многие явления подтверждают, что отталкивание между молекулами существует. Например, <b>сжатое тело распрямляется</b>. Это происходит потому, что при сжатии молекулы оказываются так близко друг к другу, что начинает проявляться отталкивание.</p>
+  <div class="simple">Молекулы похожи на людей в очереди, которые держатся за руки. Если отойти слишком далеко — руки тянут обратно (притяжение). Если толкнуть их вплотную — они упираются локтями и расталкивают друг друга (отталкивание).</div>
+
+  <h3><span class="n">4</span>Смачивание</h3>
+  <p>Некоторые явления в природе можно объяснить притяжением молекул друг к другу. Например, <span class="term">смачивание</span> твёрдого тела жидкостью.</p>
+  <p>К пружине подвешивают на нитке стеклянную пластинку так, чтобы её нижняя поверхность была горизонтальной (рис. 27). Пластинку подносят к сосуду с водой так, чтобы она легла на поверхность воды.</p>
+  <figure>
+    <img src="img/b0e2202103.jpg" alt="Рис. 27. Явление смачивания тел" style="max-width:560px">
+    <figcaption>Рис. 27. Явление смачивания тел</figcaption>
+  </figure>
+  <div class="lab">
+    <p class="lt">Живая схема: отрываем пластинку от воды</p>
+    <p class="ls">Тяни ползунок вверх (вправо) и смотри на пружину.</p>
+    <svg id="svWet" viewBox="0 0 600 320" role="img" aria-label="Пластинка на пружине и вода"></svg>
+    <div class="ctrls"><div class="rng">пластинка лежит <input type="range" id="wPull" min="0" max="100" value="0" aria-label="Тянем вверх"> оторвали</div></div>
+    <div class="say" id="wSay"></div>
+  </div>
+  <ul>
+    <li><b>а)</b> Пластинка лежит на воде.</li>
+    <li><b>б)</b> Когда пластинку отрывают от воды, пружина заметно <b>растягивается</b>. Это доказывает, что между молекулами есть притяжение. По тому, насколько растянулась пружина, можно судить, насколько оно велико.</li>
+    <li><b>в)</b> Если посмотреть на оторванную пластинку, на ней остаётся тонкий слой воды — пластинка <b>смочена</b> водой.</li>
+  </ul>
+  <p>Значит, отрывая пластинку, мы преодолевали притяжение <b>между молекулами воды</b>. Разрыв произошёл не там, где молекулы воды касаются частиц стекла, а там, где молекулы воды касаются друг друга.</p>
+  <p>Вода смачивает не только стекло, но и кожу, дерево и другие вещества.</p>
+  <p>Но во многих случаях вода может и <b>не смачивать</b> тела. Например, если опустить в воду кусочек воска или парафина, а потом вынуть, он окажется сухим. И ты хорошо знаешь, что вода не смачивает жирные поверхности.</p>
+
+  <div class="lab">
+    <p class="lt">Схема: капля на разных поверхностях</p>
+    <svg viewBox="0 0 600 230" role="img" aria-label="Смачивание и несмачивание">
+      <rect x="0" y="0" width="600" height="230" fill="#fff"/>
+      <text x="150" y="28" text-anchor="middle" font-family="PT Sans" font-weight="700" font-size="17" fill="#1f6b4f">Смачивание: вода на стекле</text>
+      <text x="450" y="28" text-anchor="middle" font-family="PT Sans" font-weight="700" font-size="17" fill="#b0182f">Несмачивание: вода на парафине</text>
+      <line x1="300" y1="40" x2="300" y2="220" stroke="#d5dde8"/>
+      <rect x="20" y="150" width="260" height="26" fill="#cfe3f3" stroke="#1d4f91"/>
+      <text x="150" y="168" text-anchor="middle" font-family="PT Sans" font-size="13" fill="#1d4f91">стекло</text>
+      <path d="M45 150 Q150 92 255 150 Z" fill="#7fb3e6" opacity=".85"/>
+      <rect x="320" y="150" width="260" height="26" fill="#f5efd9" stroke="#6f550c"/>
+      <text x="450" y="168" text-anchor="middle" font-family="PT Sans" font-size="13" fill="#6f550c">парафин</text>
+      <circle cx="450" cy="111" r="40" fill="#7fb3e6" opacity=".85"/>
+      <g font-family="PT Sans" font-size="14" fill="#15202e">
+        <text x="150" y="200" text-anchor="middle">вода к стеклу тянется сильнее,</text>
+        <text x="150" y="217" text-anchor="middle">чем к самой себе — капля растекается</text>
+        <text x="450" y="200" text-anchor="middle">вода к самой себе тянется сильнее,</text>
+        <text x="450" y="217" text-anchor="middle">чем к парафину — капля собирается в шарик</text>
+      </g>
+    </svg>
+  </div>
+  <p>Все эти примеры легко объяснить.</p>
+  <div class="cmp">
+    <div class="a"><b>Жидкость смачивает тело</b>Молекулы жидкости притягиваются друг к другу <b>слабее</b>, чем к молекулам тела.</div>
+    <div class="b"><b>Жидкость не смачивает тело (несмачиваемость)</b>Молекулы жидкости притягиваются друг к другу <b>сильнее</b>, чем к молекулам твёрдого тела.</div>
+  </div>
+  <p>В быту мы часто встречаемся со смачиванием и несмачиванием. Например, благодаря смачиванию мы можем <b>писать</b> (чернила смачивают бумагу) и <b>вытирать</b> мокрые предметы. А у водоплавающих птиц перья остаются сухими: вода их не смачивает.</p>
+</article>
+
+<footer>Физика, 7 класс · § 9–11 · по учебнику А. В. Перышкина · портрет Р. Броуна: Maull &amp; Polyblank, Wikimedia Commons, общественное достояние</footer>
+</div>
+
+<script>
+/* ---------- общие помощники ---------- */
+function setupCanvas(cv){
+  var d=window.devicePixelRatio||1, w=cv.clientWidth, h=+cv.getAttribute('height');
+  cv.width=Math.round(w*d); cv.height=Math.round(h*d); cv.style.height=h+'px';
+  var ctx=cv.getContext('2d'); ctx.setTransform(d,0,0,d,0,0); return {ctx:ctx,w:w,h:h};
+}
+function visible(el,cb){
+  var got=false;
+  if(window.IntersectionObserver) new IntersectionObserver(function(es){ got=true; es.forEach(function(e){ cb(e.isIntersecting); }); }).observe(el);
+  setTimeout(function(){ if(!got) cb(true); },1200);
+}
+var NS='http://www.w3.org/2000/svg';
+function E(p,t,a,txt){ var e=document.createElementNS(NS,t); for(var k in a) e.setAttribute(k,a[k]); if(txt!=null) e.textContent=txt; p.appendChild(e); return e; }
+
+/* ---------- § 9: броуновское движение ---------- */
+(function(){
+  var cv=document.getElementById('cvBrown'), C, ctx, W, H, mol=[], big=[], run=false, raf, temp=1;
+  var showMol=document.getElementById('bMol'), trailOn=document.getElementById('bTrail'), say=document.getElementById('bSay');
+  function init(){
+    C=setupCanvas(cv); ctx=C.ctx; W=C.w; H=C.h; mol=[];
+    var n=Math.round(W*H/520);
+    for(var i=0;i<n;i++){ var a=Math.random()*6.283; mol.push({x:Math.random()*W,y:Math.random()*H,vx:Math.cos(a)*3,vy:Math.sin(a)*3}); }
+    big=[{r:7,m:14,c:'#b0182f'},{r:14,m:60,c:'#6f550c'},{r:26,m:400,c:'#1d4f91'}];
+    big.forEach(function(b,i){ b.x=W*(0.22+0.28*i); b.y=H/2; b.vx=0; b.vy=0; b.tr=[]; });
+  }
+  function step(){
+    var sp=3*temp;
+    mol.forEach(function(m){
+      var v=Math.hypot(m.vx,m.vy)||1; m.vx*=sp/v; m.vy*=sp/v;
+      m.x+=m.vx; m.y+=m.vy;
+      if(m.x<0){m.x=0;m.vx=-m.vx;} if(m.x>W){m.x=W;m.vx=-m.vx;}
+      if(m.y<0){m.y=0;m.vy=-m.vy;} if(m.y>H){m.y=H;m.vy=-m.vy;}
+      if(Math.random()<0.02){ var a=Math.random()*6.283; m.vx=Math.cos(a)*sp; m.vy=Math.sin(a)*sp; }
+      big.forEach(function(b){
+        var dx=m.x-b.x, dy=m.y-b.y, d=Math.hypot(dx,dy);
+        if(d<b.r+1.5 && d>0){
+          var nx=dx/d, ny=dy/d, rv=(m.vx-b.vx)*nx+(m.vy-b.vy)*ny;
+          if(rv<0){ var j=2*rv/(1+1/b.m); m.vx-=j*nx; m.vy-=j*ny; b.vx+=j*nx/b.m*1.0; b.vy+=j*ny/b.m*1.0; }
+          m.x=b.x+nx*(b.r+1.6); m.y=b.y+ny*(b.r+1.6);
+        }
+      });
+    });
+    big.forEach(function(b){
+      b.x+=b.vx; b.y+=b.vy; b.vx*=0.985; b.vy*=0.985;
+      if(b.x<b.r){b.x=b.r;b.vx=Math.abs(b.vx);} if(b.x>W-b.r){b.x=W-b.r;b.vx=-Math.abs(b.vx);}
+      if(b.y<b.r){b.y=b.r;b.vy=Math.abs(b.vy);} if(b.y>H-b.r){b.y=H-b.r;b.vy=-Math.abs(b.vy);}
+      if(trailOn.checked){ b.tr.push([b.x,b.y]); if(b.tr.length>900) b.tr.shift(); }
+    });
+  }
+  function draw(){
+    ctx.fillStyle='#f7fbff'; ctx.fillRect(0,0,W,H);
+    if(showMol.checked){ ctx.fillStyle='#8fb3dc'; mol.forEach(function(m){ ctx.beginPath(); ctx.arc(m.x,m.y,1.7,0,6.283); ctx.fill(); }); }
+    big.forEach(function(b){
+      if(b.tr.length>1){ ctx.strokeStyle=b.c; ctx.globalAlpha=.55; ctx.lineWidth=1.5; ctx.beginPath(); ctx.moveTo(b.tr[0][0],b.tr[0][1]); b.tr.forEach(function(p){ ctx.lineTo(p[0],p[1]); }); ctx.stroke(); ctx.globalAlpha=1; }
+      ctx.fillStyle=b.c; ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,6.283); ctx.fill();
+    });
+  }
+  function loop(){ for(var k=0;k<2;k++) step(); draw(); raf=requestAnimationFrame(loop); }
+  function text(){
+    say.innerHTML = showMol.checked
+      ? 'Теперь видны молекулы воды (голубые точки). Они непрерывно бьют по крупинкам со всех сторон. <b>Маленькую красную</b> крупинку удары бросают туда-сюда, а <b>большая синяя</b> почти стоит на месте и только дрожит.'
+      : 'Так это выглядит в микроскоп: молекул не видно, а крупинки краски движутся сами собой. <b>Чем меньше крупинка, тем сильнее она мечется.</b> Включи «показать молекулы воды», чтобы увидеть причину.';
+    if(temp>1.4) say.innerHTML+=' <b>Сейчас горячо</b>: молекулы движутся быстрее, и крупинки тоже.';
+    if(temp<0.7) say.innerHTML+=' <b>Сейчас холодно</b>: молекулы движутся медленнее, но движение всё равно не прекращается.';
+  }
+  showMol.addEventListener('change',text);
+  document.getElementById('bTemp').addEventListener('input',function(e){ temp=+e.target.value; text(); });
+  document.getElementById('bClear').addEventListener('click',function(){ big.forEach(function(b){ b.tr=[]; }); });
+  init(); text(); draw();
+  visible(cv,function(v){ if(v&&!run){ run=true; loop(); } else if(!v&&run){ run=false; cancelAnimationFrame(raf); } });
+  var lw=cv.clientWidth; window.addEventListener('resize',function(){ if(cv.clientWidth!==lw){ lw=cv.clientWidth; init(); } });
+})();
+
+/* ---------- § 10: диффузия в газе ---------- */
+(function(){
+  var cv=document.getElementById('cvGas'), C, ctx, W, H, air=[], aro=[], on=false, run=false, raf, t=0, tracer;
+  var say=document.getElementById('gSay'), showAir=document.getElementById('gAir');
+  function init(){
+    C=setupCanvas(cv); ctx=C.ctx; W=C.w; H=C.h; air=[]; aro=[]; t=0; on=false;
+    for(var i=0;i<Math.round(W*H/700);i++) air.push(mk(Math.random()*W,Math.random()*H));
+    document.getElementById('gRun').textContent='▶ Открыть аромалампу';
+    say.textContent='Нажми «Открыть аромалампу».';
+  }
+  function mk(x,y){ var a=Math.random()*6.283; return {x:x,y:y,a:a,tr:[]}; }
+  var LX=function(){ return 60; }, LY=function(){ return H-70; };
+  function move(p,s){
+    if(Math.random()<0.08) p.a+=(Math.random()-0.5)*3.2;
+    p.x+=Math.cos(p.a)*s; p.y+=Math.sin(p.a)*s;
+    if(p.x<4){p.x=4;p.a=Math.PI-p.a;} if(p.x>W-4){p.x=W-4;p.a=Math.PI-p.a;}
+    if(p.y<4){p.y=4;p.a=-p.a;} if(p.y>H-4){p.y=H-4;p.a=-p.a;}
+  }
+  function step(){
+    air.forEach(function(p){ move(p,1.6); });
+    if(on){
+      t++;
+      if(aro.length<220 && t%2===0){ var p=mk(LX()+(Math.random()-0.5)*16,LY()-30); p.a=-Math.PI/2+(Math.random()-0.5)*1.2; aro.push(p); if(!tracer) tracer=p; }
+      aro.forEach(function(p){ move(p,1.6); });
+      if(tracer){ tracer.tr.push([tracer.x,tracer.y]); if(tracer.tr.length>700) tracer.tr.shift(); }
+      var far=aro.filter(function(p){ return p.x>W*0.66; }).length;
+      say.innerHTML = far<5 ? 'Молекулы масла вылетают из лампы и сразу натыкаются на молекулы воздуха.'
+        : far<25 ? 'Молекулы всё время сталкиваются и меняют направление — путь красной молекулы похож на ломаную линию. Но понемногу они расходятся по комнате.'
+        : 'Запах дошёл до дальнего угла комнаты: молекулы масла перемешались с воздухом. Это и есть <b>диффузия в газе</b>.';
+    }
+  }
+  function draw(){
+    ctx.fillStyle='#f7fbff'; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#e3ecf8'; ctx.fillRect(0,H-18,W,18);
+    // лампа
+    var x=LX(), y=LY();
+    ctx.fillStyle='#d9c7a6'; ctx.beginPath(); ctx.moveTo(x-26,y+52); ctx.lineTo(x-18,y-14); ctx.lineTo(x+18,y-14); ctx.lineTo(x+26,y+52); ctx.closePath(); ctx.fill();
+    ctx.fillStyle='#b9a27a'; ctx.fillRect(x-24,y-24,48,10);
+    ctx.fillStyle='#f5a440'; ctx.beginPath(); ctx.ellipse(x,y+22,5,9,0,0,6.283); ctx.fill();
+    ctx.font='bold 14px "PT Sans"'; ctx.fillStyle='#566273'; ctx.textAlign='right'; ctx.fillText('дальний угол комнаты',W-10,22);
+    if(showAir.checked){ ctx.fillStyle='#b4c0cf'; air.forEach(function(p){ ctx.beginPath(); ctx.arc(p.x,p.y,2.2,0,6.283); ctx.fill(); }); }
+    if(tracer && tracer.tr.length>1){ ctx.strokeStyle='#b0182f'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.moveTo(tracer.tr[0][0],tracer.tr[0][1]); tracer.tr.forEach(function(q){ ctx.lineTo(q[0],q[1]); }); ctx.stroke(); }
+    ctx.fillStyle='#f08a1c'; aro.forEach(function(p){ ctx.beginPath(); ctx.arc(p.x,p.y,3,0,6.283); ctx.fill(); });
+    if(tracer){ ctx.fillStyle='#b0182f'; ctx.beginPath(); ctx.arc(tracer.x,tracer.y,5,0,6.283); ctx.fill(); }
+  }
+  function loop(){ step(); draw(); raf=requestAnimationFrame(loop); }
+  document.getElementById('gRun').addEventListener('click',function(){ on=!on; this.textContent=on?'⏸ Пауза':'▶ Продолжить'; });
+  document.getElementById('gReset').addEventListener('click',function(){ tracer=null; init(); });
+  init(); draw();
+  visible(cv,function(v){ if(v&&!run){ run=true; loop(); } else if(!v&&run){ run=false; cancelAnimationFrame(raf); } });
+  var lw=cv.clientWidth; window.addEventListener('resize',function(){ if(cv.clientWidth!==lw){ lw=cv.clientWidth; tracer=null; init(); } });
+})();
+
+/* ---------- § 10: диффузия в жидкости ---------- */
+(function(){
+  var cv=document.getElementById('cvLiq'), C, ctx, W, H, ps=[], on=false, run=false, raf, day=0, temp=1;
+  var say=document.getElementById('lSay'), st=document.getElementById('lStages').children;
+  var VX, VW, VY=20, VH, R=4.2;
+  function init(){
+    C=setupCanvas(cv); ctx=C.ctx; W=C.w; H=C.h; ps=[]; day=0; on=false;
+    VX=14; VW=Math.min(W*0.62,W-150); VH=H-40;
+    var gap=R*2.3, cols=Math.floor((VW-6)/gap), rows=Math.floor((VH-6)/gap);
+    for(var r=0;r<rows;r++) for(var c=0;c<cols;c++){
+      var x=VX+4+gap/2+c*gap, y=VY+4+gap/2+r*gap;
+      ps.push({x:x,y:y,blue:r>=rows/2});
+    }
+    document.getElementById('lRun').textContent='▶ Пуск';
+    upd();
+  }
+  function mix(){
+    // соседние частицы меняются местами случайно — так выглядит беспорядочное движение в плотной жидкости
+    var n=Math.round(ps.length*0.02*temp);
+    for(var k=0;k<n;k++){
+      var a=ps[Math.random()*ps.length|0];
+      var best=null, bd=1e9;
+      for(var t=0;t<6;t++){ var b=ps[Math.random()*ps.length|0]; var d=Math.abs(a.x-b.x)+Math.abs(a.y-b.y); if(d<bd&&b!==a){bd=d;best=b;} }
+      if(best && bd<R*5.2){ var tx=a.blue; a.blue=best.blue; best.blue=tx; }
+    }
+    // небольшие «шаги» к соседу: дополнительно перемешиваем по соседям
+    for(var k2=0;k2<Math.round(ps.length*0.3*temp);k2++){
+      var i=Math.random()*ps.length|0, j=i+(Math.random()<.5?1:-1)*(Math.random()<.5?1:Math.round(VW/(R*2.3)));
+      if(j>=0&&j<ps.length){ var t2=ps[i].blue; ps[i].blue=ps[j].blue; ps[j].blue=t2; }
+    }
+    day+=0.08*temp;
+  }
+  function spread(){
+    // доля голубых в верхней половине: 0 — граница резкая, 0.5 — перемешано
+    var top=0, n=0; ps.forEach(function(p){ if(p.y<VY+VH/2){ n++; if(p.blue) top++; } }); return top/n;
+  }
+  function upd(){
+    var s=spread(), k = s<0.06?0 : s<0.38?1 : 2;
+    for(var i=0;i<3;i++) st[i].classList.toggle('on',i===k);
+    var d=Math.round(21*Math.min(1,s/0.45));
+    say.innerHTML = (day<0.5 ? 'Сверху вода, снизу медный купорос, между ними <b>резкая граница</b>. Нажми «Пуск».'
+      : k===0 ? 'Молекулы у границы начинают меняться местами.'
+      : k===1 ? 'Граница <b>размылась</b>: молекулы купороса поднялись в воду, а молекулы воды опустились в купорос.'
+      : 'Граница исчезла: голубые и белые молекулы распределились по всему объёму. Жидкость стала <b>однородной, бледно-голубой</b>.')
+      + (day>=0.5 ? ' <span style="color:var(--muted)">(в настоящем опыте прошло бы примерно '+(d<1?'меньше дня':d+' дн.')+')</span>' : '');
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H); ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle='#566273'; ctx.lineWidth=3; ctx.strokeRect(VX,VY,VW,VH);
+    ps.forEach(function(p){ ctx.fillStyle=p.blue?'#2f7fd1':'#ffffff'; ctx.beginPath(); ctx.arc(p.x,p.y,R,0,6.283); ctx.fill(); ctx.strokeStyle=p.blue?'#1d4f91':'#b4c0cf'; ctx.lineWidth=1; ctx.stroke(); });
+    // мензурка «на глаз»
+    var mx=VX+VW+40, mw=Math.min(70,W-mx-20), bands=14, bh=VH/bands;
+    ctx.font='bold 13px "PT Sans"'; ctx.fillStyle='#566273'; ctx.textAlign='center'; ctx.fillText('на глаз',mx+mw/2,14);
+    for(var b=0;b<bands;b++){
+      var y0=VY+b*bh, n=0, bl=0;
+      ps.forEach(function(p){ if(p.y>=y0&&p.y<y0+bh){ n++; if(p.blue) bl++; } });
+      var f=n?bl/n:0, c0=[255,255,255], c1=[47,127,209], rgb=c0.map(function(v,i){ return Math.round(v+(c1[i]-v)*f); });
+      ctx.fillStyle='rgb('+rgb.join(',')+')'; ctx.fillRect(mx,y0,mw,bh+0.5);
+    }
+    ctx.strokeStyle='#566273'; ctx.lineWidth=2.5; ctx.strokeRect(mx,VY,mw,VH);
+  }
+  function loop(){ if(on){ mix(); upd(); } draw(); raf=requestAnimationFrame(loop); }
+  document.getElementById('lRun').addEventListener('click',function(){ on=!on; this.textContent=on?'⏸ Пауза':'▶ Продолжить'; });
+  document.getElementById('lReset').addEventListener('click',init);
+  document.getElementById('lTemp').addEventListener('input',function(e){ temp=+e.target.value; });
+  init(); draw();
+  visible(cv,function(v){ if(v&&!run){ run=true; loop(); } else if(!v&&run){ run=false; cancelAnimationFrame(raf); } });
+  var lw=cv.clientWidth; window.addEventListener('resize',function(){ if(cv.clientWidth!==lw){ lw=cv.clientWidth; init(); } });
+})();
+
+/* ---------- § 10: свинец и золото ---------- */
+(function(){
+  var svg=document.getElementById('svSolid'), s=document.getElementById('sYears'), say=document.getElementById('sSay');
+  var cols=19, rows=10, g=24, x0=36, y0=40, atoms=[], rnd=[];
+  E(svg,'rect',{x:x0-12,y:4,width:cols*g+0,height:26,rx:4,fill:'#566273'});
+  E(svg,'text',{x:x0-12+cols*g/2,y:22,'text-anchor':'middle','font-family':'PT Sans','font-weight':700,'font-size':14,fill:'#fff'},'груз');
+  for(var r=0;r<rows;r++) for(var c=0;c<cols;c++){
+    var top=r<rows/2;
+    var a=E(svg,'circle',{cx:x0+c*g,cy:y0+12+r*g,r:10,fill:top?'#9aa3ad':'#e7b416',stroke:top?'#5d6670':'#9b7a06','stroke-width':1.5});
+    atoms.push({el:a,r:r,c:c,top:top}); rnd.push(Math.random());
+  }
+  E(svg,'text',{x:x0+cols*g+4,y:y0+66,'font-family':'PT Sans','font-weight':700,'font-size':15,fill:'#5d6670'},'свинец');
+  E(svg,'text',{x:x0+cols*g+4,y:y0+190,'font-family':'PT Sans','font-weight':700,'font-size':15,fill:'#9b7a06'},'золото');
+  var line=E(svg,'line',{x1:x0-14,x2:x0+cols*g-10,y1:y0+rows/2*g,y2:y0+rows/2*g,stroke:'#b0182f','stroke-width':2,'stroke-dasharray':'6 5'});
+  function upd(){
+    var y=+s.value, depth=y/5; // доля глубины 0..1 (1 ≈ 1 мм на схеме — 2 ряда)
+    atoms.forEach(function(a,i){
+      var dist = a.top ? (rows/2-1-a.r) : (a.r-rows/2); // 0 — у самой границы
+      var p = depth*Math.max(0,1-dist/2.6)*0.55;
+      var swapped = rnd[i]<p;
+      var lead = a.top ? !swapped : swapped;
+      a.el.setAttribute('fill',lead?'#9aa3ad':'#e7b416'); a.el.setAttribute('stroke',lead?'#5d6670':'#9b7a06');
+    });
+    line.setAttribute('opacity', y<0.3?1:0.35);
+    say.innerHTML = y<0.3 ? 'Пластинки только что положили друг на друга. Граница между ними ровная.'
+      : y<2.5 ? 'Прошло '+y.toFixed(1).replace('.',',')+' года. Отдельные атомы золота уже пробрались в свинец, а атомы свинца — в золото. Очень медленно!'
+      : 'Прошло '+y.toFixed(1).replace('.',',')+' года. Металлы проникли друг в друга примерно на <b>1 мм</b>. В твёрдых телах диффузия идёт медленнее всего.';
+  }
+  s.addEventListener('input',upd); upd();
+})();
+
+/* ---------- § 11: осколки стекла ---------- */
+(function(){
+  var svg=document.getElementById('svGlass'), say=document.getElementById('glSay'), N=16;
+  var edge=[], edgeR=[]; for(var i=0;i<=N;i++){ edge.push((Math.random()-0.5)*26); edgeR.push((Math.random()-0.5)*26); }
+  var gL=E(svg,'g',{}), gR=E(svg,'g',{}), dots=E(svg,'g',{});
+  function shape(side,off,smooth){
+    var pts=[], cx=300+off*side;
+    for(var i=0;i<=N;i++){ var y=20+i*(180/N), e=smooth?0:edge[i]; pts.push([cx+e*side*-1*(side<0?-1:1),y]); }
+    return pts;
+  }
+  function draw(off,smooth,heat){
+    gL.innerHTML=''; gR.innerHTML=''; dots.innerHTML='';
+    var L=[],Rr=[];
+    for(var i=0;i<=N;i++){ var y=20+i*(180/N); L.push([300-off+(smooth?0:edge[i]),y]); Rr.push([300+off+(smooth?0:edgeR[i]),y]); }
+    var fill=heat?'#f8d7c4':'#d7ecf5', st=heat?'#b0182f':'#1d4f91';
+    E(gL,'path',{d:'M20 20 L'+L.map(function(p){return p.join(' ');}).join(' L')+' L20 200 Z',fill:fill,stroke:st,'stroke-width':2.5});
+    E(gR,'path',{d:'M580 20 L'+Rr.map(function(p){return p.join(' ');}).join(' L')+' L580 200 Z',fill:fill,stroke:st,'stroke-width':2.5});
+    var touch=0;
+    for(var j=0;j<=N;j++){ var gap=Rr[j][0]-L[j][0]; if(gap<2.5){ touch++; E(dots,'circle',{cx:L[j][0]+gap/2,cy:L[j][1],r:6,fill:'#1f6b4f'}); } }
+    return touch;
+  }
+  var off=60; draw(off,false,false);
+  function anim(to,smooth,heat,done){
+    var from=off, t0=Date.now();
+    (function f(){ var k=Math.min(1,(Date.now()-t0)/700); off=from+(to-from)*k; var n=draw(off,smooth,heat); if(k<1) requestAnimationFrame(f); else done(n); })();
+  }
+  document.getElementById('glPress').addEventListener('click',function(){
+    // максимально прижимаем, пока не упрёмся выступами
+    var mx=-1e9; for(var i=0;i<=N;i++) mx=Math.max(mx,(edge[i]-edgeR[i])/2);
+    anim(mx,false,false,function(n){ say.innerHTML='Осколки прижали изо всех сил, но они касаются только '+(n===1?'в <b>одной точке</b> (зелёная)':'в <b>'+n+' точках</b> (зелёные)')+'. В остальных местах между ними остаются щели, намного больше размеров молекул. Притяжение там не действует — стекло не срастается.'; });
+  });
+  document.getElementById('glHeat').addEventListener('click',function(){
+    anim(0,true,true,function(){ say.innerHTML='Нагретое стекло размягчилось, края стали ровными и сошлись <b>по всей длине</b>. Частицы оказались достаточно близко, и притяжение их соединило — стекло <b>спаялось</b>.'; });
+  });
+  document.getElementById('glReset').addEventListener('click',function(){ anim(60,false,false,function(){ say.textContent='Осколки лежат рядом, но не касаются.'; }); });
+})();
+
+/* ---------- § 11: сила между молекулами ---------- */
+(function(){
+  var svg=document.getElementById('svForce'), s=document.getElementById('fDist'), say=document.getElementById('fSay'), z=document.getElementById('fZones').children;
+  var defs=E(svg,'defs',{});
+  [['mr','#b0182f'],['mg','#1f6b4f']].forEach(function(m){ var mk=E(defs,'marker',{id:m[0],viewBox:'0 0 10 10',refX:8,refY:5,markerWidth:4,markerHeight:4,orient:'auto'}); E(mk,'path',{d:'M0 0L10 5L0 10z',fill:m[1]}); });
+  var R=34, cy=100;
+  var a=E(svg,'circle',{r:R,cy:cy,fill:'#7fb3e6',stroke:'#1d4f91','stroke-width':2.5});
+  var b=E(svg,'circle',{r:R,cy:cy,fill:'#7fb3e6',stroke:'#1d4f91','stroke-width':2.5});
+  var arL=E(svg,'line',{y1:cy,y2:cy,'stroke-width':6,'stroke-linecap':'round'}), arR=E(svg,'line',{y1:cy,y2:cy,'stroke-width':6,'stroke-linecap':'round'});
+  var dl=E(svg,'text',{y:188,'text-anchor':'middle','font-family':'PT Sans','font-size':14,fill:'#566273'});
+  function upd(){
+    var v=+s.value, d=2*R*0.72 + v/100*(400-2*R*0.72); // расстояние между центрами
+    var xa=300-d/2, xb=300+d/2; a.setAttribute('cx',xa); b.setAttribute('cx',xb);
+    var ratio=d/(2*R), zone, F; // F>0 — отталкивание
+    if(ratio<0.98){ zone=0; F=(1-ratio)*170; }
+    else if(ratio<2.2){ zone=1; F=-Math.max(12,70*(1-(ratio-1)/1.2)); }
+    else { zone=2; F=0; }
+    for(var i=0;i<3;i++) z[i].classList.toggle('on',i===zone);
+    var L=Math.min(80,Math.abs(F));
+    if(zone===2){ arL.setAttribute('opacity',0); arR.setAttribute('opacity',0); }
+    else{
+      var col=zone===0?'#b0182f':'#1f6b4f', mk=zone===0?'url(#mr)':'url(#mg)';
+      [arL,arR].forEach(function(e){ e.setAttribute('opacity',1); e.setAttribute('stroke',col); e.setAttribute('marker-end',mk); });
+      if(zone===0){ arL.setAttribute('x1',xa-R-4); arL.setAttribute('x2',xa-R-4-L); arR.setAttribute('x1',xb+R+4); arR.setAttribute('x2',xb+R+4+L); }
+      else { arL.setAttribute('x1',xa-R-10-L); arL.setAttribute('x2',xa-R-10); arR.setAttribute('x1',xb+R+10+L); arR.setAttribute('x2',xb+R+10); }
+    }
+    dl.setAttribute('x',300); dl.textContent='расстояние между центрами ≈ '+(ratio).toFixed(1).replace('.',',')+' размера молекулы';
+    say.innerHTML = zone===0 ? '<b style="color:#b0182f">Отталкивание.</b> Молекулы сблизили сильнее, чем им «удобно», и они расталкивают друг друга. Так сжатое тело распрямляется.'
+      : zone===1 ? '<b style="color:#1f6b4f">Притяжение.</b> Расстояние сравнимо с размером самих молекул — они тянутся друг к другу. Так держатся вместе капли, свинцовые цилиндры, склеенные детали.'
+      : '<b>Почти не действуют.</b> Расстояние намного больше размеров молекул, притяжение ослабело настолько, что его не заметно. Поэтому осколки стекла и не срастаются.';
+  }
+  s.addEventListener('input',upd); upd();
+})();
+
+/* ---------- § 11: пластинка и пружина ---------- */
+(function(){
+  var svg=document.getElementById('svWet'), s=document.getElementById('wPull'), say=document.getElementById('wSay');
+  var defs=E(svg,'defs',{}); var mk=E(defs,'marker',{id:'mu',viewBox:'0 0 10 10',refX:8,refY:5,markerWidth:4,markerHeight:4,orient:'auto'}); E(mk,'path',{d:'M0 0L10 5L0 10z',fill:'#b0182f'});
+  var cx=300, waterY=250;
+  E(svg,'ellipse',{cx:cx,cy:waterY+26,rx:200,ry:26,fill:'#cfe3f3',stroke:'#1d4f91','stroke-width':2});
+  E(svg,'rect',{x:cx-200,y:waterY,width:400,height:26,fill:'#cfe3f3'});
+  E(svg,'ellipse',{cx:cx,cy:waterY,rx:200,ry:26,fill:'#a9cdee',stroke:'#1d4f91','stroke-width':2});
+  var g=E(svg,'g',{});
+  function upd(){
+    g.innerHTML='';
+    var v=+s.value, attached=v<80, plateY, springLen, handY;
+    if(attached){ var k=v/80; plateY=waterY-6-k*24; springLen=60+k*100; }
+    else { var k2=(v-80)/20; plateY=waterY-60-k2*30; springLen=60; }
+    var springTop=plateY-40-springLen; handY=springTop-30;
+    // нитки
+    E(g,'line',{x1:cx,y1:plateY-40,x2:cx-80,y2:plateY,stroke:'#566273','stroke-width':1.5});
+    E(g,'line',{x1:cx,y1:plateY-40,x2:cx+80,y2:plateY,stroke:'#566273','stroke-width':1.5});
+    // пружина
+    var turns=12, d='M'+cx+' '+springTop;
+    for(var i=1;i<=turns*2;i++){ d+=' L'+(cx+(i%2?12:-12))+' '+(springTop+i*springLen/(turns*2)); }
+    d+=' L'+cx+' '+(plateY-40);
+    E(g,'path',{d:d,fill:'none',stroke:'#15202e','stroke-width':2.2});
+    E(g,'line',{x1:cx,y1:handY,x2:cx,y2:springTop,stroke:'#15202e','stroke-width':2});
+    if(v>5) E(g,'line',{x1:cx+28,y1:handY+40,x2:cx+28,y2:handY+5,stroke:'#b0182f','stroke-width':4,'marker-end':'url(#mu)'});
+    // вода, тянущаяся за пластинкой
+    if(attached && v>5){ E(g,'path',{d:'M'+(cx-118)+' '+waterY+' Q'+(cx-86)+' '+(waterY-4)+' '+(cx-82)+' '+(plateY+2)+' L'+(cx+82)+' '+(plateY+2)+' Q'+(cx+86)+' '+(waterY-4)+' '+(cx+118)+' '+waterY+' Z',fill:'#7fb3e6',stroke:'#1d4f91','stroke-width':1}); E(g,'text',{x:cx+96,y:plateY-12,'font-family':'PT Sans','font-size':14,fill:'#1d4f91'},'вода тянется за пластинкой'); }
+    // пластинка
+    E(g,'rect',{x:cx-84,y:plateY-6,width:168,height:8,rx:2,fill:'#e8f2f8',stroke:'#1d4f91','stroke-width':2});
+    if(!attached){ E(g,'rect',{x:cx-84,y:plateY+2,width:168,height:4,fill:'#5fa0e0'}); }
+    E(g,'text',{x:cx-130,y:springTop+springLen/2,'text-anchor':'end','font-family':'PT Sans','font-weight':700,'font-size':15,fill:'#15202e'},'пружина: '+(attached?(v<5?'не растянута':'растягивается'):'снова короткая'));
+    var lab = v<5?'а)':attached?'б)':'в)';
+    E(g,'text',{x:30,y:40,'font-family':'PT Serif','font-style':'italic','font-weight':700,'font-size':28,fill:'#1d4f91'},lab);
+    say.innerHTML = v<5 ? '<b>а)</b> Стеклянная пластинка лежит на поверхности воды. Пружина почти не растянута.'
+      : attached ? '<b>б)</b> Тянем вверх, а пластинка не отрывается: вода «держит» её, и пружина <b>растягивается</b>. Значит, есть притяжение между молекулами. Чем сильнее растянулась пружина, тем больше это притяжение.'
+      : '<b>в)</b> Пластинку оторвали. Посмотри: снизу на ней остался <b>тонкий слой воды</b> (синяя полоска). Разрыв прошёл между молекулами воды, а не между водой и стеклом — стекло <b>смочено</b>.';
+  }
+  s.addEventListener('input',upd); upd();
+})();
+</script>
+<script>
+try{var v=JSON.parse(localStorage.getItem('uroki-visited')||'{}');v['physics/p9-11']=new Date().toISOString().slice(0,10);localStorage.setItem('uroki-visited',JSON.stringify(v));}catch(e){}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('../../sw.js',{scope:'../../'}).catch(function(){});}
+</script>
+</body>
+</html>

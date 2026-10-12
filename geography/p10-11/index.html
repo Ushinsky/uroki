@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="theme-color" content="#1d4f91">
+<link rel="apple-touch-icon" href="../../assets/icon-180.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>География 7: земная кора</title>
+<link rel="stylesheet" href="../../assets/fonts.css">
+<style>
+  :root{
+    --bg:#eef2f7; --paper:#ffffff; --ink:#15202e; --muted:#566273; --line:#d5dde8;
+    --blue:#1d4f91; --blue-soft:#e3ecf8; --red:#b0182f; --red-soft:#f8e6ea;
+    --green:#1f6b4f; --green-soft:#e2f2eb; --gold:#6f550c; --gold-soft:#f5efd9;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.65 "PT Sans",system-ui,sans-serif}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px}
+  h1,h2,h3{line-height:1.2;margin:0}
+  p{margin:0 0 14px}
+  section,[id]{scroll-margin-top:64px}
+
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:none}
+  nav a{flex:none;text-decoration:none;color:var(--ink);font-size:14px;font-weight:700;padding:6px 11px;border-radius:7px}
+  nav a:hover{background:var(--blue-soft);color:var(--blue)}
+
+  header{padding:40px 0 18px}
+  .hi{font-family:"PT Serif",serif;font-size:22px;color:var(--blue);margin:0 0 4px}
+  header h1{font-size:clamp(30px,5vw,44px);margin:4px 0 10px}
+  header p{color:var(--muted);max-width:640px;margin:0}
+
+  .par{background:var(--paper);border-radius:20px;padding:30px 26px 26px;margin:20px 0 26px;box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(21,32,46,.25)}
+  @media (max-width:560px){.par{padding:22px 16px 18px}}
+  .pnum{display:inline-block;font-family:"PT Serif",serif;font-weight:700;font-size:15px;color:#fff;background:var(--ink);border-radius:8px;padding:3px 11px}
+  .par > h2{font-size:clamp(26px,4.2vw,34px);margin:10px 0 14px}
+  .qs{background:#f3f6fa;border-radius:14px;padding:14px 18px;margin:0 0 8px}
+  .qs b{display:block;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+  .qs ol{margin:0;padding-left:22px}
+  .src{font-size:14px;color:var(--muted);margin:0 0 6px}
+
+  h3{font-size:23px;margin:34px 0 12px;padding-top:24px;border-top:1px solid var(--line)}
+  h3 .n{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--blue);color:#fff;font-size:16px;margin-right:10px;vertical-align:3px}
+
+  .def{background:var(--blue-soft);border-radius:12px;padding:14px 18px;margin:16px 0}
+  .def p{margin:0 0 6px} .def p:last-child{margin:0}
+  .def b{color:var(--blue)}
+  .key{background:var(--ink);color:#fff;border-radius:12px;padding:16px 20px;margin:18px 0;font-weight:700;font-size:18px;line-height:1.45}
+  .key::before{content:"Главное";display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#9fb3cf;margin-bottom:4px}
+  .side{background:var(--gold-soft);border-radius:12px;padding:12px 18px;margin:16px 0}
+  .side::before{content:"На полях учебника";display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:2px}
+  .side p{margin:0 0 4px} .side p:last-child{margin:0}
+  .simple{background:var(--green-soft);border-radius:12px;padding:12px 18px;margin:14px 0}
+  .simple::before{content:"Проще говоря";display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);font-weight:700;margin-bottom:2px}
+  .remember{border:2px solid var(--ink);border-radius:14px;padding:14px 18px;margin:26px 0 10px}
+  .remember b.t{display:block;font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+  .remember .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .remember .chips span{background:#f3f6fa;border-radius:8px;padding:4px 10px;font-weight:700;font-size:16px}
+  .geo{font-weight:700;font-style:italic}
+  .term{font-style:italic}
+
+  figure{margin:18px 0}
+  figure img{display:block;width:100%;height:auto;border-radius:12px;cursor:zoom-in;background:#fff}
+  figcaption{font-size:14.5px;color:var(--muted);margin-top:6px}
+  figcaption .zoom{color:var(--blue);font-weight:700}
+  .legend{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:16px;margin:10px 0 0}
+  .legend .c{width:30px;height:30px;border-radius:50%;background:#fff;border:2px solid var(--ink);display:grid;place-items:center;font-weight:700;font-size:15px}
+
+  .scheme{display:grid;gap:10px;margin:16px 0}
+  .step{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start;background:#f3f6fa;border-radius:12px;padding:12px 14px}
+  .step .i{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:22px;background:#fff}
+  .step b{display:block}
+  .rocks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
+  .rocks div{border-radius:12px;padding:12px 14px;background:#f3f6fa}
+  .rocks b{display:block;font-size:17px;margin-bottom:4px}
+  .rocks .m{background:var(--red-soft)} .rocks .m b{color:var(--red)}
+  .rocks .o{background:var(--gold-soft)} .rocks .o b{color:var(--gold)}
+  .rocks .t{background:var(--blue-soft)} .rocks .t b{color:var(--blue)}
+  .rocks span{font-size:15.5px}
+  @media (max-width:640px){.rocks{grid-template-columns:1fr}}
+
+  table.t{border-collapse:collapse;width:100%;font-size:16.5px;margin:14px 0}
+  .t th,.t td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  .t th{font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+  @media (max-width:520px){.t{font-size:15px}.t th,.t td{padding:7px 5px}}
+
+  .sw{display:inline-block;width:22px;height:16px;border-radius:4px;margin:0 6px 0 0;vertical-align:-2px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+  .sw.ln{height:4px;background:#d61f7a;vertical-align:4px;box-shadow:none}
+
+  .lb{position:fixed;inset:0;background:rgba(10,16,24,.94);z-index:50;display:none;overflow:auto;-webkit-overflow-scrolling:touch}
+  .lb.open{display:block}
+  .lb img{display:block;width:200%;max-width:none;height:auto}
+  .lb.fit img{width:100%}
+  .lb .bar{position:fixed;top:10px;right:10px;display:flex;gap:8px;z-index:51}
+  .lb button{font:inherit;font-weight:700;font-size:15px;border:0;border-radius:10px;padding:10px 14px;min-height:44px;background:#fff;color:var(--ink);cursor:pointer}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding:6px 0 40px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a href="../../" style="color:#1d4f91">← Все уроки</a>
+  <a href="#p10">§ 10. Земная кора на карте</a>
+  <a href="#p11">§ 11. Природные ресурсы земной коры</a>
+</div></nav>
+
+<div class="wrap">
+<header>
+  <p class="hi">Алиса, привет!</p>
+  <h1>Земная кора: карта и ресурсы</h1>
+  <p>География, 7 класс, параграфы 10 и 11. Здесь весь текст учебника, только разложенный по полочкам. Синие рамки — определения, тёмные — главные выводы, зелёные — пояснения простыми словами. Картинки можно нажать, чтобы рассмотреть крупно.</p>
+</header>
+
+<!-- ======================= § 10 ======================= -->
+<article class="par" id="p10">
+  <span class="pnum">§ 10</span>
+  <h2>Земная кора на карте</h2>
+  <p class="src">Учебник, с. 36–39</p>
+  <div class="qs"><b>В этом параграфе</b>
+    <ol>
+      <li>Как развивались платформы и складчатые области.</li>
+      <li>Что показывает карта строения земной коры.</li>
+      <li>Как размещаются на Земле горы и равнины.</li>
+    </ol>
+  </div>
+
+  <h3><span class="n">1</span>Как развивались платформы и складчатые области?</h3>
+  <p>Вспомни: земная кора под материками и под океанами устроена по-разному. У <b>океанической</b> коры нет гранитного слоя, она моложе и тоньше <b>материковой</b>.</p>
+  <p>Учёные предполагают, что сначала на Земле образовалась кора океанического типа. В ней появились первые устойчивые участки, и их площадь понемногу росла за счёт окраин. Окраинные области постепенно теряли подвижность и «прирастали» к более древним устойчивым участкам — <b>платформам</b>.</p>
+  <p>В эпохи, когда процессы внутри Земли усиливались, возникали крупные разломы. Материки раскалывались и расходились друг от друга, а там, где литосфера растягивалась, образовывалась новая тонкая океаническая кора. Так сложились самые крупные части строения земной коры — <b>выступы материков</b> и <b>впадины океанов</b>.</p>
+
+  <div class="def">
+    <p><b>Платформы</b> — крупные устойчивые участки земной коры с кристаллическим фундаментом в основании, на обширных площадях — с осадочным чехлом поверх него.</p>
+    <p><b>Складчатые области</b> — участки земной коры, в пределах которых слои горных пород смяты в складки.</p>
+  </div>
+
+  <p>Обычно у платформы <b>два этажа</b> (рис. 23):</p>
+  <ul>
+    <li><b>Кристаллический фундамент</b> — нижний этаж. Он сложен очень древними <span class="term">метаморфизованными</span> породами, смятыми в складки. «Метаморфизованные» значит, что с породами произошло множество превращений.</li>
+    <li><b>Осадочный чехол</b> — верхний этаж, лежит поверх фундамента. Горные породы в нём залегают в основном горизонтально, ровными слоями.</li>
+  </ul>
+  <figure>
+    <img src="img/edb3b40426.jpg" alt="Строение платформы: фундамент, осадочный чехол, щит">
+    <figcaption>Рис. 23. Строение платформы. <span class="zoom">Нажми, чтобы увеличить.</span></figcaption>
+    <div class="legend">
+      <span class="c">1</span><span>фундамент — смятые в складки древние породы</span>
+      <span class="c">2</span><span>осадочный чехол — горизонтальные слои</span>
+      <span class="c">3</span><span>щит — фундамент выходит на поверхность</span>
+    </div>
+  </figure>
+  <ul>
+    <li>Места, где кристаллический фундамент <b>выходит на поверхность</b>, называют <b>щитами</b>.</li>
+    <li>Участки, где фундамент <b>погружён вниз и покрыт осадочным слоем</b>, называют <b>плитами</b>.</li>
+  </ul>
+  <div class="simple">Платформа похожа на старый каменный пол, засыпанный слоями песка и глины. Где пол виден прямо на поверхности — это щит. Где он спрятан под слоями — это плита.</div>
+
+  <p>В разные геологические эры подвижные участки, где шли складчатость и горообразование, находились в разных местах. Поэтому все они оставили след в строении земной коры, но возраст у них разный.</p>
+  <div class="key">Постепенно к ядрам древних платформ присоединялись всё новые участки. В местах растяжения и сжатия литосферы развивались новые процессы горообразования и складчатости.</div>
+
+  <h3><span class="n">2</span>Что показывает карта строения земной коры?</h3>
+  <p class="src">Рубрика «Читаем карту»</p>
+  <p>Рассмотри карту на рисунке 24. Разными цветами на ней выделены крупные участки: каждый цвет означает определённую часть строения земной коры.</p>
+  <figure>
+    <img src="img/5a6c243bca.jpg" alt="Карта строения земной коры">
+    <figcaption>Рис. 24. Карта строения земной коры. <span class="zoom">Нажми, чтобы рассмотреть крупно.</span></figcaption>
+  </figure>
+  <p>Как читать карту:</p>
+  <table class="t">
+    <tr><th>Цвет на карте</th><th>Что это</th><th>Возраст</th></tr>
+    <tr><td><span class="sw" style="background:#f6bfdc"></span>розовато-красноватый (занимает больше всего места)</td><td><b>древние платформы</b> — участки коры, которые сформировались раньше других</td><td>более 540 млн лет</td></tr>
+    <tr><td><span class="sw" style="background:#e2489a"></span>яркий розовый внутри древних платформ</td><td><b>щиты</b> — на поверхность выходит фундамент</td><td>—</td></tr>
+    <tr><td><span class="sw" style="background:#a9ddd8"></span>бледный сине-зелёный рядом с древними платформами</td><td><b>молодые платформы (плиты)</b>. Их рельеф сгладился в палеозойскую или мезозойскую эру, они покрылись осадочными отложениями и присоединились к древним платформам</td><td>менее 500 млн лет</td></tr>
+    <tr><td><span class="sw" style="background:#7d8ad8"></span><span class="sw" style="background:#8a6a3f"></span>сине-фиолетовый и коричневый</td><td><b>складчатые области</b>, самые древние: были подвижны в палеозойскую эру</td><td>более 200 млн лет назад</td></tr>
+    <tr><td><span class="sw" style="background:#6cc07c"></span>зелёный</td><td>складчатые области, где горообразование шло в <b>мезозойскую</b> эру</td><td>—</td></tr>
+    <tr><td><span class="sw" style="background:#f5a440"></span>оранжевый</td><td>складчатые области <b>кайнозойской</b> эры, горообразование идёт и до сих пор</td><td>самые молодые</td></tr>
+    <tr><td><span class="sw ln"></span>красные длинные штрихи</td><td><b>разломы</b> земной коры</td><td>—</td></tr>
+  </table>
+  <p>Вокруг платформ в пределах материков расположились <b>складчатые области</b> разного возраста. Это участки, на которых в разное время шло активное горообразование.</p>
+  <p>В строении <b>океанического дна</b> тоже есть устойчивые и подвижные участки.</p>
+  <div class="key">По карте строения земной коры определяют возраст её различных участков и этапы развития. На ней показаны платформы (плиты и щиты), складчатые области, разломы и др.</div>
+
+  <h3><span class="n">3</span>Как размещаются на Земле горы и равнины?</h3>
+  <p>Ты уже знаешь из курса 5 класса: <b>подвижным</b> участкам земной коры в основном соответствуют <b>горы</b>, а <b>устойчивым</b> — <b>равнины</b>. Убедиться в этом можно, если сравнить карту строения земной коры с физической картой мира (Приложение учебника, с. 244–245).</p>
+
+  <div class="side"><p><i>Равнины</i> приурочены к древним и молодым <i>платформам</i>.</p></div>
+  <p>Примеры:</p>
+  <ul>
+    <li>Крупные низменные равнины Южной Америки — <span class="geo">Амазонская</span> и <span class="geo">Лаплатская</span> — лежат на древней Южно-Американской платформе. На щитах той же платформы находятся плоскогорья — <span class="geo">Бразильское</span> и <span class="geo">Гвианское</span>.</li>
+    <li>Наша <span class="geo">Восточно-Европейская (Русская)</span> равнина, а также <span class="geo">Великие</span> и <span class="geo">Центральные</span> равнины Северной Америки соответствуют древним платформам — Восточно-Европейской и Северо-Американской.</li>
+    <li>В основании <span class="geo">Западно-Сибирской</span> равнины лежит <b>молодая</b> платформа.</li>
+    <li>Африка почти целиком — это древняя Африкано-Аравийская платформа с многочисленными выступами фундамента. Поэтому в рельефе Африки больше всего <b>высоких равнин</b> — возвышенностей и плоскогорий.</li>
+  </ul>
+
+  <div class="side"><p><i>Горы</i> приурочены к <i>складчатым областям</i> разного возраста.</p><p>Современные <i>складчатые горы</i> располагаются в областях кайнозойского возраста.</p></div>
+  <p>Области складчатости выражены в рельефе <b>горами</b>. Но горы Земли могут сильно различаться по высоте, по очертаниям и по тому, как в них залегают горные породы. Это зависит <span class="term">от возраста</span> и особенно от того, насколько активны были движения земной коры в последние 25 млн лет (их называют <b>новейшими тектоническими движениями</b>).</p>
+
+  <p><b>Молодые складчатые горы.</b> В областях кайнозойской складчатости горообразование продолжается до сих пор, оно сопровождается землетрясениями и вулканизмом. Здесь поднимаются самые высокие горы мира — <span class="geo">Гималаи</span>, <span class="geo">Кавказ</span>, <span class="geo">Анды</span>, <span class="geo">Альпы</span>. Слои пород в них изогнуты в складки разной величины, то есть имеют <span class="term">складчатое</span> строение. Выпуклым частям складок часто соответствуют горные хребты, вогнутым — межгорные впадины.</p>
+
+  <p><b>Возрождённые горы.</b> Горы, возникшие в палеозое, к началу кайнозойской эры были почти полностью разрушены внешними силами Земли. В кайнозое внутренние силы Земли снова стали активнее, и складчатое основание этих гор раскололось. По разломам одни глыбы (блоки) поднимались, образуя <span class="term">горсты</span>, а другие опускались, образуя <span class="term">грабены</span>. Такие горы называют <span class="term">возрождёнными</span>. Среди них есть и высокие, и средневысотные горы. Когда глыбы смещались, складки оказались разорванными. Поэтому строение таких гор — <span class="term">складчато-глыбовое</span>.</p>
+  <div class="simple">Старые горы сначала почти «стёрлись» до равнины. Потом их основание треснуло на куски: одни куски поднялись (горсты), другие опустились (грабены). Горы «возродились», но уже из глыб.</div>
+
+  <p>Теперь ты легко найдёшь на физической карте, например, горы <span class="geo">Куньлунь</span> и <span class="geo">Тянь-Шань</span> в Центральной Азии, <span class="geo">Уральские</span> и <span class="geo">Алтай</span> в России, <span class="geo">Аппалачи</span> в Северной Америке, <span class="geo">Большой Водораздельный</span> хребет в Австралии, а по карте строения земной коры определишь их возраст.</p>
+  <p>На дне океанов на подвижных участках находятся <b>срединно-океанические хребты</b> и <b>глубоководные желоба</b>.</p>
+  <div class="key">Размещение гор и равнин на Земле подтверждает связь между рельефом территории и строением земной коры.</div>
+
+  <div class="remember"><b class="t">Запомните</b>
+    <div class="chips"><span>Платформы</span><span>Щиты и плиты</span><span>Складчатые области</span></div>
+  </div>
+</article>
+
+<!-- ======================= § 11 ======================= -->
+<article class="par" id="p11">
+  <span class="pnum">§ 11</span>
+  <h2>Природные ресурсы земной коры</h2>
+  <p class="src">Учебник, с. 40–43</p>
+  <div class="qs"><b>В этом параграфе</b>
+    <ol>
+      <li>Какие природные ресурсы земной коры использует человек.</li>
+      <li>Что происходит с горными породами в природе.</li>
+      <li>Где искать полезные ископаемые.</li>
+    </ol>
+  </div>
+
+  <h3><span class="n">1</span>Какие природные ресурсы земной коры использует человек?</h3>
+  <p>Самый первый ресурс земной коры, который понадобился человеку, — это <b>территория</b>, на которой он поселился. Человек начал её обживать: строил жилища, возделывал землю и постепенно осваивал всё новые виды хозяйственной деятельности.</p>
+  <p>В древности свободной земли было много, и освоение новых участков зависело в основном от желания и технических возможностей людей. Сначала осваивали самые удобные территории — равнины, по которым текли полноводные реки, и плодородные межгорные долины. Потом наступала очередь менее удобных участков, и на их освоение требовалось всё больше сил и средств. Когда неосвоенных уголков планеты осталось немного, <b>земельные ресурсы</b> превратились в самый ценный вид природных ресурсов.</p>
+
+  <div class="def">
+    <p><b>Земельные ресурсы</b> — территория, пригодная для расселения людей и размещения объектов их хозяйственной деятельности.</p>
+    <p><b>Минеральные ресурсы</b> — природные вещества земной коры, пригодные для получения энергии, сырья и материалов.</p>
+  </div>
+
+  <div class="side"><p>Вспомните, какие полезные ископаемые вам известны.</p></div>
+  <p>Почти сразу же, вместе с освоением территории «вширь», люди стали проникать и «вглубь», чтобы использовать богатства недр Земли — <b>минеральные ресурсы</b>. Минералы и горные породы человек использует уже многие тысячи лет:</p>
+  <div class="scheme">
+    <div class="step"><span class="i">🪨</span><div><b>Сначала</b>из самых доступных камней делали орудия труда и простые украшения;</div></div>
+    <div class="step"><span class="i">⚒️</span><div><b>потом</b>из железной руды научились выплавлять металл, а каменный уголь стали использовать как топливо;</div></div>
+    <div class="step"><span class="i">⛽</span><div><b>сегодня</b>человек добывает самые разные полезные ископаемые и превращает их в огромное количество продуктов — от топлива для автомобилей и ракет до простой соли на нашем столе.</div></div>
+  </div>
+  <div class="key">Из всех видов природных ресурсов с земной корой более всего связаны земельные и минеральные ресурсы.</div>
+
+  <h3><span class="n">2</span>Что происходит с горными породами в природе?</h3>
+  <p>Ты знаешь, что земная кора сложена горными породами, а они состоят из минералов. И горные породы, и минералы различаются по <b>происхождению</b>.</p>
+  <ul>
+    <li>Большая часть толщи горных пород — это <b>магматические</b> и <b>метаморфические породы</b>. В основном они скрыты от глаз под осадочным чехлом, слоем почвы и растительностью. Но иногда их можно увидеть и на поверхности, например в гранитных массивах щитов платформ и на склонах вулканов.</li>
+    <li>Большая часть <b>поверхности</b> сложена <b>осадочными породами</b>.</li>
+  </ul>
+  <p>Горные породы участвуют в <b>круговороте веществ</b> на Земле и испытывают множество превращений. Рассмотри рисунок 25 и проследи по жёлтым стрелкам.</p>
+  <figure>
+    <img src="img/a238b75dd7.jpg" alt="Схема образования горных пород">
+    <figcaption>Рис. 25. Образование горных пород. <span class="zoom">Нажми, чтобы увеличить.</span></figcaption>
+  </figure>
+
+  <div class="rocks">
+    <div class="m"><b>Магматические</b><span>из застывшей магмы. Глубинные (гранит) и излившиеся (из лавы).</span></div>
+    <div class="o"><b>Осадочные</b><span>из обломков разрушенных пород, которые накопились слой за слоем (песчаник).</span></div>
+    <div class="t"><b>Метаморфические</b><span>из любых пород, попавших на большую глубину, где жарко и высокое давление.</span></div>
+  </div>
+
+  <p><b>Как образуются магматические породы.</b> Расплавленная магма прорывается в толщу земной коры, начинает остывать и кристаллизоваться. Так формируются <span class="term">магматические</span> породы. Они бывают двух видов:</p>
+  <ul>
+    <li><b>Глубинные.</b> Если магме не удаётся сразу выйти на поверхность, она медленно остывает: сначала образуются крупные, потом мелкие кристаллы. Получается глубинная горная порода, например <b>гранит</b>. В куске гранита даже без лупы видны кристаллы кварца, полевого шпата и слюды.</li>
+    <li><b>Излившиеся.</b> Если магма изливается на поверхность лавой (при извержении вулкана), образуется излившаяся порода. Лава остывает быстро, и кристаллы часто не успевают образоваться. Тогда получается корка, похожая на стекло (например, на вулканах Гавайских островов).</li>
+  </ul>
+  <p><b>Как образуются осадочные породы.</b> При движениях земной коры глубинные породы могут подняться на поверхность. Тогда они, как и излившиеся, начинают разрушаться. Обломки сносятся водой, ветром, сползают по склонам в понижения рельефа и на дно океанов и морей (см. рис. 25). Слой за слоем рыхлые отложения накапливаются, уплотняются и превращаются в <span class="term">осадочные</span> породы. Так, например, образуются <b>песчаники</b> со слоистой структурой.</p>
+  <p><b>Как образуются метаморфические породы.</b> И осадочные, и магматические породы при движениях земной коры могут оказаться на большой глубине. Там под действием высоких температур и давления они превращаются в <span class="term">метаморфические</span> породы. А если погрузиться ещё глубже, они переплавятся и снова станут магмой — круг замкнулся.</p>
+  <div class="key">Горные породы и минералы испытывают множество превращений, участвуя в круговороте веществ в природе.</div>
+
+  <h3><span class="n">3</span>Где искать полезные ископаемые?</h3>
+  <p><b>Полезные ископаемые</b> — это та часть минеральных ресурсов, которую можно <b>выгодно</b> использовать в хозяйстве.</p>
+  <div class="simple">Важно слово «выгодно». Месторождение железной руды выгоднее всего разрабатывать, если железа в руде больше 50 %. А платину или золото добывают, даже если их в породе совсем мало: они очень ценные.</div>
+  <p>За свою историю люди нашли очень много месторождений полезных ископаемых и очень многие уже выработали, нередко нанося вред окружающей среде. Но производству нужно всё больше сырья и энергии, поэтому работа геологов не прекращается. Специалисты разных отраслей ищут новые технологии добычи и переработки полезных ископаемых — тех, что лежат в труднодоступных местах или содержат не слишком много полезного минерала.</p>
+
+  <div class="side">
+    <p><i>Рудные</i> полезные ископаемые чаще всего приурочены к щитам древних платформ и древним складчатым областям.</p>
+    <p>Месторождения <i>нефти</i> и <i>природного газа</i> связаны с плитами древних и молодых платформ, шельфами морей, предгорными или межгорными впадинами.</p>
+  </div>
+
+  <p>Рассмотри на карте (рис. 24) самые крупные месторождения мира и сравни их размещение со строением земной коры. Можно заметить две вещи:</p>
+  <ol>
+    <li>полезные ископаемые найдены <b>на всех материках</b>, а также на дне морей рядом с берегами;</li>
+    <li>размещены они <b>неравномерно</b>, и набор полезных ископаемых на разных территориях разный.</li>
+  </ol>
+  <p><b>Рудные полезные ископаемые.</b> Африка, как ты уже знаешь, — это древняя платформа с многочисленными выходами фундамента. В ней огромное количество полезных ископаемых. К щитам платформы приурочены месторождения руд чёрных, цветных и редких металлов (каких именно — посмотри по легенде карты), а также золота и алмазов.</p>
+  <p>Если сравнить расположение щитов древних платформ и рудных ископаемых на других материках, получится примерно та же картина. Кроме того, рудные ископаемые есть и в горах: там тоже залегают магматические и метаморфические породы. Добывают их в основном в более <b>древних, разрушенных</b> горах: в них ближе к поверхности оказываются магматические и метаморфические породы, в которых содержатся руды. Однако и в Андах разрабатывают богатейшие месторождения цветных металлов, прежде всего меди и олова.</p>
+  <p><b>Топливные полезные ископаемые</b> — газ, нефть, уголь — в современном мире имеют огромное значение. Их месторождения приурочены к <b>осадочному чехлу</b> древних и молодых платформ, а также к предгорным и межгорным впадинам (см. карту).</p>
+
+  <table class="t">
+    <tr><th>Полезные ископаемые</th><th>Где их искать</th></tr>
+    <tr><td><b>Рудные</b>: руды металлов, золото, алмазы</td><td>щиты древних платформ, древние (разрушенные) складчатые области, горы</td></tr>
+    <tr><td><b>Топливные</b>: нефть, газ, уголь</td><td>осадочный чехол (плиты) древних и молодых платформ, шельфы морей, предгорные и межгорные впадины</td></tr>
+  </table>
+  <div class="key">Размещение полезных ископаемых связано со строением земной коры и историей её развития.</div>
+
+  <div class="remember"><b class="t">Запомните</b>
+    <div class="chips"><span>Земельные ресурсы</span><span>Минеральные ресурсы</span><span>Горные породы: магматические, метаморфические и осадочные</span><span>Закономерности размещения полезных ископаемых</span></div>
+  </div>
+</article>
+
+<footer>География, 7 класс · § 10–11 · по учебнику «Полярная звезда»</footer>
+</div>
+
+<div class="lb" id="lb">
+  <div class="bar"><button id="lbFit">По ширине</button><button id="lbClose">✕ Закрыть</button></div>
+  <img id="lbImg" alt="" src="img/e2216a7e9b.gif">
+</div>
+
+<script>
+(function(){
+  var lb=document.getElementById('lb'), im=document.getElementById('lbImg'), fit=document.getElementById('lbFit');
+  document.querySelectorAll('figure img').forEach(function(i){
+    i.addEventListener('click',function(){ im.src=i.src; im.alt=i.alt; lb.classList.remove('fit'); fit.textContent='По ширине'; lb.classList.add('open'); lb.scrollTo(0,0); document.body.style.overflow='hidden'; });
+  });
+  fit.addEventListener('click',function(){ var on=lb.classList.toggle('fit'); fit.textContent=on?'Крупнее':'По ширине'; });
+  function close(){ lb.classList.remove('open'); document.body.style.overflow=''; }
+  document.getElementById('lbClose').addEventListener('click',close);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+})();
+</script>
+<script>
+try{var v=JSON.parse(localStorage.getItem('uroki-visited')||'{}');v['geography/p10-11']=new Date().toISOString().slice(0,10);localStorage.setItem('uroki-visited',JSON.stringify(v));}catch(e){}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('../../sw.js',{scope:'../../'}).catch(function(){});}
+</script>
+</body>
+</html>

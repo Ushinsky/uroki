@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="theme-color" content="#1d4f91">
+<link rel="apple-touch-icon" href="../../assets/icon-180.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>История 7: Испания</title>
+<link rel="stylesheet" href="../../assets/fonts.css">
+<style>
+  :root{
+    --bg:#eef2f7; --paper:#ffffff; --ink:#15202e; --muted:#566273; --line:#d5dde8;
+    --blue:#1d4f91; --blue-soft:#e3ecf8; --red:#b0182f; --red-soft:#f8e6ea;
+    --green:#1f6b4f; --green-soft:#e2f2eb; --gold:#6f550c; --gold-soft:#f5efd9;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:19px/1.7 "PT Serif",Georgia,serif}
+  .wrap{max-width:820px;margin:0 auto;padding:0 16px}
+  h1,h2,h3,nav,.ui{font-family:"PT Sans",system-ui,sans-serif}
+  h1,h2,h3{line-height:1.25;margin:0}
+  p{margin:0 0 16px}
+  [id]{scroll-margin-top:64px}
+
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:none}
+  nav a{flex:none;text-decoration:none;color:var(--ink);font-size:14px;font-weight:700;padding:8px 12px;border-radius:8px}
+  nav a:hover{background:var(--blue-soft);color:var(--blue)}
+
+  header{padding:40px 0 10px}
+  .hi{font-size:22px;color:var(--blue);margin:0 0 4px}
+  header h1{font-size:clamp(32px,5.4vw,48px);margin:4px 0 12px}
+  .lead{font-size:20px}
+
+  .ch{background:var(--paper);border-radius:22px;padding:30px 30px 24px;margin:20px 0 26px;box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(21,32,46,.25)}
+  @media (max-width:560px){.ch{padding:22px 18px 18px}}
+  .ch .kicker{font-family:"PT Sans",sans-serif;font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--red);margin:0 0 4px}
+  .ch h2{font-size:clamp(26px,4.4vw,34px);margin:0 0 18px}
+  .ch h3{font-size:21px;margin:30px 0 10px}
+
+  b.t{color:var(--blue)}
+  .date{font-family:"PT Sans",sans-serif;font-weight:700;color:var(--red);white-space:nowrap}
+  .term{font-family:"PT Sans",sans-serif;font-weight:700;color:var(--blue);background:var(--blue-soft);border-radius:6px;padding:1px 6px;white-space:nowrap}
+
+  .wide{margin:20px -30px}
+  @media (max-width:560px){.wide{margin:18px -18px}}
+  figure{margin:20px 0}
+  figure img{display:block;width:100%;height:auto;border-radius:14px;background:#fff}
+  .wide img{border-radius:0}
+  figcaption{font-family:"PT Sans",sans-serif;font-size:15px;color:var(--muted);margin-top:8px;line-height:1.45}
+  .wide figcaption{padding:0 30px}
+  @media (max-width:560px){.wide figcaption{padding:0 18px}}
+  figcaption b{color:var(--ink)}
+  .side{float:right;width:44%;margin:4px 0 12px 22px}
+  .side.l{float:left;margin:4px 22px 12px 0}
+  @media (max-width:600px){.side,.side.l{float:none;width:auto;margin:16px 0}}
+  .clear{clear:both}
+  .ch > ul{display:flow-root;padding-left:24px}
+
+  .scheme{display:block;width:100%;height:auto;margin:18px 0;background:#f8fafd;border-radius:14px}
+  .remember{font-family:"PT Sans",sans-serif;background:var(--ink);color:#fff;border-radius:14px;padding:16px 20px;margin:24px 0 4px;clear:both}
+  .remember b.h{display:block;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#9fb3cf;margin-bottom:6px}
+  .remember ul{margin:0;padding-left:20px;font-size:17px;line-height:1.5}
+  .remember li{margin:3px 0}
+  .quote{background:var(--gold-soft);border-radius:14px;padding:16px 20px;margin:18px 0;font-style:italic}
+  .quote .qh{display:block;font-family:"PT Sans",sans-serif;font-style:normal;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:4px}
+  .quote .qs{display:block;font-family:"PT Sans",sans-serif;font-style:normal;font-size:14px;color:var(--muted);margin-top:8px}
+
+  .chain{display:grid;margin:18px 0;font-family:"PT Sans",sans-serif;font-size:17px;line-height:1.45}
+  .chain .st{background:#f3f6fa;border-radius:12px;padding:10px 14px}
+  .chain .st b{display:block}
+  .chain .ar{text-align:center;color:var(--muted);font-size:20px;line-height:1.1;padding:3px 0}
+  .chain .st.bad{background:var(--red-soft)} .chain .st.ok{background:var(--green-soft)}
+  .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0;font-family:"PT Sans",sans-serif;font-size:16px;line-height:1.45}
+  .trio > div{background:#f3f6fa;border-radius:14px;padding:12px 14px}
+  .trio b.h{display:block;font-size:18px;margin-bottom:4px}
+  .trio .y{color:var(--green);font-weight:700} .trio .n{color:var(--red);font-weight:700}
+  @media (max-width:640px){.trio{grid-template-columns:1fr}}
+  .causes{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0;font-family:"PT Sans",sans-serif;font-size:16.5px;line-height:1.45}
+  .causes div{background:var(--red-soft);border-radius:14px;padding:12px 14px 12px 56px;position:relative}
+  .causes div span{position:absolute;left:12px;top:10px;font-size:28px;line-height:1}
+  @media (max-width:600px){.causes{grid-template-columns:1fr}}
+
+  /* старт */
+  .bigq{font-family:"PT Sans",sans-serif;background:var(--ink);color:#fff;border-radius:18px;padding:20px 22px;margin:18px 0;font-size:21px;font-weight:700;line-height:1.4}
+  .bigq small{display:block;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#9fb3cf;margin-bottom:4px}
+  .words{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0;font-family:"PT Sans",sans-serif}
+  .words div{background:var(--blue-soft);border-radius:14px;padding:12px 14px;font-size:16px;line-height:1.45}
+  .words b{display:block;font-size:19px;color:var(--blue)}
+  @media (max-width:640px){.words{grid-template-columns:1fr}}
+  .people{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0;font-family:"PT Sans",sans-serif}
+  .people figure{margin:0;background:#f3f6fa;border-radius:14px;padding:8px;text-align:center}
+  .people img{aspect-ratio:1;object-fit:cover;object-position:50% 18%;border-radius:10px}
+  .people figcaption{color:var(--ink);font-weight:700;font-size:15px;margin-top:6px}
+  .people figcaption small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;font-family:"PT Sans",sans-serif}
+  .twocol > div{border-radius:14px;padding:12px 16px}
+  .twocol .w{background:var(--blue-soft)} .twocol .r{background:var(--red-soft)}
+  .twocol b.h{display:block;font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+  .twocol .w b.h{color:var(--blue)} .twocol .r b.h{color:var(--red)}
+  .twocol ul{margin:0;padding-left:18px;font-size:16px;line-height:1.5}
+  .twocol li{margin:4px 0}
+  @media (max-width:600px){.twocol{grid-template-columns:1fr}}
+
+  /* запомни */
+  .tl .line{display:flex;gap:6px;overflow-x:auto;padding:4px 2px 10px;scrollbar-width:thin}
+  .tl button{flex:none;font:700 15px "PT Sans",sans-serif;border:0;border-radius:10px;padding:10px 12px;min-height:44px;background:#f3f6fa;color:var(--ink);cursor:pointer}
+  .tl button[aria-pressed=true]{background:var(--red);color:#fff}
+  .tl .ev{font-family:"PT Sans",sans-serif;background:#fff;border-radius:12px;padding:12px 14px;box-shadow:inset 0 0 0 1px var(--line);min-height:56px}
+  .flips{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+  @media (max-width:640px){.flips{grid-template-columns:1fr 1fr}}
+  .flip{font:inherit;font-family:"PT Sans",sans-serif;text-align:left;border:0;border-radius:14px;padding:14px;min-height:110px;cursor:pointer;background:var(--blue-soft);color:var(--ink)}
+  .flip .f{font-weight:700;font-size:18px;color:var(--blue)}
+  .flip .f small{display:block;font-weight:400;font-size:13px;color:var(--muted);margin-top:4px}
+  .flip .b{display:none;font-size:15.5px;line-height:1.45}
+  .flip.on{background:#fff;box-shadow:inset 0 0 0 2px var(--blue)}
+  .flip.on .f{display:none} .flip.on .b{display:block}
+  .answer{counter-reset:a;list-style:none;padding:0;margin:14px 0}
+  .answer li{counter-increment:a;position:relative;padding:4px 0 10px 46px}
+  .answer li::before{content:counter(a);position:absolute;left:0;top:4px;width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;font:700 16px "PT Sans",sans-serif;display:grid;place-items:center}
+  /* поработаем сами */
+  .order{display:grid;gap:8px;margin:12px 0;font-family:"PT Sans",sans-serif}
+  .order button{display:flex;align-items:center;gap:12px;text-align:left;font:inherit;font-size:17px;border:0;border-radius:12px;padding:12px 14px;min-height:52px;background:#f3f6fa;color:var(--ink);cursor:pointer}
+  .order button .n{flex:none;width:32px;height:32px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 2px var(--line);display:grid;place-items:center;font-weight:700}
+  .order button.on .n{background:var(--blue);color:#fff;box-shadow:none}
+  .order button.ok{background:var(--green-soft)} .order button.ok .n{background:var(--green)}
+  .order button.no{background:var(--red-soft)} .order button.no .n{background:var(--red)}
+  .ctl{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+  .btn{font:700 16px "PT Sans",sans-serif;border:0;border-radius:10px;padding:10px 18px;min-height:44px;background:var(--blue);color:#fff;cursor:pointer}
+  .btn.ghost{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+  .fb{font-family:"PT Sans",sans-serif;font-size:17px;min-height:28px;margin:6px 0 4px}
+  .fb.ok{color:var(--green);font-weight:700} .fb.no{color:var(--red);font-weight:700}
+  .doc{background:var(--gold-soft);border-radius:14px;padding:16px 20px;margin:14px 0;font-size:17.5px}
+  .doc p:last-child{margin:0}
+  .qlist{padding-left:24px}
+  .qlist li{margin:0 0 14px}
+  details.hint{margin:8px 0 0;font-family:"PT Sans",sans-serif;font-size:16.5px;line-height:1.5}
+  details.hint summary{cursor:pointer;color:var(--blue);font-weight:700;min-height:40px;display:flex;align-items:center}
+  details.hint[open]{background:var(--blue-soft);border-radius:12px;padding:4px 14px 12px}
+  .how{font-family:"PT Sans",sans-serif;font-size:17px;color:var(--muted);margin:0 0 10px}
+  .how b{color:var(--ink)}
+  .flip .f{font-size:17px}
+  footer{font-family:"PT Sans",sans-serif;text-align:center;color:var(--muted);font-size:13.5px;padding:6px 0 40px;line-height:1.5}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a href="../../" style="color:#1d4f91">← Все уроки</a>
+  <a href="#start">Начало</a>
+  <a href="#s1">1. Карл V</a>
+  <a href="#s2">2. Филипп II</a>
+  <a href="#s3">3. Упадок</a>
+  <a href="#rabota">Поработаем</a>
+  <a href="#zapomni">Запомни</a>
+</div></nav>
+
+<div class="wrap">
+<header>
+  <p class="hi">Алиса, привет!</p>
+  <h1>§ 8. Испания</h1>
+  <p class="lead">Сегодня история про страну, которая стала самой обширной державой своего времени — а потом начала слабеть. Устраивайся поудобнее.</p>
+</header>
+
+<!-- ========== НАЧАЛО ========== -->
+<section class="ch" id="start">
+  <p class="kicker">Перед тем как начать</p>
+  <h2>Загадка параграфа</h2>
+  <figure class="wide">
+    <img src="img/cefd6a14e7.jpg" alt="Эскориал, вид сверху">
+    <figcaption><b>Эскориал</b>, 1563–1584 гг. Дворец, монастырь и усыпальница испанских королей. Мы ещё вернёмся сюда.</figcaption>
+  </figure>
+  <div class="bigq"><small>Вопрос, на который мы ответим в конце</small>Почему Испания, столь могущественная в XVI в., в XVII в. приходит в упадок?</div>
+  <p>Чтобы разгадать загадку, понадобятся три слова. Все они про испанскую знать и власть:</p>
+  <div class="words">
+    <div><b>Гранды</b>высший дворянский титул в Испании, который носили самые влиятельные аристократы</div>
+    <div><b>Идальго</b>низший слой дворянства в Испании</div>
+    <div><b>Кортесы</b>представительные органы: собрания, без согласия которых не вводили новые налоги</div>
+  </div>
+  <p>И три главных героя:</p>
+  <div class="people">
+    <figure><img src="img/f5a0187178.jpg" alt="Карл V"><figcaption>Карл V Габсбург<small>император, король Испании</small></figcaption></figure>
+    <figure><img src="img/a2e6d80fb2.jpg" alt="Филипп II"><figcaption>Филипп II<small>его сын, 1556–1598</small></figcaption></figure>
+    <figure><img src="img/bf62edc1dc.jpg" alt="Граф Оливарес"><figcaption>граф Оливарес<small>советник Филиппа IV</small></figcaption></figure>
+  </div>
+  <p>А вот что происходило в те же годы в мире и у нас, в России:</p>
+  <div class="twocol">
+    <div class="w"><b class="h">Мир</b>
+      <ul>
+        <li><span class="date">1561 г.</span> — столицей Испании становится Мадрид</li>
+        <li><span class="date">1571 г.</span> — при Лепанто в морском сражении с турками тяжело ранен Сервантес, в будущем великий испанский писатель</li>
+        <li><span class="date">1580 г.</span> — присоединение к Испанской монархии Португалии и её колоний</li>
+        <li><span class="date">1588 г.</span> — поражение Непобедимой армады</li>
+      </ul>
+    </div>
+    <div class="r"><b class="h">Россия</b>
+      <ul>
+        <li><span class="date">1556 г.</span> — присоединение к России Астраханского ханства</li>
+        <li><span class="date">1564–1579 гг.</span> — переписка Ивана IV Грозного с беглым князем Андреем Курбским</li>
+        <li><span class="date">1572 г.</span> — битва при Молодях</li>
+        <li><span class="date">1581–1585 гг.</span> — покорение Сибирского ханства Ермаком</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 1 ========== -->
+<section class="ch" id="s1">
+  <p class="kicker">Глава первая</p>
+  <h2>Империя, в которой никогда не заходит солнце</h2>
+
+  <figure class="side">
+    <img src="img/b316e5471e.jpg" alt="Фердинанд Арагонский и Изабелла Кастильская">
+    <figcaption><b>Фердинанд II Арагонский и Изабелла I Кастильская</b> — Католические короли.</figcaption>
+  </figure>
+  <p>Наша история начинается в конце XV в. Два правителя — <b class="t">Изабелла I Кастильская</b> и <b class="t">Фердинанд II Арагонский</b> — объединили Испанию и завершили Реконкисту, долгую борьбу за освобождение полуострова от власти мусульман.</p>
+  <p>За усердие в делах веры папа римский наградил их титулом <b>Католических королей</b>. И те, кто правил после них, носили этот титул по праву: они тоже были убеждёнными католиками и поддерживали инквизицию.</p>
+  <p>В начале XVI в. Испания стала одной из ведущих держав Европы. И тут на сцену выходит главный герой первой главы — внук Фердинанда и Изабеллы <b class="t">Карл V Габсбург</b>. Он был ещё и внуком императора Священной Римской империи. Посмотри, сколько земель ему досталось:</p>
+  <div class="clear"></div>
+
+  <svg class="scheme" viewBox="0 0 640 330" role="img" aria-label="Что получил Карл V">
+    <g font-family="PT Sans" text-anchor="middle">
+      <rect x="20" y="16" width="280" height="54" rx="12" fill="#f8e6ea"/>
+      <text x="160" y="38" font-size="14" fill="#b0182f" font-weight="700">ОТ МАМЫ</text>
+      <text x="160" y="58" font-size="15" fill="#15202e">наследство Фердинанда и Изабеллы</text>
+      <rect x="340" y="16" width="280" height="54" rx="12" fill="#e3ecf8"/>
+      <text x="480" y="38" font-size="14" fill="#1d4f91" font-weight="700">ОТ ПАПЫ</text>
+      <text x="480" y="58" font-size="15" fill="#15202e">наследство Габсбургов</text>
+      <rect x="20" y="84" width="280" height="110" rx="12" fill="#fff" stroke="#b0182f" stroke-width="2"/>
+      <text x="160" y="110" font-size="16" fill="#15202e">Испания</text>
+      <text x="160" y="133" font-size="16" fill="#15202e">владения в Италии</text>
+      <text x="160" y="156" font-size="16" fill="#15202e">владения в Новом Свете</text>
+      <text x="160" y="179" font-size="16" fill="#15202e">владения в Северной Африке</text>
+      <rect x="340" y="84" width="280" height="110" rx="12" fill="#fff" stroke="#1d4f91" stroke-width="2"/>
+      <text x="480" y="122" font-size="16" fill="#15202e">Австрия</text>
+      <text x="480" y="145" font-size="16" fill="#15202e">Нидерланды</text>
+      <text x="480" y="168" font-size="16" fill="#15202e">и другие земли</text>
+      <path d="M160 196 L300 248 M480 196 L340 248" stroke="#566273" stroke-width="2.5" fill="none"/>
+      <rect x="200" y="236" width="240" height="40" rx="12" fill="#15202e"/>
+      <text x="320" y="262" font-size="18" fill="#fff" font-weight="700">КАРЛ V</text>
+      <rect x="120" y="288" width="400" height="34" rx="10" fill="#f5efd9"/>
+      <text x="320" y="311" font-size="15.5" fill="#6f550c" font-weight="700">а ещё его избрали императором</text>
+    </g>
+  </svg>
+  <p>Земли Карла раскинулись от Европы до Америки: когда в одной его стране садилось солнце, в другой оно только вставало. Поэтому современники и говорили, что во владениях Карла V <b>никогда не заходит солнце</b>.</p>
+  <figure class="wide">
+    <img src="img/b5f239796e.jpg" alt="Карта владений Габсбургов в Европе при отречении Карла V">
+    <figcaption><b>Владения Габсбургов в Европе к отречению Карла V</b> (закрашены зелёным). Найди Испанию, Нидерланды, Австрию и земли в Италии. А ведь это только Европа — за океаном были ещё огромные земли в Америке.</figcaption>
+  </figure>
+
+  <h3>Чужой король</h3>
+  <p>Но огромное наследство принесло и большие хлопоты. Карл родился и вырос в Нидерландах. Когда в <span class="date">1517 г.</span> он впервые приехал в Испанию, он не знал ни её законов, ни обычаев, ни даже испанского языка. Вокруг него были советники-нидерландцы.</p>
+  <p>Мало того, на выборы Карла императором ушло очень много денег. Чтобы покрыть расходы, ему пришлось добиваться повышения налогов в Испании. Как ты думаешь, понравилось ли это испанцам?</p>
+  <p>Конечно, нет. Начались волнения крестьян и горожан, а в Кастилии вспыхнуло восстание — <b class="t">Комунерос</b> (<span class="date">1520–1522</span>). Среди восставших было немало дворян, которых по разным причинам не устраивала политика короны.</p>
+  <p>Восставшие требовали:</p>
+  <ul>
+    <li>не отдавать должности иностранцам;</li>
+    <li>не вывозить деньги из Испании;</li>
+    <li>соблюдать все местные законы и привилегии.</li>
+  </ul>
+  <p>Восстание охватило огромную территорию, и несколько месяцев казалось, что оно и правда заставит короля уступить. Но властям удалось расколоть восставших. Правительственные войска их разбили, и восстание подавили.</p>
+  <div class="clear"></div>
+  <p>Для Карла это стало хорошим уроком. Он несколько лет прожил в Испании, многое узнал о стране и её обычаях, стал опираться на испанских советников, выучил язык и с тех пор старался не нарушать права и привилегии подданных.</p>
+
+  <div class="quote"><span class="qh">Что думают историки</span>Возникает вопрос: в какой мере испанцы разделяли ту политику, которую их короли проводили от их имени в Европе и, в частности, в Нидерландах? XVI век, несомненно, являлся для Испании эпохой доминирования и престижа, но понятно, что эта слава была достигнута за счёт подданных, которым предлагалось оплачивать своей кровью и деньгами имперские идеи и предприятия, в одностороннем порядке определённые монархами. Активное участие королевства, возможно, позволило бы исправить отдельные аспекты этой политики и избежать некоторых драматических последствий. Но история не терпит сослагательного наклонения.<span class="qs">Х. Вальдеон, Ж. Перес, С. Хулиа. «История Испании»</span></div>
+  <p>Иными словами, слава Испании стоила дорого: за войны королей подданные платили своими деньгами и жизнями, а их мнения никто не спрашивал. Запомни эту мысль — она пригодится, когда будем отвечать на загадку.</p>
+
+  <h3>Король уходит в монастырь</h3>
+  <p>Почти 40 лет Карл правил своими владениями и всё это время вёл тяжёлые войны — с Францией, с немецкими протестантами, с турками. А в <span class="date">1556 г.</span> он сделал то, что короли делают редчайше: <b>отрёкся от трона</b> и ушёл в монастырь. Причин было несколько: глубокая вера, пошатнувшееся здоровье и разочарование — ему так и не удалось преодолеть религиозный раскол.</p>
+
+  <div class="remember"><b class="h">Запомни</b>
+    <ul>
+      <li>Карл V получил огромную империю — в ней «никогда не заходит солнце».</li>
+      <li>Его политика вызвала восстание Комунерос (1520–1522). Его подавили, а Карл стал уважать законы и обычаи Испании.</li>
+      <li>В 1556 г. Карл отрёкся от трона.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ========== 2 ========== -->
+<section class="ch" id="s2">
+  <p class="kicker">Глава вторая</p>
+  <h2>Испанская монархия Филиппа II</h2>
+
+  <p>Уходя, Карл разделил свои владения на две части:</p>
+  <svg class="scheme" viewBox="0 0 640 230" role="img" aria-label="Раздел владений Карла V в 1556 году">
+    <g font-family="PT Sans" text-anchor="middle">
+      <rect x="220" y="12" width="200" height="46" rx="12" fill="#15202e"/>
+      <text x="320" y="34" font-size="17" fill="#fff" font-weight="700">Карл V</text>
+      <text x="320" y="51" font-size="13" fill="#b9c3d2">отрёкся в 1556 г.</text>
+      <path d="M270 60 L160 92 M370 60 L480 92" stroke="#566273" stroke-width="2.5" fill="none"/>
+      <rect x="20" y="92" width="280" height="126" rx="12" fill="#e3ecf8"/>
+      <text x="160" y="118" font-size="16" fill="#1d4f91" font-weight="700">младший брат Фердинанд</text>
+      <text x="160" y="146" font-size="15.5" fill="#15202e">австрийские земли</text>
+      <text x="160" y="168" font-size="15.5" fill="#15202e">Габсбургов</text>
+      <text x="160" y="196" font-size="15.5" fill="#15202e" font-weight="700">+ стал императором</text>
+      <rect x="340" y="92" width="280" height="126" rx="12" fill="#f8e6ea"/>
+      <text x="480" y="118" font-size="16" fill="#b0182f" font-weight="700">сын Филипп II (1556–1598)</text>
+      <text x="480" y="146" font-size="15.5" fill="#15202e">Испания</text>
+      <text x="480" y="168" font-size="15.5" fill="#15202e">земли в Италии и Америке</text>
+      <text x="480" y="190" font-size="15.5" fill="#15202e">Нидерланды и другие земли</text>
+    </g>
+  </svg>
+  <p>Всё, чем правили Филипп II и его преемники, историки называют <b class="t">Испанской монархией</b>. Почему не просто «Испанией»? Потому что официального титула «король Испании» тогда ещё не было — он появился только в начале XVIII в.</p>
+
+  <h3>«Король деловых бумаг»</h3>
+  <figure class="side">
+    <img src="img/a2e6d80fb2.jpg" alt="Филипп II">
+    <figcaption><b>Филипп II</b> (1527–1598)</figcaption>
+  </figure>
+  <p>Познакомься с новым героем. <b class="t">Филипп II</b> правил Испанией более 40 лет. Он никогда не рубил сплеча: выслушивал советников, тщательно взвешивал все выгоды и риски и только потом решал. За это его прозвали <b>Предусмотрительным</b>. Правда, из-за такой осторожности его решения нередко запаздывали.</p>
+  <p>Филипп неутомимо трудился в своём кабинете, его называли «королём деловых бумаг». Чтобы управлять, ему нужны были точные сведения о своих владениях. Поэтому по его воле составляли карты, рисовали виды городов, собирали сведения обо всех населённых пунктах и писали подробную историю Испанской монархии. А для изучения природы Нового Света Филипп II отправил <b>первую в истории научную экспедицию в Америку</b>.</p>
+  <div class="clear"></div>
+
+  <h3>Самая большая держава на свете</h3>
+  <p>Испанская монархия и так была огромной. А в <span class="date">1580 г.</span> к ней присоединили <b>Португалию с её колониями</b>: у Филиппа были на неё наследственные права, когда правившая там династия прервалась. И тогда Испанская монархия стала <b>самой обширной мировой державой</b>, какую к тому времени знала история.</p>
+  <figure class="wide">
+    <img src="img/59ae13fd86.jpg" alt="Владения Филиппа II в 1598 году">
+    <figcaption><b>Владения Филиппа II к концу его правления (1598 г.).</b> Цветом закрашено всё, чем он правил. Синим — Португалия с её колониями, присоединённая в 1580 г.</figcaption>
+  </figure>
+  <p>У неё была и <b>самая сильная армия в Западной Европе</b>. С её помощью Филипп II пытался удержать свои разбросанные по Европе владения и остановить натиск турок в Средиземноморье.</p>
+  <figure>
+    <img src="img/0818406ccd.jpg" alt="Битва при Лепанто, картина А. Вичентино">
+    <figcaption><b>Битва при Лепанто, 1571 г.</b> Худ. А. Вичентино. В этом морском сражении с турками был тяжело ранен Сервантес, в будущем великий испанский писатель.</figcaption>
+  </figure>
+
+  <h3>Как король правил: всё — в одних руках</h3>
+  <p>И Карл V, и Филипп II хотели, чтобы все важные решения принимались в центре — королём и его людьми. Это называется <b>централизацией</b>. Но им сопротивлялись и отдельные части державы, и знать. Посмотри, что в итоге получил каждый:</p>
+  <div class="trio">
+    <div><b class="h">Гранды</b><span class="n">Потеряли:</span> их не пускали в центральное управление, вместо них король назначал послушных чиновников.<br><span class="y">Сохранили:</span> командные посты в армии; чаще всего именно гранды становились послами.</div>
+    <div><b class="h">Дворяне</b><span class="y">Сохранили:</span> большое влияние на местах — в крупных городах и в сеньориях.</div>
+    <div><b class="h">Кортесы</b><span class="y">Сохранили:</span> собирались регулярно, без них не вводили новые налоги, и в обмен на согласие города иногда добивались уступок.<br><span class="n">Потеряли:</span> права вмешиваться в политику.</div>
+  </div>
+  <figure>
+    <img src="img/8177d9c1f9.jpg" alt="Замок, где хранился архив правителей Испании">
+    <figcaption><b>Замок, в котором с XVI в. хранился архив правителей Испании</b> (построен в XV в.). Архив был огромным и прекрасно устроенным: по любому вопросу — отношения с другой страной, завещания королей, старые привилегии монастыря или аристократа — можно было быстро найти справку. Как ты думаешь, зачем королю это было нужно?</figcaption>
+  </figure>
+
+  <h3>Столица в самом центре</h3>
+  <p>До <span class="date">1561 г.</span> постоянной столицы в Испании не было. Филипп II выбрал <b>Мадрид</b> — город в самом центре страны.</p>
+  <p>А неподалёку, в горах, по его приказу вырос огромный, светлый и строгий <b class="t">Эскориал</b> — тот самый, с фото в начале урока. Это одновременно дворец, монастырь и королевская усыпальница: властелин половины мира хотел жить, ни на минуту не забывая о близости смерти и о жизни вечной. Здесь собрали одну из крупнейших в мире коллекций реликвий, картины лучших мастеров, а в библиотеке хранились редчайшие греческие и арабские рукописи. Уже современники называли Эскориал <b>«восьмым чудом света»</b>.</p>
+
+  <h3>Попробуй-ка управлять половиной мира</h3>
+  <p>Части державы отделяли друг от друга многие тысячи километров. Представь: из Перу в Мадрид пришло срочное известие. Пока его доставят, пока король ответит, пока ответ доплывёт обратно…</p>
+  <svg class="scheme" viewBox="0 0 640 150" role="img" aria-label="Письмо из Перу в Мадрид и обратно — около года">
+    <g font-family="PT Sans" text-anchor="middle">
+      <circle cx="80" cy="74" r="34" fill="#f5efd9" stroke="#6f550c" stroke-width="2"/>
+      <text x="80" y="80" font-size="16" font-weight="700" fill="#6f550c">Перу</text>
+      <circle cx="560" cy="74" r="34" fill="#f8e6ea" stroke="#b0182f" stroke-width="2"/>
+      <text x="560" y="80" font-size="16" font-weight="700" fill="#b0182f">Мадрид</text>
+      <path d="M118 60 Q320 0 522 60" fill="none" stroke="#1d4f91" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M522 90 Q320 150 118 90" fill="none" stroke="#1d4f91" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <text x="320" y="30" font-size="15" fill="#1d4f91">известие →</text>
+      <text x="320" y="132" font-size="15" fill="#1d4f91">← ответ короля</text>
+      <rect x="250" y="56" width="140" height="36" rx="10" fill="#15202e"/>
+      <text x="320" y="80" font-size="16" font-weight="700" fill="#fff">≈ 1 год</text>
+    </g>
+  </svg>
+  <p>…и вот уже прошёл <b>почти год</b>. Распоряжения иногда приходили слишком поздно. Огромные трудности были и с тем, чтобы снабжать войска и перебрасывать их с места на место.</p>
+
+  <h3>Непобедимая армада</h3>
+  <p>Самыми опасными бедами для Испанской монархии стали <b>восстание в Нидерландах</b> и <b>ссора с Англией</b>. Англия помогала мятежным голландцам и поддерживала пиратов, которые нападали на испанские колонии и корабли.</p>
+  <p>Филипп II решил покончить с этим одним ударом. В <span class="date">1588 г.</span> он собрал огромный флот для вторжения в Англию — <b class="t">Непобедимую армаду</b>. Но непобедимой она оказалась только по названию: значительная часть кораблей погибла в штормах, а остальные вернулись в Испанию, так и не выполнив задачи.</p>
+  <figure class="wide">
+    <img src="img/c9765e2e65.jpg" alt="Поражение Непобедимой армады, картина Ф. Ж. де Лутербурга">
+    <figcaption><b>Поражение Непобедимой армады.</b> Худ. Ф. Ж. де Лутербург. 1796 г.</figcaption>
+  </figure>
+  <p>С этой неудачи начался <b>закат морского могущества Испании</b>.</p>
+
+  <div class="remember"><b class="h">Запомни</b>
+    <ul>
+      <li>Филипп II (1556–1598), Предусмотрительный, «король деловых бумаг».</li>
+      <li>1580 г. — присоединение Португалии: Испанская монархия стала самой обширной державой в истории.</li>
+      <li>1561 г. — столица в Мадриде; рядом — Эскориал, «восьмое чудо света».</li>
+      <li>Короли проводили централизацию: гранды отстранены от управления, кортесы лишены права вмешиваться в политику.</li>
+      <li>1588 г. — гибель Непобедимой армады, начало заката морского могущества Испании.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ========== 3 ========== -->
+<section class="ch" id="s3">
+  <p class="kicker">Глава третья</p>
+  <h2>Испания в XVII в.: великан слабеет</h2>
+
+  <p>Снаружи Испанская монархия казалась великаном. Но посмотрим, как она была устроена внутри. Она состояла из множества королевств, герцогств и других земель, разбросанных очень далеко друг от друга. Связывал их по сути только <b>один монарх</b>. В хозяйстве эти земли были мало связаны, и у каждой — свои порядки, права и привилегии.</p>
+  <p>Центром монархии была <b>Кастилия</b> — а она была далеко не самой развитой частью державы. Гораздо больше могли бы дать богатые <b>Нидерланды и Италия</b>, но у них были налоговые привилегии, и стоило Мадриду попытаться их пересмотреть, как начиналось сопротивление. Поэтому деньги на сложные и дорогие дела — например, на отпор туркам — короли собирали с огромным трудом.</p>
+  <p>Правда, у королей был ещё один важный источник дохода — <b>американское серебро</b>. Но и его не хватало! Государство начало <b>жить в долг</b>: закладывало свои доходы на годы вперёд, лишь бы получить деньги на очередную войну.</p>
+  <svg class="scheme" viewBox="0 0 640 220" role="img" aria-label="Весы: притязания и возможности">
+    <g font-family="PT Sans" text-anchor="middle">
+      <polygon points="320,190 300,214 340,214" fill="#566273"/>
+      <line x1="320" y1="70" x2="320" y2="192" stroke="#566273" stroke-width="5"/>
+      <line x1="140" y1="40" x2="500" y2="104" stroke="#15202e" stroke-width="5" stroke-linecap="round"/>
+      <line x1="140" y1="40" x2="140" y2="78" stroke="#15202e" stroke-width="2"/>
+      <line x1="500" y1="104" x2="500" y2="142" stroke="#15202e" stroke-width="2"/>
+      <rect x="40" y="78" width="200" height="74" rx="12" fill="#e2f2eb"/>
+      <text x="140" y="104" font-size="15" font-weight="700" fill="#1f6b4f">ВОЗМОЖНОСТИ</text>
+      <text x="140" y="126" font-size="14.5" fill="#15202e">налоги, американское</text>
+      <text x="140" y="144" font-size="14.5" fill="#15202e">серебро</text>
+      <rect x="400" y="142" width="200" height="74" rx="12" fill="#f8e6ea"/>
+      <text x="500" y="168" font-size="15" font-weight="700" fill="#b0182f">ПРИТЯЗАНИЯ</text>
+      <text x="500" y="190" font-size="14.5" fill="#15202e">войны с турками,</text>
+      <text x="500" y="208" font-size="14.5" fill="#15202e">протестантами, соперниками</text>
+      <text x="320" y="24" font-size="15" fill="#566273">чаша желаний тяжелее — и разрыв растёт</text>
+    </g>
+  </svg>
+  <p>Получалось, что Испания хотела гораздо больше, чем могла оплатить. Разрыв между <b>притязаниями</b> монархии и её <b>финансовыми возможностями</b> всё увеличивался.</p>
+
+  <h3>Беда за бедой</h3>
+  <p>В конце XVI в. Испания вступила в <b>период упадка</b>. Беды сыпались одна за другой:</p>
+  <div class="causes">
+    <div><span>☠️</span>На рубеже XVI–XVII вв. север страны опустошила <b>эпидемия чумы</b>. Население начало сокращаться.</div>
+    <div><span>💰</span>Людей — а значит, налогоплательщиков — становилось меньше, а налоги быстро росли, особенно в Кастилии. Это <b>разоряло крестьян и ремесленников</b>.</div>
+    <div><span>🎩</span>А служители церкви и очень многочисленные дворяне, в большинстве своём <b>идальго</b>, <b>налогов почти не платили</b>.</div>
+    <div><span>⛪</span>Короли хотели, чтобы в их владениях жили только католики. В начале XVII в. король приказал <b>изгнать потомков испанских мусульман</b> — их подозревали в тайной верности исламу. Это ударило по хозяйству областей, где они играли важную роль.</div>
+    <div><span>⚔️</span>На борьбу с Реформацией, соперниками в Европе и турками нужны были <b>огромные деньги</b>, прежде всего на армию.</div>
+    <div><span>🔥</span>А когда в Европе началась <b>Тридцатилетняя война</b>, все проблемы стали ещё тяжелее.</div>
+  </div>
+  <figure id="morFig">
+    <img src="img/6150f74863.jpg" alt="Изгнание потомков мусульман из Испании">
+    <figcaption><b>Изгнание потомков мусульман из Испании.</b> Худ. П. Оромиг и Ф. Перальта. 1613 г.</figcaption>
+  </figure>
+
+  <h3>Кто такие кабальеро и идальго</h3>
+  <figure class="side">
+    <img src="img/5d3dda04e6.jpg" alt="Кабальеро с рукой на груди, картина Эль Греко">
+    <figcaption><b>Кабальеро с рукой на груди.</b> Худ. Эль Греко. Около 1580 г.</figcaption>
+  </figure>
+  <p>Взгляни на этого гордого господина. Это <b>кабальеро</b> — так обычно называли дворян, которые по богатству и положению стояли чуть выше идальго, но ниже титулованной знати. Кстати, в современной Испании «кабальеро» — просто вежливое обращение к мужчине.</p>
+  <p>А вот многие <b>идальго</b> были бедны и искали счастья на военной службе или в заокеанских приключениях.</p>
+  <div class="clear"></div>
+  <svg class="scheme" viewBox="0 0 640 200" role="img" aria-label="Лестница испанского дворянства">
+    <g font-family="PT Sans" text-anchor="middle">
+      <rect x="170" y="14" width="300" height="50" rx="12" fill="#15202e"/>
+      <text x="320" y="36" font-size="17" font-weight="700" fill="#fff">Гранды</text>
+      <text x="320" y="55" font-size="13" fill="#b9c3d2">титулованная знать, самые влиятельные</text>
+      <rect x="110" y="76" width="420" height="50" rx="12" fill="#1d4f91"/>
+      <text x="320" y="98" font-size="17" font-weight="700" fill="#fff">Кабальеро</text>
+      <text x="320" y="117" font-size="13" fill="#dbe6f5">выше идальго, ниже титулованной знати</text>
+      <rect x="40" y="138" width="560" height="50" rx="12" fill="#e3ecf8"/>
+      <text x="320" y="160" font-size="17" font-weight="700" fill="#1d4f91">Идальго</text>
+      <text x="320" y="179" font-size="13" fill="#15202e">низший слой дворянства, очень многочисленны, многие бедны</text>
+    </g>
+  </svg>
+
+  <h3>Последняя попытка графа Оливареса</h3>
+  <figure class="side l">
+    <img src="img/bf62edc1dc.jpg" alt="Граф Оливарес, портрет работы Веласкеса">
+    <figcaption><b>Граф Оливарес.</b> Худ. Д. Веласкес. 1638 г.</figcaption>
+  </figure>
+  <p><b class="t">Граф Оливарес</b> был ближайшим доверенным человеком и советником короля <b>Филиппа IV</b>. Он понимал: без реформ победы в Тридцатилетней войне не видать. Оливарес хотел сделать управление единым и разложить бремя налогов и набора солдат <b>поровну</b> на все части Испанской монархии.</p>
+  <p>Звучит справедливо? Но самые привилегированные земли — <b>Каталония</b> и <b>Португалия</b> — восстали. Каталонию удержали с огромным трудом и только сохранив все её привилегии. А <b>Португалия вернула себе независимость</b>.</p>
+  <div class="clear"></div>
+  <p>Истощённая войнами Испания, переживавшая упадок, постепенно теряла своё место в Европе.</p>
+
+  <h3>Гости из далёкой России</h3>
+  <figure class="side">
+    <img src="img/877ae6af97.jpg" alt="Русский посол П. И. Потёмкин при дворе испанского короля">
+    <figcaption><b>Русский посол П. И. Потёмкин при дворе испанского короля.</b> Худ. Х. Карреньо де Миранда. 1681 г.</figcaption>
+  </figure>
+  <p>И напоследок история, которая связывает Испанию с Россией. В <span class="date">1668 г.</span> в Мадрид прибыло посольство царя <b>Алексея Михайловича</b>. Испания могла бы стать для России союзником против османов и выгодным торговым партнёром.</p>
+  <p>Русских гостей в Мадриде совсем не ждали и долго ломали голову, как же их принимать. Ведь они христиане, но не католики; европейцы, но так непохожи на другие европейские народы!</p>
+  <p>Предложение наладить дипломатические и торговые связи испанцев заинтересовало. Но Россия была слишком далеко, а сама Испания уже находилась в упадке.</p>
+  <div class="clear"></div>
+
+  <div class="remember"><b class="h">Запомни</b>
+    <ul>
+      <li>Испанская монархия — много разрозненных земель, их объединял только монарх.</li>
+      <li>Денег не хватало даже с американским серебром: государство жило в долг.</li>
+      <li>Причины упадка: чума, сокращение населения, рост налогов для крестьян и ремесленников (дворяне и церковь почти не платили), изгнание потомков мусульман, огромные военные расходы, Тридцатилетняя война.</li>
+      <li>Реформы Оливареса вызвали восстания; Португалия вернула независимость.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ========== ПОРАБОТАЕМ САМИ ========== -->
+<section class="ch" id="rabota">
+  <p class="kicker">Теперь твоя очередь</p>
+  <h2>Поработаем сами</h2>
+  <p>Ты прочитала всю историю. Теперь попробуй поработать как настоящий историк: с датами, с документом и со словами.</p>
+
+  <h3>1. Работаем с хронологией</h3>
+  <p>Расположите в хронологической последовательности следующие события. Нажимай на события по порядку: какое было раньше всех — первым.</p>
+  <div class="order" id="order">
+    <button data-k="а"><span class="n"></span>а) изгнание потомков мусульман из Испании</button>
+    <button data-k="б"><span class="n"></span>б) присоединение Португалии</button>
+    <button data-k="в"><span class="n"></span>в) установление столицы Испании в Мадриде</button>
+    <button data-k="г"><span class="n"></span>г) начало правления Филиппа II</button>
+  </div>
+  <div class="ctl"><button class="btn" id="ordCheck">Проверить</button><button class="btn ghost" id="ordReset">Заново</button></div>
+  <div class="fb" id="ordFb"></div>
+
+  <h3>2. Работаем с источником</h3>
+  <p>Это настоящий документ того времени — отрывок из приговора инквизиции. Прочитай его внимательно.</p>
+  <div class="doc">
+    <p>Во-первых: Орбриан, фламандец, проживающий в Херес-де-ла-Фронтера, по профессии переплётчик, 30 лет. Он сжёг некоторые картины вместе с изображением Господа нашего Иисуса Христа и других святых и вообще исповедовал Лютерово учение, считая его хорошим. Он, кроме того, осмелился учить других. Он выказал себя упорствующим, а потому был проклят и передан представителям светского суда для сожжения живым с конфискацией его имущества, движимого и недвижимого.</p>
+    <p>Во-вторых: Хуана де Перес, португалка, женщина 40 лет. Она придерживалась иудейской веры и сохраняла её в течение многих лет, соблюдая все её предписания и церемонии, и вводила этим в соблазн других. Она исповедовалась и примирилась с церковью. Она наказывается отлучением и вечным тюремным заключением. Её движимое и недвижимое имущество конфискуется…</p>
+    <p>В-тридцать вторых: Андреас Консено, крестьянин, сказал, что перед священниками не следует исповедоваться в тяжких грехах, ибо они такие же люди, как и он. Он должен покаяться и получить сто ударов розгами.</p>
+  </div>
+  <p>Ответь на вопросы:</p>
+  <ol class="qlist">
+    <li>Люди каких национальностей и какого положения в обществе оказались в числе жертв инквизиции?
+      <details class="hint"><summary>Подсказка</summary>Выпиши из документа про каждого: кто он по национальности и чем занимается. Орбриан — фламандец, переплётчик. Хуана де Перес — португалка. Андреас Консено — крестьянин. Подумай: это знатные люди или простые?</details></li>
+    <li>В каких случаях можно сделать выводы о влиянии на осуждённых идей Реформации? Обоснуйте свою точку зрения.
+      <details class="hint"><summary>Подсказка</summary>Вспомни § 6: Лютер осуждал почитание икон и мощей святых, а сторонники Реформации спорили со священниками, которые учили, что лишь они могут быть посредниками между верующими и Богом. Теперь найди в документе, кто «исповедовал Лютерово учение» прямо, а чьи слова похожи на эти идеи, хотя Лютер не назван.</details></li>
+    <li>Как вы думаете, почему за сходные преступления разным людям назначены различные наказания?
+      <details class="hint"><summary>Подсказка</summary>Сравни, как вели себя осуждённые. Про Орбриана сказано, что он «выказал себя упорствующим» и ещё учил других. А Хуана де Перес «исповедовалась и примирилась с церковью». Андреасу велено «покаяться». Как это могло повлиять на приговор?</details></li>
+  </ol>
+
+  <h3>3. Работаем с понятиями</h3>
+  <p>Раскройте смысл понятий «гранд» и «идальго». Как вы думаете, являются ли различия между ними отличительной чертой Испании или же являются общей чертой для многих стран? Свой ответ обоснуйте.</p>
+  <details class="hint"><summary>Подсказка</summary>Посмотри на лестницу дворянства в главе третьей: гранды — самые влиятельные титулованные аристократы, идальго — низший слой дворянства, многие из них были бедны. А теперь вспомни § 5: там говорилось, что дворянство в Европе было неоднородно — немногочисленная родовитая аристократия жила намного богаче основной массы дворянства. Это только Испания или многие страны?</details>
+</section>
+
+<!-- ========== ЗАПОМНИ ========== -->
+<section class="ch" id="zapomni">
+  <p class="kicker">Разгадка</p>
+  <h2>Подведём итоги</h2>
+  <p>В начале XVI в. Испанию унаследовал Карл V Габсбург. Его политика вызвала восстание, после подавления которого королевская власть усилилась. Преемницей империи Карла V стала Испания Филиппа II и его преемников, достигшая во второй половине XVI в. вершины могущества, но затем вступившая в эпоху упадка.</p>
+  <div class="bigq" style="font-size:18px"><small>Так почему же Испания пришла в упадок?</small>Держава была огромной, но разрозненной, а денег на её войны не хватало.</div>
+  <ol class="answer">
+    <li><b>Земли не держались вместе.</b> Их объединял только монарх. Богатые Нидерланды и Италия не хотели отказываться от налоговых привилегий, а Кастилия в центре была не самой развитой.</li>
+    <li><b>Войны стоили слишком дорого.</b> Даже американского серебра не хватало, и государство жило в долг.</li>
+    <li><b>Налоги разоряли тех, кто работал.</b> Платили крестьяне и ремесленники, а многочисленные дворяне и церковь почти не платили. После чумы налогоплательщиков стало ещё меньше.</li>
+    <li><b>Религиозная политика:</b> изгнание потомков мусульман ударило по хозяйству.</li>
+    <li><b>Поражения:</b> гибель Непобедимой армады (1588), тяжёлая Тридцатилетняя война, отделение Португалии.</li>
+  </ol>
+
+  <h3>Даты</h3>
+  <p class="how">Посмотри на дату и <b>сначала вспомни сама</b>, что тогда произошло. Только потом нажми и проверь себя.</p>
+  <div class="tl">
+    <div class="line" id="tlLine"></div>
+    <div class="ev" id="tlEv">Выбери дату, вспомни событие — и нажми.</div>
+  </div>
+
+  <h3>Слова и люди</h3>
+  <p class="how">На каждой карточке вопрос. <b>Сначала ответь на него мысленно</b>, а потом нажми на карточку и сравни со своим ответом.</p>
+  <div class="flips" id="flips"></div>
+</section>
+
+<footer>Иллюстрации: учебник «История. История Нового времени. 7 класс» и Wikimedia Commons.<br>Карта «Владения Филиппа II в 1598 г.» — Trasamundo, CC BY-SA 3.0. Карта владений Габсбургов — Cambridge Modern History Atlas, 1912.</footer>
+</div>
+
+<script>
+(function(){
+  var D=[
+    ['конец XV в.','Изабелла Кастильская и Фердинанд Арагонский объединили Испанию и завершили Реконкисту.'],
+    ['1517','Карл V впервые приезжает в Испанию.'],
+    ['1520–1522','Восстание Комунерос в Кастилии.'],
+    ['1556','Карл V отрекается от трона и делит владения. Начало правления Филиппа II (1556–1598).'],
+    ['1561','Мадрид становится столицей Испании.'],
+    ['1563–1584','Эскориал.'],
+    ['1571','Морское сражение с турками при Лепанто — там тяжело ранен Сервантес.'],
+    ['1580','К Испанской монархии присоединены Португалия и её колонии.'],
+    ['1588','Поражение Непобедимой армады — начало заката морского могущества Испании.'],
+    ['начало XVII в.','Изгнание потомков мусульман из Испании.'],
+    ['1668','В Мадрид прибывает посольство царя Алексея Михайловича.']
+  ];
+  var line=document.getElementById('tlLine'), ev=document.getElementById('tlEv');
+  D.forEach(function(d){
+    var b=document.createElement('button'); b.textContent=d[0]; b.setAttribute('aria-pressed','false');
+    b.addEventListener('click',function(){
+      [].forEach.call(line.children,function(x){ x.setAttribute('aria-pressed','false'); });
+      b.setAttribute('aria-pressed','true');
+      ev.innerHTML='<span class="date">'+d[0]+'</span> — '+d[1];
+    });
+    line.appendChild(b);
+  });
+  var F=[
+    ['Кто такие гранды?','высший дворянский титул в Испании, который носили самые влиятельные аристократы'],
+    ['Кто такие идальго?','низший слой дворянства в Испании; многие были бедны и почти не платили налогов'],
+    ['Что такое кортесы?','представительные органы: без их согласия не вводили новые налоги, но вмешиваться в политику они не могли'],
+    ['Что такое Комунерос?','восстание в Кастилии в 1520–1522 гг. против политики Карла V'],
+    ['Что такое Непобедимая армада?','огромный флот Филиппа II для вторжения в Англию (1588); погиб в штормах'],
+    ['Что такое Эскориал?','дворец, монастырь и королевская усыпальница около Мадрида; «восьмое чудо света»'],
+    ['Кто такой Карл V Габсбург?','внук Фердинанда и Изабеллы; в его владениях «никогда не заходит солнце»; отрёкся в 1556 г.'],
+    ['Кто такой Филипп II?','сын Карла V, правил 1556–1598; прозвище Предусмотрительный, «король деловых бумаг»'],
+    ['Кто такой граф Оливарес?','советник Филиппа IV; хотел разложить налоги и набор солдат поровну, это вызвало восстания']
+  ];
+  var box=document.getElementById('flips');
+  F.forEach(function(f){
+    var b=document.createElement('button'); b.className='flip';
+    b.innerHTML='<div class="f">'+f[0]+'<small>ответь про себя, потом нажми</small></div><div class="b"><b>'+f[0]+'</b><br>'+f[1]+'</div>';
+    b.addEventListener('click',function(){ b.classList.toggle('on'); });
+    box.appendChild(b);
+  });
+})();
+/* хронология */
+(function(){
+  var box=document.getElementById('order'), fb=document.getElementById('ordFb'), seq=[];
+  var RIGHT=['г','в','б','а'], DATES={'г':'1556 г.','в':'1561 г.','б':'1580 г.','а':'начало XVII в.'};
+  var btns=[].slice.call(box.querySelectorAll('button'));
+  function paint(){ btns.forEach(function(b){ var i=seq.indexOf(b.dataset.k); b.classList.toggle('on',i>=0); b.classList.remove('ok','no'); b.querySelector('.n').textContent=i>=0?(i+1):''; }); }
+  btns.forEach(function(b){ b.addEventListener('click',function(){
+    var i=seq.indexOf(b.dataset.k); if(i>=0) seq.splice(i,1); else seq.push(b.dataset.k); fb.textContent=''; fb.className='fb'; paint();
+  }); });
+  document.getElementById('ordCheck').addEventListener('click',function(){
+    if(seq.length<4){ fb.className='fb no'; fb.textContent='Расставь все четыре события.'; return; }
+    var good=0; btns.forEach(function(b){ var ok=seq.indexOf(b.dataset.k)===RIGHT.indexOf(b.dataset.k); if(ok) good++; b.classList.add(ok?'ok':'no'); });
+    if(good===4){ fb.className='fb ok'; fb.innerHTML='Верно! г) '+DATES['г']+' → в) '+DATES['в']+' → б) '+DATES['б']+' → а) '+DATES['а']; }
+    else { fb.className='fb no'; fb.textContent='Пока не всё на месте: красные стоят не там. Подсказка — найди эти даты в ленте «Запомни» ниже.'; }
+  });
+  document.getElementById('ordReset').addEventListener('click',function(){ seq=[]; fb.textContent=''; fb.className='fb'; paint(); });
+})();
+</script>
+<script>
+try{var v=JSON.parse(localStorage.getItem('uroki-visited')||'{}');v['history/p8']=new Date().toISOString().slice(0,10);localStorage.setItem('uroki-visited',JSON.stringify(v));}catch(e){}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('../../sw.js',{scope:'../../'}).catch(function(){});}
+</script>
+</body>
+</html>

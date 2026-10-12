@@ -1,0 +1,1412 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="theme-color" content="#1d4f91">
+<link rel="apple-touch-icon" href="../../assets/icon-180.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Геометрия 7: повторение</title>
+<link rel="stylesheet" href="../../assets/fonts.css">
+<style>
+  :root{
+    --bg:#eef2f7; --paper:#ffffff; --ink:#15202e; --muted:#566273; --line:#d5dde8;
+    --blue:#1d4f91; --blue-soft:#e3ecf8; --red:#b0182f; --red-soft:#f8e6ea;
+    --green:#1f6b4f; --green-soft:#e2f2eb; --gold:#6f550c; --gold-soft:#f5efd9;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "PT Sans",system-ui,sans-serif}
+  .wrap{max-width:920px;margin:0 auto;padding:0 16px}
+  h1,h2,h3{line-height:1.2;margin:0}
+  h2{font-size:clamp(24px,3.6vw,32px);margin-bottom:8px}
+  h3{font-size:21px;margin:26px 0 8px}
+  p{margin:0 0 12px}
+  .m{font-family:"PT Serif",Georgia,serif;white-space:nowrap}
+  .m i, i.m{font-style:italic}
+  section,[id]{scroll-margin-top:64px}
+
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:none}
+  nav a{flex:none;text-decoration:none;color:var(--ink);font-size:14px;font-weight:700;padding:6px 11px;border-radius:7px}
+  nav a:hover{background:var(--blue-soft);color:var(--blue)}
+
+  header{padding:40px 0 18px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end}
+  header h1{font-size:clamp(28px,4.6vw,42px);margin:6px 0 10px}
+  header p{color:var(--muted);max-width:620px;margin:0}
+  .hi{font-family:"PT Serif",serif;font-size:22px;color:var(--blue);margin:0 0 4px}
+  @media (max-width:640px){header{grid-template-columns:1fr}}
+
+  .para{font-family:"PT Serif",serif;font-size:15px;font-weight:700;color:#fff;background:var(--ink);display:inline-block;border-radius:8px;padding:4px 12px;margin:22px 0 0}
+  section{background:var(--paper);border-radius:18px;padding:28px 24px;margin:16px 0 20px;box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(21,32,46,.25)}
+  .tag{display:inline-block;font-weight:700;font-size:14px;color:var(--blue);margin-bottom:6px}
+  .block{margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+  .block:first-of-type{border-top:0;padding-top:0;margin-top:14px}
+  .bn{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;font-weight:700;font-size:15px;margin-right:8px;vertical-align:2px}
+
+  .rule{background:var(--blue-soft);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .rule b.t{color:var(--blue)}
+  .rule.book{background:#f3f5f9}
+  .rule.book .src{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .imp{background:var(--red-soft);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .imp b.t{color:var(--red)}
+  .imp b.t::before{content:"❗ ";}
+  .trap{background:var(--gold-soft);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .trap b.t{color:var(--gold)}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center}
+  @media (max-width:700px){.two{grid-template-columns:1fr}}
+  figure{margin:14px 0}
+  svg{display:block;max-width:100%;height:auto;margin:0 auto}
+  figcaption{font-size:14px;color:var(--muted);text-align:center;margin-top:4px}
+  .svgtxt{font-family:"PT Serif",serif;font-style:italic}
+
+  table.cmp{border-collapse:collapse;width:100%;font-size:16px;margin:10px 0}
+  .cmp th,.cmp td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  .cmp th{font-size:14px;color:var(--muted)}
+  .cmp td:first-child{font-weight:700;width:30%}
+
+  .say{background:var(--gold-soft);border-radius:12px;padding:14px 18px;margin-top:22px}
+  .say h3{margin:0 0 6px;font-size:14px;text-transform:uppercase;letter-spacing:.05em;color:var(--gold)}
+  .say ul{margin:0;padding-left:20px}
+
+  /* тест */
+  .quiz{margin-top:26px;background:#f3f6fa;border-radius:16px;padding:20px}
+  .quiz > h3{margin:0 0 4px}
+  .quiz .lead{color:var(--muted);font-size:15px;margin:0 0 6px}
+  .q{background:#fff;border-radius:14px;padding:16px 18px;margin-top:14px}
+  .q .qn{font-size:13px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.05em}
+  .q .qt{font-size:18px;margin:4px 0 10px}
+  .opts{display:grid;gap:8px}
+  .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;font:inherit;font-size:16.5px;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer;min-height:48px}
+  .opt:hover{border-color:var(--blue)}
+  .opt .l{flex:none;width:26px;height:26px;border-radius:50%;background:var(--blue-soft);color:var(--blue);font-weight:700;display:grid;place-items:center;font-size:14px;margin-top:1px}
+  .q.done .opt{cursor:default}
+  .q.done .opt:hover{border-color:var(--line)}
+  .opt.right{border-color:var(--green);background:var(--green-soft)}
+  .opt.right .l{background:var(--green);color:#fff}
+  .opt.wrong{border-color:var(--red);background:var(--red-soft)}
+  .opt.wrong .l{background:var(--red);color:#fff}
+  .expl{display:none;margin-top:10px;border-radius:12px;padding:12px 14px;font-size:16px}
+  .q.done .expl{display:block}
+  .expl.ok{background:var(--green-soft)} .expl.no{background:var(--red-soft)}
+  .expl b.h{display:block;margin-bottom:2px}
+  .expl.ok b.h{color:var(--green)} .expl.no b.h{color:var(--red)}
+  .score{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:14px;font-weight:700}
+  .btn{background:var(--blue);color:#fff;border:0;border-radius:10px;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer;min-height:44px}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+
+  /* спойлеры параграфов */
+  details.par{margin:16px 0}
+  details.par > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:16px;background:var(--paper);border-radius:18px;padding:18px 20px;
+    box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(21,32,46,.25);-webkit-user-select:none;user-select:none}
+  details.par > summary::-webkit-details-marker{display:none}
+  details.par > summary:hover{box-shadow:0 0 0 2px var(--blue-soft),0 10px 30px -18px rgba(21,32,46,.25)}
+  details.par .pn{flex:none;font-family:"PT Serif",serif;font-weight:700;font-size:22px;color:#fff;background:var(--ink);border-radius:10px;padding:6px 12px}
+  details.par .pt{flex:1;font-size:21px;font-weight:700;line-height:1.25}
+  details.par .pt small{display:block;font-size:14.5px;font-weight:400;color:var(--muted);margin-top:4px}
+  details.par .chev{flex:none;font-size:32px;line-height:1;color:var(--blue);transition:transform .2s ease}
+  details.par[open] > summary{background:var(--ink);color:#fff}
+  details.par[open] > summary .pn{background:#fff;color:var(--ink)}
+  details.par[open] > summary .pt small{color:#b9c3d2}
+  details.par[open] > summary .chev{transform:rotate(90deg);color:#fff}
+  details.par > section{margin:14px 0 18px}
+  .src2{color:var(--muted);font-size:14px}
+  .tools{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .toolc{background:#f3f6fa;border-radius:12px;padding:12px 14px}
+  .toolc b{display:block}
+  .toolc span{font-size:15px;color:var(--muted)}
+  @media (max-width:640px){.tools{grid-template-columns:1fr}}
+  .lab{background:#f3f6fa;border-radius:14px;padding:18px;margin:14px 0}
+  .lab input[type=range]{width:100%;accent-color:var(--blue);height:28px}
+  .vvals{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;text-align:center;font-family:"PT Serif",serif;font-size:19px}
+  .vvals div{background:#fff;border-radius:10px;padding:6px}
+  @media (max-width:520px){.vvals{grid-template-columns:repeat(2,1fr)}}
+  .steps{counter-reset:s;list-style:none;padding:0;margin:10px 0}
+  .steps li{counter-increment:s;position:relative;padding:4px 0 8px 40px}
+  .steps li::before{content:counter(s);position:absolute;left:0;top:3px;width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-weight:700;display:grid;place-items:center;font-size:15px}
+  .note{background:var(--blue-soft);border-radius:14px;padding:16px 20px;margin:0 0 8px}
+  .note b{color:var(--blue)}
+  .note ul{margin:6px 0 0;padding-left:20px}
+  .note li{margin:3px 0}
+  .prog{display:flex;align-items:center;gap:12px;margin:12px 0 4px;font-weight:700}
+  .prog .bar{flex:1;height:10px;background:#fff;border-radius:6px;overflow:hidden}
+  .prog .bar i{display:block;height:100%;width:100%;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+  .chk{flex:none;display:flex;align-items:center;gap:8px;cursor:pointer;padding:6px 10px;border-radius:10px;font-size:14px;font-weight:700;color:var(--muted);background:#f3f6fa;min-height:44px}
+  .chk .box{width:26px;height:26px;border-radius:7px;border:2px solid #9fb3cf;background:#fff;display:grid;place-items:center;font-size:18px;line-height:1;color:#fff}
+  .chk.on{color:var(--green);background:var(--green-soft)}
+  .chk.on .box{background:var(--green);border-color:var(--green)}
+  details.par[open] > summary .chk{color:var(--muted)}
+  details.par[open] > summary .chk.on{color:var(--green)}
+  @media (max-width:560px){.chk .txt{display:none} details.par > summary{gap:10px;padding:14px} details.par .pt{font-size:18px} details.par .pn{font-size:18px;padding:5px 9px}}
+  details.par .pt{min-width:0;overflow-wrap:anywhere}
+  nav a.done::after{content:" ✓";color:var(--green)}
+  @media (max-width:420px){.cmp{font-size:14px;word-break:break-word}.cmp th,.cmp td{padding:6px 5px}}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding:6px 0 40px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a href="../../" style="color:#1d4f91">← Все уроки</a>
+  <a href="#p1">§ 1. Прямая и отрезок</a>
+  <a href="#p2">§ 2. Луч и угол</a>
+  <a href="#p3">§ 3. Сравнение</a>
+  <a href="#p4">§ 4. Измерение отрезков</a>
+  <a href="#p5">§ 5. Измерение углов</a>
+  <a href="#p6">§ 6. Перпендикулярные прямые</a>
+</div></nav>
+
+<div class="wrap">
+
+<header>
+  <div>
+    <p class="hi">Алиса, привет!</p>
+    <h1>Геометрия 7 класс: повторение</h1>
+    <p>Повторяем главу I «Начальные геометрические сведения»: 6 параграфов, 13 тем. Нажми на параграф, чтобы его раскрыть. В каждой теме короткое объяснение с картинками, самое важное выделено красным, а в конце три вопроса, чтобы проверить себя.</p>
+  </div>
+  <svg width="150" height="110" viewBox="0 0 150 110" aria-hidden="true">
+    <line x1="6" y1="96" x2="144" y2="14" stroke="#1d4f91" stroke-width="3"/>
+    <circle cx="44" cy="73" r="6" fill="#b0182f"/><circle cx="106" cy="37" r="6" fill="#b0182f"/>
+    <text x="36" y="100" class="svgtxt" font-size="20" fill="#15202e">A</text>
+    <text x="112" y="62" class="svgtxt" font-size="20" fill="#15202e">B</text>
+  </svg>
+</header>
+
+<div class="note">
+  <b>Это повторение.</b> Если какую-то тему вы не проходили на уроке, просто пропусти её, ничего страшного.
+  <ul>
+    <li>Не нужно пытаться пройти все параграфы за один раз. Выбери один, разберись и сделай перерыв.</li>
+    <li>Возвращайся к остальным по мере необходимости.</li>
+    <li>Повторила параграф — поставь галочку справа на его плашке. Галочки сохраняются на этом устройстве.</li>
+  </ul>
+  <div class="prog"><span id="progTxt">Повторено: 0 из 6</span><span class="bar"><i id="progBar"></i></span></div>
+</div>
+
+
+<details class="par" id="p1">
+<summary><span class="pn">§ 1</span><span class="pt">Прямая и отрезок<small>1. Точки, прямые, отрезки · 2. Провешивание прямой на местности</small></span><span class="chk" role="checkbox" aria-checked="false" tabindex="0"><span class="box"></span><span class="txt">повторила</span></span><span class="chev">›</span></summary>
+
+<!-- ======================= ТЕМА 1 ======================= -->
+<section id="t1">
+  <span class="tag">Тема 1</span>
+  <h2>Точки, прямые, отрезки</h2>
+  <p class="src2">Учебник, с. 5–7</p>
+
+  <!-- 1.1 -->
+  <div class="block">
+    <h3><span class="bn">1</span>Точка и прямая</h3>
+    <p><b>Прямая бесконечна в обе стороны.</b> На чертеже мы рисуем по линейке только её кусочек, но представляем, что она тянется дальше и дальше без конца.</p>
+    <figure>
+      <svg viewBox="0 0 600 200" role="img" aria-label="Прямая a, точки A и B на ней, точки C и D вне неё">
+        <line x1="20" y1="180" x2="70" y2="168" stroke="#1d4f91" stroke-width="3" stroke-dasharray="6 7"/>
+        <line x1="70" y1="168" x2="530" y2="58" stroke="#1d4f91" stroke-width="3"/>
+        <line x1="530" y1="58" x2="585" y2="45" stroke="#1d4f91" stroke-width="3" stroke-dasharray="6 7"/>
+        <text x="540" y="38" class="svgtxt" font-size="24" fill="#1d4f91">a</text>
+        <circle cx="200" cy="137" r="6" fill="#15202e"/><text x="186" y="128" class="svgtxt" font-size="22">B</text>
+        <circle cx="390" cy="91" r="6" fill="#15202e"/><text x="396" y="122" class="svgtxt" font-size="22">A</text>
+        <circle cx="300" cy="55" r="6" fill="#b0182f"/><text x="310" y="50" class="svgtxt" font-size="22" fill="#b0182f">D</text>
+        <circle cx="330" cy="168" r="6" fill="#b0182f"/><text x="340" y="190" class="svgtxt" font-size="22" fill="#b0182f">C</text>
+        <text x="40" y="150" font-family="PT Sans" font-size="13" fill="#566273">…и дальше</text>
+        <text x="480" y="98" font-family="PT Sans" font-size="13" fill="#566273">…и дальше</text>
+      </svg>
+      <figcaption>Пунктир напоминает: прямая продолжается бесконечно</figcaption>
+    </figure>
+    <table class="cmp">
+      <tr><th>Что</th><th>Как обозначают</th></tr>
+      <tr><td>Точки</td><td>большими латинскими буквами: <span class="m"><i>A</i>, <i>B</i>, <i>C</i></span></td></tr>
+      <tr><td>Прямые</td><td>маленькими латинскими буквами: <span class="m"><i>a</i>, <i>b</i></span>. Или двумя точками на ней: <span class="m"><i>AB</i></span> (это то же, что <span class="m"><i>BA</i></span>)</td></tr>
+      <tr><td>«лежит на»</td><td><span class="m"><i>A</i> ∈ <i>a</i></span> — точка <i>A</i> лежит на прямой <i>a</i></td></tr>
+      <tr><td>«не лежит на»</td><td><span class="m"><i>C</i> ∉ <i>a</i></span> — точка <i>C</i> не лежит на прямой <i>a</i> (знак перечёркнут)</td></tr>
+    </table>
+    <p>На рисунке: <span class="m"><i>A</i> ∈ <i>a</i></span>, <span class="m"><i>B</i> ∈ <i>a</i></span>, <span class="m"><i>C</i> ∉ <i>a</i></span>, <span class="m"><i>D</i> ∉ <i>a</i></span>. Ещё говорят: «прямая <i>a</i> проходит через точки <i>A</i> и <i>B</i>».</p>
+  </div>
+
+  <!-- 1.2 -->
+  <div class="block">
+    <h3><span class="bn">2</span>Главное свойство прямой</h3>
+    <div class="imp">
+      <b class="t">Запомни дословно:</b> через любые две точки можно провести прямую, и притом только одну.
+    </div>
+    <div class="two">
+      <div>
+        <p>Проверь на опыте: вбей два гвоздика и натяни между ними нитку. Нитка ляжет только одним способом, другую прямую через эти же два гвоздика не проведёшь.</p>
+        <p>А через <b>одну</b> точку прямых можно провести сколько угодно: как спицы колеса.</p>
+      </div>
+      <figure style="margin:0">
+        <svg viewBox="0 0 300 170" role="img" aria-label="Через одну точку много прямых, через две точки одна">
+          <g stroke="#9fb3cf" stroke-width="2">
+            <line x1="10" y1="85" x2="130" y2="85"/><line x1="20" y1="35" x2="120" y2="135"/><line x1="70" y1="20" x2="70" y2="150"/><line x1="20" y1="135" x2="120" y2="35"/>
+          </g>
+          <circle cx="70" cy="85" r="6" fill="#b0182f"/>
+          <text x="70" y="166" text-anchor="middle" font-family="PT Sans" font-size="13" fill="#566273">одна точка — много прямых</text>
+          <line x1="160" y1="140" x2="295" y2="40" stroke="#1d4f91" stroke-width="3"/>
+          <circle cx="190" cy="118" r="6" fill="#b0182f"/><circle cx="262" cy="64" r="6" fill="#b0182f"/>
+          <text x="228" y="166" text-anchor="middle" font-family="PT Sans" font-size="13" fill="#566273">две точки — одна прямая</text>
+        </svg>
+      </figure>
+    </div>
+  </div>
+
+  <!-- 1.3 -->
+  <div class="block">
+    <h3><span class="bn">3</span>Две прямые</h3>
+    <div class="two">
+      <figure style="margin:0">
+        <svg viewBox="0 0 300 180" role="img" aria-label="Прямые a и b пересекаются в точке O, прямые p и q не пересекаются">
+          <line x1="20" y1="20" x2="280" y2="90" stroke="#1d4f91" stroke-width="3"/>
+          <line x1="20" y1="90" x2="280" y2="20" stroke="#1d4f91" stroke-width="3"/>
+          <circle cx="150" cy="55" r="6" fill="#b0182f"/><text x="143" y="84" class="svgtxt" font-size="20" fill="#b0182f">O</text>
+          <text x="284" y="96" class="svgtxt" font-size="20">a</text><text x="284" y="22" class="svgtxt" font-size="20">b</text>
+          <line x1="20" y1="130" x2="280" y2="130" stroke="#15202e" stroke-width="3"/>
+          <line x1="20" y1="162" x2="280" y2="162" stroke="#15202e" stroke-width="3"/>
+          <text x="284" y="135" class="svgtxt" font-size="20">p</text><text x="284" y="167" class="svgtxt" font-size="20">q</text>
+        </svg>
+      </figure>
+      <div>
+        <p>Если две прямые имеют общую точку, говорят, что они <b>пересекаются</b>. Прямые <i class="m">a</i> и <i class="m">b</i> пересекаются в точке <i class="m">O</i>.</p>
+        <p>Прямые <i class="m">p</i> и <i class="m">q</i> <b>не пересекаются</b>: общих точек у них нет.</p>
+      </div>
+    </div>
+    <div class="imp">
+      <b class="t">Других вариантов нет:</b> две прямые либо имеют <b>только одну</b> общую точку, либо <b>не имеют</b> общих точек.
+    </div>
+    <p><b>Почему не могут быть две общие точки?</b> Если бы у двух прямых было две общие точки, то обе прямые проходили бы через эти две точки. Но через две точки проходит только одна прямая. Значит, это была бы одна и та же прямая, а не две.</p>
+  </div>
+
+  <!-- 1.4 -->
+  <div class="block">
+    <h3><span class="bn">4</span>Отрезок</h3>
+    <p><b>Отрезок</b> — часть прямой, ограниченная двумя точками. Эти точки называются <b>концами</b> отрезка. Отрезок с концами <i class="m">A</i> и <i class="m">B</i> обозначают <span class="m"><i>AB</i></span> или <span class="m"><i>BA</i></span>.</p>
+    <figure>
+      <svg viewBox="0 0 600 120" role="img" aria-label="Прямая и отрезок AB">
+        <line x1="20" y1="35" x2="580" y2="35" stroke="#9fb3cf" stroke-width="3" stroke-dasharray="6 7"/>
+        <text x="300" y="20" text-anchor="middle" font-family="PT Sans" font-size="14" fill="#566273">прямая: концов нет</text>
+        <line x1="150" y1="88" x2="450" y2="88" stroke="#1d4f91" stroke-width="4"/>
+        <circle cx="150" cy="88" r="7" fill="#b0182f"/><circle cx="450" cy="88" r="7" fill="#b0182f"/>
+        <text x="142" y="116" class="svgtxt" font-size="22">A</text><text x="443" y="116" class="svgtxt" font-size="22">B</text>
+        <text x="300" y="78" text-anchor="middle" font-family="PT Sans" font-size="14" fill="#1d4f91">отрезок AB: два конца</text>
+      </svg>
+    </figure>
+    <div class="imp">
+      <b class="t">Концы — тоже часть отрезка.</b> Отрезок <i class="m">AB</i> содержит точки <i class="m">A</i> и <i class="m">B</i> и все точки прямой <i class="m">AB</i>, лежащие между ними.
+    </div>
+    <table class="cmp">
+      <tr><th></th><th>Прямая</th><th>Отрезок</th></tr>
+      <tr><td>Концы</td><td>нет</td><td>два</td></tr>
+      <tr><td>Длина</td><td>бесконечная, измерить нельзя</td><td>можно измерить линейкой</td></tr>
+      <tr><td>Обозначение</td><td><span class="m"><i>a</i></span> или <span class="m"><i>AB</i></span></td><td><span class="m"><i>AB</i></span></td></tr>
+    </table>
+  </div>
+
+  <!-- 1.5 -->
+  <div class="block">
+    <h3><span class="bn">5</span>Ломаная</h3>
+    <p>Если соединять отрезки один за другим, получится <b>ломаная</b>.</p>
+    <ul>
+      <li>Отрезки, из которых она состоит, — <b>звенья</b>.</li>
+      <li>Концы звеньев — <b>вершины</b>.</li>
+      <li>Ломаную называют по вершинам по порядку: <span class="m"><i>ABCDE</i></span>.</li>
+    </ul>
+    <div class="two">
+      <figure style="margin:0">
+        <svg viewBox="0 0 280 170" role="img" aria-label="Незамкнутая ломаная ABCDE">
+          <polyline points="20,140 60,50 140,40 190,120 260,70" fill="none" stroke="#1d4f91" stroke-width="3" stroke-linejoin="round"/>
+          <g fill="#b0182f"><circle cx="20" cy="140" r="5"/><circle cx="60" cy="50" r="5"/><circle cx="140" cy="40" r="5"/><circle cx="190" cy="120" r="5"/><circle cx="260" cy="70" r="5"/></g>
+          <g class="svgtxt" font-size="18"><text x="6" y="162">A</text><text x="44" y="42">B</text><text x="140" y="30">C</text><text x="186" y="146">D</text><text x="262" y="62">E</text></g>
+        </svg>
+        <figcaption>Ломаная <i>ABCDE</i>: 4 звена, 5 вершин</figcaption>
+      </figure>
+      <figure style="margin:0">
+        <svg viewBox="0 0 280 170" role="img" aria-label="Замкнутая ломаная ABCD">
+          <polygon points="40,130 70,40 200,30 240,140" fill="none" stroke="#1d4f91" stroke-width="3" stroke-linejoin="round"/>
+          <g fill="#b0182f"><circle cx="40" cy="130" r="5"/><circle cx="70" cy="40" r="5"/><circle cx="200" cy="30" r="5"/><circle cx="240" cy="140" r="5"/></g>
+          <g class="svgtxt" font-size="18"><text x="10" y="150">A (E)</text><text x="54" y="34">B</text><text x="206" y="26">C</text><text x="244" y="160">D</text></g>
+        </svg>
+        <figcaption>Замкнутая: конец совпал с началом</figcaption>
+      </figure>
+    </div>
+    <p><b>Смежные звенья</b> — соседние, с общей вершиной: <i class="m">AB</i> и <i class="m">BC</i>, <i class="m">BC</i> и <i class="m">CD</i>. В ломаной смежные звенья <b>не лежат на одной прямой</b>. Если бы лежали, они слились бы в один отрезок, и «излома» там не было бы.</p>
+    <p>Если первая и последняя вершины совпадают, ломаная называется <b>замкнутой</b>.</p>
+    <div class="imp"><b class="t">Считай внимательно:</b> у незамкнутой ломаной вершин на одну больше, чем звеньев. У замкнутой их поровну.</div>
+  </div>
+
+  <!-- 1.6 -->
+  <div class="block">
+    <h3><span class="bn">6</span>Многоугольник</h3>
+    <div class="rule book">
+      <span class="src">Как в учебнике</span>
+      Если несмежные звенья замкнутой ломаной не имеют общих точек, то эта ломаная называется <b>многоугольником</b>, её звенья называются <b>сторонами</b> многоугольника.
+    </div>
+    <p>Проще: замкнутая ломаная, которая <b>сама себя не пересекает и не касается</b>.</p>
+    <div class="two">
+      <figure style="margin:0">
+        <svg viewBox="0 0 280 170" role="img" aria-label="Пятиугольник с закрашенной внутренней областью">
+          <polygon points="140,20 250,80 210,155 70,155 30,80" fill="#e3ecf8" stroke="#1d4f91" stroke-width="3" stroke-linejoin="round"/>
+          <text x="140" y="105" text-anchor="middle" font-family="PT Sans" font-size="14" fill="#1d4f91">внутренняя</text>
+          <text x="140" y="122" text-anchor="middle" font-family="PT Sans" font-size="14" fill="#1d4f91">область</text>
+          <text x="250" y="160" font-family="PT Sans" font-size="12" fill="#566273">внешняя</text>
+        </svg>
+        <figcaption>✓ Многоугольник (пятиугольник)</figcaption>
+      </figure>
+      <figure style="margin:0">
+        <svg viewBox="0 0 280 170" role="img" aria-label="Замкнутая ломаная-бантик, звенья пересекаются">
+          <polygon points="30,40 250,140 250,40 30,140" fill="none" stroke="#b0182f" stroke-width="3" stroke-linejoin="round"/>
+          <circle cx="140" cy="90" r="9" fill="none" stroke="#b0182f" stroke-width="2.5"/>
+        </svg>
+        <figcaption>✗ Не многоугольник: несмежные звенья пересеклись</figcaption>
+      </figure>
+    </div>
+    <ul>
+      <li>Многоугольник с <i class="m">n</i> вершинами называют <b><i>n</i>-угольником</b>: у него <i class="m">n</i> сторон. Треугольник, четырёхугольник, пятиугольник…</li>
+      <li>Многоугольник делит плоскость на две части: <b>внутреннюю</b> и <b>внешнюю</b> область.</li>
+      <li>Многоугольником называют и фигуру из сторон вместе с внутренней областью.</li>
+    </ul>
+    <div class="imp"><b class="t">У многоугольника вершин столько же, сколько сторон.</b> Шестиугольник — 6 вершин и 6 сторон.</div>
+  </div>
+
+  <div class="say">
+    <h3>Коротко тема 1</h3>
+    <ul>
+      <li>Прямая бесконечна. Точки — <i>A, B</i>; прямые — <i>a, b</i> или <i>AB</i>; знаки ∈ и ∉.</li>
+      <li><b>Через две точки — одна прямая, и только одна.</b></li>
+      <li>Две прямые: одна общая точка (пересекаются) или ни одной.</li>
+      <li>Отрезок — часть прямой между двумя точками, концы входят в отрезок.</li>
+      <li>Ломаная: звенья и вершины; замкнутая — конец совпал с началом.</li>
+      <li>Многоугольник — замкнутая ломаная без самопересечений.</li>
+    </ul>
+  </div>
+
+  <div class="quiz" data-quiz="q1">
+    <h3>Проверь себя: тема 1</h3>
+    <p class="lead">Выбери один ответ. После ответа появится объяснение.</p>
+  </div>
+</section>
+
+<!-- ======================= ТЕМА 2 ======================= -->
+<section id="t2">
+  <span class="tag">Тема 2</span>
+  <h2>Провешивание прямой на местности</h2>
+  <p class="src2">Учебник, с. 7–8</p>
+
+  <div class="block">
+    <h3><span class="bn">1</span>Задача: начертить отрезок длиннее линейки</h3>
+    <p>Линейка короткая, а провести нужно длинный прямой отрезок. Как быть? Учебник предлагает хитрость:</p>
+    <ol>
+      <li>Прикладываем линейку, отмечаем точки <i class="m">A</i> и <i class="m">B</i> у её концов и ещё точку <i class="m">C</i> между ними.</li>
+      <li>Сдвигаем линейку вправо так, чтобы её <b>левый конец оказался у точки <i>C</i></b>, и отмечаем точку <i class="m">D</i> у правого конца.</li>
+      <li>Проводим отрезок <i class="m">AB</i>, потом <i class="m">BD</i>. Получается отрезок <i class="m">AD</i>, длиннее линейки.</li>
+    </ol>
+    <figure>
+      <svg viewBox="0 0 620 170" role="img" aria-label="Линейку сдвинули: отрезок AD длиннее линейки">
+        <rect x="20" y="30" width="300" height="34" rx="4" fill="#e3ecf8" stroke="#1d4f91" stroke-width="2"/>
+        <g stroke="#1d4f91" stroke-width="1.5"><line x1="40" y1="30" x2="40" y2="42"/><line x1="100" y1="30" x2="100" y2="42"/><line x1="160" y1="30" x2="160" y2="42"/><line x1="220" y1="30" x2="220" y2="42"/><line x1="280" y1="30" x2="280" y2="42"/></g>
+        <text x="170" y="58" text-anchor="middle" font-family="PT Sans" font-size="13" fill="#1d4f91">1-е положение линейки</text>
+        <rect x="200" y="96" width="300" height="34" rx="4" fill="#f5efd9" stroke="#6f550c" stroke-width="2"/>
+        <text x="350" y="124" text-anchor="middle" font-family="PT Sans" font-size="13" fill="#6f550c">2-е положение (сдвинули)</text>
+        <line x1="20" y1="84" x2="500" y2="84" stroke="#b0182f" stroke-width="3"/>
+        <g fill="#15202e"><circle cx="20" cy="84" r="6"/><circle cx="200" cy="84" r="6"/><circle cx="320" cy="84" r="6"/><circle cx="500" cy="84" r="6"/></g>
+        <g class="svgtxt" font-size="20"><text x="14" y="22">A</text><text x="194" y="22">C</text><text x="314" y="22">B</text><text x="494" y="150">D</text></g>
+        <line x1="200" y1="72" x2="200" y2="96" stroke="#566273" stroke-dasharray="3 3"/>
+        <text x="560" y="90" font-family="PT Sans" font-size="14" fill="#b0182f">AD</text>
+      </svg>
+      <figcaption>Точки <i>A</i>, <i>C</i>, <i>B</i>, <i>D</i> лежат на одной прямой, потому что линейка дважды прошла через <i>C</i> и <i>B</i></figcaption>
+    </figure>
+    <p><b>Почему всё ровно?</b> Во втором положении линейка снова проходит через точки <i class="m">C</i> и <i class="m">B</i>. А через две точки проходит только одна прямая (тема 1!). Значит, новый кусок продолжает ту же самую прямую.</p>
+  </div>
+
+  <div class="block">
+    <h3><span class="bn">2</span>То же самое на местности: вехи</h3>
+    <p>На земле линейки нет. Вместо неё используют <b>вехи</b> — шесты длиной около 2 м, заострённые снизу, чтобы втыкать их в землю.</p>
+    <ol>
+      <li>Ставят две вехи в точках <i class="m">A</i> и <i class="m">B</i>.</li>
+      <li>Наблюдатель встаёт у вехи <i class="m">A</i> и смотрит вдоль вех.</li>
+      <li>Третью веху <i class="m">C</i> ставят так, чтобы вехи <i class="m">A</i> и <i class="m">B</i> <b>закрывали её</b> от наблюдателя. То есть наблюдатель её не видит: она прячется точно за ними.</li>
+      <li>Следующую веху ставят так, чтобы её закрывали вехи <i class="m">B</i> и <i class="m">C</i>, и так далее.</li>
+    </ol>
+    <figure>
+      <svg viewBox="0 0 620 230" role="img" aria-label="Вид сверху и вид глазами наблюдателя">
+        <text x="150" y="20" text-anchor="middle" font-family="PT Sans" font-size="15" font-weight="700" fill="#15202e">Вид сверху</text>
+        <line x1="30" y1="120" x2="290" y2="120" stroke="#9fb3cf" stroke-width="2" stroke-dasharray="5 5"/>
+        <text x="30" y="108" font-size="22">👁</text>
+        <g fill="#b0182f"><circle cx="70" cy="120" r="7"/><circle cx="160" cy="120" r="7"/><circle cx="250" cy="120" r="7"/></g>
+        <g class="svgtxt" font-size="18"><text x="64" y="148">A</text><text x="154" y="148">B</text><text x="244" y="148">C</text></g>
+        <text x="150" y="190" text-anchor="middle" font-family="PT Sans" font-size="14" fill="#566273">луч взгляда проходит через все вехи</text>
+
+        <text x="460" y="20" text-anchor="middle" font-family="PT Sans" font-size="15" font-weight="700" fill="#15202e">Что видит наблюдатель у A</text>
+        <rect x="340" y="34" width="110" height="150" rx="10" fill="#e2f2eb"/>
+        <rect x="390" y="56" width="10" height="110" fill="#15202e"/>
+        <text x="395" y="204" text-anchor="middle" font-family="PT Sans" font-size="14" fill="#1f6b4f">✓ видна одна веха:</text>
+        <text x="395" y="222" text-anchor="middle" font-family="PT Sans" font-size="14" fill="#1f6b4f">C спряталась за B</text>
+        <rect x="470" y="34" width="130" height="150" rx="10" fill="#f8e6ea"/>
+        <rect x="520" y="56" width="10" height="110" fill="#15202e"/>
+        <rect x="552" y="74" width="7" height="80" fill="#b0182f"/>
+        <text x="535" y="204" text-anchor="middle" font-family="PT Sans" font-size="14" fill="#b0182f">✗ веха C торчит</text>
+        <text x="535" y="222" text-anchor="middle" font-family="PT Sans" font-size="14" fill="#b0182f">сбоку — переставить</text>
+      </svg>
+    </figure>
+    <p>Такой приём называется <b>провешиванием</b> прямой, от слова «веха». Им пользуются, когда прокладывают просеки в лесу, шоссе и железные дороги, линии электропередачи.</p>
+    <div class="imp"><b class="t">Главная идея:</b> если веха спряталась за двумя другими, значит, все три стоят на одной прямой — на луче взгляда.</div>
+    <div class="trap"><b class="t">Не путай:</b> «провешивание» — от слова «<b>веха</b>», а не от «вешать». Ничего не подвешивают, вехи втыкают в землю.</div>
+  </div>
+
+  <div class="say">
+    <h3>Коротко тема 2</h3>
+    <ul>
+      <li>Длинный отрезок линейкой строят, сдвигая её так, чтобы она снова проходила через две уже отмеченные точки.</li>
+      <li>На местности вместо линейки — вехи; новую веху ставят так, чтобы её закрывали две предыдущие.</li>
+      <li>Оба приёма работают, потому что через две точки проходит только одна прямая.</li>
+    </ul>
+  </div>
+
+  <div class="quiz" data-quiz="q2">
+    <h3>Проверь себя: тема 2</h3>
+    <p class="lead">Выбери один ответ. После ответа появится объяснение.</p>
+  </div>
+</section>
+
+</details>
+
+<!-- ======================= § 2 ======================= -->
+<details class="par" id="p2">
+<summary><span class="pn">§ 2</span><span class="pt">Луч и угол<small>3. Луч · 4. Угол</small></span><span class="chk" role="checkbox" aria-checked="false" tabindex="0"><span class="box"></span><span class="txt">повторила</span></span><span class="chev">›</span></summary>
+
+<section id="t3">
+  <span class="tag">Тема 3</span>
+  <h2>Луч</h2>
+  <p class="src2">Учебник, с. 9</p>
+
+  <div class="block">
+    <p>Отметим на прямой точку <i class="m">O</i>. Она разрезает прямую на две части. Каждая часть называется <b>лучом, исходящим из точки <i>O</i></b>, а точка <i class="m">O</i> — <b>началом</b> луча.</p>
+    <figure>
+      <svg viewBox="0 0 600 110" role="img" aria-label="Точка O делит прямую на два луча">
+        <line x1="20" y1="50" x2="300" y2="50" stroke="#9fb3cf" stroke-width="4"/>
+        <line x1="300" y1="50" x2="560" y2="50" stroke="#1d4f91" stroke-width="5"/>
+        <path d="M560 50 l-14 -8 v16 z" fill="#1d4f91"/>
+        <path d="M20 50 l14 -8 v16 z" fill="#9fb3cf"/>
+        <circle cx="300" cy="50" r="8" fill="#fff" stroke="#b0182f" stroke-width="3"/>
+        <text x="292" y="88" class="svgtxt" font-size="22" fill="#b0182f">O</text>
+        <text x="430" y="36" text-anchor="middle" font-family="PT Sans" font-size="14" fill="#1d4f91">луч 1 — бесконечно вправо</text>
+        <text x="160" y="36" text-anchor="middle" font-family="PT Sans" font-size="14" fill="#566273">луч 2 — бесконечно влево</text>
+      </svg>
+    </figure>
+    <p>Луч похож на луч фонарика: <b>начало есть, конца нет</b>. Он бесконечно тянется в одну сторону.</p>
+    <table class="cmp">
+      <tr><th></th><th>Прямая</th><th>Луч</th><th>Отрезок</th></tr>
+      <tr><td>Сколько концов</td><td>0</td><td>1 (начало)</td><td>2</td></tr>
+      <tr><td>Куда тянется</td><td>в обе стороны</td><td>в одну сторону</td><td>никуда, ограничен</td></tr>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>Как обозначают луч</h3>
+    <ul>
+      <li>Маленькой латинской буквой: луч <i class="m">h</i>.</li>
+      <li>Двумя большими буквами: <b>первая — начало</b>, вторая — любая точка на луче. Луч <span class="m"><i>OA</i></span> начинается в <i class="m">O</i> и проходит через <i class="m">A</i>.</li>
+    </ul>
+    <div class="two">
+      <figure style="margin:0">
+        <svg viewBox="0 0 280 70" role="img" aria-label="Луч OA"><line x1="30" y1="35" x2="260" y2="35" stroke="#1d4f91" stroke-width="4"/><circle cx="30" cy="35" r="7" fill="#fff" stroke="#b0182f" stroke-width="3"/><circle cx="150" cy="35" r="6" fill="#15202e"/><g class="svgtxt" font-size="20"><text x="22" y="65" fill="#b0182f">O</text><text x="144" y="65">A</text></g></svg>
+        <figcaption>луч <i>OA</i>: начало в <i>O</i></figcaption>
+      </figure>
+      <figure style="margin:0">
+        <svg viewBox="0 0 280 70" role="img" aria-label="Луч AO"><line x1="20" y1="35" x2="150" y2="35" stroke="#1d4f91" stroke-width="4"/><line x1="20" y1="35" x2="5" y2="35" stroke="#1d4f91" stroke-width="4"/><circle cx="150" cy="35" r="7" fill="#fff" stroke="#b0182f" stroke-width="3"/><circle cx="60" cy="35" r="6" fill="#15202e"/><g class="svgtxt" font-size="20"><text x="54" y="65">O</text><text x="144" y="65" fill="#b0182f">A</text></g></svg>
+        <figcaption>луч <i>AO</i>: начало в <i>A</i>, идёт в другую сторону</figcaption>
+      </figure>
+    </div>
+    <div class="imp"><b class="t">У луча порядок букв важен!</b> Отрезок <i>OA</i> и отрезок <i>AO</i> — одно и то же. А лучи <i>OA</i> и <i>AO</i> — разные: у них разные начала.</div>
+    <p>Два луча, на которые точка делит прямую, называют <b>продолжениями</b> друг друга: у них общее начало, и вместе они составляют прямую. Это слово понадобится в темах про углы.</p>
+  </div>
+
+  <div class="quiz" data-quiz="q3"><h3>Проверь себя: тема 3</h3><p class="lead">Выбери один ответ.</p></div>
+</section>
+
+<section id="t4">
+  <span class="tag">Тема 4</span>
+  <h2>Угол</h2>
+  <p class="src2">Учебник, с. 10</p>
+
+  <div class="block">
+    <div class="rule book"><span class="src">Как в учебнике</span><b>Угол</b> — это геометрическая фигура, которая состоит из точки и двух лучей, исходящих из этой точки. Лучи называются <b>сторонами угла</b>, а их общее начало — <b>вершиной угла</b>.</div>
+    <div class="two">
+      <figure style="margin:0">
+        <svg viewBox="0 0 280 180" role="img" aria-label="Угол AOB со сторонами h и k">
+          <line x1="40" y1="150" x2="270" y2="150" stroke="#1d4f91" stroke-width="3"/>
+          <line x1="40" y1="150" x2="220" y2="25" stroke="#1d4f91" stroke-width="3"/>
+          <path d="M80 150 A40 40 0 0 0 73 127" fill="none" stroke="#b0182f" stroke-width="2.5"/>
+          <circle cx="40" cy="150" r="6" fill="#b0182f"/><circle cx="180" cy="150" r="5" fill="#15202e"/><circle cx="148" cy="75" r="5" fill="#15202e"/>
+          <g class="svgtxt" font-size="20"><text x="22" y="174" fill="#b0182f">O</text><text x="175" y="174">A</text><text x="130" y="70">B</text><text x="258" y="140">h</text><text x="222" y="22">k</text></g>
+          <text x="105" y="140" font-family="PT Sans" font-size="13" fill="#566273">вершина O</text>
+        </svg>
+      </figure>
+      <div>
+        <p>Этот угол можно записать тремя способами:</p>
+        <ul>
+          <li><span class="m">∠<i>hk</i></span> — по сторонам;</li>
+          <li><span class="m">∠<i>AOB</i></span> или <span class="m">∠<i>BOA</i></span> — по трём точкам;</li>
+          <li><span class="m">∠<i>O</i></span> — по вершине.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="imp"><b class="t">В записи из трёх букв вершина всегда посередине.</b> <span class="m">∠<i>AOB</i></span> — угол с вершиной <i>O</i>. А <span class="m">∠<i>OAB</i></span> — уже совсем другой угол, с вершиной в <i>A</i>.</div>
+  </div>
+
+  <div class="block">
+    <h3>Развёрнутый угол</h3>
+    <div class="two">
+      <figure style="margin:0">
+        <svg viewBox="0 0 280 90" role="img" aria-label="Развёрнутый угол"><line x1="20" y1="55" x2="260" y2="55" stroke="#1d4f91" stroke-width="3"/><path d="M110 55 A30 30 0 0 1 170 55" fill="none" stroke="#b0182f" stroke-width="2.5"/><circle cx="140" cy="55" r="6" fill="#b0182f"/><g class="svgtxt" font-size="20"><text x="134" y="84" fill="#b0182f">C</text><text x="24" y="44">p</text><text x="248" y="44">q</text></g></svg>
+      </figure>
+      <p>Угол называется <b>развёрнутым</b>, если обе его стороны лежат на одной прямой. Каждая его сторона — продолжение другой. Он выглядит как прямая с точкой, но это угол: его «раскрыли» до конца.</p>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>Внутри и снаружи угла</h3>
+    <div class="two">
+      <figure style="margin:0">
+        <svg viewBox="0 0 280 180" role="img" aria-label="Внутренняя область угла и точки">
+          <path d="M40 150 L270 150 L270 0 L40 0 Z" fill="none"/>
+          <path d="M40 150 L270 150 L270 70 L150 0 Z" fill="#e3ecf8"/>
+          <line x1="40" y1="150" x2="270" y2="150" stroke="#1d4f91" stroke-width="3"/>
+          <line x1="40" y1="150" x2="150" y2="0" stroke="#1d4f91" stroke-width="3"/>
+          <g fill="#1f6b4f"><circle cx="170" cy="100" r="5"/><circle cx="210" cy="60" r="5"/></g>
+          <g fill="#b0182f"><circle cx="70" cy="50" r="5"/><circle cx="120" cy="170" r="5"/></g>
+          <circle cx="95" cy="75" r="5" fill="#15202e"/>
+          <text x="180" y="130" font-family="PT Sans" font-size="13" fill="#1d4f91">внутренняя область</text>
+          <text x="10" y="30" font-family="PT Sans" font-size="13" fill="#566273">внешняя</text>
+        </svg>
+      </figure>
+      <div>
+        <p>Неразвёрнутый угол делит плоскость на <b>внутреннюю</b> (закрашена) и <b>внешнюю</b> область.</p>
+        <p>Зелёные точки лежат <b>внутри</b> угла, красные — <b>вне</b> угла, а чёрная — <b>на стороне</b> угла.</p>
+        <p>У развёрнутого угла любую из двух половин плоскости можно считать внутренней.</p>
+      </div>
+    </div>
+    <p>Если луч выходит из вершины и проходит <b>внутри</b> угла, он делит угол на два угла. Луч <i class="m">OC</i> делит угол <i class="m">AOB</i> на углы <i class="m">AOC</i> и <i class="m">COB</i>.</p>
+    <div class="trap"><b class="t">Считай все углы:</b> когда луч делит угол, на рисунке три угла: два маленьких и весь большой.</div>
+  </div>
+
+  <div class="quiz" data-quiz="q4"><h3>Проверь себя: тема 4</h3><p class="lead">Выбери один ответ.</p></div>
+</section>
+</details>
+
+<!-- ======================= § 3 ======================= -->
+<details class="par" id="p3">
+<summary><span class="pn">§ 3</span><span class="pt">Сравнение отрезков и углов<small>5. Равенство фигур · 6. Сравнение отрезков и углов</small></span><span class="chk" role="checkbox" aria-checked="false" tabindex="0"><span class="box"></span><span class="txt">повторила</span></span><span class="chev">›</span></summary>
+
+<section id="t5">
+  <span class="tag">Тема 5</span>
+  <h2>Равенство геометрических фигур</h2>
+  <p class="src2">Учебник, с. 11–12</p>
+  <div class="block">
+    <p>Вокруг много одинаковых вещей: два одинаковых листа бумаги, две одинаковые книги. В геометрии фигуры, у которых <b>одинаковая форма и одинаковые размеры</b>, называют <b>равными</b>.</p>
+    <p><b>Как проверить, равны ли фигуры?</b> Скопировать одну фигуру на кальку (прозрачную бумагу) и попробовать наложить на другую. Кальку можно двигать, поворачивать и даже переворачивать другой стороной. Совпали полностью — значит, фигуры равны.</p>
+    <figure>
+      <svg viewBox="0 0 600 170" role="img" aria-label="Фигуру скопировали на кальку и наложили на другую">
+        <path d="M60 130 L60 40 Q120 30 150 80 L110 130 Z" fill="#e3ecf8" stroke="#1d4f91" stroke-width="3"/>
+        <text x="95" y="160" text-anchor="middle" class="svgtxt" font-size="20">Ф₁</text>
+        <path d="M540 130 L540 40 Q480 30 450 80 L490 130 Z" fill="#e3ecf8" stroke="#1d4f91" stroke-width="3"/>
+        <text x="505" y="160" text-anchor="middle" class="svgtxt" font-size="20">Ф₂</text>
+        <path d="M200 85 C 260 40, 340 40, 400 85" fill="none" stroke="#b0182f" stroke-width="2.5" stroke-dasharray="6 6"/>
+        <path d="M400 85 l-14 -2 l8 -11 z" fill="#b0182f"/>
+        <text x="300" y="38" text-anchor="middle" font-family="PT Sans" font-size="14" fill="#b0182f">копия на кальке, перевернули — совпала</text>
+        <text x="300" y="120" text-anchor="middle" font-family="PT Sans" font-size="14" fill="#566273">Ф₂ — зеркальная копия Ф₁</text>
+      </svg>
+    </figure>
+    <div class="rule book"><span class="src">Определение из учебника</span>Две геометрические фигуры называются <b>равными</b>, если их можно совместить наложением.</div>
+    <div class="imp"><b class="t">Одинаковой площади мало!</b> Прямоугольник 2 × 8 и квадрат 4 × 4 имеют одинаковую площадь 16, но наложением их не совместить, значит, они не равны. Равные фигуры совпадают целиком: и формой, и размерами.</div>
+  </div>
+  <div class="quiz" data-quiz="q5"><h3>Проверь себя: тема 5</h3><p class="lead">Выбери один ответ.</p></div>
+</section>
+
+<section id="t6">
+  <span class="tag">Тема 6</span>
+  <h2>Сравнение отрезков и углов</h2>
+  <p class="src2">Учебник, с. 12–13</p>
+
+  <div class="block">
+    <h3>Отрезки</h3>
+    <p>Накладываем один отрезок на другой так, чтобы <b>совпали концы с одной стороны</b>. Смотрим на другие концы:</p>
+    <ul>
+      <li>совпали — отрезки <b>равны</b>;</li>
+      <li>не совпали — <b>меньше тот</b> отрезок, который составляет <b>часть другого</b>.</li>
+    </ul>
+    <figure>
+      <svg viewBox="0 0 600 120" role="img" aria-label="Отрезок AC меньше отрезка AB; C — середина">
+        <line x1="40" y1="40" x2="420" y2="40" stroke="#1d4f91" stroke-width="4"/>
+        <line x1="40" y1="40" x2="250" y2="40" stroke="#b0182f" stroke-width="7" opacity=".55"/>
+        <g fill="#15202e"><circle cx="40" cy="40" r="6"/><circle cx="250" cy="40" r="6"/><circle cx="420" cy="40" r="6"/></g>
+        <g class="svgtxt" font-size="20"><text x="34" y="74">A</text><text x="244" y="74">C</text><text x="414" y="74">B</text></g>
+        <text x="470" y="46" class="svgtxt" font-size="20" fill="#b0182f">AC &lt; AB</text>
+        <text x="300" y="108" text-anchor="middle" font-family="PT Sans" font-size="14" fill="#566273">AC — часть отрезка AB, поэтому AC меньше</text>
+      </svg>
+    </figure>
+    <div class="rule">Точка, которая делит отрезок пополам, на два равных отрезка, называется <b>серединой отрезка</b>. Если <i class="m">C</i> — середина <i class="m">AB</i>, то <span class="m"><i>AC</i> = <i>CB</i></span>.</div>
+  </div>
+
+  <div class="block">
+    <h3>Углы</h3>
+    <p>Накладываем углы так, чтобы <b>одна сторона совпала</b> со стороной другого угла, а две другие стороны оказались <b>по одну сторону</b> от неё. Смотрим на две другие стороны: совпали — углы равны; нет — меньше тот угол, который составляет часть другого.</p>
+    <div class="two">
+      <figure style="margin:0">
+        <svg viewBox="0 0 300 170" role="img" aria-label="Угол 1 с длинными сторонами меньше угла 2 с короткими">
+          <line x1="10" y1="80" x2="190" y2="80" stroke="#1d4f91" stroke-width="3"/><line x1="10" y1="80" x2="185" y2="22" stroke="#1d4f91" stroke-width="3"/>
+          <text x="58" y="76" font-family="PT Serif" font-size="18" fill="#1d4f91">1</text>
+          <line x1="210" y1="80" x2="290" y2="80" stroke="#b0182f" stroke-width="3"/><line x1="210" y1="80" x2="240" y2="10" stroke="#b0182f" stroke-width="3"/>
+          <text x="232" y="70" font-family="PT Serif" font-size="18" fill="#b0182f">2</text>
+          <line x1="10" y1="150" x2="190" y2="150" stroke="#555" stroke-width="3"/><line x1="10" y1="150" x2="185" y2="92" stroke="#1d4f91" stroke-width="3"/><line x1="10" y1="150" x2="60" y2="96" stroke="#b0182f" stroke-width="3"/>
+          <text x="200" y="140" font-family="PT Sans" font-size="13" fill="#566273">наложили:</text>
+          <text x="200" y="158" font-family="PT Sans" font-size="13" fill="#566273">∠1 — часть ∠2</text>
+        </svg>
+      </figure>
+      <div class="imp" style="margin:0"><b class="t">Длина сторон на рисунке ничего не значит!</b> Стороны угла — лучи, они бесконечны. Угол 1 нарисован с длинными сторонами, но он <b>меньше</b> угла 2: его «раствор» уже.</div>
+    </div>
+    <ul>
+      <li>Неразвёрнутый угол составляет часть развёрнутого, поэтому <b>развёрнутый угол больше неразвёрнутого</b>.</li>
+      <li><b>Любые два развёрнутых угла равны.</b></li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3>Биссектриса угла</h3>
+    <div class="two">
+      <figure style="margin:0">
+        <svg viewBox="0 0 280 170" role="img" aria-label="Луч l — биссектриса угла hk">
+          <line x1="30" y1="150" x2="270" y2="150" stroke="#1d4f91" stroke-width="3"/>
+          <line x1="30" y1="150" x2="150" y2="10" stroke="#1d4f91" stroke-width="3"/>
+          <line x1="30" y1="150" x2="250" y2="55" stroke="#b0182f" stroke-width="3"/>
+          <path d="M80 150 A50 50 0 0 0 76 131" fill="none" stroke="#15202e" stroke-width="2"/><path d="M76 130 A50 50 0 0 0 63 112" fill="none" stroke="#15202e" stroke-width="2"/>
+          <g class="svgtxt" font-size="20"><text x="18" y="172">O</text><text x="262" y="142">k</text><text x="150" y="28">h</text><text x="252" y="52" fill="#b0182f">l</text></g>
+        </svg>
+      </figure>
+      <div>
+        <div class="rule book" style="margin-top:0"><span class="src">Как в учебнике</span>Луч, исходящий из вершины угла и делящий его на два равных угла, называется <b>биссектрисой угла</b>.</div>
+        <p>Здесь <span class="m">∠<i>hl</i> = ∠<i>lk</i></span>. Биссектриса — это <b>луч</b> (не отрезок!), и он обязательно выходит <b>из вершины</b>.</p>
+      </div>
+    </div>
+  </div>
+  <div class="quiz" data-quiz="q6"><h3>Проверь себя: тема 6</h3><p class="lead">Выбери один ответ.</p></div>
+</section>
+</details>
+
+<!-- ======================= § 4 ======================= -->
+<details class="par" id="p4">
+<summary><span class="pn">§ 4</span><span class="pt">Измерение отрезков<small>7. Длина отрезка · 8. Единицы измерения. Измерительные инструменты</small></span><span class="chk" role="checkbox" aria-checked="false" tabindex="0"><span class="box"></span><span class="txt">повторила</span></span><span class="chev">›</span></summary>
+
+<section id="t7">
+  <span class="tag">Тема 7</span>
+  <h2>Длина отрезка</h2>
+  <p class="src2">Учебник, с. 14–16</p>
+
+  <div class="block">
+    <h3>Измерить — значит сравнить с единицей</h3>
+    <p>Выбираем отрезок, который назовём <b>единицей измерения</b> (его называют ещё <b>масштабным отрезком</b>), например 1 см. Считаем, <b>сколько раз он укладывается</b> в нашем отрезке.</p>
+    <figure>
+      <svg viewBox="0 0 600 120" role="img" aria-label="В отрезке AC сантиметр укладывается 3 раза и 4 миллиметра">
+        <g fill="#e3ecf8" stroke="#1d4f91" stroke-width="2"><rect x="40" y="30" width="120" height="30"/><rect x="160" y="30" width="120" height="30"/><rect x="280" y="30" width="120" height="30"/></g>
+        <g fill="#f5efd9" stroke="#6f550c" stroke-width="1.5"><rect x="400" y="30" width="12" height="30"/><rect x="412" y="30" width="12" height="30"/><rect x="424" y="30" width="12" height="30"/><rect x="436" y="30" width="12" height="30"/></g>
+        <g font-family="PT Sans" font-size="15" fill="#1d4f91" text-anchor="middle"><text x="100" y="51">1 см</text><text x="220" y="51">1 см</text><text x="340" y="51">1 см</text></g>
+        <line x1="40" y1="80" x2="448" y2="80" stroke="#b0182f" stroke-width="3"/>
+        <g class="svgtxt" font-size="20"><text x="34" y="108">A</text><text x="440" y="108">C</text></g>
+        <text x="470" y="51" font-family="PT Sans" font-size="14" fill="#6f550c">+ 4 мм</text>
+        <text x="520" y="86" class="svgtxt" font-size="20" fill="#b0182f">3,4 см</text>
+      </svg>
+    </figure>
+    <p>Если сантиметр не укладывается целое число раз, остаток меряют <b>десятыми долями</b> (миллиметрами). Не укладываются ровно и они — длину записывают <b>приближённо</b>: <span class="m"><i>AD</i> ≈ 3,8 см</span>.</p>
+    <ul>
+      <li>Выбрав единицу измерения, можно измерить любой отрезок: его длина — <b>положительное число</b>.</li>
+      <li><b>Равные отрезки имеют равные длины</b>, а меньший отрезок — меньшую длину.</li>
+      <li>Если длина <i class="m">CD</i> в <i class="m">k</i> раз больше длины <i class="m">AB</i>, пишут <span class="m"><i>CD</i> = <i>k</i>·<i>AB</i></span>.</li>
+      <li>Длину отрезка называют ещё <b>расстоянием</b> между его концами.</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3>Самое полезное свойство</h3>
+    <figure>
+      <svg viewBox="0 0 600 90" role="img" aria-label="AC плюс CB равно AB">
+        <line x1="40" y1="40" x2="260" y2="40" stroke="#1d4f91" stroke-width="5"/><line x1="260" y1="40" x2="540" y2="40" stroke="#b0182f" stroke-width="5"/>
+        <g fill="#15202e"><circle cx="40" cy="40" r="6"/><circle cx="260" cy="40" r="6"/><circle cx="540" cy="40" r="6"/></g>
+        <g class="svgtxt" font-size="20"><text x="34" y="74">A</text><text x="254" y="74">C</text><text x="534" y="74">B</text></g>
+        <text x="150" y="28" text-anchor="middle" font-family="PT Serif" font-size="17" fill="#1d4f91">3 см</text>
+        <text x="400" y="28" text-anchor="middle" font-family="PT Serif" font-size="17" fill="#b0182f">2,7 см</text>
+      </svg>
+    </figure>
+    <div class="imp"><b class="t">Когда точка делит отрезок на два отрезка, длина всего отрезка равна сумме длин этих двух отрезков:</b> <span class="m"><i>AC</i> + <i>CB</i> = <i>AB</i></span>. Здесь 3 + 2,7 = 5,7 см.</div>
+    <p><b>Следствие (задача 39 учебника):</b> если три точки лежат на одной прямой, то самый длинный из трёх отрезков равен сумме двух других. Если не равен, значит, точки на одной прямой <b>не лежат</b>.</p>
+    <div class="trap"><b class="t">Ловушка в задачах:</b> «точки <i>A</i>, <i>B</i>, <i>C</i> лежат на одной прямой» не значит, что <i>B</i> между <i>A</i> и <i>C</i>. Посередине может оказаться любая из трёх точек, поэтому ответов бывает два. И всегда переводи всё в одни единицы: см с мм не складывают.</div>
+  </div>
+
+  <div class="block">
+    <h3>Длина ломаной и периметр</h3>
+    <p>Длина ломаной — <b>сумма длин всех её звеньев</b>. Длина замкнутой ломаной называется <b>периметром многоугольника</b>.</p>
+  </div>
+  <div class="quiz" data-quiz="q7"><h3>Проверь себя: тема 7</h3><p class="lead">Выбери один ответ.</p></div>
+</section>
+
+<section id="t8">
+  <span class="tag">Тема 8</span>
+  <h2>Единицы измерения. Измерительные инструменты</h2>
+  <p class="src2">Учебник, с. 16–17</p>
+  <div class="block">
+    <p>Стандартная международная единица длины — <b>метр</b>. Это отрезок, приближённо равный одной сорокамиллионной части земного меридиана. <b>Эталон</b> метра — металлический брусок, он хранится в Международном бюро мер и весов во Франции, а копии — в других странах, в том числе в России.</p>
+    <table class="cmp">
+      <tr><th>Единица</th><th>Сколько это</th><th>Чем меряют</th></tr>
+      <tr><td>миллиметр, сантиметр</td><td>1 см = 10 мм</td><td>расстояния на бумаге</td></tr>
+      <tr><td>дециметр, метр</td><td>1 м = 10 дм = 100 см</td><td>предметы в комнате</td></tr>
+      <tr><td>километр</td><td>1 км = 1000 м</td><td>расстояния между городами</td></tr>
+      <tr><td>морская миля</td><td>1,852 км</td><td>расстояния на море</td></tr>
+      <tr><td>световой год</td><td>путь, который свет проходит за один год</td><td>расстояния до звёзд</td></tr>
+      <tr><td>аршин, сажень</td><td>0,7112 м и 2,1336 м</td><td>старинные русские меры</td></tr>
+    </table>
+    <div class="imp"><b class="t">Световой год — это расстояние, а не время!</b> Слово «год» говорит, сколько летит свет, но измеряют им длину пути.</div>
+  </div>
+  <div class="block">
+    <h3>Инструменты</h3>
+    <div class="tools">
+      <div class="toolc"><b>Масштабная миллиметровая линейка</b><span>техническое черчение</span></div>
+      <div class="toolc"><b>Штангенциркуль</b><span>диаметр трубки и мелкие детали, точность до 0,1 мм</span></div>
+      <div class="toolc"><b>Рулетка</b><span>лента с делениями — расстояния на местности</span></div>
+    </div>
+  </div>
+  <div class="quiz" data-quiz="q8"><h3>Проверь себя: тема 8</h3><p class="lead">Выбери один ответ.</p></div>
+</section>
+</details>
+
+<!-- ======================= § 5 ======================= -->
+<details class="par" id="p5">
+<summary><span class="pn">§ 5</span><span class="pt">Измерение углов<small>9. Градусная мера угла · 10. Измерение углов на местности</small></span><span class="chk" role="checkbox" aria-checked="false" tabindex="0"><span class="box"></span><span class="txt">повторила</span></span><span class="chev">›</span></summary>
+
+<section id="t9">
+  <span class="tag">Тема 9</span>
+  <h2>Градусная мера угла</h2>
+  <p class="src2">Учебник, с. 19–20</p>
+  <div class="block">
+    <p>Углы меряют так же, как отрезки: сравнивают с единицей. Единица — <b>градус</b>: угол, равный <b>1/180 части развёрнутого угла</b>. Представь, что развёрнутый угол разрезали на 180 одинаковых тонких «кусочков пиццы»: один кусочек — 1°.</p>
+    <p><b>Градусная мера угла</b> — положительное число, которое показывает, сколько раз градус и его части укладываются в угле. Меряют <b>транспортиром</b>. Пишут: <span class="m">∠<i>AOB</i> = 150°</span>.</p>
+    <div class="rule">Части градуса: <b>минута</b> — 1/60 градуса (знак ′), <b>секунда</b> — 1/60 минуты (знак ″). Например: <span class="m">60°32′17″</span>. <br>Значит, <b>1° = 60′</b>, и 0,5° — это 30′, а не 50′!</div>
+  </div>
+  <div class="block">
+    <h3>Виды углов</h3>
+    <figure>
+      <svg viewBox="0 0 640 140" role="img" aria-label="Острый, прямой, тупой и развёрнутый углы">
+        <g stroke="#1d4f91" stroke-width="3" fill="none">
+          <line x1="20" y1="100" x2="130" y2="100"/><line x1="20" y1="100" x2="110" y2="45"/>
+          <line x1="180" y1="100" x2="280" y2="100"/><line x1="180" y1="100" x2="180" y2="20"/>
+          <line x1="370" y1="100" x2="460" y2="100"/><line x1="370" y1="100" x2="320" y2="35"/>
+          <line x1="500" y1="100" x2="630" y2="100"/>
+        </g>
+        <rect x="180" y="86" width="14" height="14" fill="none" stroke="#b0182f" stroke-width="2"/>
+        <circle cx="565" cy="100" r="5" fill="#b0182f"/>
+        <g font-family="PT Sans" font-size="15" text-anchor="middle" fill="#15202e">
+          <text x="75" y="126">острый</text><text x="230" y="126">прямой</text><text x="390" y="126">тупой</text><text x="565" y="126">развёрнутый</text>
+        </g>
+        <g font-family="PT Serif" font-size="15" text-anchor="middle" fill="#b0182f">
+          <text x="75" y="18">меньше 90°</text><text x="230" y="18">ровно 90°</text><text x="390" y="18">от 90° до 180°</text><text x="565" y="70">ровно 180°</text>
+        </g>
+      </svg>
+    </figure>
+    <div class="imp"><b class="t">Тупой угол строго меньше 180°.</b> Угол в 180° — не тупой, а развёрнутый. И любой неразвёрнутый угол меньше 180°.</div>
+    <p>Прямой угол мы видим каждый день: угол стола, угол между стеной и полом. На чертеже его отмечают маленьким квадратиком.</p>
+  </div>
+  <div class="block">
+    <h3>Сложение углов</h3>
+    <div class="two">
+      <figure style="margin:0">
+        <svg viewBox="0 0 280 160" role="img" aria-label="Луч OC делит угол AOB">
+          <line x1="140" y1="140" x2="270" y2="140" stroke="#1d4f91" stroke-width="3"/>
+          <line x1="140" y1="140" x2="30" y2="80" stroke="#1d4f91" stroke-width="3"/>
+          <line x1="140" y1="140" x2="240" y2="55" stroke="#b0182f" stroke-width="3"/>
+          <g class="svgtxt" font-size="20"><text x="132" y="160">O</text><text x="262" y="132">A</text><text x="20" y="74">B</text><text x="244" y="52" fill="#b0182f">C</text></g>
+          <text x="195" y="128" font-family="PT Serif" font-size="15" fill="#b0182f">40°</text>
+          <text x="125" y="100" font-family="PT Serif" font-size="15" fill="#1d4f91">120°</text>
+        </svg>
+      </figure>
+      <div>
+        <div class="imp" style="margin-top:0"><b class="t">Когда луч делит угол на два угла, градусная мера всего угла равна сумме градусных мер этих углов.</b></div>
+        <p class="m" style="font-size:19px">∠<i>AOC</i> + ∠<i>COB</i> = ∠<i>AOB</i><br>40° + 120° = 160°</p>
+        <p>Это то же самое, что <span class="m"><i>AC</i> + <i>CB</i> = <i>AB</i></span> для отрезков.</p>
+      </div>
+    </div>
+  </div>
+  <div class="quiz" data-quiz="q9"><h3>Проверь себя: тема 9</h3><p class="lead">Выбери один ответ.</p></div>
+</section>
+
+<section id="t10">
+  <span class="tag">Тема 10</span>
+  <h2>Измерение углов на местности</h2>
+  <p class="src2">Учебник, с. 21</p>
+  <div class="block">
+    <p>На местности углы меряют специальными приборами. Самый простой — <b>астролябия</b>. Она состоит из двух частей:</p>
+    <div class="two">
+      <figure style="margin:0">
+        <svg viewBox="0 0 260 220" role="img" aria-label="Схема астролябии: диск с делениями и алидада">
+          <circle cx="130" cy="110" r="90" fill="#f3f6fa" stroke="#1d4f91" stroke-width="3"/>
+          <g id="astroTicks"></g>
+          <line x1="40" y1="110" x2="220" y2="110" stroke="#9fb3cf" stroke-width="2" stroke-dasharray="4 4"/>
+          <line x1="58" y1="152" x2="202" y2="68" stroke="#b0182f" stroke-width="7" stroke-linecap="round"/>
+          <rect x="196" y="58" width="12" height="22" fill="#b0182f" transform="rotate(-30 202 69)"/>
+          <rect x="52" y="141" width="12" height="22" fill="#b0182f" transform="rotate(-30 58 152)"/>
+          <circle cx="130" cy="110" r="6" fill="#15202e"/>
+          <text x="130" y="214" text-anchor="middle" font-family="PT Sans" font-size="13" fill="#566273">вид сверху</text>
+        </svg>
+      </figure>
+      <ul>
+        <li><b>диск</b>, разделённый на градусы;</li>
+        <li><b>алидада</b> — линейка, которая вращается вокруг центра диска (красная). На её концах два узких окошечка: через них смотрят, чтобы направить алидаду на нужную точку.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="block">
+    <h3>Как измерить угол <i>AOB</i></h3>
+    <ol class="steps">
+      <li>Ставят треножник с астролябией так, чтобы <b>отвес</b>, подвешенный к центру диска, был точно над точкой <i class="m">O</i> — вершиной угла.</li>
+      <li>Направляют алидаду вдоль стороны <i class="m">OA</i> и записывают деление, против которого стоит указатель.</li>
+      <li>Поворачивают алидаду вдоль <i class="m">OB</i> и снова записывают деление.</li>
+      <li><b>Разность отсчётов</b> и есть градусная мера угла <i class="m">AOB</i>.</li>
+    </ol>
+    <div class="imp"><b class="t">Отсчёты вычитают, а не складывают.</b> Если указатель показал 35° и 112°, то угол равен 112° − 35° = 77°.</div>
+    <p>Точно измерять углы нужно в астрономии, чтобы определять положение небесных тел и искусственных спутников. Для этого строят специальные приборы, а данные обрабатывают на компьютерах.</p>
+  </div>
+  <div class="quiz" data-quiz="q10"><h3>Проверь себя: тема 10</h3><p class="lead">Выбери один ответ.</p></div>
+</section>
+</details>
+
+<!-- ======================= § 6 ======================= -->
+<details class="par" id="p6">
+<summary><span class="pn">§ 6</span><span class="pt">Перпендикулярные прямые<small>11. Смежные и вертикальные углы · 12. Перпендикулярные прямые · 13. Построение прямых углов на местности</small></span><span class="chk" role="checkbox" aria-checked="false" tabindex="0"><span class="box"></span><span class="txt">повторила</span></span><span class="chev">›</span></summary>
+
+<section id="t11">
+  <span class="tag">Тема 11</span>
+  <h2>Смежные и вертикальные углы</h2>
+  <p class="src2">Учебник, с. 22–23</p>
+  <div class="block">
+    <h3>Смежные углы</h3>
+    <div class="two">
+      <figure style="margin:0">
+        <svg viewBox="0 0 280 150" role="img" aria-label="Смежные углы AOB и BOC">
+          <line x1="20" y1="120" x2="260" y2="120" stroke="#1d4f91" stroke-width="3"/>
+          <line x1="150" y1="120" x2="100" y2="20" stroke="#b0182f" stroke-width="3"/>
+          <circle cx="150" cy="120" r="5" fill="#15202e"/>
+          <g class="svgtxt" font-size="20"><text x="18" y="144">A</text><text x="144" y="144">O</text><text x="250" y="144">C</text><text x="88" y="18" fill="#b0182f">B</text></g>
+          <text x="70" y="108" font-family="PT Serif" font-size="16" fill="#1d4f91">∠AOB</text>
+          <text x="175" y="100" font-family="PT Serif" font-size="16" fill="#1d4f91">∠BOC</text>
+        </svg>
+      </figure>
+      <div>
+        <p>Два угла называются <b>смежными</b>, если у них <b>одна сторона общая</b> (луч <i class="m">OB</i>), а две другие — <b>продолжения одна другой</b> (лучи <i class="m">OA</i> и <i class="m">OC</i> составляют прямую).</p>
+        <p>Вместе смежные углы составляют развёрнутый угол, поэтому:</p>
+      </div>
+    </div>
+    <div class="imp"><b class="t">Сумма смежных углов равна 180°.</b> Знаешь один — второй находишь вычитанием: если один 111°, то другой 180° − 111° = 69°.</div>
+  </div>
+  <div class="block">
+    <h3>Вертикальные углы</h3>
+    <p>Два угла называются <b>вертикальными</b>, если стороны одного угла являются продолжениями сторон другого. Они получаются, когда пересекаются две прямые: углы, которые стоят «напротив» друг друга.</p>
+    <div class="lab">
+      <label for="vSlider"><b>Поворачивай прямую: ∠1 = <span id="vVal">50</span>°</b></label>
+      <input type="range" id="vSlider" min="15" max="165" step="1" value="50">
+      <svg id="vSvg" viewBox="0 0 320 220" role="img" aria-label="Две пересекающиеся прямые и четыре угла" style="max-width:380px"></svg>
+      <div class="vvals" id="vVals"></div>
+    </div>
+    <p>Посмотри: ∠1 и ∠3 всегда одинаковые, ∠2 и ∠4 тоже. Почему? Угол 2 — смежный и с углом 1, и с углом 3. Значит, <span class="m">∠1 = 180° − ∠2</span> и <span class="m">∠3 = 180° − ∠2</span>, то есть <span class="m">∠1 = ∠3</span>.</p>
+    <div class="imp"><b class="t">Вертикальные углы равны.</b> А соседние углы при пересечении прямых — смежные, их сумма 180°.</div>
+  </div>
+  <div class="quiz" data-quiz="q11"><h3>Проверь себя: тема 11</h3><p class="lead">Выбери один ответ.</p></div>
+</section>
+
+<section id="t12">
+  <span class="tag">Тема 12</span>
+  <h2>Перпендикулярные прямые</h2>
+  <p class="src2">Учебник, с. 23–24</p>
+  <div class="block">
+    <p>Две пересекающиеся прямые образуют четыре неразвёрнутых угла. Угол, который <b>не больше каждого из трёх остальных</b> (то есть самый маленький), называется <b>углом между пересекающимися прямыми</b>.</p>
+    <p>Если один из четырёх углов прямой, то и все остальные прямые: смежные с ним равны 180° − 90° = 90°, а вертикальный равен ему.</p>
+    <div class="two">
+      <figure style="margin:0">
+        <svg viewBox="0 0 240 200" role="img" aria-label="Перпендикулярные прямые AC и BD">
+          <line x1="20" y1="100" x2="220" y2="100" stroke="#1d4f91" stroke-width="3"/>
+          <line x1="120" y1="10" x2="120" y2="190" stroke="#1d4f91" stroke-width="3"/>
+          <rect x="106" y="86" width="14" height="14" fill="none" stroke="#b0182f" stroke-width="2"/>
+          <g class="svgtxt" font-size="20"><text x="14" y="92">A</text><text x="210" y="92">C</text><text x="128" y="22">B</text><text x="128" y="190">D</text></g>
+        </svg>
+      </figure>
+      <div>
+        <div class="rule book" style="margin-top:0"><span class="src">Как в учебнике</span>Две пересекающиеся прямые называются <b>перпендикулярными</b> (или взаимно перпендикулярными), если они образуют четыре прямых угла.</div>
+        <p>Обозначение: <span class="m"><i>AC</i> ⊥ <i>BD</i></span>. Читается: «прямая <i>AC</i> перпендикулярна к прямой <i>BD</i>».</p>
+      </div>
+    </div>
+  </div>
+  <div class="block">
+    <h3>Две прямые, перпендикулярные к третьей</h3>
+    <div class="two">
+      <figure style="margin:0">
+        <svg viewBox="0 0 260 170" role="img" aria-label="Две прямые, перпендикулярные третьей, не пересекаются">
+          <line x1="10" y1="90" x2="250" y2="90" stroke="#15202e" stroke-width="3"/>
+          <line x1="80" y1="10" x2="80" y2="165" stroke="#1d4f91" stroke-width="3"/>
+          <line x1="180" y1="10" x2="180" y2="165" stroke="#1d4f91" stroke-width="3"/>
+          <rect x="80" y="76" width="14" height="14" fill="none" stroke="#b0182f" stroke-width="2"/><rect x="180" y="76" width="14" height="14" fill="none" stroke="#b0182f" stroke-width="2"/>
+          <g class="svgtxt" font-size="18"><text x="66" y="24">a</text><text x="188" y="24">b</text><text x="236" y="82">c</text></g>
+        </svg>
+      </figure>
+      <div>
+        <div class="imp" style="margin-top:0"><b class="t">Две прямые, перпендикулярные к третьей, не пересекаются.</b></div>
+        <p>Учебник доказывает это, мысленно перегибая рисунок по третьей прямой. Если бы <i class="m">a</i> и <i class="m">b</i> пересеклись в точке <i class="m">M</i> сверху, то при перегибе такая же точка <i class="m">M₁</i> нашлась бы снизу. Тогда через две точки <i class="m">M</i> и <i class="m">M₁</i> прошли бы две разные прямые, а это невозможно.</p>
+      </div>
+    </div>
+    <div class="trap"><b class="t">Не путай:</b> <i>a</i> ⊥ <i>c</i> и <i>b</i> ⊥ <i>c</i> не значит, что <i>a</i> ⊥ <i>b</i>. Наоборот, <i>a</i> и <i>b</i> вообще не пересекаются.</div>
+    <p>Перпендикулярные прямые на бумаге проводят с помощью <b>чертёжного треугольника и линейки</b>.</p>
+  </div>
+  <div class="quiz" data-quiz="q12"><h3>Проверь себя: тема 12</h3><p class="lead">Выбери один ответ.</p></div>
+</section>
+
+<section id="t13">
+  <span class="tag">Тема 13</span>
+  <h2>Построение прямых углов на местности</h2>
+  <p class="src2">Учебник, с. 24–25</p>
+  <div class="block">
+    <div class="two">
+      <figure style="margin:0">
+        <svg viewBox="0 0 260 220" role="img" aria-label="Экер: два бруска крестом, вид сверху">
+          <line x1="40" y1="200" x2="240" y2="20" stroke="#9fb3cf" stroke-width="2" stroke-dasharray="5 5"/>
+          <line x1="140" y1="110" x2="50" y2="10" stroke="#9fb3cf" stroke-width="2" stroke-dasharray="5 5"/>
+          <rect x="80" y="104" width="120" height="12" rx="3" fill="#8a5a3c" transform="rotate(-42 140 110)"/>
+          <rect x="134" y="50" width="12" height="120" rx="3" fill="#a87250" transform="rotate(-42 140 110)"/>
+          <circle cx="140" cy="110" r="5" fill="#15202e"/>
+          <circle cx="240" cy="20" r="7" fill="#b0182f"/><circle cx="50" cy="10" r="7" fill="#1f6b4f"/>
+          <g class="svgtxt" font-size="18"><text x="146" y="134">O</text><text x="226" y="48" fill="#b0182f">A</text><text x="64" y="20" fill="#1f6b4f">B</text></g>
+          <text x="130" y="214" text-anchor="middle" font-family="PT Sans" font-size="13" fill="#566273">вид сверху</text>
+        </svg>
+      </figure>
+      <div>
+        <p><b>Экер</b> — простой прибор для построения прямых углов на местности. Это <b>два бруска, расположенные под прямым углом</b> и укреплённые на треножнике. На концах брусков вбиты гвозди так, что прямые, проходящие через них, взаимно перпендикулярны.</p>
+      </div>
+    </div>
+    <h3>Как построить прямой угол с заданной стороной <i>OA</i></h3>
+    <ol class="steps">
+      <li>Ставят треножник так, чтобы <b>отвес</b> был точно над точкой <i class="m">O</i>.</li>
+      <li>Поворачивают экер, пока <b>один брусок не укажет на луч <i>OA</i></b>: для этого на луче ставят веху.</li>
+      <li><b>Провешивают прямую</b> по направлению второго бруска (тема 2!). Получается прямой угол <i class="m">AOB</i>.</li>
+    </ol>
+    <div class="imp"><b class="t">Не путай приборы:</b> астролябия <b>измеряет</b> углы в градусах, а экер <b>строит</b> прямой угол. В геодезии для этого используют более совершенные приборы, например <b>теодолит</b>.</div>
+  </div>
+  <div class="quiz" data-quiz="q13"><h3>Проверь себя: тема 13</h3><p class="lead">Выбери один ответ.</p></div>
+</section>
+</details>
+
+<footer>Геометрия, 7 класс · Глава I · повторение</footer>
+</div>
+
+<script>
+/* ---------- вопросы ---------- */
+var QUIZ={
+  q1:[
+    {q:'На листе отметили 4 точки так, что никакие три из них не лежат на одной прямой. Через каждые две точки провели прямую. Сколько всего получилось прямых?',
+     pic:'<svg viewBox="0 0 260 150" style="max-width:260px;margin:4px 0 10px"><g fill="#b0182f"><circle cx="40" cy="110" r="6"/><circle cx="110" cy="30" r="6"/><circle cx="220" cy="50" r="6"/><circle cx="190" cy="130" r="6"/></g><g class="svgtxt" font-size="18"><text x="22" y="134">A</text><text x="100" y="22">B</text><text x="230" y="48">C</text><text x="198" y="146">D</text></g></svg>',
+     opts:['4','6','8','12'], a:1,
+     why:['Это если провести по одной прямой у каждой точки. Но прямую задают две точки, а пар из четырёх точек больше.',
+          'Пары: AB, AC, AD, BC, BD, CD — шесть пар, и через каждую проходит ровно одна прямая.',
+          'Похоже на «4 точки × 2», но такого правила нет. Надо перебрать все пары: их 6.',
+          'Это если у каждой из 4 точек посчитать 3 прямые: 4 · 3 = 12. Но тогда каждая прямая посчитана дважды (AB и BA — одна прямая): 12 : 2 = 6.']},
+    {q:'На прямой по порядку отмечены точки A, B, C, D. На каких отрезках лежит точка C?',
+     pic:'<svg viewBox="0 0 400 60" style="max-width:400px;margin:4px 0 10px"><line x1="10" y1="34" x2="390" y2="34" stroke="#1d4f91" stroke-width="3"/><g fill="#15202e"><circle cx="60" cy="34" r="6"/><circle cx="150" cy="34" r="6"/><circle cx="250" cy="34" r="6" fill="#b0182f"/><circle cx="340" cy="34" r="6"/></g><g class="svgtxt" font-size="18"><text x="54" y="22">A</text><text x="144" y="22">B</text><text x="244" y="22" fill="#b0182f">C</text><text x="334" y="22">D</text></g></svg>',
+     opts:['Только на AD и BD','На AC, AD, BC, BD и CD','На AD, BD и CD','На всех шести отрезках'], a:1,
+     why:['Это отрезки, где C лежит строго внутри. Но концы тоже принадлежат отрезку, значит, C лежит и на AC, BC, CD.',
+          'Конец отрезка — тоже его точка. Поэтому C лежит на AD и BD (внутри) и на AC, BC, CD (как конец). Не лежит только на AB.',
+          'Забыты AC и BC: там C — конец отрезка, а концы входят в отрезок.',
+          'Нет: отрезок AB заканчивается в точке B и до C не доходит.']},
+    {q:'Замкнутую ломаную нарисовали так, как на рисунке. Является ли эта фигура многоугольником?',
+     pic:'<svg viewBox="0 0 260 140" style="max-width:260px;margin:4px 0 10px"><polygon points="20,30 240,120 240,30 20,120" fill="none" stroke="#1d4f91" stroke-width="3" stroke-linejoin="round"/><g fill="#15202e"><circle cx="20" cy="30" r="5"/><circle cx="240" cy="120" r="5"/><circle cx="240" cy="30" r="5"/><circle cx="20" cy="120" r="5"/></g></svg>',
+     opts:['Да, это четырёхугольник: у него 4 звена и 4 вершины','Да, ведь ломаная замкнутая','Нет, потому что несмежные звенья имеют общую точку','Нет, потому что у многоугольника все стороны должны быть равны'], a:2,
+     why:['Число звеньев и вершин правда 4, но этого мало: у многоугольника несмежные звенья не должны пересекаться.',
+          'Замкнутость нужна, но её мало. Главное условие: несмежные звенья не имеют общих точек.',
+          'Два несмежных звена пересеклись посередине («бантик»). По определению такая замкнутая ломаная многоугольником не является.',
+          'Стороны многоугольника могут быть любой длины. Равные стороны — это особый случай, а не обязательное условие.']}
+  ],
+  q2:[
+    {q:'Что такое провешивание прямой?',
+     opts:['Измерение расстояния между двумя вехами рулеткой','Построение прямой линии на местности с помощью вех','Подвешивание груза на нитке, чтобы получить отвесную линию','Отметка на местности точки, где пересекаются две дороги'], a:1,
+     why:['Провешивание ничего не измеряет: оно помогает поставить вехи на одну прямую.',
+          'Вехи ставят одну за другой так, чтобы все они оказались на одной прямой.',
+          'Ловушка в слове: «провешивание» — от «веха», а не от «вешать». Нитка с грузом называется отвесом, это другое.',
+          'Пересечение дорог тут ни при чём: провешивание строит одну прямую линию.']},
+    {q:'Вехи стоят в точках A и B, наблюдатель — у вехи A. Как правильно поставить третью веху C, чтобы все три вехи оказались на одной прямой?',
+     opts:['Так, чтобы веха C была видна ровно посередине между A и B','Так, чтобы вехи A и B закрывали веху C от наблюдателя','На таком же расстоянии от B, как B от A','Так, чтобы все три вехи были видны рядом, не загораживая друг друга'], a:1,
+     why:['Если C видна между A и B, она стоит в стороне от линии взгляда, а не на ней.',
+          'Если C спряталась за A и B, она стоит на том же луче взгляда, то есть на прямой AB.',
+          'Одинаковое расстояние ничего не говорит о направлении: C может стоять вбок под любым углом.',
+          'Наоборот: если вехи видны отдельно, они не на одной прямой. На прямой они загораживают друг друга.']},
+    {q:'Линейка длиной 15 см. У её концов отметили точки A и B, а точку C — на делении 10 см. Линейку сдвинули так, что её левый конец оказался у C, и отметили D у правого конца. Чему равна длина отрезка AD?',
+     pic:'<svg viewBox="0 0 420 70" style="max-width:420px;margin:4px 0 10px"><line x1="10" y1="40" x2="410" y2="40" stroke="#b0182f" stroke-width="3"/><g fill="#15202e"><circle cx="20" cy="40" r="6"/><circle cx="173" cy="40" r="6"/><circle cx="250" cy="40" r="6"/><circle cx="403" cy="40" r="6"/></g><g class="svgtxt" font-size="18"><text x="14" y="26">A</text><text x="167" y="26">C</text><text x="244" y="26">B</text><text x="397" y="26">D</text></g><text x="96" y="62" text-anchor="middle" font-family="PT Sans" font-size="13" fill="#566273">10 см</text></svg>',
+     opts:['30 см','25 см','20 см','15 см'], a:1,
+     why:['Так было бы, если бы линейку приложили встык к B. Но её приложили к C, то есть на 5 см раньше.',
+          'От A до C — 10 см, от C до D — целая линейка, 15 см. Всего 10 + 15 = 25 см.',
+          'Это 10 + 10: ошибка, будто от C до D тоже 10 см. Но от C до D — вся длина линейки.',
+          'Это длина одной линейки. Но отрезок AD длиннее линейки — в этом весь смысл приёма.']}
+  ]
+};
+
+/* ---------- вопросы к темам 3–13 ---------- */
+var LINE3='<svg viewBox="0 0 400 60" style="max-width:400px;margin:4px 0 10px"><line x1="10" y1="34" x2="390" y2="34" stroke="#1d4f91" stroke-width="3"/><g fill="#15202e"><circle cx="90" cy="34" r="6"/><circle cx="200" cy="34" r="6"/><circle cx="310" cy="34" r="6"/></g><g class="svgtxt" font-size="18"><text x="84" y="22">A</text><text x="194" y="22">B</text><text x="304" y="22">C</text></g></svg>';
+QUIZ.q3=[
+  {q:'На прямой по порядку отмечены точки A, B, C. Какие два луча совпадают?', pic:LINE3,
+   opts:['AB и BA','AB и AC','BA и BC','AC и CA'], a:1,
+   why:['У этих лучей разные начала (A и B), и смотрят они в разные стороны. Порядок букв в названии луча важен.',
+        'Оба луча начинаются в A и идут вправо, через B и через C. Это один и тот же луч, просто названный по разным точкам.',
+        'У них общее начало B, но идут они в разные стороны: это два луча, продолжающие друг друга, а не один луч.',
+        'Луч AC начинается в A, а луч CA — в C. Начала разные, значит, лучи разные.']},
+  {q:'Чем луч OA отличается от луча AO?',
+   opts:['Ничем: как и у отрезка, буквы можно переставлять','У них разные начала: у первого O, у второго A','Луч OA длиннее луча AO','Луч AO — продолжение луча OA'], a:1,
+   why:['Для отрезка это верно (OA = AO), а для луча нет: первая буква — всегда начало.',
+        'Первая буква в названии луча — его начало. Поэтому OA начинается в O, а AO — в A, и смотрят они в противоположные стороны.',
+        'Лучи бесконечны, у них нет длины, сравнивать их по длине нельзя.',
+        'Продолжение луча OA начиналось бы в той же точке O. А у луча AO начало в A, и он перекрывается с лучом OA на отрезке OA.']},
+  {q:'На прямой отмечена точка O. Сколько лучей с началом в точке O лежат на этой прямой?',
+   opts:['Один','Два','Бесконечно много','Четыре'], a:1,
+   why:['Точка делит прямую на две части, и каждая из них — луч.',
+        'Точка O делит прямую на две части: луч вправо и луч влево.',
+        'Бесконечно много лучей с началом O можно провести на плоскости, в разные стороны. А на одной прямой их только два.',
+        'Четыре луча получится, если через O проходят две прямые. Здесь прямая одна.']}
+];
+var ANG4='<svg viewBox="0 0 260 150" style="max-width:260px;margin:4px 0 10px"><line x1="30" y1="130" x2="250" y2="130" stroke="#1d4f91" stroke-width="3"/><line x1="30" y1="130" x2="190" y2="20" stroke="#1d4f91" stroke-width="3"/><circle cx="30" cy="130" r="5" fill="#b0182f"/><circle cx="170" cy="130" r="5"/><circle cx="140" cy="55" r="5"/><g class="svgtxt" font-size="18"><text x="14" y="148" fill="#b0182f">O</text><text x="164" y="150">A</text><text x="122" y="50">B</text></g></svg>';
+QUIZ.q4=[
+  {q:'Какая запись угла на рисунке НЕВЕРНА?', pic:ANG4,
+   opts:['∠AOB','∠BOA','∠OAB','∠O'], a:2,
+   why:['Это верная запись: вершина O посередине.',
+        'Тоже верно: можно начинать с любой стороны, главное, чтобы вершина O стояла посередине.',
+        'Здесь посередине стоит A, то есть это угол с вершиной в точке A. Наш угол с вершиной O так записать нельзя.',
+        'Верно: угол можно назвать по одной вершине, если других углов с этой вершиной на рисунке нет.']},
+  {q:'Две прямые пересекаются в точке O. Сколько НЕразвёрнутых углов с вершиной O, стороны которых — лучи этих прямых, получилось?',
+   opts:['2','4','6','8'], a:1,
+   why:['Углов больше: прямые дают 4 луча, и каждые два соседних луча образуют угол.',
+        'Четыре луча образуют 6 пар. Но в двух парах лучи — продолжения друг друга, такие углы развёрнутые. Остаётся 6 − 2 = 4.',
+        '6 — это все углы, включая два развёрнутых. А спрашивали только про неразвёрнутые.',
+        'Столько не получится: из четырёх лучей можно составить всего 6 пар.']},
+  {q:'Луч OC проходит внутри угла AOB. Сколько всего углов с вершиной O на этом рисунке?',
+   pic:'<svg viewBox="0 0 260 150" style="max-width:260px;margin:4px 0 10px"><line x1="30" y1="130" x2="250" y2="130" stroke="#1d4f91" stroke-width="3"/><line x1="30" y1="130" x2="150" y2="10" stroke="#1d4f91" stroke-width="3"/><line x1="30" y1="130" x2="245" y2="62" stroke="#b0182f" stroke-width="3"/><g class="svgtxt" font-size="18"><text x="14" y="148">O</text><text x="240" y="150">A</text><text x="154" y="22">B</text><text x="236" y="56" fill="#b0182f">C</text></g></svg>',
+   opts:['1','2','3','4'], a:2,
+   why:['Луч OC разделил угол, так что углов стало больше одного.',
+        'Это два маленьких угла AOC и COB. Но большой угол AOB тоже никуда не делся!',
+        'AOC, COB и весь угол AOB — всего три.',
+        'Четвёртому неоткуда взяться: из трёх лучей получается только три пары.']}
+];
+QUIZ.q5=[
+  {q:'Как в геометрии устанавливают, что две фигуры равны?',
+   opts:['Сравнивают площади: равные площади — равные фигуры','Пытаются совместить их наложением','Проверяют, что у них одинаковое число сторон','Измеряют одну сторону каждой фигуры'], a:1,
+   why:['Разные фигуры могут иметь одинаковую площадь, например прямоугольник 2 × 8 и квадрат 4 × 4.',
+        'По определению фигуры равны, если их можно совместить наложением.',
+        'Одинаковое число сторон бывает и у совсем разных фигур: маленький и огромный треугольники.',
+        'Одной стороны мало: остальные стороны и углы могут отличаться.']},
+  {q:'Фигуру Ф₁ скопировали на кальку. Совместить копию с фигурой Ф₂ удалось только после того, как кальку перевернули другой стороной. Равны ли фигуры?',
+   opts:['Да: переворачивать кальку разрешено','Нет: фигуры зеркальные, значит, разные','Нет: совмещать можно только сдвигом','Равны только по форме, но не по размеру'], a:0,
+   why:['В учебнике прямо сказано: кальку накладывают «той или другой стороной». Совместились — значит, равны.',
+        'Зеркальное отражение тоже считается наложением: кальку можно перевернуть.',
+        'Двигать, поворачивать и переворачивать можно. Запрещено только растягивать и сжимать.',
+        'Если фигуры совместились, то совпали и форма, и размеры.']},
+  {q:'Прямоугольник со сторонами 2 см и 8 см и квадрат со стороной 4 см. Равны ли эти фигуры?',
+   opts:['Да: у них одинаковая площадь, 16 см²','Да: у обеих фигур по 4 стороны и 4 прямых угла','Нет: наложением их не совместить','Нет: квадрат вообще не прямоугольник'], a:2,
+   why:['Одинаковая площадь — ещё не равенство. Равные фигуры должны совпадать при наложении.',
+        'Углы совпадают, но стороны разные: 8 см не наложить на 4 см.',
+        'Длинную сторону 8 см нельзя совместить со стороной 4 см, значит, фигуры не равны.',
+        'Квадрат — это прямоугольник с равными сторонами. Фигуры не равны, но совсем по другой причине.']}
+];
+var TWOANG='<svg viewBox="0 0 320 110" style="max-width:320px;margin:4px 0 10px"><line x1="10" y1="95" x2="190" y2="95" stroke="#1d4f91" stroke-width="3"/><line x1="10" y1="95" x2="185" y2="40" stroke="#1d4f91" stroke-width="3"/><text x="60" y="90" font-family="PT Serif" font-size="18" fill="#1d4f91">1</text><line x1="220" y1="95" x2="300" y2="95" stroke="#b0182f" stroke-width="3"/><line x1="220" y1="95" x2="248" y2="25" stroke="#b0182f" stroke-width="3"/><text x="240" y="86" font-family="PT Serif" font-size="18" fill="#b0182f">2</text></svg>';
+QUIZ.q6=[
+  {q:'Какой угол больше?', pic:TWOANG,
+   opts:['Угол 1: у него стороны длиннее','Угол 2','Они равны','Сравнить нельзя: стороны разной длины'], a:1,
+   why:['Длина нарисованных сторон не важна: стороны угла — бесконечные лучи. Важно, насколько угол «раскрыт».',
+        'Если наложить углы, угол 1 окажется внутри угла 2, то есть станет его частью. Значит, угол 2 больше.',
+        'Если их наложить, стороны не совпадут: угол 2 раскрыт шире.',
+        'Можно: углы сравнивают наложением, длина нарисованных сторон роли не играет.']},
+  {q:'Точка C — середина отрезка AB, AB = 10 см. Точка D — середина отрезка AC. Найдите длину отрезка DB.',
+   opts:['2,5 см','5 см','7,5 см','10 см'], a:2,
+   why:['2,5 см — это AD или DC, а спрашивали DB.',
+        '5 см — это CB. Но от D до B ещё нужно добавить DC.',
+        'AC = CB = 5 см, AD = DC = 2,5 см. DB = DC + CB = 2,5 + 5 = 7,5 см.',
+        'Это весь отрезок AB, а D лежит внутри него, так что DB меньше.']},
+  {q:'Луч l — биссектриса угла hk. Какое утверждение верно?',
+   opts:['∠hl = ∠lk','∠hl в два раза больше ∠hk','Луч l может выходить из любой точки внутри угла','Биссектриса — это отрезок, который делит угол пополам'], a:0,
+   why:['Биссектриса делит угол на два равных угла, поэтому ∠hl = ∠lk.',
+        'Наоборот: ∠hl — половина ∠hk, то есть в два раза меньше.',
+        'Нет: биссектриса обязательно выходит из вершины угла.',
+        'Биссектриса — луч, а не отрезок: у неё есть начало (вершина угла), но нет конца.']}
+];
+QUIZ.q7=[
+  {q:'Точка B делит отрезок AC на два отрезка. AB = 7,8 см, BC = 25 мм. Найдите длину AC.',
+   opts:['32,8 см','10,3 см','5,3 см','10,3 мм'], a:1,
+   why:['Сложили 7,8 и 25, забыв, что 25 мм — это 2,5 см. Сначала переведи всё в одни единицы.',
+        '25 мм = 2,5 см, AC = AB + BC = 7,8 + 2,5 = 10,3 см.',
+        'Это разность 7,8 − 2,5. Но точка делит отрезок, значит, части нужно сложить.',
+        'Число верное, а единицы нет: считали в сантиметрах, значит, 10,3 см (это 103 мм).']},
+  {q:'Точки A, B и C лежат на одной прямой, AB = 12 см, BC = 13,5 см. Какой может быть длина AC?',
+   opts:['Только 25,5 см','Только 1,5 см','25,5 см или 1,5 см','Любой от 1,5 до 25,5 см'], a:2,
+   why:['Это если B лежит между A и C. Но в условии этого нет, может быть и иначе.',
+        'Это если A лежит между B и C. Но B тоже может оказаться посередине.',
+        'Если B между A и C: 12 + 13,5 = 25,5 см. Если A между B и C: 13,5 − 12 = 1,5 см. Третий случай (C между A и B) невозможен: BC длиннее AB.',
+        'Точки лежат на одной прямой, поэтому вариантов всего два: посередине стоит B или A. Промежуточных значений не бывает.']},
+  {q:'AC = 5 см, AB = 3 см, BC = 4 см. Лежат ли точки A, B, C на одной прямой?',
+   opts:['Да: AB + BC больше AC, значит, B между A и C','Нет: тогда самый длинный отрезок был бы равен сумме двух других, а 3 + 4 ≠ 5','Да: через любые три точки можно провести прямую','Определить нельзя без рисунка'], a:1,
+   why:['Если B лежит между A и C, то должно быть точно AB + BC = AC, а не «больше».',
+        'На одной прямой самый длинный из трёх отрезков равен сумме двух других. 3 + 4 = 7, а не 5, значит, не лежат.',
+        'Через любые ДВЕ точки — да. А три точки на одной прямой бывают не всегда.',
+        'Можно: хватает длин и свойства AC + CB = AB.']}
+];
+QUIZ.q8=[
+  {q:'Что такое световой год?',
+   opts:['Время, за которое свет от Солнца доходит до Земли','Путь, который свет проходит за один год','Год, в течение которого видна яркая звезда','Единица времени, равная 365 суткам'], a:1,
+   why:['Свет от Солнца идёт около 8 минут. И световой год — это вообще не время.',
+        'Световой год — единица расстояния: путь света за год. Им меряют расстояния до звёзд.',
+        'Слово «год» сбивает с толку, но это мера длины, а не время наблюдения.',
+        'Ловушка в слове «год»: на самом деле это единица длины, а не времени.']},
+  {q:'Каким инструментом измерить диаметр тонкой трубки с точностью до 0,1 мм?',
+   opts:['Рулеткой','Штангенциркулем','Транспортиром','Масштабной линейкой'], a:1,
+   why:['Рулетка нужна для больших расстояний на местности, точность у неё маленькая.',
+        'Штангенциркулем меряют диаметр трубок и мелкие детали с точностью до 0,1 мм.',
+        'Транспортир меряет углы, а не длины.',
+        'У линейки деления по 1 мм, до 0,1 мм ей не измерить.']},
+  {q:'Какое расстояние самое большое?',
+   opts:['1 километр','1 морская миля','1000 аршин','500 саженей'], a:1,
+   why:['1 км = 1000 м, а морская миля длиннее: 1852 м.',
+        'Морская миля = 1,852 км = 1852 м, это больше всех остальных.',
+        'Число большое, но аршин короткий: 1000 · 0,7112 м = 711,2 м.',
+        'Сажень длинная, но 500 · 2,1336 м ≈ 1067 м. Меньше морской мили.']}
+];
+QUIZ.q9=[
+  {q:'Угол равен 180°. Как он называется?',
+   opts:['Тупой','Развёрнутый','Прямой','Такого угла не бывает'], a:1,
+   why:['Тупой угол больше 90°, но обязательно меньше 180°.',
+        'Развёрнутый угол равен 180°: его стороны лежат на одной прямой.',
+        'Прямой угол равен 90°.',
+        'Бывает: это развёрнутый угол.']},
+  {q:'Луч OC делит угол AOB на два угла. ∠AOB = 78°, угол AOC на 18° меньше угла BOC. Найдите ∠BOC.',
+   opts:['30°','48°','60°','39°'], a:1,
+   why:['30° — это угол AOC, а спрашивали BOC.',
+        'Пусть ∠BOC = x, тогда ∠AOC = x − 18. Сумма: x + x − 18 = 78, 2x = 96, x = 48°.',
+        'Это 78 − 18. Но так не учитывается, что углов два.',
+        'Это половина 78°: так было бы, если бы углы были равны.']},
+  {q:'Как записать угол 2,5° в градусах и минутах?',
+   opts:['2°5′','2°50′','2°30′','2°25′'], a:2,
+   why:['Минуты — не десятичная дробь: 0,5° — это не 5′.',
+        'Ловушка: в градусе не 100, а 60 минут. 0,5° = 30′, а не 50′.',
+        '1° = 60′, значит, 0,5° = 30′. Итого 2°30′.',
+        '25′ — это меньше половины градуса (половина — 30′), так что это не 2,5°.']}
+];
+QUIZ.q10=[
+  {q:'Как называется вращающаяся линейка астролябии?',
+   opts:['Отвес','Алидада','Веха','Экер'], a:1,
+   why:['Отвес — грузик на нитке. Он нужен, чтобы поставить центр прибора точно над вершиной угла.',
+        'Алидада вращается вокруг центра диска, на её концах окошечки для наведения.',
+        'Веха — шест для провешивания прямой.',
+        'Экер — другой прибор, он строит прямые углы.']},
+  {q:'Когда алидаду навели на точку A, указатель показал 35°, а когда на точку B — 112°. Чему равен угол AOB?',
+   opts:['147°','77°','112°','35°'], a:1,
+   why:['Отсчёты не складывают. 147° — это 35 + 112.',
+        'Угол равен разности отсчётов: 112° − 35° = 77°.',
+        'Это только второй отсчёт. Он был бы ответом, если бы первый был 0°.',
+        'Это первый отсчёт, а не угол.']},
+  {q:'Зачем у астролябии отвес?',
+   opts:['Чтобы центр диска оказался точно над вершиной угла','Чтобы прибор не раскачивался от ветра','Чтобы измерять высоту предметов','Чтобы показывать направление на север'], a:0,
+   why:['Отвес показывает точку прямо под центром диска, его ставят точно над вершиной O.',
+        'Для устойчивости есть треножник. Отвес — это указатель, а не груз против ветра.',
+        'Отвес висит вертикально, но высоту им не меряют.',
+        'На север показывает компас, а не отвес.']}
+];
+QUIZ.q11=[
+  {q:'∠ABC = 111°. Чему равен угол, смежный с ним?',
+   opts:['69°','79°','111°','249°'], a:0,
+   why:['Сумма смежных углов 180°, поэтому 180° − 111° = 69°.',
+        'Ошибка в вычитании: 180 − 111 = 69, а не 79.',
+        '111° — это угол, вертикальный с ABC. А смежный дополняет его до 180°.',
+        'Это 360° − 111°. Но смежные углы в сумме дают 180°, а не 360°.']},
+  {q:'Верно ли, что если смежные углы равны, то они прямые?',
+   opts:['Да: их сумма 180°, значит, каждый 90°','Нет: смежные углы никогда не равны','Нет: они могут быть, например, по 60°','Нет: равными бывают только вертикальные углы'], a:0,
+   why:['Смежные углы в сумме 180°. Если они равны, каждый 180° : 2 = 90°.',
+        'Бывают равны: ровно когда оба по 90°.',
+        '60° + 60° = 120°, а смежные углы всегда дают 180°.',
+        'Вертикальные всегда равны, а смежные бывают равными, когда оба прямые.']},
+  {q:'При пересечении двух прямых один из углов равен 43°. Чему равны остальные три угла?',
+   opts:['43°, 137°, 137°','47°, 43°, 47°','137°, 43°, 180°','43°, 43°, 43°'], a:0,
+   why:['Вертикальный угол тоже 43°, а два смежных равны 180° − 43° = 137°.',
+        'Ловушка: 47° — это 90° − 43°. Но смежные углы дополняют друг друга до 180°, а не до 90°.',
+        'Развёрнутых углов среди этих четырёх нет, все четыре меньше 180°.',
+        'Все четыре угла равны только у перпендикулярных прямых, и тогда они по 90°.']}
+];
+QUIZ.q12=[
+  {q:'Две прямые пересеклись, получились углы 70° и 110°. Чему равен угол между этими прямыми?',
+   opts:['70°','110°','180°','90°'], a:0,
+   why:['Углом между прямыми называют тот из четырёх углов, который не больше остальных, то есть 70°.',
+        'Это больший угол, а углом между прямыми называют меньший.',
+        '180° — это сумма смежных углов, а не угол между прямыми.',
+        '90° было бы, если бы прямые были перпендикулярны.']},
+  {q:'Прямые a и b перпендикулярны прямой c. Что можно сказать о прямых a и b?',
+   opts:['Они пересекаются под прямым углом','Они не пересекаются','Они перпендикулярны друг другу','Они обязательно совпадают'], a:1,
+   why:['Ловушка: «перпендикулярны третьей» не значит «перпендикулярны друг другу».',
+        'В учебнике доказано: две прямые, перпендикулярные к третьей, не пересекаются.',
+        'Наоборот: они вообще не пересекаются, значит, и перпендикулярными друг к другу быть не могут.',
+        'Через разные точки прямой c можно провести две разные перпендикулярные прямые.']},
+  {q:'Один из углов, получившихся при пересечении двух прямых, прямой. Что можно сказать об остальных трёх углах?',
+   opts:['Все три тоже прямые','Один прямой, два других острые','Прямой только вертикальный с ним угол','Вместе они дают 270°, но могут быть разными'], a:0,
+   why:['Смежные с ним равны 180° − 90° = 90°, а вертикальный равен ему. Все четыре по 90°.',
+        'Смежные углы в сумме 180°, поэтому рядом с прямым может стоять только прямой.',
+        'Вертикальный — да, но и смежные равны 180° − 90° = 90°.',
+        'Сумма верная, но разными они быть не могут: каждый смежный ровно 90°.']}
+];
+QUIZ.q13=[
+  {q:'Что такое экер?',
+   opts:['Прибор для измерения углов в градусах на местности','Прибор для построения прямых углов на местности','Шест для провешивания прямой','Лента с делениями для измерения расстояний'], a:1,
+   why:['Это астролябия. Экер не меряет градусы, а сразу даёт прямой угол.',
+        'Экер — два бруска под прямым углом на треножнике, им строят прямые углы.',
+        'Это веха.',
+        'Это рулетка.']},
+  {q:'Экер поставили над точкой O, а один его брусок направили на веху в точке A. Что делают дальше?',
+   opts:['Провешивают прямую по направлению второго бруска','Измеряют угол транспортиром','Поворачивают экер, пока брусок не укажет на север','Ставят веху в 90 шагах от точки A'], a:0,
+   why:['Второй брусок перпендикулярен первому. Прямую по его направлению провешивают вехами и получают прямой угол AOB.',
+        'Транспортир не нужен: прямой угол задают сами бруски экера.',
+        'Сторона света тут не важна, важно направление на A.',
+        '«90 шагов» не делают угол прямым: важно направление, а не расстояние.']},
+  {q:'Какие темы этой главы помогают построить прямой угол экером?',
+   opts:['Только тема про перпендикулярные прямые','Перпендикулярные прямые и провешивание прямой','Только градусная мера угла','Длина отрезка и единицы измерения'], a:1,
+   why:['Перпендикуляр задаёт экер, но вторую сторону угла на земле ещё нужно провести, а это провешивание.',
+        'Экер даёт перпендикулярное направление, а сторону угла проводят провешиванием (тема 2).',
+        'Градусы тут не меряют: экер сразу даёт 90°.',
+        'Длины для построения прямого угла не нужны.']}
+];
+
+(function(){
+  var L='АБВГ';
+  document.querySelectorAll('.quiz').forEach(function(box){
+    var list=QUIZ[box.dataset.quiz], answered=0, right=0;
+    var score=document.createElement('div'); score.className='score';
+    function updScore(){
+      score.innerHTML='<span>Верно: '+right+' из '+list.length+(answered<list.length?' · осталось '+(list.length-answered):'')+'</span>';
+      if(answered===list.length){
+        var msg = right===list.length ? '. Отлично, тема повторена!' : '. Посмотри объяснения и попробуй ещё раз.';
+        score.firstChild.textContent+=msg;
+        var b=document.createElement('button'); b.className='btn ghost'; b.textContent='Пройти заново';
+        b.addEventListener('click',build); score.appendChild(b);
+      }
+    }
+    function build(){
+      box.querySelectorAll('.q, .score').forEach(function(x){ x.remove(); });
+      answered=0; right=0;
+      list.forEach(function(it,qi){
+        var q=document.createElement('div'); q.className='q';
+        q.innerHTML='<div class="qn">Вопрос '+(qi+1)+'</div><div class="qt">'+it.q+'</div>'+(it.pic||'')+'<div class="opts"></div><div class="expl"></div>';
+        var opts=q.querySelector('.opts'), ex=q.querySelector('.expl');
+        it.opts.forEach(function(t,oi){
+          var b=document.createElement('button'); b.className='opt';
+          b.innerHTML='<span class="l">'+L[oi]+'</span><span>'+t+'</span>';
+          b.addEventListener('click',function(){
+            if(q.classList.contains('done')) return;
+            q.classList.add('done'); answered++;
+            var ok=oi===it.a; if(ok) right++;
+            b.classList.add(ok?'right':'wrong');
+            opts.children[it.a].classList.add('right');
+            ex.className='expl '+(ok?'ok':'no');
+            ex.innerHTML = ok
+              ? '<b class="h">Верно!</b>'+it.why[it.a]
+              : '<b class="h">Не совсем.</b>'+it.why[oi]+'<br><b>Правильный ответ — '+L[it.a]+'.</b> '+it.why[it.a];
+            updScore();
+          });
+          opts.appendChild(b);
+        });
+        box.appendChild(q);
+      });
+      box.appendChild(score); updScore();
+    }
+    build();
+  });
+})();
+
+/* ---------- вертикальные углы ---------- */
+(function(){
+  var s=document.getElementById('vSlider'); if(!s) return;
+  var svg=document.getElementById('vSvg'), vals=document.getElementById('vVals'), ns='http://www.w3.org/2000/svg';
+  var cx=160, cy=110, R=150;
+  function el(t,a,txt){ var e=document.createElementNS(ns,t); for(var k in a) e.setAttribute(k,a[k]); if(txt!=null) e.textContent=txt; svg.appendChild(e); return e; }
+  function arc(r,a0,a1,color){
+    var p0=[cx+r*Math.cos(a0),cy-r*Math.sin(a0)], p1=[cx+r*Math.cos(a1),cy-r*Math.sin(a1)];
+    el('path',{d:'M'+p0[0]+' '+p0[1]+' A'+r+' '+r+' 0 0 0 '+p1[0]+' '+p1[1],fill:'none',stroke:color,'stroke-width':3});
+  }
+  function draw(){
+    var a=+s.value, t=a*Math.PI/180; svg.innerHTML='';
+    el('line',{x1:cx-R,y1:cy,x2:cx+R,y2:cy,stroke:'#1d4f91','stroke-width':3});
+    el('line',{x1:cx-R*Math.cos(t),y1:cy+R*Math.sin(t),x2:cx+R*Math.cos(t),y2:cy-R*Math.sin(t),stroke:'#1d4f91','stroke-width':3});
+    var b=[0,t,Math.PI,Math.PI+t,2*Math.PI], col=['#b0182f','#1f6b4f','#b0182f','#1f6b4f'];
+    for(var i=0;i<4;i++){
+      arc(i%2?30:38,b[i],b[i+1],col[i]);
+      var m=(b[i]+b[i+1])/2, rr=58;
+      el('text',{x:cx+rr*Math.cos(m),y:cy-rr*Math.sin(m)+7,'text-anchor':'middle','font-family':'PT Serif','font-size':20,'font-weight':700,fill:col[i]},String(i+1));
+    }
+    el('circle',{cx:cx,cy:cy,r:5,fill:'#15202e'});
+    document.getElementById('vVal').textContent=a;
+    vals.innerHTML='<div style="color:#b0182f">∠1 = '+a+'°</div><div style="color:#1f6b4f">∠2 = '+(180-a)+'°</div><div style="color:#b0182f">∠3 = '+a+'°</div><div style="color:#1f6b4f">∠4 = '+(180-a)+'°</div>';
+  }
+  s.addEventListener('input',draw); draw();
+})();
+
+/* ---------- деления астролябии ---------- */
+(function(){
+  var g=document.getElementById('astroTicks'); if(!g) return;
+  var ns='http://www.w3.org/2000/svg';
+  for(var d=0; d<360; d+=10){
+    var t=d*Math.PI/180, r1=d%30===0?76:82, l=document.createElementNS(ns,'line');
+    l.setAttribute('x1',130+r1*Math.cos(t)); l.setAttribute('y1',110-r1*Math.sin(t));
+    l.setAttribute('x2',130+88*Math.cos(t)); l.setAttribute('y2',110-88*Math.sin(t));
+    l.setAttribute('stroke','#1d4f91'); l.setAttribute('stroke-width', d%30===0?2:1);
+    g.appendChild(l);
+  }
+})();
+
+/* ---------- чек-лист параграфов ---------- */
+(function(){
+  var KEY='geo7-rev-done', st={};
+  try{ st=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){}
+  var chks=document.querySelectorAll('details.par > summary .chk');
+  function paint(){
+    var n=0;
+    chks.forEach(function(c){
+      var id=c.closest('details').id, on=!!st[id]; if(on) n++;
+      c.classList.toggle('on',on); c.setAttribute('aria-checked',on);
+      c.querySelector('.box').textContent=on?'✓':'';
+      var a=document.querySelector('nav a[href="#'+id+'"]'); if(a) a.classList.toggle('done',on);
+    });
+    document.getElementById('progTxt').textContent='Повторено: '+n+' из '+chks.length;
+    document.getElementById('progBar').style.transform='scaleX('+(n/chks.length)+')';
+  }
+  function toggle(c,e){
+    e.preventDefault(); e.stopPropagation();
+    var id=c.closest('details').id; st[id]=!st[id];
+    try{ localStorage.setItem(KEY,JSON.stringify(st)); }catch(x){}
+    paint();
+  }
+  chks.forEach(function(c){
+    c.addEventListener('click',function(e){ toggle(c,e); });
+    c.addEventListener('keydown',function(e){ if(e.key===' '||e.key==='Enter') toggle(c,e); });
+  });
+  paint();
+})();
+
+/* ---------- спойлеры: открыть по ссылке ---------- */
+(function(){
+  function openFor(id){
+    var el=document.getElementById(id); if(!el) return null;
+    var d=el.tagName==='DETAILS' ? el : el.closest('details');
+    if(d) d.open=true;
+    return el;
+  }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest && e.target.closest('a[href^="#"]'); if(!a) return;
+    var el=openFor(a.getAttribute('href').slice(1));
+    if(el){ e.preventDefault(); setTimeout(function(){ el.scrollIntoView({behavior:'smooth',block:'start'}); },30); history.replaceState(null,'',a.getAttribute('href')); }
+  });
+  if(location.hash){ var el=openFor(location.hash.slice(1)); if(el) setTimeout(function(){ el.scrollIntoView(); },50); }
+})();
+</script>
+<script>
+try{var v=JSON.parse(localStorage.getItem('uroki-visited')||'{}');v['geometry/gl1-povtorenie']=new Date().toISOString().slice(0,10);localStorage.setItem('uroki-visited',JSON.stringify(v));}catch(e){}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('../../sw.js',{scope:'../../'}).catch(function(){});}
+</script>
+</body>
+</html>

@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="theme-color" content="#1d4f91">
+<link rel="apple-touch-icon" href="../../assets/icon-180.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Сравнение выражений для Алисы</title>
+<link rel="stylesheet" href="../../assets/fonts.css">
+<style>
+  :root{
+    --bg:#eef2f7; --paper:#ffffff; --ink:#15202e; --muted:#566273; --line:#d5dde8;
+    --blue:#1d4f91; --blue-soft:#e3ecf8; --red:#b0182f; --red-soft:#f8e6ea;
+    --green:#1f6b4f; --green-soft:#e2f2eb; --gold:#6f550c; --gold-soft:#f5efd9;
+    --grid:#cfdcee;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "PT Sans",system-ui,sans-serif}
+  .wrap{max-width:920px;margin:0 auto;padding:0 16px}
+  h1,h2,h3{line-height:1.2;margin:0}
+  h2{font-size:clamp(24px,3.6vw,32px);margin-bottom:8px}
+  h3{font-size:21px;margin:22px 0 8px}
+  p{margin:0 0 12px}
+  .m{font-family:"PT Serif",Georgia,serif;white-space:nowrap}
+  .m i{font-style:italic}
+  .big{font-family:"PT Serif",Georgia,serif;font-size:24px;text-align:center;margin:14px 0}
+
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:none}
+  nav a{flex:none;text-decoration:none;color:var(--ink);font-size:14px;font-weight:700;padding:6px 11px;border-radius:7px}
+  nav a:hover{background:var(--blue-soft);color:var(--blue)}
+
+  header{padding:40px 0 20px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end}
+  header .signs{font-family:"PT Serif",serif;font-size:clamp(56px,11vw,110px);line-height:.9;color:var(--blue);letter-spacing:-2px}
+  header .signs span{color:var(--red)}
+  header h1{font-size:clamp(28px,4.6vw,42px);margin:6px 0 10px}
+  header p{color:var(--muted);max-width:620px;margin:0}
+  .hi{font-family:"PT Serif",serif;font-size:22px;color:var(--blue);margin:0 0 4px}
+  @media (max-width:640px){header{grid-template-columns:1fr}}
+
+  section{background:var(--paper);border-radius:18px;padding:28px 24px;margin:20px 0;box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(21,32,46,.25)}
+  .tag{display:inline-block;font-weight:700;font-size:14px;color:var(--blue);margin-bottom:6px}
+
+  .rule{background:var(--blue-soft);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .rule b.t{color:var(--blue)}
+  .rule.red{background:var(--red-soft)} .rule.red b.t{color:var(--red)}
+  .rule.gold{background:var(--gold-soft)} .rule.gold b.t{color:var(--gold)}
+  .book{font-size:14px;color:var(--muted)}
+
+  table.signs-t{border-collapse:collapse;width:100%;margin:10px 0 4px;font-size:16px}
+  .signs-t td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+  .signs-t td:first-child{font-family:"PT Serif",serif;font-size:26px;width:64px;text-align:center;color:var(--blue)}
+  .signs-t td:nth-child(2){font-family:"PT Serif",serif;white-space:nowrap;width:130px}
+
+  .steps{counter-reset:s;list-style:none;padding:0;margin:10px 0}
+  .steps li{counter-increment:s;position:relative;padding:4px 0 8px 40px}
+  .steps li::before{content:counter(s);position:absolute;left:0;top:3px;width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-weight:700;display:grid;place-items:center;font-size:15px}
+
+  /* ползунок */
+  .lab{background:#f3f6fa;border-radius:14px;padding:18px;margin:14px 0}
+  .lab input[type=range]{width:100%;accent-color:var(--blue);height:28px}
+  .boxes{display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;gap:10px;margin-top:12px}
+  .cbox{background:#fff;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px;transition:box-shadow .25s}
+  .cbox.win{box-shadow:0 0 0 3px var(--green)}
+  .cbox .cap{font-size:15px;color:var(--muted);text-align:center}
+  .cbox .cap b{font-family:"PT Serif",serif;font-size:20px;color:var(--ink);margin-right:4px}
+  .cbox.left .cap b{color:var(--blue)} .cbox.right .cap b{color:var(--red)}
+  .bags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:flex-start;flex:1}
+  .bag{border:2px dashed #9fb3cf;border-radius:12px 12px 16px 16px;padding:8px;min-width:74px;min-height:52px;max-width:118px;
+       display:flex;flex-wrap:wrap;gap:4px;align-content:flex-start;justify-content:center;background:#f7f9fc;position:relative}
+  .bag::before{content:"пакет";position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-size:11px;color:#6d7f98;background:#fff;padding:0 4px}
+  .bag.empty::after{content:"пусто";font-size:13px;color:#8a98ab;align-self:center}
+  .loose{display:flex;flex-wrap:wrap;gap:4px;width:56px;align-content:center;justify-content:center;min-height:52px}
+  .candy{width:16px;height:16px;border-radius:50%;background:var(--blue);animation:pop .25s ease-out}
+  .right .candy{background:var(--red)}
+  .loose .candy{background:#e0a100}
+  @keyframes pop{from{transform:scale(.3)}to{transform:scale(1)}}
+  .total{font-family:"PT Serif",serif;font-size:30px;font-weight:700;text-align:center;line-height:1}
+  .total small{display:block;font-family:"PT Sans",sans-serif;font-size:13px;font-weight:400;color:var(--muted);margin-top:2px}
+  .lab .sign{font-family:"PT Serif",serif;font-size:54px;font-weight:700;color:var(--red);min-width:50px;align-self:center;text-align:center}
+  .lab .said{text-align:center;margin-top:12px;font-weight:700;font-size:18px}
+  .lab .said .m{font-size:19px}
+  @media (max-width:520px){.boxes{grid-template-columns:1fr}.lab .sign{font-size:40px}}
+  .choco-row{display:grid;grid-template-columns:240px 1fr;gap:18px;align-items:center;margin-top:10px}
+  .choco-row svg{width:100%;max-width:240px}
+  .choco-info{font-size:17px}
+  .pbig{font-family:"PT Serif",serif;font-size:52px;font-weight:700;color:var(--blue);line-height:1;margin-bottom:8px}
+  @media (max-width:520px){.choco-row{grid-template-columns:1fr;justify-items:center;text-align:center}}
+  table.cmp{border-collapse:collapse;width:100%;font-size:16px;margin-top:6px}
+  .cmp th{font-size:14px;color:var(--muted);text-align:left;font-weight:700;padding:6px 8px;border-bottom:2px solid var(--line)}
+  .cmp td{padding:9px 8px;border-bottom:1px solid var(--line)}
+  @media (max-width:600px){table.cmp,.cmp tbody,.cmp tr,.cmp td{display:block}.cmp tr:first-child{display:none}.cmp tr{padding:8px 0;border-bottom:1px solid var(--line)}.cmp td{border:0;padding:2px 0}}
+  .quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;justify-content:center}
+  .chip{border:1px solid var(--line);background:#fff;border-radius:9px;padding:6px 12px;font:inherit;font-size:15px;cursor:pointer}
+  .chip:hover{border-color:var(--blue);color:var(--blue)}
+
+  figure{margin:14px 0}
+  svg{display:block;max-width:100%;height:auto;margin:0 auto}
+  figcaption{font-size:14px;color:var(--muted);text-align:center;margin-top:4px}
+
+  .say{background:var(--gold-soft);border-radius:12px;padding:14px 18px;margin-top:16px}
+  .say h3{margin:0 0 6px;font-size:14px;text-transform:uppercase;letter-spacing:.05em;color:var(--gold)}
+  .say ul{margin:0;padding-left:20px}
+
+  .task{font-family:"PT Serif",serif;font-size:18px;background:#f3f6fa;border-radius:12px;padding:12px 16px;margin:8px 0 14px}
+  .task b{font-family:"PT Sans",sans-serif}
+  .sol{margin:0 0 6px}
+  .ans{display:inline-block;background:var(--green-soft);color:var(--green);font-weight:700;border-radius:8px;padding:2px 10px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media (max-width:700px){.two{grid-template-columns:1fr}}
+
+  /* доска */
+  .board{margin:14px 0 10px;border-radius:14px;background:#fff;box-shadow:0 0 0 1px var(--line)}
+  .toolbar{display:flex;flex-wrap:wrap;gap:6px;padding:8px;border-bottom:1px solid var(--line);align-items:center}
+  .tool{display:inline-flex;align-items:center;gap:6px;border:1px solid transparent;background:#f3f6fa;color:var(--ink);border-radius:9px;padding:8px 12px;font:inherit;font-size:15px;font-weight:700;cursor:pointer;min-height:42px}
+  .tool svg{width:20px;height:20px;margin:0}
+  .tool[aria-pressed=true]{background:var(--blue);color:#fff}
+  .tool:hover{border-color:var(--blue)}
+  .tool .dot{width:14px;height:14px;border-radius:50%;box-shadow:0 0 0 2px #fff}
+  .spacer{flex:1}
+  .grip{display:flex;align-items:center;justify-content:center;gap:10px;height:34px;cursor:ns-resize;touch-action:none;-webkit-user-select:none;user-select:none;
+    background:#f3f6fa;border-top:1px solid var(--line);border-radius:0 0 14px 14px;font-size:13px;color:var(--muted)}
+  .grip span{width:56px;height:6px;border-radius:3px;background:#9fb3cf}
+  .grip:hover span,.grip.drag span{background:var(--blue)}
+  .pen-state{font-size:13px;color:var(--muted);padding:0 6px}
+  .canvas-box{position:relative;overflow:hidden;
+    background-color:#fdfeff;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:24px 24px}
+  .canvas-box canvas{display:block;width:100%;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:crosshair}
+
+  .check{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0}
+  .check label{font-weight:700}
+  .check input{font:inherit;font-size:20px;width:130px;padding:8px 12px;border:2px solid var(--line);border-radius:10px;font-family:"PT Serif",serif}
+  .check input:focus{outline:none;border-color:var(--blue)}
+  .check .pct{font-family:"PT Serif",serif;font-size:20px}
+  .btn{background:var(--blue);color:#fff;border:0;border-radius:10px;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer;min-height:44px}
+  .btn:hover{background:#163f75}
+  .btn.ghost{background:#f3f6fa;color:var(--ink)}
+  .fb{font-weight:700;min-height:26px}
+  .fb.ok{color:var(--green)} .fb.no{color:var(--red)}
+  .hidden-sol{display:none;background:#f3f6fa;border-radius:12px;padding:12px 16px;margin-top:8px}
+  .hidden-sol.show{display:block}
+
+  footer{text-align:center;color:var(--muted);font-size:14px;padding:6px 0 40px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a href="../../" style="color:#1d4f91">← Все уроки</a>
+  <a href="#t1">Сравнение</a>
+  <a href="#t2">С переменной</a>
+  <a href="#t3">Двойное неравенство</a>
+  <a href="#t4">≤ и ≥</a>
+  <a href="#pct">Проценты</a>
+  <a href="#e85">№ 85</a>
+  <a href="#e86">№ 86</a>
+  <a href="#self">Реши сама</a>
+</div></nav>
+
+<div class="wrap">
+
+<header>
+  <div>
+    <p class="hi">Алиса, привет!</p>
+    <h1>4. Сравнение значений выражений</h1>
+    <p>Разберём пункт 4 из учебника простыми словами, потом упражнения № 85 и № 86, а в конце ты решишь две похожие задачи сама. Прямо на планшете, стилусом, в клеточках.</p>
+  </div>
+  <div class="signs" aria-hidden="true">&gt;<span>=</span>&lt;</div>
+</header>
+
+<!-- ============ 1 ============ -->
+<section id="t1">
+  <span class="tag">Теория · шаг 1</span>
+  <h2>Что значит «сравнить значения выражений»</h2>
+  <p>Сравнить два выражения — значит выяснить <b>две вещи</b>: равны их значения или нет. А если не равны, то какое из них больше и какое меньше.</p>
+
+  <p>В учебнике это объясняют на задаче:</p>
+  <div class="task">Пшеницей засеяли два опытных участка площадью 48 га и 60 га. С первого участка собрали 1800 ц, а со второго — 2100 ц. На каком участке урожайность выше?</div>
+
+  <p>Урожайность — это сколько пшеницы собрали <b>с одного гектара</b>. Значит, нужно массу пшеницы разделить на площадь:</p>
+  <ol class="steps">
+    <li>Первый участок — <span class="m">1800 : 48 = 37,5</span> ц с гектара.</li>
+    <li>Второй участок — <span class="m">2100 : 60 = 35</span> ц с гектара.</li>
+    <li><span class="m">37,5 &gt; 35</span>, значит, урожайность <b>выше на первом участке</b>.</li>
+  </ol>
+  <p>Хоть со второго участка собрали больше пшеницы (2100 ц), он и сам больше. С каждого гектара первый участок дал больше. Поэтому сравнивали не 1800 и 2100, а <b>значения выражений</b> <span class="m">1800 : 48</span> и <span class="m">2100 : 60</span>.</p>
+
+  <div class="rule">
+    <b class="t">Главное.</b> Для любых двух числовых выражений можно установить, равны их значения или нет, и если не равны, то какое из них больше и какое меньше. Результат записывают в виде <b>равенства</b> (со знаком =) или <b>неравенства</b> (со знаком &gt; или &lt;).
+  </div>
+  <p>Результат нашей задачи записывают в виде неравенства.</p>
+  <div class="big">1800 : 48 &gt; 2100 : 60</div>
+
+  <h3>Знаки сравнения, и как их читать</h3>
+  <table class="signs-t">
+    <tr><td>=</td><td>5 = 5</td><td>«равно»</td></tr>
+    <tr><td>&gt;</td><td>7 &gt; 3</td><td>«больше». Острый угол смотрит на меньшее число, раскрытая сторона — на большее.</td></tr>
+    <tr><td>&lt;</td><td>3 &lt; 7</td><td>«меньше»</td></tr>
+    <tr><td>≥</td><td><i>n</i> ≥ 28</td><td>«больше или равно» (это разберём в шаге 4)</td></tr>
+    <tr><td>≤</td><td><i>n</i> ≤ 31</td><td>«меньше или равно»</td></tr>
+  </table>
+</section>
+
+<!-- ============ 2 ============ -->
+<section id="t2">
+  <span class="tag">Теория · шаг 2</span>
+  <h2>А если в выражении есть буква?</h2>
+
+  <p><b>Буква — это число, которое мы пока не знаем.</b> Как закрытый пакет: внутри что-то лежит, но сколько, не видно.</p>
+
+  <h3 style="margin-top:14px">Задачка про конфеты</h3>
+  <div class="task" style="font-family:'PT Sans',sans-serif;font-size:17px">
+    В магазине продают конфеты в одинаковых пакетах. В каждом пакете <b><i class="m">a</i></b> конфет.<br>
+    <b style="color:var(--blue)">Левая коробка:</b> в ней 2 пакета. Конфет в ней <span class="m">2<i>a</i></span>.<br>
+    <b style="color:var(--red)">Правая коробка:</b> в ней 1 пакет и ещё 4 конфеты россыпью. Конфет в ней <span class="m"><i>a</i> + 4</span>.<br>
+    В какой коробке конфет больше?
+  </div>
+  <p>Ответить сразу нельзя: <b>всё зависит от того, сколько конфет в пакете</b>. Алиса, двигай ползунок, то есть меняй число конфет в пакете, и смотри, какая коробка побеждает:</p>
+
+  <div class="lab">
+    <label for="aSlider"><b>В каждом пакете <i class="m">a</i> = <span id="aVal">0</span> <span id="aWord">конфет</span></b></label>
+    <input type="range" id="aSlider" min="0" max="12" step="1" value="0">
+    <div class="boxes">
+      <div class="cbox left">
+        <div class="cap"><b>2<i>a</i></b> · два пакета</div>
+        <div class="bags"><div class="bag" id="bagL1"></div><div class="bag" id="bagL2"></div></div>
+        <div class="total" id="left">0</div>
+      </div>
+      <div class="sign" id="sign">&lt;</div>
+      <div class="cbox right">
+        <div class="cap"><b><i>a</i> + 4</b> · пакет и 4 конфеты</div>
+        <div class="bags"><div class="bag" id="bagR"></div><div class="loose" id="loose"></div></div>
+        <div class="total" id="right">4</div>
+      </div>
+    </div>
+    <div class="said" id="said"></div>
+    <div class="quick">
+      <span style="font-size:14px;color:var(--muted);align-self:center">Как в учебнике:</span>
+      <button class="chip" data-a="0">a = 0</button>
+      <button class="chip" data-a="4">a = 4</button>
+      <button class="chip" data-a="10">a = 10</button>
+    </div>
+  </div>
+
+  <p>Что ты увидела:</p>
+  <ul>
+    <li><b>В пакете меньше 4 конфет</b> (0, 1, 2 или 3) — побеждает правая коробка: её выручают 4 конфеты россыпью.</li>
+    <li><b>В пакете ровно 4 конфеты</b> — поровну! Второй пакет слева равен четырём конфетам справа.</li>
+    <li><b>В пакете больше 4 конфет</b> — побеждает левая коробка: второй полный пакет больше, чем 4 конфеты.</li>
+  </ul>
+
+  <div class="rule">
+    <b class="t">Вывод из учебника.</b> Если в выражениях есть буквы (переменные), то при разных значениях букв результат сравнения <b>может получиться разным</b>: иногда «больше», иногда «равно», иногда «меньше».
+  </div>
+
+  <h3>Как это записать в тетради</h3>
+  <p>Нужно всего три действия: <b>подставить</b> число вместо буквы, <b>посчитать</b> оба выражения, <b>сравнить</b> результаты. Вот три случая из учебника:</p>
+  <table class="cmp">
+    <tr><th>Подставили</th><th>Посчитали <span class="m">2<i>a</i></span></th><th>Посчитали <span class="m"><i>a</i> + 4</span></th><th>Сравнили</th></tr>
+    <tr><td><span class="m"><i>a</i> = 0</span></td><td><span class="m">2 · 0 = 0</span></td><td><span class="m">0 + 4 = 4</span></td><td><span class="m">0 &lt; 4</span>, значит, <b class="m">2<i>a</i> &lt; <i>a</i> + 4</b></td></tr>
+    <tr><td><span class="m"><i>a</i> = 4</span></td><td><span class="m">2 · 4 = 8</span></td><td><span class="m">4 + 4 = 8</span></td><td><span class="m">8 = 8</span>, значит, <b class="m">2<i>a</i> = <i>a</i> + 4</b></td></tr>
+    <tr><td><span class="m"><i>a</i> = 10</span></td><td><span class="m">2 · 10 = 20</span></td><td><span class="m">10 + 4 = 14</span></td><td><span class="m">20 &gt; 14</span>, значит, <b class="m">2<i>a</i> &gt; <i>a</i> + 4</b></td></tr>
+  </table>
+  <p style="margin-top:10px">В учебнике это записано так: «Если <span class="m"><i>a</i> = 0</span>, то <span class="m">2<i>a</i> = 0</span> и <span class="m"><i>a</i> + 4 = 4</span>, т. е. при <span class="m"><i>a</i> = 0</span> верно неравенство <span class="m">2<i>a</i> &lt; <i>a</i> + 4</span>». Остальные два случая записываются так же.</p>
+</section>
+
+<!-- ============ 3 ============ -->
+<section id="t3">
+  <span class="tag">Теория · шаг 3</span>
+  <h2>Двойное неравенство</h2>
+  <p>Иногда нужно указать, <b>между какими числами</b> находится значение. Пример из учебника: взвесили металлический шарик. Оказалось, что он тяжелее 86 г, но легче 87 г. Обозначим массу шарика (в граммах) буквой <span class="m"><i>m</i></span>.</p>
+  <p>Тогда <span class="m"><i>m</i> &gt; 86</span> и <span class="m"><i>m</i> &lt; 87</span>, или иначе: <span class="m">86 &lt; <i>m</i></span> и <span class="m"><i>m</i> &lt; 87</span>.</p>
+  <p>Два таких неравенства записывают одной строкой. Это и есть <b>двойное неравенство</b>:</p>
+  <div class="big">86 &lt; <i>m</i> &lt; 87</div>
+  <p>Читают: <b>«<i>m</i> больше 86 и меньше 87»</b>.</p>
+
+  <figure>
+    <svg viewBox="0 0 600 110" role="img" aria-label="Число m на прямой между 86 и 87, концы не включены">
+      <line x1="30" y1="60" x2="570" y2="60" stroke="#15202e" stroke-width="2"/>
+      <path d="M570 60 l-10 -6 v12 z" fill="#15202e"/>
+      <line x1="170" y1="60" x2="430" y2="60" stroke="#1d4f91" stroke-width="8" stroke-linecap="butt"/>
+      <circle cx="170" cy="60" r="9" fill="#fff" stroke="#1d4f91" stroke-width="3"/>
+      <circle cx="430" cy="60" r="9" fill="#fff" stroke="#1d4f91" stroke-width="3"/>
+      <text x="170" y="96" text-anchor="middle" font-family="PT Serif" font-size="20" fill="#15202e">86</text>
+      <text x="430" y="96" text-anchor="middle" font-family="PT Serif" font-size="20" fill="#15202e">87</text>
+      <text x="300" y="36" text-anchor="middle" font-family="PT Serif" font-style="italic" font-size="22" fill="#1d4f91">m где-то здесь</text>
+    </svg>
+    <figcaption>Кружки пустые: сами числа 86 и 87 не подходят, шарик не весит ровно 86 или ровно 87 г</figcaption>
+  </figure>
+  <div class="rule gold"><b class="t">Подсказка:</b> в двойном неравенстве <b>меньшее число пишут слева</b>, большее — справа, а букву — посередине. Как на числовой прямой.</div>
+</section>
+
+<!-- ============ 4 ============ -->
+<section id="t4">
+  <span class="tag">Теория · шаг 4</span>
+  <h2>Знаки ≤ и ≥: «или равно»</h2>
+  <p>Пример из учебника: число дней в месяце меньше 31 или равно 31. Обозначим число дней буквой <span class="m"><i>n</i></span>. Тогда</p>
+  <div class="big"><i>n</i> &lt; 31 &nbsp;или&nbsp; <i>n</i> = 31</div>
+  <p>Вместо двух записей пишут одно неравенство <span class="m"><i>n</i> ≤ 31</span> и читают <b>«<i>n</i> меньше или равно 31»</b>.</p>
+  <p>Ещё: число дней в месяце больше или равно 28 (<span class="m"><i>n</i> &gt; 28</span> или <span class="m"><i>n</i> = 28</span>). Короче: <span class="m"><i>n</i> ≥ 28</span>, читают <b>«<i>n</i> больше или равно 28»</b>.</p>
+  <p>Так как <span class="m"><i>n</i> ≥ 28</span>, то <span class="m">28 ≤ <i>n</i></span>. Это одно и то же, просто прочитано с другой стороны: если <i>n</i> не меньше 28, то 28 не больше <i>n</i>.</p>
+  <p>Два неравенства <span class="m">28 ≤ <i>n</i></span> и <span class="m"><i>n</i> ≤ 31</span> записывают как двойное неравенство:</p>
+  <div class="big">28 ≤ <i>n</i> ≤ 31</div>
+
+  <figure>
+    <svg viewBox="0 0 600 110" role="img" aria-label="Число n на прямой от 28 до 31, концы включены">
+      <line x1="30" y1="60" x2="570" y2="60" stroke="#15202e" stroke-width="2"/>
+      <path d="M570 60 l-10 -6 v12 z" fill="#15202e"/>
+      <line x1="120" y1="60" x2="480" y2="60" stroke="#b0182f" stroke-width="8"/>
+      <g font-family="PT Serif" font-size="20" fill="#15202e" text-anchor="middle">
+        <text x="120" y="96">28</text><text x="240" y="96">29</text><text x="360" y="96">30</text><text x="480" y="96">31</text>
+      </g>
+      <line x1="240" y1="52" x2="240" y2="68" stroke="#15202e" stroke-width="2"/>
+      <line x1="360" y1="52" x2="360" y2="68" stroke="#15202e" stroke-width="2"/>
+      <circle cx="120" cy="60" r="9" fill="#b0182f"/>
+      <circle cx="480" cy="60" r="9" fill="#b0182f"/>
+      <text x="300" y="34" text-anchor="middle" font-family="PT Sans" font-size="16" fill="#566273">в месяце 28, 29, 30 или 31 день</text>
+    </svg>
+    <figcaption>Кружки закрашены: сами числа 28 и 31 подходят (в феврале бывает ровно 28 дней, в январе ровно 31)</figcaption>
+  </figure>
+
+  <div class="rule red">
+    <b class="t">Запомни определение.</b> Неравенства, составленные с помощью знаков &gt; и &lt;, называют <b>строгими</b>. Неравенства, составленные с помощью знаков ≥ и ≤, называют <b>нестрогими</b>.
+  </div>
+  <p>Алиса, вот как не перепутать: у знаков ≤ и ≥ снизу есть <b>чёрточка — кусочек знака «=»</b>. Есть чёрточка, значит, «или равно», и неравенство нестрогое. Нет чёрточки, значит, строгое: равенство не разрешено.</p>
+
+  <div class="say">
+    <h3>Коротко весь пункт 4</h3>
+    <ul>
+      <li>Сравнить выражения — узнать, равны ли они, а если нет, какое больше.</li>
+      <li>Результат пишут равенством (=) или неравенством (&gt;, &lt;).</li>
+      <li>Если есть буква, ответ зависит от её значения: подставь и посчитай.</li>
+      <li><span class="m">86 &lt; <i>m</i> &lt; 87</span> — двойное неравенство: «<i>m</i> больше 86 и меньше 87».</li>
+      <li>&gt; и &lt; — строгие неравенства; ≥ и ≤ — нестрогие («или равно»).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ проценты ============ -->
+<section id="pct">
+  <span class="tag">Сначала вспомним</span>
+  <h2>Что такое процент</h2>
+  <p>Представь шоколадку, в которой ровно <b>100 одинаковых долек</b>.</p>
+  <ul>
+    <li>Одна долька — это <b>1&nbsp;%</b> шоколадки (читается «один процент»).</li>
+    <li>Вся шоколадка целиком, все 100 долек — это <b>100&nbsp;%</b>.</li>
+  </ul>
+  <p>Слово «процент» так и переводится: <b>«из сотни»</b>. 7&nbsp;% значит «7 долек из 100», 30&nbsp;% значит «30 долек из 100».</p>
+
+  <div class="lab">
+    <label for="pSlider"><b>Съели <span id="pVal">25</span> <span id="pWord">долек</span> из 100</b></label>
+    <input type="range" id="pSlider" min="0" max="100" step="1" value="25">
+    <div class="choco-row">
+      <svg id="choco" viewBox="0 0 232 232" role="img" aria-label="Шоколадка из 100 долек"></svg>
+      <div class="choco-info">
+        <div class="pbig" id="pBig">25&nbsp;%</div>
+        <div id="pSay"></div>
+      </div>
+    </div>
+    <div class="quick">
+      <button class="chip" data-p="1">1&nbsp;%</button>
+      <button class="chip" data-p="10">10&nbsp;%</button>
+      <button class="chip" data-p="25">25&nbsp;%</button>
+      <button class="chip" data-p="50">50&nbsp;%</button>
+      <button class="chip" data-p="100">100&nbsp;%</button>
+    </div>
+  </div>
+
+  <p>Полезно запомнить: <b>100&nbsp;% — всё целиком</b>, <b>50&nbsp;% — половина</b>, <b>25&nbsp;% — четверть</b>, <b>10&nbsp;% — десятая часть</b>. Ты видишь проценты каждый день: «заряд телефона 50&nbsp;%» значит, что батарейка заряжена наполовину.</p>
+
+  <h3>А если долек не 100?</h3>
+  <p>Чаще всего целое не равно 100. Например, у тебя <b>200 рублей</b>. Всё равно всё целое — это 100&nbsp;%. Значит, мы мысленно <b>делим 200 рублей на 100 равных кусочков</b>.</p>
+  <div class="big">200 : 100 = 2</div>
+  <p>Каждый кусочек — 2 рубля, и каждый такой кусочек — это 1&nbsp;%. Выходит, <b>1&nbsp;% от 200 — это 2</b>.</p>
+  <div class="rule">
+    <b class="t">Как найти 1&nbsp;% числа?</b> Раздели число на 100.<br>1&nbsp;% от 200 — это <span class="m">200 : 100 = 2</span>.<br>1&nbsp;% от 14 — это <span class="m">14 : 100 = 0,14</span>.
+  </div>
+
+  <h3>Главный вопрос: «сколько процентов составляет одно число от другого»</h3>
+  <p>Это значит: <b>какую часть от целого занимает кусок</b>, если целое — это 100&nbsp;%. Сначала нужно понять, где что:</p>
+  <ul>
+    <li><b>Целое</b> (оно же 100&nbsp;%) — число, которое стоит после слов <b>«от числа»</b>.</li>
+    <li><b>Часть</b> — то, про что спрашивают.</li>
+  </ul>
+  <p>Решать можно двумя способами. Выбирай тот, который понятнее.</p>
+  <div class="two">
+    <div class="rule gold" style="margin:0">
+      <b class="t">Способ 1. Через один процент</b><br>
+      1) Найди 1&nbsp;% целого — раздели целое на 100.<br>
+      2) Узнай, сколько таких процентов помещается в части, — раздели часть на 1&nbsp;%.
+    </div>
+    <div class="rule gold" style="margin:0">
+      <b class="t">Способ 2. Правило из учебника</b><br>
+      Раздели часть на целое и умножь на 100.<br>
+      <span class="m" style="font-size:19px">часть : целое · 100&nbsp;%</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 85 ============ -->
+<section id="e85">
+  <span class="tag">Разбор упражнения</span>
+  <h2>№ 85. Сколько процентов составляет число</h2>
+  <p class="book">Это задача из блока повторения (значок «П» на полях учебника), она на проценты.</p>
+  <div class="task"><b>85.</b> Сколько процентов составляет: а) число 8 от числа 200; б) число 2,1 от числа 14?</div>
+
+  <h3>а) 8 от 200</h3>
+  <p><b>Где что:</b> после слов «от числа» стоит 200, значит, <b>200 — это целое, 100&nbsp;%</b>. Спрашивают про 8, значит, <b>8 — это часть</b>.</p>
+  <div class="two">
+    <div>
+      <p><b>Способ 1. Через один процент</b></p>
+      <ol class="steps">
+        <li>Находим 1&nbsp;% от 200. Делим 200 на 100, получаем <span class="m">200 : 100 = 2</span>. Каждая «долька» — 2.</li>
+        <li>Сколько таких долек в числе 8? <span class="m">8 : 2 = 4</span> дольки.</li>
+        <li>4 дольки — это 4&nbsp;%.</li>
+      </ol>
+    </div>
+    <figure style="margin:0">
+      <svg viewBox="0 0 230 250" role="img" aria-label="Квадрат из 100 клеток, 4 закрашены">
+        <g id="grid100"></g>
+        <text x="115" y="244" text-anchor="middle" font-family="PT Sans" font-size="15" fill="#566273">1 клетка = 1&nbsp;% = 2</text>
+      </svg>
+      <figcaption>200 разрезали на 100 клеточек по 2. Число 8 заняло 4 клеточки</figcaption>
+    </figure>
+  </div>
+  <p><b>Способ 2. Правило из учебника</b></p>
+  <ol class="steps">
+    <li>Часть делим на целое — <span class="m">8 : 200 = 0,04</span>.</li>
+    <li>Умножаем на 100: <span class="m">0,04 · 100 = 4</span>.</li>
+  </ol>
+  <p>Оба способа дали одно и то же. Ответ: <span class="ans">4&nbsp;%</span></p>
+
+  <h3>б) 2,1 от 14</h3>
+  <p><b>Где что:</b> 14 — это целое (после «от числа»), <b>100&nbsp;%</b>. 2,1 — это часть.</p>
+  <p><b>Способ 1. Через один процент</b></p>
+  <ol class="steps">
+    <li>Находим 1&nbsp;% от 14. Делим 14 на 100, получаем <span class="m">14 : 100 = 0,14</span>.</li>
+    <li>Сколько раз 0,14 помещается в 2,1? <span class="m">2,1 : 0,14 = 210 : 14 = 15</span>. Чтобы было удобно, запятую перенесли на два знака вправо в обоих числах.</li>
+  </ol>
+  <p><b>Способ 2. Правило из учебника</b></p>
+  <ol class="steps">
+    <li>Часть делим на целое — <span class="m">2,1 : 14 = 0,15</span>. Если так трудно, можно разделить иначе — <span class="m">2,1 : 14 = 21 : 140 = 3 : 20 = 0,15</span>.</li>
+    <li>Умножаем на 100: <span class="m">0,15 · 100 = 15</span>.</li>
+  </ol>
+  <p>Ответ: <span class="ans">15&nbsp;%</span></p>
+  <div class="rule"><b class="t">Проверка всегда полезна:</b> 15&nbsp;% от 14 — это 15 долек по 0,14: <span class="m">15 · 0,14 = 2,1</span>. Совпало с частью, значит, решено верно.</div>
+</section>
+
+<!-- ============ 86 ============ -->
+<section id="e86">
+  <span class="tag">Разбор упражнения</span>
+  <h2>№ 86. На сколько процентов сократилось</h2>
+  <div class="task"><b>86.</b> В результате рационализации производства удалось сократить число рабочих на комбинате. Вместо 1600 их осталось 1200. На сколько процентов сократилось число рабочих?</div>
+
+  <p>«Рационализация» значит, что работу устроили удобнее, и людей стало нужно меньше.</p>
+  <p><b>Что спрашивают простыми словами:</b> было 1600 человек, осталось 1200. Какую часть от всех рабочих, которые были сначала, сократили? Эту часть и нужно выразить в процентах.</p>
+
+  <p><b>Шаг 1. На сколько человек стало меньше?</b></p>
+  <div class="big">1600 − 1200 = 400</div>
+  <p>Сократили 400 рабочих. Но спрашивают не «на сколько человек», а <b>«на сколько процентов»</b>, поэтому идём дальше.</p>
+
+  <p><b>Шаг 2. Где целое?</b> Целое (100&nbsp;%) — это все рабочие, которые <b>были в начале</b>, то есть 1600. Проценты всегда считают от того, что было сначала.</p>
+
+  <p><b>Шаг 3. Какую часть 400 составляют от 1600?</b> Посмотри на схему: 1600 рабочих поделили на 4 равные группы по 400.</p>
+  <figure>
+    <svg viewBox="0 0 600 150" role="img" aria-label="1600 рабочих разделены на 4 группы по 400, одну группу сократили">
+      <g font-family="PT Sans" font-weight="700" font-size="17" text-anchor="middle">
+        <rect x="20" y="36" width="136" height="48" rx="8" fill="#1d4f91"/><text x="88" y="66" fill="#fff">400</text>
+        <rect x="161" y="36" width="136" height="48" rx="8" fill="#1d4f91"/><text x="229" y="66" fill="#fff">400</text>
+        <rect x="302" y="36" width="136" height="48" rx="8" fill="#1d4f91"/><text x="370" y="66" fill="#fff">400</text>
+        <rect x="443" y="36" width="136" height="48" rx="8" fill="#f8e6ea" stroke="#b0182f" stroke-width="2" stroke-dasharray="6 5"/><text x="511" y="66" fill="#b0182f">400</text>
+        <line x1="458" y1="46" x2="564" y2="74" stroke="#b0182f" stroke-width="3"/>
+      </g>
+      <g font-family="PT Sans" font-size="15" text-anchor="middle">
+        <text x="229" y="24" fill="#1d4f91">осталось 1200</text>
+        <text x="511" y="24" fill="#b0182f">сократили 400</text>
+        <text x="88" y="106" fill="#566273">25&nbsp;%</text><text x="229" y="106" fill="#566273">25&nbsp;%</text>
+        <text x="370" y="106" fill="#566273">25&nbsp;%</text><text x="511" y="106" fill="#b0182f" font-weight="700">25&nbsp;%</text>
+        <text x="300" y="140" fill="#566273">было 1600 рабочих = 100&nbsp;%</text>
+      </g>
+    </svg>
+  </figure>
+  <p>400 — это <b>одна из четырёх равных частей</b>, то есть четверть. А четверть — это 25&nbsp;% (как 25 долек шоколадки из 100).</p>
+  <p>То же по правилу из учебника — <span class="m">400 : 1600 = 0,25</span>, затем <span class="m">0,25 · 100 = 25</span>.</p>
+  <p>Ответ: число рабочих сократилось на <span class="ans">25&nbsp;%</span></p>
+
+  <div class="rule gold"><b class="t">Ловушка!</b> Нельзя делить 400 на 1200, то есть на тех, кто остался. Получится около 33&nbsp;%, и это ошибка. Уменьшение всегда сравниваем с тем, что было <b>в начале</b>.</div>
+  <p><b>Проверка.</b> 25&nbsp;% от 1600 — это четверть, то есть <span class="m">1600 : 4 = 400</span>. Было 1600, убрали 400, осталось <span class="m">1600 − 400 = 1200</span>. Всё сходится.</p>
+</section>
+
+<!-- ============ самопроверка ============ -->
+<section id="self">
+  <span class="tag">Реши сама</span>
+  <h2>Две задачи для самопроверки</h2>
+  <p>Алиса, реши задачи прямо в клеточках стилусом, как в тетради. Потом впиши ответ в окошко и нажми «Проверить». Твои записи сохранятся, даже если закрыть страницу.</p>
+
+  <!-- задание 1 -->
+  <h3>Задание 1 <span style="font-weight:400;color:var(--muted);font-size:16px">(похоже на № 85)</span></h3>
+  <div class="task">Сколько процентов составляет: а) число 9 от числа 150; б) число 4,2 от числа 12?</div>
+  <div class="board" data-board="z1" data-height="440"></div>
+
+  <div class="check" data-answer="6" data-hint="Целое — 150 (после «от числа»). Найди 1&nbsp;% от 150, а потом узнай, сколько таких процентов помещается в 9.">
+    <label for="a1">а)</label><input id="a1" inputmode="decimal" autocomplete="off"><span class="pct">%</span>
+    <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
+  </div>
+  <div class="check" data-answer="35" data-hint="Целое — 12. 1&nbsp;% от 12 — это 0,12. Сколько раз 0,12 помещается в 4,2?">
+    <label for="a2">б)</label><input id="a2" inputmode="decimal" autocomplete="off"><span class="pct">%</span>
+    <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
+  </div>
+  <button class="btn ghost show-sol" data-for="sol1">Показать решение</button>
+  <div class="hidden-sol" id="sol1">
+    <p class="sol"><b>а)</b> Целое — 150, часть — 9.<br><b>Способ 1.</b> 1&nbsp;% от 150 — это <span class="m">150 : 100 = 1,5</span>. В числе 9 таких долек <span class="m">9 : 1,5 = 6</span>.<br><b>Способ 2.</b> <span class="m">9 : 150 = 0,06</span>, затем <span class="m">0,06 · 100 = 6</span>.<br>Ответ — <b>6&nbsp;%</b>.</p>
+    <p class="sol"><b>б)</b> Целое — 12, часть — 4,2.<br><b>Способ 1.</b> 1&nbsp;% от 12 — это <span class="m">0,12</span>. Сколько раз 0,12 помещается в 4,2? <span class="m">4,2 : 0,12 = 420 : 12 = 35</span>.<br><b>Способ 2.</b> <span class="m">4,2 : 12 = 42 : 120 = 7 : 20 = 0,35</span>, затем <span class="m">0,35 · 100 = 35</span>.<br>Ответ — <b>35&nbsp;%</b>.</p>
+  </div>
+
+  <!-- задание 2 -->
+  <h3>Задание 2 <span style="font-weight:400;color:var(--muted);font-size:16px">(похоже на № 86)</span></h3>
+  <div class="task">В школьной библиотеке было 2500 старых книг. После проверки часть книг списали, и их осталось 2100. На сколько процентов уменьшилось число книг?</div>
+  <div class="board" data-board="z2" data-height="440"></div>
+
+  <div class="check" data-answer="16" data-hint="Сначала найди, на сколько книг стало меньше. Потом раздели это число на то, что было в начале (2500).">
+    <label for="a3">Ответ:</label><input id="a3" inputmode="decimal" autocomplete="off"><span class="pct">%</span>
+    <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
+  </div>
+  <button class="btn ghost show-sol" data-for="sol2">Показать решение</button>
+  <div class="hidden-sol" id="sol2">
+    <p class="sol">1) <span class="m">2500 − 2100 = 400</span> книг списали.</p>
+    <p class="sol">2) Целое — 2500 (сколько было в начале). <span class="m">400 : 2500 = 0,16</span>; <span class="m">0,16 · 100 = 16</span>.</p>
+    <p class="sol">Ответ: число книг уменьшилось на <b>16&nbsp;%</b>.</p>
+  </div>
+</section>
+
+<footer>Удачи, Алиса! Алгебра, 7 класс · п. 4 «Сравнение значений выражений»</footer>
+</div>
+
+<script>
+/* ---------- ползунок 2a и a+4 ---------- */
+(function(){
+  var s=document.getElementById('aSlider'), aV=document.getElementById('aVal'),
+      L=document.getElementById('left'), R=document.getElementById('right'),
+      S=document.getElementById('sign'), said=document.getElementById('said'),
+      bags=['bagL1','bagL2','bagR'].map(function(id){ return document.getElementById(id); }),
+      loose=document.getElementById('loose'),
+      boxL=document.querySelector('.cbox.left'), boxR=document.querySelector('.cbox.right');
+  function fill(el,n){
+    if(el.children.length===n) return;
+    el.innerHTML=''; for(var i=0;i<n;i++){ var c=document.createElement('span'); c.className='candy'; el.appendChild(c); }
+    el.classList.toggle('empty', n===0);
+  }
+  function word(n){ var d=n%10, h=n%100; if(d===1&&h!==11) return 'конфета'; if(d>=2&&d<=4&&(h<12||h>14)) return 'конфеты'; return 'конфет'; }
+  fill(loose,4);
+  function upd(){
+    var a=+s.value, l=2*a, r=a+4, sg=l<r?'<':(l>r?'>':'=');
+    aV.textContent=a; document.getElementById('aWord').textContent=word(a);
+    bags.forEach(function(b){ fill(b,a); });
+    L.innerHTML='<span class="m">2 · '+a+' = '+l+'</span><small>'+l+' '+word(l)+'</small>';
+    R.innerHTML='<span class="m">'+a+' + 4 = '+r+'</span><small>'+r+' '+word(r)+'</small>';
+    S.textContent=sg; S.style.color = sg==='=' ? '#1f6b4f' : '#b0182f';
+    boxL.classList.toggle('win', l>r); boxR.classList.toggle('win', r>l);
+    var who = sg==='<' ? 'Больше в правой коробке.' : sg==='>' ? 'Больше в левой коробке.' : 'Поровну!';
+    said.innerHTML = who+' Записываем: при <span class="m"><i>a</i> = '+a+'</span> верно '+(sg==='='?'равенство':'неравенство')+
+      ' <span class="m">2<i>a</i> '+(sg==='<'?'&lt;':sg==='>'?'&gt;':'=')+' <i>a</i> + 4</span>';
+  }
+  s.addEventListener('input',upd);
+  document.querySelectorAll('.chip[data-a]').forEach(function(b){
+    b.addEventListener('click',function(){ s.value=b.dataset.a; upd(); });
+  });
+  upd();
+})();
+
+/* ---------- шоколадка из 100 долек ---------- */
+(function(){
+  var svg=document.getElementById('choco'); if(!svg) return;
+  var ns='http://www.w3.org/2000/svg', c=22.6, cells=[];
+  var bg=document.createElementNS(ns,'rect'); bg.setAttribute('width',232); bg.setAttribute('height',232); bg.setAttribute('rx',10); bg.setAttribute('fill','#5a3a26'); svg.appendChild(bg);
+  for(var i=0;i<100;i++){
+    var r=document.createElementNS(ns,'rect'), row=Math.floor(i/10), col=i%10;
+    r.setAttribute('x',4+col*c); r.setAttribute('y',4+row*c); r.setAttribute('width',c-2.6); r.setAttribute('height',c-2.6); r.setAttribute('rx',3);
+    svg.appendChild(r); cells.push(r);
+  }
+  var s=document.getElementById('pSlider'), v=document.getElementById('pVal'), w=document.getElementById('pWord'),
+      big=document.getElementById('pBig'), say=document.getElementById('pSay');
+  function dol(n){ var d=n%10,h=n%100; if(d===1&&h!==11) return 'дольку'; if(d>=2&&d<=4&&(h<12||h>14)) return 'дольки'; return 'долек'; }
+  var special={0:'Шоколадку ещё не трогали: 0 %.',1:'Одна долька — это 1 %.',10:'10 % — это десятая часть шоколадки.',25:'25 % — это ровно четверть шоколадки!',50:'50 % — ровно половина шоколадки!',75:'75 % — три четверти шоколадки.',100:'Съели всё: 100 % — это вся шоколадка целиком.'};
+  function upd(){
+    var p=+s.value;
+    cells.forEach(function(r,i){ r.setAttribute('fill', i<p ? '#e9dccf' : '#8a5a3c'); });
+    v.textContent=p; w.textContent=dol(p); big.textContent=p+' %';
+    say.textContent = ('Съели '+p+' '+dol(p)+' из 100, то есть '+p+' % шоколадки. '+(special[p]||'')).replace(/ %/g,' %');
+  }
+  s.addEventListener('input',upd);
+  document.querySelectorAll('.chip[data-p]').forEach(function(b){ b.addEventListener('click',function(){ s.value=b.dataset.p; upd(); }); });
+  upd();
+})();
+
+/* ---------- сетка 100 клеток ---------- */
+(function(){
+  var g=document.getElementById('grid100'), ns='http://www.w3.org/2000/svg', c=21, x0=10, y0=4;
+  for(var i=0;i<100;i++){
+    var r=document.createElementNS(ns,'rect'), row=Math.floor(i/10), col=i%10;
+    r.setAttribute('x',x0+col*c); r.setAttribute('y',y0+row*c);
+    r.setAttribute('width',c-3); r.setAttribute('height',c-3); r.setAttribute('rx',3);
+    r.setAttribute('fill', i<4 ? '#b0182f' : '#e3ecf8');
+    g.appendChild(r);
+  }
+})();
+
+/* ---------- проверка ответов ---------- */
+function norm(v){ return parseFloat(String(v).replace(/\s|%/g,'').replace(',','.')); }
+document.querySelectorAll('.check').forEach(function(box){
+  var inp=box.querySelector('input'), btn=box.querySelector('button'), fb=box.querySelector('.fb'), tries=0;
+  function go(){
+    var v=norm(inp.value);
+    if(isNaN(v)){ fb.className='fb no'; fb.textContent='Впиши число'; return; }
+    if(Math.abs(v-norm(box.dataset.answer))<1e-9){
+      fb.className='fb ok'; fb.textContent='Верно! Молодец, Алиса 🎉'; inp.style.borderColor='#1f6b4f';
+    } else {
+      tries++; fb.className='fb no'; inp.style.borderColor='#b0182f';
+      fb.textContent = tries<2 ? 'Пока нет, проверь вычисления' : 'Подсказка: '+box.dataset.hint;
+    }
+  }
+  btn.addEventListener('click',go);
+  inp.addEventListener('keydown',function(e){ if(e.key==='Enter') go(); });
+});
+document.querySelectorAll('.show-sol').forEach(function(b){
+  b.addEventListener('click',function(){
+    var el=document.getElementById(b.dataset.for), on=el.classList.toggle('show');
+    b.textContent = on ? 'Скрыть решение' : 'Показать решение';
+  });
+});
+
+/* ---------- доска для письма стилусом ---------- */
+var penSeen=false;
+var ICON={
+  pen:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4z"/><path d="M14 6l3 3"/></svg>',
+  eraser:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20h12"/><path d="M5 15l9-9 5 5-8 8H8z"/></svg>',
+  undo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 010 12h-3"/></svg>',
+  clear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>',
+  more:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>'
+};
+function Board(root){
+  var id=root.dataset.board, key='alg4-board-'+id, self=this;
+  this.h=+root.dataset.height||420; this.strokes=[]; this.tool='pen'; this.color='#1d3f8f';
+  root.innerHTML=
+    '<div class="toolbar">'+
+      '<button class="tool" data-t="pen" data-c="#1d3f8f" aria-pressed="true"><span class="dot" style="background:#1d3f8f"></span>Синяя</button>'+
+      '<button class="tool" data-t="pen" data-c="#c21a33" aria-pressed="false"><span class="dot" style="background:#c21a33"></span>Красная</button>'+
+      '<button class="tool" data-t="eraser" aria-pressed="false">'+ICON.eraser+'Ластик</button>'+
+      '<button class="tool" data-act="undo">'+ICON.undo+'Назад</button>'+
+      '<span class="spacer"></span><span class="pen-state"></span>'+
+      '<button class="tool" data-act="more">'+ICON.more+'Место</button>'+
+      '<button class="tool" data-act="clear">'+ICON.clear+'Стереть всё</button>'+
+    '</div><div class="canvas-box"><canvas></canvas></div>'+
+    '<div class="grip" title="Потяни вниз, чтобы удлинить лист"><span></span>потяни вниз, чтобы удлинить лист<span></span></div>';
+  var cv=root.querySelector('canvas'), ctx=cv.getContext('2d'), state=root.querySelector('.pen-state');
+  try{ var saved=JSON.parse(localStorage.getItem(key)||'null'); if(saved){ this.strokes=saved.s||[]; if(saved.h) this.h=Math.max(240,saved.h); } }catch(e){}
+  function save(){ try{ localStorage.setItem(key,JSON.stringify({s:self.strokes,h:self.h})); }catch(e){} }
+  function showState(){ state.textContent = penSeen ? 'Стилус подключён: ладонь не рисует' : ''; }
+  showState(); document.addEventListener('pen-seen',showState);
+
+  function size(){
+    var w=cv.parentElement.clientWidth, d=window.devicePixelRatio||1;
+    cv.width=Math.round(w*d); cv.height=Math.round(self.h*d); cv.style.height=self.h+'px';
+    ctx.setTransform(d,0,0,d,0,0); redraw();
+  }
+  function seg(st,i){
+    var a=st.p[i-1], b=st.p[i];
+    ctx.strokeStyle=st.c; ctx.lineWidth=(a[2]+b[2])/2;
+    ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.stroke();
+  }
+  function dot(st){ var a=st.p[0]; ctx.fillStyle=st.c; ctx.beginPath(); ctx.arc(a[0],a[1],a[2]/2,0,Math.PI*2); ctx.fill(); }
+  function redraw(){
+    ctx.clearRect(0,0,cv.width,cv.height); ctx.lineCap='round'; ctx.lineJoin='round';
+    self.strokes.forEach(function(st){ if(st.p.length===1) dot(st); for(var i=1;i<st.p.length;i++) seg(st,i); });
+  }
+  function pt(e){
+    var r=cv.getBoundingClientRect(), pr=e.pointerType==='pen' ? (e.pressure||0.5) : 0.5;
+    var w = e.pointerType==='pen' ? 1.2+pr*3.2 : 2.6;
+    return [Math.round((e.clientX-r.left)*10)/10, Math.round((e.clientY-r.top)*10)/10, Math.round(w*10)/10];
+  }
+  function eraseAt(p){
+    var R=14, n=self.strokes.length;
+    self.strokes=self.strokes.filter(function(st){
+      return !st.p.some(function(q){ var dx=q[0]-p[0], dy=q[1]-p[1]; return dx*dx+dy*dy<R*R; });
+    });
+    if(self.strokes.length!==n) redraw();
+  }
+  var active=null, cur=null;
+  cv.addEventListener('pointerdown',function(e){
+    if(e.pointerType==='pen' && !penSeen){ penSeen=true; document.dispatchEvent(new Event('pen-seen')); }
+    if(e.pointerType==='touch' && penSeen) return;          // ладонь не рисует
+    if(active!==null) return;
+    e.preventDefault(); try{ cv.setPointerCapture(e.pointerId); }catch(err){} active=e.pointerId;
+    var eraser = self.tool==='eraser' || e.button===5;       // кнопка-ластик на стилусе
+    if(eraser){ cur=null; eraseAt(pt(e)); }
+    else { cur={c:self.color,p:[pt(e)]}; self.strokes.push(cur); ctx.lineCap='round'; dot(cur); }
+  });
+  cv.addEventListener('pointermove',function(e){
+    if(e.pointerId!==active) return;
+    e.preventDefault();
+    var list = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
+    if(!list.length) list=[e];
+    list.forEach(function(ev){
+      var p=pt(ev);
+      if(!cur){ eraseAt(p); return; }
+      var last=cur.p[cur.p.length-1];
+      if(Math.abs(last[0]-p[0])+Math.abs(last[1]-p[1])<0.8) return;
+      cur.p.push(p); seg(cur,cur.p.length-1);
+    });
+  });
+  function end(e){ if(e.pointerId!==active) return; active=null; cur=null; save(); }
+  cv.addEventListener('pointerup',end); cv.addEventListener('pointercancel',end);
+  cv.addEventListener('contextmenu',function(e){ e.preventDefault(); });
+
+  root.querySelectorAll('.tool').forEach(function(b){
+    b.addEventListener('click',function(){
+      if(b.dataset.t){
+        self.tool=b.dataset.t; if(b.dataset.c) self.color=b.dataset.c;
+        root.querySelectorAll('.tool[data-t]').forEach(function(x){ x.setAttribute('aria-pressed', x===b ? 'true':'false'); });
+        cv.style.cursor = self.tool==='eraser' ? 'cell' : 'crosshair';
+      } else if(b.dataset.act==='undo'){ self.strokes.pop(); redraw(); save(); }
+      else if(b.dataset.act==='clear'){ if(self.strokes.length && confirm('Стереть всё, что написано на этом листе?')){ self.strokes=[]; redraw(); save(); } }
+      else if(b.dataset.act==='more'){ self.h+=240; size(); save(); }
+    });
+  });
+  var grip=root.querySelector('.grip'), gy=null, gh=0;
+  grip.addEventListener('pointerdown',function(e){
+    e.preventDefault(); try{ grip.setPointerCapture(e.pointerId); }catch(err){}
+    gy=e.clientY; gh=self.h; grip.classList.add('drag');
+  });
+  grip.addEventListener('pointermove',function(e){
+    if(gy===null) return; e.preventDefault();
+    var nh=Math.max(240, Math.round(gh+e.clientY-gy));
+    if(nh!==self.h){ self.h=nh; size(); }
+  });
+  function gripEnd(){ if(gy===null) return; gy=null; grip.classList.remove('drag'); save(); }
+  grip.addEventListener('pointerup',gripEnd); grip.addEventListener('pointercancel',gripEnd);
+  var lastW=0;
+  window.addEventListener('resize',function(){ var w=cv.parentElement.clientWidth; if(w!==lastW){ lastW=w; size(); } });
+  lastW=cv.parentElement.clientWidth; size();
+}
+document.querySelectorAll('.board').forEach(function(b){ new Board(b); });
+</script>
+<script>
+try{var v=JSON.parse(localStorage.getItem('uroki-visited')||'{}');v['algebra/p4']=new Date().toISOString().slice(0,10);localStorage.setItem('uroki-visited',JSON.stringify(v));}catch(e){}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('../../sw.js',{scope:'../../'}).catch(function(){});}
+</script>
+</body>
+</html>
