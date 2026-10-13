@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="theme-color" content="#1d4f91">
+<link rel="apple-touch-icon" href="../../assets/icon-180.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>География 7: доли океанов</title>
+<link rel="stylesheet" href="../../assets/fonts.css">
+<style>
+  :root{--bg:#eef2f7;--paper:#fff;--ink:#15202e;--muted:#566273;--line:#d5dde8;--blue:#1d4f91;--blue-soft:#e3ecf8}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.6 "PT Sans",system-ui,sans-serif}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px}
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;gap:4px;padding-top:8px;padding-bottom:8px}
+  nav a{text-decoration:none;color:var(--ink);font-size:14px;font-weight:700;padding:8px 12px;border-radius:8px}
+  header{padding:40px 0 10px}
+  h1{font-size:clamp(28px,5vw,40px);line-height:1.15;margin:0 0 8px}
+  header p{color:var(--muted);margin:0}
+  .card{background:var(--paper);border-radius:20px;padding:26px;margin:18px 0 24px;box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(21,32,46,.25)}
+  .chart{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center}
+  @media (max-width:640px){.chart{grid-template-columns:1fr}}
+  svg{display:block;width:100%;max-width:360px;margin:0 auto}
+  svg path{cursor:pointer;transition:transform .2s;transform-origin:180px 180px}
+  svg path.on{transform:scale(1.04)}
+  .leg{list-style:none;margin:0;padding:0}
+  .leg li{display:grid;grid-template-columns:18px 1fr auto;gap:10px;align-items:center;padding:10px 8px;border-bottom:1px solid var(--line);cursor:pointer;border-radius:8px}
+  .leg li.on{background:var(--blue-soft)}
+  .leg .sw{width:16px;height:16px;border-radius:4px}
+  .leg b{display:block}
+  .leg small{color:var(--muted);font-size:14.5px}
+  .leg .p{font-family:"PT Serif",serif;font-weight:700;font-size:22px}
+  .total{margin-top:12px;color:var(--muted);font-size:15px}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+  .facts div{background:#f3f6fa;border-radius:12px;padding:12px 14px;font-size:16.5px}
+  @media (max-width:640px){.facts{grid-template-columns:1fr}}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding:6px 0 40px}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a href="../../" style="color:#1d4f91">← Все уроки</a><a href="#chart">Диаграмма</a><a href="#facts">Что видно</a></div></nav>
+<div class="wrap">
+<header>
+  <h1>Доля каждого океана в Мировом океане</h1>
+  <p>По площади вместе с морями. Нажми на долю или на строчку — она подсветится.</p>
+</header>
+
+<section class="card" id="chart">
+  <div class="chart">
+    <svg id="pie" viewBox="0 0 360 360" role="img" aria-label="Круговая диаграмма долей океанов: Тихий 49,5 %, Атлантический 25,4 %, Индийский 21,1 %, Северный Ледовитый 4,1 %"></svg>
+    <ul class="leg" id="leg"></ul>
+  </div>
+  <p class="total">Площадь Мирового океана: 178,6 + 91,6 + 76,2 + 14,7 = <b>361,1 млн км²</b>. Доля океана = его площадь ÷ 361,1 × 100 %.</p>
+</section>
+
+<section class="card" id="facts">
+  <div class="facts">
+    <div><b>Тихий</b> — самый большой и самый глубокий: почти половина Мирового океана. Он больше Атлантического и Индийского вместе.</div>
+    <div><b>Атлантический</b> — второй по величине, около четверти.</div>
+    <div><b>Индийский</b> — третий по величине, примерно пятая часть.</div>
+    <div><b>Северный Ледовитый</b> — самый маленький и самый мелкий: всего около 4 %.</div>
+  </div>
+</section>
+
+<footer>География, 7 класс · площади океанов с морями — по учебнику, § 24–25</footer>
+</div>
+<script>
+(function(){
+  var D=[['Тихий',178.6,'#1d4f91'],['Атлантический',91.6,'#1f8a6a'],['Индийский',76.2,'#c98a0a'],['Северный Ледовитый',14.7,'#6a5acd']];
+  var tot=D.reduce(function(a,d){return a+d[1];},0), NS='http://www.w3.org/2000/svg', svg=document.getElementById('pie'), leg=document.getElementById('leg');
+  var cx=180,cy=180,R=165,a0=-Math.PI/2, paths=[], items=[];
+  function f(x){return String(x).replace('.',',');}
+  D.forEach(function(d,i){
+    var frac=d[1]/tot, a1=a0+frac*2*Math.PI, big=frac>0.5?1:0;
+    var p=document.createElementNS(NS,'path');
+    p.setAttribute('d','M'+cx+' '+cy+' L'+(cx+R*Math.cos(a0))+' '+(cy+R*Math.sin(a0))+' A'+R+' '+R+' 0 '+big+' 1 '+(cx+R*Math.cos(a1))+' '+(cy+R*Math.sin(a1))+' Z');
+    p.setAttribute('fill',d[2]); p.setAttribute('stroke','#fff'); p.setAttribute('stroke-width','3');
+    svg.appendChild(p); paths.push(p);
+    var pct=(frac*100).toFixed(1);
+    if(frac>0.08){ var m=(a0+a1)/2, t=document.createElementNS(NS,'text');
+      t.setAttribute('x',cx+R*0.6*Math.cos(m)); t.setAttribute('y',cy+R*0.6*Math.sin(m)+7);
+      t.setAttribute('text-anchor','middle'); t.setAttribute('fill','#fff'); t.setAttribute('font-family','PT Serif'); t.setAttribute('font-weight','700'); t.setAttribute('font-size','20');
+      t.setAttribute('pointer-events','none'); t.textContent=f(pct)+' %'; svg.appendChild(t); }
+    var li=document.createElement('li');
+    li.innerHTML='<span class="sw" style="background:'+d[2]+'"></span><span><b>'+d[0]+'</b><small>'+f(d[1])+' млн км²</small></span><span class="p">'+f(pct)+' %</span>';
+    leg.appendChild(li); items.push(li);
+    function on(){ paths.forEach(function(x,j){x.classList.toggle('on',j===i);}); items.forEach(function(x,j){x.classList.toggle('on',j===i);}); }
+    p.addEventListener('click',on); li.addEventListener('click',on);
+    a0=a1;
+  });
+})();
+</script>
+<script>
+try{var v=JSON.parse(localStorage.getItem('uroki-visited')||'{}');v['geography/okeany']=new Date().toISOString().slice(0,10);localStorage.setItem('uroki-visited',JSON.stringify(v));}catch(e){}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('../../sw.js',{scope:'../../'}).catch(function(){});}
+</script>
+</body>
+</html>
