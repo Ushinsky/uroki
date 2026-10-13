@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="theme-color" content="#1d4f91">
+<link rel="apple-touch-icon" href="../../assets/icon-180.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Алгебра 7: линейное уравнение</title>
+<link rel="stylesheet" href="../../assets/fonts.css">
+<style>
+  :root{
+    --bg:#eef2f7; --paper:#ffffff; --ink:#15202e; --muted:#566273; --line:#d5dde8;
+    --blue:#1d4f91; --blue-soft:#e3ecf8; --red:#b0182f; --red-soft:#f8e6ea;
+    --green:#1f6b4f; --green-soft:#e2f2eb; --gold:#6f550c; --gold-soft:#f5efd9;
+    --grid:#cfdcee; --pen:#1d3f8f;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.6 "PT Sans",system-ui,sans-serif}
+  .wrap{max-width:900px;margin:0 auto;padding:0 16px}
+  h1,h2,h3{line-height:1.2;margin:0}
+  h2{font-size:clamp(25px,3.8vw,32px);margin-bottom:12px}
+  h3{font-size:21px;margin:26px 0 10px}
+  p{margin:0 0 12px}
+  [id]{scroll-margin-top:64px}
+  .m{font-family:"PT Serif",Georgia,serif;white-space:nowrap}
+  .m i, i.m{font-style:italic}
+  .big{font-family:"PT Serif",Georgia,serif;font-size:28px;text-align:center;margin:12px 0 16px}
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:none}
+  nav a{flex:none;text-decoration:none;color:var(--ink);font-size:14px;font-weight:700;padding:8px 11px;border-radius:8px}
+  nav a:hover{background:var(--blue-soft);color:var(--blue)}
+  header{padding:40px 0 14px}
+  .hi{font-family:"PT Serif",serif;font-size:22px;color:var(--blue);margin:0 0 4px}
+  header h1{font-size:clamp(30px,5vw,44px);margin:4px 0 10px}
+  header p{color:var(--muted);max-width:660px;margin:0}
+  .card{background:var(--paper);border-radius:20px;padding:28px 26px 24px;margin:18px 0 22px;box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(21,32,46,.25)}
+  @media (max-width:560px){.card{padding:22px 16px 18px}}
+  .tag{display:inline-block;font-weight:700;font-size:14px;color:var(--blue);margin-bottom:6px}
+  .src{color:var(--muted);font-size:16px}
+  .sub{font-weight:400;color:var(--muted);font-size:16px}
+  .task{background:#f3f6fa;border-radius:12px;padding:14px 18px;margin:8px 0 12px}
+  .rule{background:var(--blue-soft);border-radius:12px;padding:14px 18px;margin:12px 0}
+  .rule b.t{color:var(--blue)}
+  .trap{background:var(--gold-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+  .trap b.t{color:var(--gold)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+  @media (max-width:620px){.two{grid-template-columns:1fr}}
+  .steps{counter-reset:s;list-style:none;padding:0;margin:10px 0}
+  .steps li{counter-increment:s;position:relative;padding:4px 0 8px 42px}
+  .steps li::before{content:counter(s);position:absolute;left:0;top:3px;width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;font-weight:700;display:grid;place-items:center;font-size:15px}
+
+  /* страница тетради */
+  .tetrad{position:relative;background-color:#fdfeff;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:22px 22px;
+    border-radius:12px;box-shadow:inset 0 0 0 1px var(--line);padding:30px 18px 14px;margin:12px 0;font-family:"PT Serif",serif;font-style:italic;font-size:20px;line-height:1.55;color:var(--pen)}
+  .tetrad .tl{position:absolute;top:6px;left:12px;font-family:"PT Sans",sans-serif;font-style:normal;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .tetrad .eq{display:block;white-space:nowrap}
+  .tetrad u{text-decoration:none;box-shadow:0 0 0 2px var(--pen);padding:0 6px;border-radius:2px}
+  .tetrad.big-t p{margin:0 0 10px} .tetrad.big-t b{font-style:normal;font-family:"PT Sans",sans-serif}
+
+  .kinds{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
+  .kinds > div{background:#f3f6fa;border-radius:14px;padding:12px 14px;font-size:16px;line-height:1.5}
+  .kinds b.h{display:block;font-size:17px;color:var(--blue);margin-bottom:4px}
+  .kinds .m{white-space:normal}
+  @media (max-width:760px){.kinds{grid-template-columns:1fr 1fr}}
+
+  .lab{background:#f3f6fa;border-radius:16px;padding:16px;margin:16px 0}
+  .lab svg{display:block;width:100%;height:auto;background:#fff;border-radius:12px;margin-top:10px}
+  .rng{display:flex;align-items:center;gap:12px;margin-top:12px;font-family:"PT Serif",serif;font-size:22px}
+  .rng input{flex:1;accent-color:var(--blue);height:32px}
+  .rng b{min-width:34px;text-align:center}
+  .say{background:#fff;border-radius:12px;padding:12px 14px;margin-top:10px;min-height:52px}
+  .say .ok{color:var(--green);font-weight:700} .say .no{color:var(--red);font-weight:700}
+
+  .solve{background:#fff;border-radius:12px;padding:14px 18px;margin-top:10px;font-family:"PT Serif",serif;font-size:24px;line-height:1.7}
+  .solve .ln{opacity:.35;transition:opacity .25s}
+  .solve .ln.cur{opacity:1}
+  .solve .ln.past{opacity:.7}
+  .solve .r{color:var(--red);font-weight:700} .solve .g{color:var(--green);font-weight:700} .solve .bl{color:var(--blue);font-weight:700}
+  .solve .note{font-family:"PT Sans",sans-serif;font-size:15px;color:var(--muted);margin-left:10px}
+  .ctl{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+
+  table.chk{border-collapse:collapse;width:100%;margin:10px 0;font-size:17px}
+  .chk th,.chk td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left}
+  .chk th{font-size:14px;color:var(--muted)}
+  .chk .yes{color:var(--green);font-weight:700} .chk .no{color:var(--muted)}
+
+  .yn{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+  .yn .btn.on-ok{background:var(--green);color:#fff} .yn .btn.on-no{background:var(--red);color:#fff}
+  .sum{padding-left:22px} .sum li{margin:6px 0}
+  .short h2{font-size:24px}
+  .three{padding-left:24px;margin:0;font-size:19px} .three li{margin:6px 0}
+  .cap{text-align:center;color:var(--muted);font-size:15px;margin-top:-8px}
+  .big .c-red,.big .c-blue{font-weight:700}
+  .easy{padding-left:22px} .easy li{margin:8px 0}
+  details.more{background:#f3f6fa;border-radius:12px;padding:4px 16px;margin:12px 0}
+  details.more summary{cursor:pointer;font-weight:700;color:var(--blue);min-height:44px;display:flex;align-items:center}
+  details.more[open]{padding-bottom:10px}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+  .vs div{border-radius:12px;padding:12px 14px;font-size:17px}
+  .vs .ok{background:var(--green-soft);color:var(--green)} .vs .no{background:var(--red-soft);color:var(--red)}
+  @media (max-width:620px){.vs{grid-template-columns:1fr}}
+  .moves{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+  .moves > div{background:var(--blue-soft);border-radius:14px;padding:12px 16px;font-size:17px}
+  .moves b.h{display:block;color:var(--blue);font-size:18px;margin-bottom:2px}
+  @media (max-width:620px){.moves{grid-template-columns:1fr}}
+  .found{background:var(--green-soft);border-radius:14px;padding:14px 18px;margin:14px 0 0;animation:pop .35s ease-out}
+  .found p:last-child{margin:0}
+  @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .sol-t{padding-top:16px}
+  .sol-t .row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:14px;align-items:baseline;padding:4px 0;border-bottom:1px dashed #c9d6e8}
+  .sol-t .row:last-child{border-bottom:0}
+  .sol-t .why{font-family:"PT Sans",sans-serif;font-style:normal;font-size:15.5px;line-height:1.4;color:var(--ink)}
+  .sol-t .row .eq:empty + .why{grid-column:1 / -1;color:var(--green);font-weight:700}
+  @media (max-width:620px){.sol-t .row{grid-template-columns:1fr;gap:0}.sol-t .why{margin:0 0 4px}}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding:6px 0 40px}
+  /* доска */
+  .board{margin:14px 0 10px;border-radius:14px;background:#fff;box-shadow:0 0 0 1px var(--line)}
+  .toolbar{display:flex;flex-wrap:wrap;gap:6px;padding:8px;border-bottom:1px solid var(--line);align-items:center}
+  .tool{display:inline-flex;align-items:center;gap:6px;border:1px solid transparent;background:#f3f6fa;color:var(--ink);border-radius:9px;padding:8px 12px;font:inherit;font-size:15px;font-weight:700;cursor:pointer;min-height:42px}
+  .tool svg{width:20px;height:20px;margin:0}
+  .tool[aria-pressed=true]{background:var(--blue);color:#fff}
+  .tool:hover{border-color:var(--blue)}
+  .tool .dot{width:14px;height:14px;border-radius:50%;box-shadow:0 0 0 2px #fff}
+  .spacer{flex:1}
+  .grip{display:flex;align-items:center;justify-content:center;gap:10px;height:34px;cursor:ns-resize;touch-action:none;-webkit-user-select:none;user-select:none;
+    background:#f3f6fa;border-top:1px solid var(--line);border-radius:0 0 14px 14px;font-size:13px;color:var(--muted)}
+  .grip span{width:56px;height:6px;border-radius:3px;background:#9fb3cf}
+  .grip:hover span,.grip.drag span{background:var(--blue)}
+  .pen-state{font-size:13px;color:var(--muted);padding:0 6px}
+  .canvas-box{position:relative;overflow:hidden;background-color:#fdfeff;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+  .canvas-box canvas{display:block;width:100%;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:crosshair}
+
+  .check{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0}
+  .check label{font-weight:700;min-width:28px}
+  .check input{font:inherit;font-size:20px;width:140px;padding:8px 12px;border:2px solid var(--line);border-radius:10px;font-family:"PT Serif",serif}
+  .check input:focus{outline:none;border-color:var(--blue)}
+  .btn{background:var(--blue);color:#fff;border:0;border-radius:10px;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer;min-height:44px}
+  .btn:hover{background:#163f75}
+  .btn.ghost{background:#f3f6fa;color:var(--ink)}
+  .fb{font-weight:700;min-height:26px}
+  .fb.ok{color:var(--green)} .fb.no{color:var(--red)}
+  .hidden-sol{display:none;background:#f3f6fa;border-radius:12px;padding:12px 16px;margin-top:8px}
+  .hidden-sol.show{display:block}
+  .sol{margin:0 0 6px}
+
+  .btn{background:var(--blue);color:#fff;border:0;border-radius:10px;padding:10px 16px;font:inherit;font-size:16px;font-weight:700;cursor:pointer;min-height:44px}
+  .btn.ghost{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+  .btn:disabled{opacity:.4;cursor:default}
+
+  .sol-t .eq{white-space:normal}
+  .sol-t .row{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)}
+  .fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;line-height:1.05;margin:0 3px;font-size:.82em}
+  .fr span:first-child{border-bottom:1.5px solid currentColor;padding:0 3px}
+  .slots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+  .slots > div{background:#f3f6fa;border-radius:14px;padding:12px;text-align:center}
+  .slots small{display:block;font-size:15px;margin-top:4px}
+  .big2{font-size:24px}
+  @media (max-width:620px){.slots{grid-template-columns:1fr}}
+  .kinds3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+  .kinds3 > div{background:#f3f6fa;border-radius:14px;padding:12px 14px;font-size:16px;line-height:1.5}
+  .kinds3 b.h{display:block;font-size:17px;color:var(--blue);margin-bottom:4px}
+  @media (max-width:700px){.kinds3{grid-template-columns:1fr}}
+  .lab svg{background:#fff}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a href="../../" style="color:#1d4f91">← Все уроки</a>
+  <a href="#s1">1. Что это</a>
+  <a href="#s2">2. № 145</a>
+  <a href="#s3">3. Дроби, № 146</a>
+  <a href="#s4">4. № 147</a>
+  <a href="#s5">5. № 148</a>
+  <a href="#s6">6. Сколько корней</a>
+  <a href="#s7">Тренировка</a>
+</div></nav>
+
+<div class="wrap">
+<header>
+  <p class="hi">Алиса, привет!</p>
+  <h1>Линейное уравнение с одной переменной</h1>
+  <p>Алгебра, п. 8. Классная работа 12 октября. Страницы в клетку — это то, что записано у вас в тетради.</p>
+</header>
+
+<section class="card short">
+  <h2>Весь урок в трёх фразах</h2>
+  <ol class="three">
+    <li><b>Линейное уравнение</b> — самое простое: «число · <i class="m">x</i> = число», например <span class="m">5<i>x</i> = −60</span>.</li>
+    <li>Чтобы найти <i class="m">x</i>, <b>делим число справа на число перед <i>x</i></b>.</li>
+    <li>Если уравнение сложнее, сначала <b>переносим</b>: иксы — влево, числа — вправо. И оно превращается в простое.</li>
+  </ol>
+</section>
+
+<!-- ============ 1 ============ -->
+<section class="card" id="s1">
+  <span class="tag">Шаг 1</span>
+  <h2>Что такое линейное уравнение</h2>
+  <div class="rule"><b class="t">Определение.</b> Уравнение вида <span class="m"><i>ax</i> = <i>b</i></span>, где <i class="m">x</i> — переменная, <i class="m">a</i> и <i class="m">b</i> — некоторые числа, называется линейным уравнением с одной переменной.</div>
+  <p>Буквы <i class="m">a</i> и <i class="m">b</i> здесь — просто «места для чисел»:</p>
+  <div class="slots">
+    <div><span class="m big2"><span class="c-blue">5</span><i>x</i> = <span class="c-red">−60</span></span><small><span class="c-blue">a = 5</span>, <span class="c-red">b = −60</span></small></div>
+    <div><span class="m big2"><span class="c-blue">0,7</span><i>x</i> = <span class="c-red">0</span></span><small><span class="c-blue">a = 0,7</span>, <span class="c-red">b = 0</span></small></div>
+    <div><span class="m big2"><span class="c-blue">−0,2</span><i>x</i> = <span class="c-red">−1</span></span><small><span class="c-blue">a = −0,2</span>, <span class="c-red">b = −1</span></small></div>
+  </div>
+  <p><span class="c-blue"><b>a</b></span> — число, на которое умножен <i class="m">x</i>. <span class="c-red"><b>b</b></span> — число по другую сторону от «=».</p>
+
+  <h3>Как его решать — запись в тетради</h3>
+  <div class="tetrad sol-t"><span class="tl">запись в тетради</span>
+    <div class="row"><span class="eq">ax = b</span><span class="why">x умножили на a и получили b</span></div>
+    <div class="row"><span class="eq">x = <span class="fr"><span>b</span><span>a</span></span></span><span class="why">значит, x = b, делённое на a (черта дроби — это деление)</span></div>
+  </div>
+  <div class="lab">
+    <b>Почему делим?</b> Представь: 5 одинаковых коробок весят 60 кг. Сколько весит одна? Делим: 60 : 5 = 12. Уравнение <span class="m">5<i>x</i> = 60</span> — то же самое.
+    <svg id="boxes" viewBox="0 0 640 150" role="img" aria-label="5 коробок по x весят 60"></svg>
+  </div>
+</section>
+
+<!-- ============ 2 ============ -->
+<section class="card" id="s2">
+  <span class="tag">Шаг 2</span>
+  <h2>№ 145 — делим число на коэффициент</h2>
+  <p class="src">Найдите корень уравнения. Число перед <i class="m">x</i> (его называют <b>коэффициентом</b>) отправляем под черту.</p>
+  <div class="tetrad sol-t"><span class="tl">запись в тетради · № 145 а)</span>
+    <div class="row"><span class="eq">а) 5x = −60</span><span class="why">a = 5, b = −60</span></div>
+    <div class="row"><span class="eq">x = <span class="fr"><span>−60</span><span>5</span></span></span><span class="why">x = b : a — делим −60 на 5</span></div>
+    <div class="row"><span class="eq">x = −12</span><span class="why">60 : 5 = 12; минус на плюс — минус</span></div>
+    <div class="row"><span class="eq">Ответ: x = −12</span><span class="why">проверка: 5·(−12) = −60 ✓</span></div>
+  </div>
+  <div class="tetrad sol-t"><span class="tl">запись в тетради · № 145 г)</span>
+    <div class="row"><span class="eq">г) 6x = −50</span><span class="why">a = 6, b = −50</span></div>
+    <div class="row"><span class="eq">x = −<span class="fr"><span>50</span><span>6</span></span></span><span class="why">делим −50 на 6. Нацело не делится — оставляем дробью</span></div>
+    <div class="row"><span class="eq">x = −8<span class="fr"><span>2</span><span>6</span></span></span><span class="why">выделили целую часть: в 50 шесть помещается 8 раз (48), остаётся 2</span></div>
+    <div class="row"><span class="eq">x = −8<span class="fr"><span>1</span><span>3</span></span></span><span class="why">сократили дробь: 2 и 6 делим на 2</span></div>
+    <div class="row"><span class="eq">Ответ: x = −8<span class="fr"><span>1</span><span>3</span></span></span><span class="why"></span></div>
+  </div>
+  <div class="tetrad sol-t"><span class="tl">запись в тетради · № 145 ж)</span>
+    <div class="row"><span class="eq">ж) 0,7x = 0</span><span class="why">a = 0,7, b = 0</span></div>
+    <div class="row"><span class="eq">x = <span class="fr"><span>0</span><span>0,7</span></span></span><span class="why">делим 0 на 0,7</span></div>
+    <div class="row"><span class="eq">x = 0</span><span class="why">ноль, делённый на любое число (кроме нуля), — это 0</span></div>
+    <div class="row"><span class="eq">Ответ: x = 0</span><span class="why"></span></div>
+  </div>
+</section>
+
+<!-- ============ 3 ============ -->
+<section class="card" id="s3">
+  <span class="tag">Шаг 3</span>
+  <h2>Если перед x дробь — № 146</h2>
+  <div class="rule"><b class="t">Главный секрет.</b> Разделить на дробь — то же самое, что умножить на <b>перевёрнутую</b> дробь.<br>
+    <span class="m">: <span class="fr"><span>1</span><span>3</span></span> &nbsp;→&nbsp; · <span class="fr"><span>3</span><span>1</span></span> = · 3</span> &nbsp;&nbsp;&nbsp;&nbsp; <span class="m">: <span class="fr"><span>2</span><span>3</span></span> &nbsp;→&nbsp; · <span class="fr"><span>3</span><span>2</span></span></span></div>
+  <p>Проверь на понятном: сколько третей в 12 пиццах? В каждой пицце 3 трети, значит 12·3 = 36. Поэтому <span class="m">12 : <span class="fr"><span>1</span><span>3</span></span> = 12 · 3</span>.</p>
+  <div class="tetrad sol-t"><span class="tl">запись в тетради · № 146 а)</span>
+    <div class="row"><span class="eq">а) <span class="fr"><span>1</span><span>3</span></span>x = 12</span><span class="why">a = <sup>1</sup>/<sub>3</sub>, b = 12</span></div>
+    <div class="row"><span class="eq">x = 12 : <span class="fr"><span>1</span><span>3</span></span></span><span class="why">как всегда: b делим на a</span></div>
+    <div class="row"><span class="eq">x = 12 · 3</span><span class="why">делить на <sup>1</sup>/<sub>3</sub> = умножить на перевёрнутую <sup>3</sup>/<sub>1</sub>, то есть на 3</span></div>
+    <div class="row"><span class="eq"><u>x = 36</u></span><span class="why">12·3 = 36</span></div>
+    <div class="row"><span class="eq">Ответ: x = 36</span><span class="why">проверка: треть от 36 — это 12 ✓</span></div>
+  </div>
+  <div class="tetrad sol-t"><span class="tl">запись в тетради · № 146 б)</span>
+    <div class="row"><span class="eq">б) <span class="fr"><span>2</span><span>3</span></span>y = 9</span><span class="why">тут переменная обозначена y — решаем так же</span></div>
+    <div class="row"><span class="eq">y = 9 : <span class="fr"><span>2</span><span>3</span></span></span><span class="why">b делим на a</span></div>
+    <div class="row"><span class="eq">y = 9 · <span class="fr"><span>3</span><span>2</span></span></span><span class="why">делить на <sup>2</sup>/<sub>3</sub> = умножить на перевёрнутую <sup>3</sup>/<sub>2</sub></span></div>
+    <div class="row"><span class="eq"><u>y = 13,5</u></span><span class="why">9·3 = 27, 27 : 2 = 13,5</span></div>
+    <div class="row"><span class="eq">Ответ: y = 13,5</span><span class="why"></span></div>
+  </div>
+</section>
+
+<!-- ============ 4 ============ -->
+<section class="card" id="s4">
+  <span class="tag">Шаг 4</span>
+  <h2>Если есть «лишнее» число — № 147</h2>
+  <p>В <span class="m">5<i>x</i> − 150 = 0</span> мешает число <span class="c-red"><b>−150</b></span> рядом с иксом. Сначала <b>переносим его вправо, меняя знак</b> (это вы проходили в п. 7). Получается простое уравнение, как в № 145.</p>
+  <div class="tetrad sol-t"><span class="tl">запись в тетради · № 147 а)</span>
+    <div class="row"><span class="eq">а) 5x − 150 = 0</span><span class="why">мешает −150</span></div>
+    <div class="row"><span class="eq">5x = 0 + 150</span><span class="why">перенесли −150 вправо — знак поменялся на +</span></div>
+    <div class="row"><span class="eq">5x = 150</span><span class="why">0 + 150 = 150. Теперь уравнение простое: ax = b</span></div>
+    <div class="row"><span class="eq">x = 150 : 5</span><span class="why">b делим на a</span></div>
+    <div class="row"><span class="eq"><u>x = 30</u></span><span class="why"></span></div>
+    <div class="row"><span class="eq">Ответ: x = 30</span><span class="why">проверка: 5·30 − 150 = 0 ✓</span></div>
+  </div>
+  <div class="tetrad sol-t"><span class="tl">запись в тетради · № 147 г)</span>
+    <div class="row"><span class="eq">г) 12x − 1 = 35</span><span class="why">мешает −1</span></div>
+    <div class="row"><span class="eq">12x = 35 + 1</span><span class="why">перенесли −1 вправо — стало +1</span></div>
+    <div class="row"><span class="eq">12x = 36</span><span class="why">35 + 1 = 36</span></div>
+    <div class="row"><span class="eq">x = 36 : 12</span><span class="why">b делим на a</span></div>
+    <div class="row"><span class="eq"><u>x = 3</u></span><span class="why"></span></div>
+    <div class="row"><span class="eq">Ответ: x = 3</span><span class="why">проверка: 12·3 − 1 = 35 ✓</span></div>
+  </div>
+
+  <h3>№ 147 ж) <span class="sub">— когда x справа</span></h3>
+  <p class="src">7 = 6 − 0,2x. Здесь икс справа. Удобнее всего сначала <b>поменять части местами</b> — равенство от этого не меняется.</p>
+  <div class="lab">
+    <b>Нажимай «Дальше».</b>
+    <div class="solve" id="solveZh"></div>
+    <div class="say" id="sayZh"></div>
+    <div class="ctl"><button class="btn ghost" id="zBack">← Назад</button><button class="btn" id="zNext">Дальше →</button></div>
+  </div>
+</section>
+
+<!-- ============ 5 ============ -->
+<section class="card" id="s5">
+  <span class="tag">Шаг 5</span>
+  <h2>Иксы с двух сторон — № 148 а)</h2>
+  <p>Тут иксы и слева, и справа. План тот же, что в п. 7: <b>иксы — влево, числа — вправо</b>, потом делим.</p>
+  <div class="tetrad sol-t"><span class="tl">запись в тетради · № 148 а)</span>
+    <div class="row"><span class="eq">а) 2x + 9 = 13 − x</span><span class="why">мешают −x справа и +9 слева</span></div>
+    <div class="row"><span class="eq">2x + x = 13 − 9</span><span class="why">−x ушёл влево и стал +x; +9 ушло вправо и стало −9</span></div>
+    <div class="row"><span class="eq">3x = 4</span><span class="why">2x + x = 3x; 13 − 9 = 4</span></div>
+    <div class="row"><span class="eq">x =</span><span class="why">в классе здесь остановились — доделаем ниже</span></div>
+  </div>
+  <div class="tetrad sol-t"><span class="tl">доделываем</span>
+    <div class="row"><span class="eq">x = <span class="fr"><span>4</span><span>3</span></span></span><span class="why">b делим на a: 4 : 3. Нацело не делится — пишем дробью</span></div>
+    <div class="row"><span class="eq">x = 1<span class="fr"><span>1</span><span>3</span></span></span><span class="why">в 4 тройка помещается 1 раз, остаётся 1</span></div>
+    <div class="row"><span class="eq">Ответ: x = 1<span class="fr"><span>1</span><span>3</span></span></span><span class="why"></span></div>
+  </div>
+</section>
+
+<!-- ============ 6 ============ -->
+<section class="card" id="s6">
+  <span class="tag">Шаг 6</span>
+  <h2>Сколько корней у линейного уравнения</h2>
+  <p>Почти всегда — <b>один</b>. Но если перед иксом окажется <b>0</b>, разделить нельзя (на ноль не делят). Тогда два особых случая:</p>
+  <div class="kinds3">
+    <div><b class="h">a ≠ 0 — один корень</b><span class="m">5<i>x</i> = −60</span><br><span class="m"><i>x</i> = −12</span></div>
+    <div><b class="h">0·x = 7 — нет корней</b>Любое число, умноженное на 0, даёт 0, а не 7. Ни один <i class="m">x</i> не подходит.</div>
+    <div><b class="h">0·x = 0 — любое число</b>Любое число, умноженное на 0, даёт 0. Подходит каждый <i class="m">x</i>.</div>
+  </div>
+  <details class="more"><summary>Пример из учебника: как получается 0·x</summary>
+    <div class="tetrad sol-t">
+      <div class="row"><span class="eq">2x + 5 = 2(x + 6)</span><span class="why">исходное уравнение</span></div>
+      <div class="row"><span class="eq">2x + 5 = 2x + 12</span><span class="why">раскрыли скобки: 2·x + 2·6</span></div>
+      <div class="row"><span class="eq">2x − 2x = 12 − 5</span><span class="why">иксы — влево, числа — вправо</span></div>
+      <div class="row"><span class="eq">0x = 7</span><span class="why">иксы сократились до нуля — значит, корней нет</span></div>
+    </div>
+  </details>
+</section>
+
+<!-- ============ 7 ============ -->
+<section class="card" id="s7">
+  <span class="tag">Сама</span>
+  <h2>Тренировка</h2>
+  <p>Решай на листе, как в тетради, потом впиши ответ.</p>
+
+  <h3>Задание 1 <span class="sub">(как № 145)</span></h3>
+  <div class="task">Найдите корень уравнения <span class="m">4<i>x</i> = −28</span>.</div>
+  <div class="board" data-board="t1" data-height="240"></div>
+  <div class="check" data-answer="-7" data-hint="x = −28 : 4. Минус на плюс — минус.">
+    <label for="a1">x =</label><input id="a1" inputmode="decimal" autocomplete="off"><button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
+  </div>
+  <button class="btn ghost show-sol" data-for="sol1">Показать решение</button>
+  <div class="hidden-sol" id="sol1"><div class="tetrad sol-t">
+    <div class="row"><span class="eq">4x = −28</span><span class="why">a = 4, b = −28</span></div>
+    <div class="row"><span class="eq">x = <span class="fr"><span>−28</span><span>4</span></span></span><span class="why">b делим на a</span></div>
+    <div class="row"><span class="eq">x = −7</span><span class="why">28 : 4 = 7, знак минус</span></div>
+    <div class="row"><span class="eq">Ответ: x = −7</span><span class="why">проверка: 4·(−7) = −28 ✓</span></div>
+  </div></div>
+
+  <h3>Задание 2 <span class="sub">(как № 146)</span></h3>
+  <div class="task">Решите уравнение <span class="m"><span class="fr"><span>1</span><span>4</span></span><i>x</i> = 5</span>.</div>
+  <div class="board" data-board="t2" data-height="240"></div>
+  <div class="check" data-answer="20" data-hint="Делить на 1/4 — значит умножить на 4.">
+    <label for="a2">x =</label><input id="a2" inputmode="decimal" autocomplete="off"><button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
+  </div>
+  <button class="btn ghost show-sol" data-for="sol2">Показать решение</button>
+  <div class="hidden-sol" id="sol2"><div class="tetrad sol-t">
+    <div class="row"><span class="eq"><span class="fr"><span>1</span><span>4</span></span>x = 5</span><span class="why">a = <sup>1</sup>/<sub>4</sub>, b = 5</span></div>
+    <div class="row"><span class="eq">x = 5 : <span class="fr"><span>1</span><span>4</span></span></span><span class="why">b делим на a</span></div>
+    <div class="row"><span class="eq">x = 5 · 4</span><span class="why">делить на <sup>1</sup>/<sub>4</sub> = умножить на перевёрнутую, то есть на 4</span></div>
+    <div class="row"><span class="eq">Ответ: x = 20</span><span class="why">проверка: четверть от 20 — это 5 ✓</span></div>
+  </div></div>
+
+  <h3>Задание 3 <span class="sub">(как № 147 г)</span></h3>
+  <div class="task">Найдите корень уравнения <span class="m">8<i>x</i> + 5 = 29</span>.</div>
+  <div class="board" data-board="t3" data-height="280"></div>
+  <div class="check" data-answer="3" data-hint="Перенеси +5 вправо, оно станет −5: 8x = 29 − 5.">
+    <label for="a3">x =</label><input id="a3" inputmode="decimal" autocomplete="off"><button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
+  </div>
+  <button class="btn ghost show-sol" data-for="sol3">Показать решение</button>
+  <div class="hidden-sol" id="sol3"><div class="tetrad sol-t">
+    <div class="row"><span class="eq">8x + 5 = 29</span><span class="why">мешает +5</span></div>
+    <div class="row"><span class="eq">8x = 29 − 5</span><span class="why">перенесли +5 вправо — стало −5</span></div>
+    <div class="row"><span class="eq">8x = 24</span><span class="why">29 − 5 = 24</span></div>
+    <div class="row"><span class="eq">x = 24 : 8</span><span class="why">b делим на a</span></div>
+    <div class="row"><span class="eq">Ответ: x = 3</span><span class="why">проверка: 8·3 + 5 = 29 ✓</span></div>
+  </div></div>
+
+  <h3>Задание 4 <span class="sub">(как № 148 а)</span></h3>
+  <div class="task">Решите уравнение <span class="m">5<i>x</i> − 4 = 2<i>x</i> + 11</span>.</div>
+  <div class="board" data-board="t4" data-height="300"></div>
+  <div class="check" data-answer="5" data-hint="Иксы — влево, числа — вправо: 5x − 2x = 11 + 4.">
+    <label for="a4">x =</label><input id="a4" inputmode="decimal" autocomplete="off"><button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
+  </div>
+  <button class="btn ghost show-sol" data-for="sol4">Показать решение</button>
+  <div class="hidden-sol" id="sol4"><div class="tetrad sol-t">
+    <div class="row"><span class="eq">5x − 4 = 2x + 11</span><span class="why">мешают 2x справа и −4 слева</span></div>
+    <div class="row"><span class="eq">5x − 2x = 11 + 4</span><span class="why">2x ушло влево и стало −2x; −4 ушло вправо и стало +4</span></div>
+    <div class="row"><span class="eq">3x = 15</span><span class="why">5x − 2x = 3x; 11 + 4 = 15</span></div>
+    <div class="row"><span class="eq">x = 15 : 3</span><span class="why">b делим на a</span></div>
+    <div class="row"><span class="eq">Ответ: x = 5</span><span class="why">проверка: 5·5 − 4 = 21 и 2·5 + 11 = 21 ✓</span></div>
+  </div></div>
+</section>
+
+<footer>Алгебра, 7 класс · § 3 · п. 8 «Линейное уравнение с одной переменной»</footer>
+</div>
+
+<script>
+/* ---------- коробки ---------- */
+(function(){
+  var svg=document.getElementById('boxes'), NS='http://www.w3.org/2000/svg';
+  function E(t,a,txt){ var e=document.createElementNS(NS,t); for(var k in a) e.setAttribute(k,a[k]); if(txt!=null) e.textContent=txt; svg.appendChild(e); return e; }
+  for(var i=0;i<5;i++){ E('rect',{x:24+i*74,y:44,width:62,height:62,rx:8,fill:'#e3ecf8',stroke:'#1d4f91','stroke-width':2.5}); E('text',{x:55+i*74,y:84,'text-anchor':'middle','font-family':'PT Serif','font-style':'italic','font-size':24,fill:'#1d4f91'},'x'); }
+  E('text',{x:410,y:84,'font-family':'PT Serif','font-size':26,fill:'#15202e'},'= 60 кг');
+  E('text',{x:24,y:30,'font-family':'PT Sans','font-size':15,fill:'#566273'},'5 одинаковых коробок:  5x = 60');
+  E('text',{x:24,y:136,'font-family':'PT Sans','font-size':16,'font-weight':700,fill:'#1f6b4f'},'одна коробка: x = 60 : 5 = 12 кг');
+})();
+
+/* ---------- № 147 ж по шагам ---------- */
+(function(){
+  var box=document.getElementById('solveZh'), say=document.getElementById('sayZh'), cur=0;
+  var L=[
+    '7 = 6 − 0,2<i>x</i>',
+    '6 − 0,2<i>x</i> = 7',
+    '−0,2<i>x</i> = 7 − 6',
+    '−0,2<i>x</i> = 1',
+    '<i>x</i> = 1 : (−0,2)',
+    '<span class="bl"><i>x</i> = −5</span>'
+  ];
+  var T=[
+    'Икс справа. Удобнее, когда он слева.',
+    '<b>Поменяли части местами.</b> «7 = 6 − 0,2x» и «6 − 0,2x = 7» — одно и то же равенство.',
+    '<b>Перенесли 6 вправо</b> — знак поменялся: было +6, стало −6.',
+    '<b>Посчитали:</b> 7 − 6 = 1. Теперь уравнение простое: ax = b, где a = −0,2, b = 1.',
+    '<b>b делим на a.</b>',
+    '<b>1 : 0,2 = 5</b> (в одной целой пять раз по 0,2), а плюс на минус даёт минус. Проверка: 6 − 0,2·(−5) = 6 + 1 = 7 ✓'
+  ];
+  function show(){
+    box.innerHTML=L.map(function(l,i){ return '<div class="ln'+(i===cur?' cur':i<cur?' past':'')+'">'+(i<=cur?l:'&nbsp;')+'</div>'; }).join('');
+    say.innerHTML='<b>Шаг '+(cur+1)+' из '+L.length+'.</b> '+T[cur];
+    document.getElementById('zBack').disabled=cur===0; document.getElementById('zNext').disabled=cur===L.length-1;
+  }
+  document.getElementById('zNext').addEventListener('click',function(){ if(cur<L.length-1){cur++;show();} });
+  document.getElementById('zBack').addEventListener('click',function(){ if(cur>0){cur--;show();} });
+  show();
+})();
+/* ---------- да / нет ---------- */
+document.querySelectorAll('.yn').forEach(function(box){
+  var fb=box.querySelector('.fb');
+  box.querySelectorAll('button').forEach(function(b){ b.addEventListener('click',function(){
+    box.querySelectorAll('button').forEach(function(x){ x.classList.remove('on-ok','on-no'); });
+    var ok=b.dataset.v===box.dataset.ok; b.classList.add(ok?'on-ok':'on-no');
+    fb.className='fb '+(ok?'ok':'no'); fb.textContent= ok ? 'Верно! 🎉' : 'Проверь ещё раз: подставь число и посчитай обе части.';
+  }); });
+});
+/* ---------- проверка числа ---------- */
+function norm(v){ return parseFloat(String(v).replace(/\\s/g,'').replace(',','.').replace('−','-')); }
+document.querySelectorAll('.check').forEach(function(box){
+  var inp=box.querySelector('input'), btn=box.querySelector('button'), fb=box.querySelector('.fb'), tries=0;
+  function go(){
+    var v=norm(inp.value);
+    if(isNaN(v)){ fb.className='fb no'; fb.textContent='Впиши число'; return; }
+    if(Math.abs(v-norm(box.dataset.answer))<1e-9){ fb.className='fb ok'; fb.textContent='Верно! 🎉'; inp.style.borderColor='#1f6b4f'; }
+    else { tries++; fb.className='fb no'; inp.style.borderColor='#b0182f'; fb.textContent = tries<2 ? 'Пока нет. Сделай проверку: подставь ответ в уравнение.' : 'Подсказка. '+box.dataset.hint; }
+  }
+  btn.addEventListener('click',go); inp.addEventListener('keydown',function(e){ if(e.key==='Enter') go(); });
+});
+document.querySelectorAll('.show-sol').forEach(function(b){
+  b.addEventListener('click',function(){ var el=document.getElementById(b.dataset.for), on=el.classList.toggle('show'); b.textContent = on ? 'Скрыть решение' : 'Показать решение'; });
+});
+
+/* ---------- доска для письма стилусом ---------- */
+var penSeen=false;
+var ICON={
+  eraser:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20h12"/><path d="M5 15l9-9 5 5-8 8H8z"/></svg>',
+  undo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 010 12h-3"/></svg>',
+  clear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>',
+  more:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>'
+};
+function Board(root){
+  var id=root.dataset.board, key='alg8-board-'+id, self=this;
+  this.h=+root.dataset.height||420; this.strokes=[]; this.tool='pen'; this.color='#1d3f8f';
+  root.innerHTML=
+    '<div class="toolbar">'+
+      '<button class="tool" data-t="pen" data-c="#1d3f8f" aria-pressed="true"><span class="dot" style="background:#1d3f8f"></span>Синяя</button>'+
+      '<button class="tool" data-t="pen" data-c="#c21a33" aria-pressed="false"><span class="dot" style="background:#c21a33"></span>Красная</button>'+
+      '<button class="tool" data-t="eraser" aria-pressed="false">'+ICON.eraser+'Ластик</button>'+
+      '<button class="tool" data-act="undo">'+ICON.undo+'Назад</button>'+
+      '<span class="spacer"></span><span class="pen-state"></span>'+
+      '<button class="tool" data-act="more">'+ICON.more+'Место</button>'+
+      '<button class="tool" data-act="clear">'+ICON.clear+'Стереть всё</button>'+
+    '</div><div class="canvas-box"><canvas></canvas></div>'+
+    '<div class="grip" title="Потяни вниз, чтобы удлинить лист"><span></span>потяни вниз, чтобы удлинить лист<span></span></div>';
+  var cv=root.querySelector('canvas'), ctx=cv.getContext('2d'), state=root.querySelector('.pen-state');
+  try{ var saved=JSON.parse(localStorage.getItem(key)||'null'); if(saved){ this.strokes=saved.s||[]; if(saved.h) this.h=Math.max(240,saved.h); } }catch(e){}
+  function save(){ try{ localStorage.setItem(key,JSON.stringify({s:self.strokes,h:self.h})); }catch(e){} }
+  function showState(){ state.textContent = penSeen ? 'Стилус подключён: ладонь не рисует' : ''; }
+  showState(); document.addEventListener('pen-seen',showState);
+
+  function size(){
+    var w=cv.parentElement.clientWidth, d=window.devicePixelRatio||1;
+    cv.width=Math.round(w*d); cv.height=Math.round(self.h*d); cv.style.height=self.h+'px';
+    ctx.setTransform(d,0,0,d,0,0); redraw();
+  }
+  function seg(st,i){
+    var a=st.p[i-1], b=st.p[i];
+    ctx.strokeStyle=st.c; ctx.lineWidth=(a[2]+b[2])/2;
+    ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.stroke();
+  }
+  function dot(st){ var a=st.p[0]; ctx.fillStyle=st.c; ctx.beginPath(); ctx.arc(a[0],a[1],a[2]/2,0,Math.PI*2); ctx.fill(); }
+  function redraw(){
+    ctx.clearRect(0,0,cv.width,cv.height); ctx.lineCap='round'; ctx.lineJoin='round';
+    self.strokes.forEach(function(st){ if(st.p.length===1) dot(st); for(var i=1;i<st.p.length;i++) seg(st,i); });
+  }
+  function pt(e){
+    var r=cv.getBoundingClientRect(), pr=e.pointerType==='pen' ? (e.pressure||0.5) : 0.5;
+    var w = e.pointerType==='pen' ? 1.2+pr*3.2 : 2.6;
+    return [Math.round((e.clientX-r.left)*10)/10, Math.round((e.clientY-r.top)*10)/10, Math.round(w*10)/10];
+  }
+  function eraseAt(p){
+    var R=14, n=self.strokes.length;
+    self.strokes=self.strokes.filter(function(st){
+      return !st.p.some(function(q){ var dx=q[0]-p[0], dy=q[1]-p[1]; return dx*dx+dy*dy<R*R; });
+    });
+    if(self.strokes.length!==n) redraw();
+  }
+  var active=null, cur=null;
+  cv.addEventListener('pointerdown',function(e){
+    if(e.pointerType==='pen' && !penSeen){ penSeen=true; document.dispatchEvent(new Event('pen-seen')); }
+    if(e.pointerType==='touch' && penSeen) return;
+    if(active!==null) return;
+    e.preventDefault(); try{ cv.setPointerCapture(e.pointerId); }catch(err){} active=e.pointerId;
+    var eraser = self.tool==='eraser' || e.button===5;
+    if(eraser){ cur=null; eraseAt(pt(e)); }
+    else { cur={c:self.color,p:[pt(e)]}; self.strokes.push(cur); ctx.lineCap='round'; dot(cur); }
+  });
+  cv.addEventListener('pointermove',function(e){
+    if(e.pointerId!==active) return;
+    e.preventDefault();
+    var list = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
+    if(!list.length) list=[e];
+    list.forEach(function(ev){
+      var p=pt(ev);
+      if(!cur){ eraseAt(p); return; }
+      var last=cur.p[cur.p.length-1];
+      if(Math.abs(last[0]-p[0])+Math.abs(last[1]-p[1])<0.8) return;
+      cur.p.push(p); seg(cur,cur.p.length-1);
+    });
+  });
+  function end(e){ if(e.pointerId!==active) return; active=null; cur=null; save(); }
+  cv.addEventListener('pointerup',end); cv.addEventListener('pointercancel',end);
+  cv.addEventListener('contextmenu',function(e){ e.preventDefault(); });
+
+  root.querySelectorAll('.tool').forEach(function(b){
+    b.addEventListener('click',function(){
+      if(b.dataset.t){
+        self.tool=b.dataset.t; if(b.dataset.c) self.color=b.dataset.c;
+        root.querySelectorAll('.tool[data-t]').forEach(function(x){ x.setAttribute('aria-pressed', x===b ? 'true':'false'); });
+        cv.style.cursor = self.tool==='eraser' ? 'cell' : 'crosshair';
+      } else if(b.dataset.act==='undo'){ self.strokes.pop(); redraw(); save(); }
+      else if(b.dataset.act==='clear'){ if(self.strokes.length && confirm('Стереть всё, что написано на этом листе?')){ self.strokes=[]; redraw(); save(); } }
+      else if(b.dataset.act==='more'){ self.h+=240; size(); save(); }
+    });
+  });
+  var grip=root.querySelector('.grip'), gy=null, gh=0;
+  grip.addEventListener('pointerdown',function(e){
+    e.preventDefault(); try{ grip.setPointerCapture(e.pointerId); }catch(err){}
+    gy=e.clientY; gh=self.h; grip.classList.add('drag');
+  });
+  grip.addEventListener('pointermove',function(e){
+    if(gy===null) return; e.preventDefault();
+    var nh=Math.max(240, Math.round(gh+e.clientY-gy));
+    if(nh!==self.h){ self.h=nh; size(); }
+  });
+  function gripEnd(){ if(gy===null) return; gy=null; grip.classList.remove('drag'); save(); }
+  grip.addEventListener('pointerup',gripEnd); grip.addEventListener('pointercancel',gripEnd);
+  var lastW=0;
+  window.addEventListener('resize',function(){ var w=cv.parentElement.clientWidth; if(w!==lastW){ lastW=w; size(); } });
+  lastW=cv.parentElement.clientWidth; size();
+}
+document.querySelectorAll('.board').forEach(function(b){ new Board(b); });
+
+</script>
+<script>
+try{var v=JSON.parse(localStorage.getItem('uroki-visited')||'{}');v['algebra/p8']=new Date().toISOString().slice(0,10);localStorage.setItem('uroki-visited',JSON.stringify(v));}catch(e){}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('../../sw.js',{scope:'../../'}).catch(function(){});}
+</script>
+</body>
+</html>
