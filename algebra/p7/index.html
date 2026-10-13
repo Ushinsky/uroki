@@ -89,6 +89,25 @@
   .yn{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
   .yn .btn.on-ok{background:var(--green);color:#fff} .yn .btn.on-no{background:var(--red);color:#fff}
   .sum{padding-left:22px} .sum li{margin:6px 0}
+  .short h2{font-size:24px}
+  .three{padding-left:24px;margin:0;font-size:19px} .three li{margin:6px 0}
+  .cap{text-align:center;color:var(--muted);font-size:15px;margin-top:-8px}
+  .big .c-red,.big .c-blue{font-weight:700}
+  .easy{padding-left:22px} .easy li{margin:8px 0}
+  details.more{background:#f3f6fa;border-radius:12px;padding:4px 16px;margin:12px 0}
+  details.more summary{cursor:pointer;font-weight:700;color:var(--blue);min-height:44px;display:flex;align-items:center}
+  details.more[open]{padding-bottom:10px}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+  .vs div{border-radius:12px;padding:12px 14px;font-size:17px}
+  .vs .ok{background:var(--green-soft);color:var(--green)} .vs .no{background:var(--red-soft);color:var(--red)}
+  @media (max-width:620px){.vs{grid-template-columns:1fr}}
+  .moves{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+  .moves > div{background:var(--blue-soft);border-radius:14px;padding:12px 16px;font-size:17px}
+  .moves b.h{display:block;color:var(--blue);font-size:18px;margin-bottom:2px}
+  @media (max-width:620px){.moves{grid-template-columns:1fr}}
+  .found{background:var(--green-soft);border-radius:14px;padding:14px 18px;margin:14px 0 0;animation:pop .35s ease-out}
+  .found p:last-child{margin:0}
+  @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   footer{text-align:center;color:var(--muted);font-size:14px;padding:6px 0 40px}
   /* доска */
   .board{margin:14px 0 10px;border-radius:14px;background:#fff;box-shadow:0 0 0 1px var(--line)}
@@ -129,45 +148,51 @@
 <body>
 <nav><div class="wrap">
   <a href="../../" style="color:#1d4f91">← Все уроки</a>
-  <a href="#s1">Что такое уравнение</a>
-  <a href="#s2">Корень</a>
-  <a href="#s3">Сколько корней</a>
-  <a href="#s4">Решить уравнение</a>
-  <a href="#s5">Равносильные</a>
-  <a href="#s6">№ 131 и № 134</a>
+  <a href="#s1">1. Уравнение</a>
+  <a href="#s2">2. Корень</a>
+  <a href="#s3">3. Проверка</a>
+  <a href="#s4">4. Решить</a>
+  <a href="#s5">5. Как решают</a>
+  <a href="#s6">6. № 131, № 134</a>
   <a href="#s7">Тренировка</a>
-  <a href="#s8">Запомни</a>
 </div></nav>
 
 <div class="wrap">
 <header>
   <p class="hi">Алиса, привет!</p>
-  <h1>п. 7. Уравнение и его корни</h1>
-  <p>§ 3 «Уравнения с одной переменной». Эту тему проходили 8 октября. Разберём всё по порядку. Где ты увидишь страницу в клетку, там то, что записано у вас в тетради, слово в слово.</p>
+  <h1>Уравнение и его корни</h1>
+  <p>Алгебра, п. 7. Урок 8 октября. Страницы в клетку — это то, что записано у вас в тетради.</p>
 </header>
+
+<section class="card short">
+  <h2>Весь урок в трёх фразах</h2>
+  <ol class="three">
+    <li><b>Уравнение</b> — это равенство с буквой <i class="m">x</i>, как загадка: какое число спрятано под <i class="m">x</i>?</li>
+    <li><b>Корень</b> — число, которое подходит: поставили его вместо <i class="m">x</i>, и слева получилось столько же, сколько справа.</li>
+    <li><b>Решить уравнение</b> — найти все такие числа.</li>
+  </ol>
+</section>
 
 <!-- ============ 1 ============ -->
 <section class="card" id="s1">
   <span class="tag">Шаг 1</span>
   <h2>Что такое уравнение</h2>
-  <p>Начнём с задачи из учебника.</p>
   <div class="task">На нижней полке в 4 раза больше книг, чем на верхней. Если с нижней полки переставить на верхнюю 15 книг, то книг на полках станет поровну. Сколько книг на верхней полке?</div>
-  <p>Мы не знаем, сколько книг наверху. Обозначим это число буквой <i class="m">x</i>.</p>
-  <ul>
-    <li>Наверху <i class="m">x</i> книг, а внизу в 4 раза больше, то есть <span class="m">4<i>x</i></span>.</li>
-    <li>Переставили 15 книг: внизу осталось <span class="m">4<i>x</i> − 15</span>, а наверху стало <span class="m"><i>x</i> + 15</span>.</li>
-    <li>Книг стало поровну, значит:</li>
-  </ul>
-  <p class="big"><span class="m">4<i>x</i> − 15 = <i>x</i> + 15</span></p>
-  <p>Вот это и есть <b>уравнение</b>: равенство, в котором есть буква-неизвестное (её называют <b>переменной</b>). Нам нужно найти такое число, которое можно поставить вместо <i class="m">x</i>, чтобы равенство стало верным.</p>
+  <p>Сколько книг наверху, мы не знаем. Назовём это число <i class="m">x</i>. Тогда после перестановки:</p>
+  <p class="big"><span class="c-red">4<i>x</i> − 15</span> = <span class="c-blue"><i>x</i> + 15</span></p>
+  <p class="cap"><span class="c-red">внизу</span> &nbsp;&nbsp;&nbsp; = &nbsp;&nbsp;&nbsp; <span class="c-blue">наверху</span></p>
+  <p>Это и есть <b>уравнение</b>. Найдём, какое число подходит вместо <i class="m">x</i>.</p>
 
   <div class="lab">
-    <b>Попробуй подобрать сама.</b> Двигай ползунок: сколько книг было наверху?
+    <b>Двигай ползунок</b>, пока полки не сравняются.
     <svg id="shelf" viewBox="0 0 640 230" role="img" aria-label="Две полки с книгами"></svg>
     <div class="rng"><span>x =</span><input type="range" id="xS" min="1" max="15" value="4" aria-label="Число книг наверху"><b id="xV" class="m">4</b></div>
     <div class="say" id="xSay"></div>
   </div>
-  <p>Число 10 подошло: при <span class="m"><i>x</i> = 10</span> обе части уравнения равны 25. Такое число называют <b>корнем уравнения</b>. Ответ задачи: на верхней полке было 10 книг.</p>
+  <div class="found" id="found" hidden>
+    <p><b>Число 10 подошло:</b> при <span class="m"><i>x</i> = 10</span> обе части уравнения равны 25. Такое число называют <b>корнем уравнения</b>.</p>
+    <p>Ответ задачи: на верхней полке было 10 книг.</p>
+  </div>
 </section>
 
 <!-- ============ 2 ============ -->
@@ -175,56 +200,35 @@
   <span class="tag">Шаг 2</span>
   <h2>Корень уравнения</h2>
   <div class="tetrad"><span class="tl">запись в тетради</span>Корень уравнения — значение переменной, при котором уравнение обращается в верное числовое равенство.</div>
-  <p>Проще говоря: <b>корень — это число, которое «подходит».</b> Поставили его вместо <i class="m">x</i>, посчитали левую и правую части — и получилось одно и то же.</p>
-
-  <h3>Как проверить, корень ли это</h3>
-  <ol class="steps">
-    <li>Пишем, какое число проверяем, например <span class="m"><i>x</i> = 3</span>.</li>
-    <li>Переписываем уравнение, а вместо каждого <i class="m">x</i> ставим это число.</li>
-    <li>Считаем левую часть и правую часть.</li>
-    <li>Сравниваем. Получилось одинаково — число является корнем. Разные — не является.</li>
-  </ol>
-
-  <h3>Как это делали в классе: № 130</h3>
-  <p class="src">Является ли число 3 корнем уравнения?</p>
+  <p>То есть <b>корень — это число, которое подходит</b>, как 10 в задаче про полки.</p>
+  <p>Корней бывает и два. Посмотри, что записали в классе:</p>
   <div class="two">
-    <div class="tetrad"><span class="tl">а)</span><span class="eq">5(2x − 1) = 8x + 1</span><span class="eq">x = 3</span><span class="eq">5·(2·3 − 1) = 8·3 + 1</span><span class="eq">25 = 24 + 1</span><span class="eq">25 = 25</span></div>
-    <div class="tetrad"><span class="tl">б)</span><span class="eq">(x − 4)(x + 4) = 7</span><span class="eq">x = 3</span><span class="eq">(3 − 4)(3 + 4) = 7</span><span class="eq">−1·7 = 7</span><span class="eq">−7 ≠ 7</span><span class="eq">x = 3 не является корнем</span></div>
+    <div class="tetrad"><span class="tl">запись в тетради</span><span class="eq">x² = 4</span><span class="eq">x = 2</span><span class="eq">x = −2</span></div>
+    <div class="tetrad"><span class="tl">запись в тетради</span><span class="eq">(x − 2)(x + 2) = 0</span><span class="eq">x − 2 = 0 &nbsp;&nbsp;&nbsp; x + 2 = 0</span><span class="eq">x = 2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x = −2</span></div>
   </div>
-  <ul>
-    <li>В а) слева получилось 25 и справа 25 — <b>равенство верное</b>, значит, 3 — корень.</li>
-    <li>В б) слева −7, справа 7 — <b>не равно</b>. Значит, 3 не корень. Знак <span class="m">≠</span> читается «не равно».</li>
+  <ul class="easy">
+    <li><span class="m"><i>x</i>² = 4</span>: подходит 2, потому что <span class="m">2·2 = 4</span>. И −2 тоже: <span class="m">(−2)·(−2) = 4</span>.</li>
+    <li><span class="m">(<i>x</i> − 2)(<i>x</i> + 2) = 0</span>: произведение равно нулю, только если одна из скобок равна нулю. Поэтому каждую скобку приравниваем к нулю.</li>
   </ul>
-  <div class="trap"><b class="t">Не забудь про знаки.</b> В б) <span class="m">3 − 4 = −1</span>, а минус на плюс даёт минус: <span class="m">−1·7 = −7</span>. Если потерять минус, получится «7 = 7», и ответ будет неверный.</div>
+  <details class="more"><summary>А ещё бывает…</summary>
+    <p>Три корня: у <span class="m">(<i>x</i> − 4)(<i>x</i> − 5)(<i>x</i> − 6) = 0</span> корни 4, 5 и 6 — каждая скобка даёт свой.</p>
+    <p>Ни одного: у <span class="m"><i>x</i> + 2 = <i>x</i></span> слева всегда на 2 больше, чем справа, ни одно число не подходит.</p>
+  </details>
 </section>
 
 <!-- ============ 3 ============ -->
 <section class="card" id="s3">
   <span class="tag">Шаг 3</span>
-  <h2>Сколько корней бывает у уравнения</h2>
-  <p>У уравнения про книги корень был один — число 10. Но бывает по-разному.</p>
-  <div class="kinds">
-    <div><b class="h">Один корень</b><span class="m">4<i>x</i> − 15 = <i>x</i> + 15</span><br>корень 10</div>
-    <div><b class="h">Два корня</b><span class="m"><i>x</i>² = 4</span><br>корни 2 и −2</div>
-    <div><b class="h">Три корня</b><span class="m">(<i>x</i> − 4)(<i>x</i> − 5)(<i>x</i> − 6) = 0</span><br>корни 4, 5 и 6</div>
-    <div><b class="h">Нет корней</b><span class="m"><i>x</i> + 2 = <i>x</i></span><br>ни одно число не подходит</div>
+  <h2>Как проверить, корень ли число</h2>
+  <p>Ставим число вместо <i class="m">x</i>, считаем левую и правую части и сравниваем. Так делали в классе, № 130: является ли 3 корнем?</p>
+  <div class="two">
+    <div class="tetrad"><span class="tl">а)</span><span class="eq">5(2x − 1) = 8x + 1</span><span class="eq">x = 3</span><span class="eq">5·(2·3 − 1) = 8·3 + 1</span><span class="eq">25 = 24 + 1</span><span class="eq">25 = 25</span></div>
+    <div class="tetrad"><span class="tl">б)</span><span class="eq">(x − 4)(x + 4) = 7</span><span class="eq">x = 3</span><span class="eq">(3 − 4)(3 + 4) = 7</span><span class="eq">−1·7 = 7</span><span class="eq">−7 ≠ 7</span><span class="eq">x = 3 не является корнем</span></div>
   </div>
-
-  <h3>Почему у <span class="m"><i>x</i>² = 4</span> два корня</h3>
-  <div class="tetrad"><span class="tl">запись в тетради</span><span class="eq">x² = 4</span><span class="eq">x = 2</span><span class="eq">x = −2</span></div>
-  <p><span class="m"><i>x</i>²</span> — это <span class="m"><i>x</i>·<i>x</i></span>. Подходит 2, потому что <span class="m">2·2 = 4</span>. Но подходит и −2: <span class="m">(−2)·(−2) = 4</span>, ведь минус на минус даёт плюс.</p>
-
-  <h3>Почему у <span class="m">(<i>x</i> − 2)(<i>x</i> + 2) = 0</span> тоже 2 и −2</h3>
-  <div class="tetrad"><span class="tl">запись в тетради</span><span class="eq">(x − 2)(x + 2) = 0</span><span class="eq">x − 2 = 0 &nbsp;&nbsp;&nbsp;&nbsp; x + 2 = 0</span><span class="eq">x = 2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x = −2</span></div>
-  <p>Тут работает простое правило: <b>произведение равно нулю, только если хотя бы один множитель равен нулю.</b> Поэтому по очереди приравниваем к нулю каждую скобку:</p>
-  <ul>
-    <li><span class="m"><i>x</i> − 2 = 0</span>, значит <span class="m"><i>x</i> = 2</span>;</li>
-    <li><span class="m"><i>x</i> + 2 = 0</span>, значит <span class="m"><i>x</i> = −2</span>.</li>
-  </ul>
-  <p>Так же и с тремя скобками <span class="m">(<i>x</i> − 4)(<i>x</i> − 5)(<i>x</i> − 6) = 0</span>: каждая скобка даёт свой корень — 4, 5 и 6.</p>
-
-  <h3>Почему у <span class="m"><i>x</i> + 2 = <i>x</i></span> корней нет</h3>
-  <p>Какое бы число ни взять, слева всегда на 2 больше, чем справа. Например, при <span class="m"><i>x</i> = 5</span>: слева 7, справа 5. Равенство никогда не станет верным.</p>
+  <div class="vs">
+    <div class="ok">а) 25 = 25 — одинаково, <b>3 — корень</b> ✓</div>
+    <div class="no">б) −7 ≠ 7 — разное, <b>3 — не корень</b> ✗</div>
+  </div>
 </section>
 
 <!-- ============ 4 ============ -->
@@ -232,23 +236,21 @@
   <span class="tag">Шаг 4</span>
   <h2>Что значит «решить уравнение»</h2>
   <div class="tetrad"><span class="tl">запись в тетради</span>Решить уравнение — значит найти все его корни или доказать, что корней нет.</div>
-  <p>Обрати внимание на слово <b>все</b>. Если у <span class="m"><i>x</i>² = 4</span> назвать только 2 и забыть про −2, уравнение решено не до конца.</p>
+  <p>Главное слово — <b>все</b>. У <span class="m"><i>x</i>² = 4</span> мало назвать 2, нужно ещё −2.</p>
 </section>
 
 <!-- ============ 5 ============ -->
 <section class="card" id="s5">
   <span class="tag">Шаг 5</span>
-  <h2>Равносильные уравнения</h2>
+  <h2>Как решают уравнение</h2>
   <div class="tetrad"><span class="tl">запись в тетради</span>Равносильные уравнения — имеющие одни и те же корни.</div>
-  <p>Пример: <span class="m"><i>x</i>² = 4</span> и <span class="m">(<i>x</i> − 2)(<i>x</i> + 2) = 0</span> равносильны: у обоих корни 2 и −2. Уравнения, у которых корней нет вообще, тоже считают равносильными.</p>
-  <p>Зачем это нужно? Когда мы решаем уравнение, мы шаг за шагом заменяем его <b>более простым, но равносильным</b> — корни при этом не меняются. В конце остаётся совсем простое: <span class="m"><i>x</i> = число</span>. Для этого есть два правила.</p>
-
-  <div class="rule"><b class="t">Правило 1. Перенос.</b> Слагаемое можно перенести из одной части уравнения в другую, <b>поменяв его знак</b> на противоположный.</div>
-  <div class="rule"><b class="t">Правило 2. Умножение и деление.</b> Обе части уравнения можно умножить или разделить на одно и то же число, <b>не равное нулю</b>.</div>
-
-  <h3>Решаем как в классе</h3>
+  <p>Решая уравнение, мы шаг за шагом делаем его проще, а корни не меняются. Для этого есть два приёма:</p>
+  <div class="moves">
+    <div><b class="h">① Перенос</b>Число или <i class="m">x</i> можно перенести через знак «=», <b>поменяв знак</b>: плюс на минус, минус на плюс.</div>
+    <div><b class="h">② Умножить или разделить</b>Обе части можно умножить или разделить на одно и то же число (только не на ноль).</div>
+  </div>
   <div class="lab">
-    <b>Нажимай «Дальше»</b> и смотри, что происходит на каждом шаге.
+    <b>Решаем как в классе.</b> Нажимай «Дальше».
     <div class="solve" id="solve"></div>
     <div class="say" id="solveSay"></div>
     <div class="ctl"><button class="btn ghost" id="sBack">← Назад</button><button class="btn" id="sNext">Дальше →</button></div>
@@ -257,51 +259,46 @@
     <div class="tetrad"><span class="tl">запись в тетради</span><span class="eq">3x + 6 = 7x − 6</span><span class="eq">3x − 7x = −6 − 6</span><span class="eq">−4x = −12 &nbsp;|:(−4)</span><span class="eq"><u>x = 3</u></span></div>
     <div class="tetrad"><span class="tl">запись в тетради</span><span class="eq">0,2x = 3 &nbsp;|·5</span><span class="eq">x = 15</span></div>
   </div>
-  <p><b>Что значат значки справа.</b> Черта и <span class="m">·5</span> — это пометка «умножаем обе части на 5». Черта и деление на <span class="m">(−4)</span> — «делим обе части на −4». Так учитель показывает, какое правило применили.</p>
-  <p><b>Почему умножили именно на 5?</b> Потому что <span class="m">0,2·5 = 1</span>: слева остаётся просто <i class="m">x</i>, а справа <span class="m">3·5 = 15</span>.</p>
-  <p><b>Проверим первый пример.</b> При <span class="m"><i>x</i> = 3</span> слева <span class="m">3·3 + 6 = 15</span>, справа <span class="m">7·3 − 6 = 15</span>. Верно, 3 — корень.</p>
+  <p class="cap">Пометка справа показывает, что сделали с обеими частями: «|·5» — умножили на 5, «|:(−4)» — разделили на −4.</p>
 </section>
 
 <!-- ============ 6 ============ -->
 <section class="card" id="s6">
   <span class="tag">Шаг 6</span>
-  <h2>Доделаем № 131 и проверим домашку № 134</h2>
-
-  <h3>№ 131 а) — в классе не успели</h3>
+  <h2>№ 131 и домашка № 134</h2>
+  <h3>№ 131 а) — в классе начали</h3>
   <p class="src">Какие из чисел −2, −1, 0, 2, 3 являются корнями уравнения <span class="m"><i>x</i>² = 10 − 3<i>x</i></span>?</p>
-  <p>Проверяем каждое число по очереди: считаем левую часть <span class="m"><i>x</i>²</span> и правую <span class="m">10 − 3<i>x</i></span>.</p>
+  <p>Проверяем каждое число, как в № 130:</p>
   <table class="chk">
-    <tr><th><i class="m">x</i></th><th>слева <span class="m"><i>x</i>²</span></th><th>справа <span class="m">10 − 3<i>x</i></span></th><th>корень?</th></tr>
-    <tr><td class="m">−2</td><td class="m">4</td><td class="m">10 + 6 = 16</td><td class="no">нет</td></tr>
-    <tr><td class="m">−1</td><td class="m">1</td><td class="m">10 + 3 = 13</td><td class="no">нет</td></tr>
-    <tr><td class="m">0</td><td class="m">0</td><td class="m">10</td><td class="no">нет</td></tr>
-    <tr><td class="m">2</td><td class="m">4</td><td class="m">10 − 6 = 4</td><td class="yes">да ✓</td></tr>
-    <tr><td class="m">3</td><td class="m">9</td><td class="m">10 − 9 = 1</td><td class="no">нет</td></tr>
+    <tr><th><i class="m">x</i></th><th>слева <span class="m"><i>x</i>²</span></th><th>справа <span class="m">10 − 3<i>x</i></span></th><th></th></tr>
+    <tr><td class="m">−2</td><td class="m">4</td><td class="m">16</td><td class="no">не корень</td></tr>
+    <tr><td class="m">−1</td><td class="m">1</td><td class="m">13</td><td class="no">не корень</td></tr>
+    <tr><td class="m">0</td><td class="m">0</td><td class="m">10</td><td class="no">не корень</td></tr>
+    <tr><td class="m">2</td><td class="m">4</td><td class="m">4</td><td class="yes">корень ✓</td></tr>
+    <tr><td class="m">3</td><td class="m">9</td><td class="m">1</td><td class="no">не корень</td></tr>
   </table>
-  <p>Ответ: из этих чисел корнем является только <b>2</b>.</p>
-  <div class="trap"><b class="t">Осторожно с минусом.</b> При <span class="m"><i>x</i> = −2</span>: <span class="m">3·(−2) = −6</span>, а <span class="m">10 − (−6) = 10 + 6 = 16</span>. Минус перед минусом даёт плюс.</div>
+  <p>Ответ: <b>2</b>.</p>
 
   <h3>Домашняя работа № 134</h3>
   <p class="src">Докажите, что каждое из чисел 1,2 и −1,2 является корнем уравнения <span class="m"><i>x</i>² = 1,44</span>.</p>
   <div class="two">
     <div class="tetrad"><span class="eq">x² = 1,44</span><span class="eq">x = 1,2</span><span class="eq">1,2² = 1,44</span><span class="eq">1,44 = 1,44</span></div>
-    <div class="tetrad"><span class="eq">x² = 1,44</span><span class="eq">x = −1,2</span><span class="eq">(−1,2)² = 1,44</span><span class="eq">1,44 = 1,44</span></div>
+    <div class="tetrad"><span class="eq">x² = 1,44</span><span class="eq">x = −1,2</span><span class="eq">−1,2² = 1,44</span><span class="eq">1,44 = 1,44</span></div>
   </div>
-  <div class="trap"><b class="t">Совет про скобки.</b> Отрицательное число в квадрате пиши <b>в скобках</b>: <span class="m">(−1,2)²</span>. Тогда видно, что в квадрат возводим всё число вместе с минусом: <span class="m">(−1,2)·(−1,2) = 1,44</span>. Без скобок запись <span class="m">−1,2²</span> читается как «минус (1,2 в квадрате)», а это −1,44.</div>
 </section>
 
 <!-- ============ 7 ============ -->
 <section class="card" id="s7">
   <span class="tag">Сама</span>
   <h2>Тренировка</h2>
-  <p>Решай на листе (можно стилусом), как в тетради, потом проверь ответ.</p>
+  <p>Решай на листе, как в тетради, потом проверь.</p>
 
   <h3>Задание 1 <span class="sub">(как № 130)</span></h3>
   <div class="task">Является ли число 2 корнем уравнения <span class="m">3(<i>x</i> + 1) = 5<i>x</i> − 1</span>?</div>
   <div class="board" data-board="t1" data-height="300"></div>
   <div class="yn" data-ok="yes"><button class="btn ghost" data-v="yes">Да, является</button><button class="btn ghost" data-v="no">Нет, не является</button><span class="fb"></span></div>
   <button class="btn ghost show-sol" data-for="sol1">Показать решение</button>
-  <div class="hidden-sol" id="sol1"><div class="tetrad"><span class="eq">3(x + 1) = 5x − 1</span><span class="eq">x = 2</span><span class="eq">3·(2 + 1) = 5·2 − 1</span><span class="eq">9 = 9</span><span class="eq">x = 2 является корнем</span></div></div>
+  <div class="hidden-sol" id="sol1"><div class="tetrad"><span class="eq">3(x + 1) = 5x − 1</span><span class="eq">x = 2</span><span class="eq">3·(2 + 1) = 5·2 − 1</span><span class="eq">9 = 9</span></div></div>
 
   <h3>Задание 2 <span class="sub">(как № 130 б)</span></h3>
   <div class="task">Является ли число −1 корнем уравнения <span class="m">(<i>x</i> + 3)(<i>x</i> − 2) = 6</span>?</div>
@@ -318,34 +315,17 @@
     <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
   </div>
   <button class="btn ghost show-sol" data-for="sol3">Показать решение</button>
-  <div class="hidden-sol" id="sol3"><div class="tetrad"><span class="eq">5x + 4 = 2x + 19</span><span class="eq">5x − 2x = 19 − 4</span><span class="eq">3x = 15 &nbsp;|:3</span><span class="eq"><u>x = 5</u></span></div><p class="sol">Проверка: <span class="m">5·5 + 4 = 29</span>, <span class="m">2·5 + 19 = 29</span>. Верно.</p></div>
+  <div class="hidden-sol" id="sol3"><div class="tetrad"><span class="eq">5x + 4 = 2x + 19</span><span class="eq">5x − 2x = 19 − 4</span><span class="eq">3x = 15 &nbsp;|:3</span><span class="eq"><u>x = 5</u></span></div></div>
 
   <h3>Задание 4 <span class="sub">(как 0,2x = 3)</span></h3>
   <div class="task">Решите уравнение <span class="m">0,5<i>x</i> = 4</span>.</div>
   <div class="board" data-board="t4" data-height="260"></div>
-  <div class="check" data-answer="8" data-hint="На какое число умножить 0,5, чтобы получилась 1? На 2. Умножь обе части на 2.">
+  <div class="check" data-answer="8" data-hint="На что умножить 0,5, чтобы получилась 1? На 2. Умножь обе части на 2.">
     <label for="a4">x =</label><input id="a4" inputmode="decimal" autocomplete="off">
     <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
   </div>
   <button class="btn ghost show-sol" data-for="sol4">Показать решение</button>
   <div class="hidden-sol" id="sol4"><div class="tetrad"><span class="eq">0,5x = 4 &nbsp;|·2</span><span class="eq">x = 8</span></div></div>
-</section>
-
-<!-- ============ 8 ============ -->
-<section class="card" id="s8">
-  <span class="tag">Шпаргалка</span>
-  <h2>Запомни</h2>
-  <div class="tetrad big-t">
-    <p><b>Корень уравнения</b> — значение переменной, при котором уравнение обращается в верное числовое равенство.</p>
-    <p><b>Решить уравнение</b> — значит найти все его корни или доказать, что корней нет.</p>
-    <p><b>Равносильные уравнения</b> — имеющие одни и те же корни.</p>
-  </div>
-  <ul class="sum">
-    <li><b>Проверить корень:</b> подставь число вместо <i class="m">x</i>, посчитай обе части, сравни.</li>
-    <li><b>Перенос:</b> слагаемое переходит в другую часть с противоположным знаком.</li>
-    <li><b>Умножение и деление:</b> обе части можно умножить или разделить на одно и то же число, не равное нулю.</li>
-    <li>Корней может быть один, несколько или ни одного.</li>
-  </ul>
 </section>
 
 <footer>Алгебра, 7 класс · § 3 · п. 7 «Уравнение и его корни»</footer>
@@ -369,8 +349,9 @@
     if(bot>=0){ books(bot,118,'Нижняя: 4x − 15'); E('text',{x:20,y:166,'font-family':'PT Serif','font-size':22,'font-weight':700,fill:'#15202e'},bot+' кн.'); }
     else { E('text',{x:20,y:150,'font-family':'PT Sans','font-size':16,fill:'#b0182f'},'Внизу было бы '+(4*x)+' кн. — нельзя отдать 15!'); }
     var mn=function(n){return String(n).replace('-','−');}; var eq='<span class="m">4·'+x+' − 15 = '+mn(4*x-15)+'</span>, а <span class="m">'+x+' + 15 = '+top+'</span>. ';
-    if(bot===top) say.innerHTML=eq+'<span class="ok">Поровну! Равенство верное, значит x = 10 — корень уравнения.</span>';
-    else say.innerHTML=eq+'<span class="no">Не поровну</span> — равенство неверное, '+x+' не подходит. '+(bot<top?'Попробуй побольше.':'Попробуй поменьше.');
+    document.getElementById('found').hidden = bot!==top;
+    if(bot===top) say.innerHTML=eq+'<span class="ok">Поровну!</span>';
+    else say.innerHTML=eq+'<span class="no">Не поровну.</span> '+(bot<top?'Попробуй побольше.':'Попробуй поменьше.');
   }
   s.addEventListener('input',draw); draw();
 })();
@@ -385,10 +366,10 @@
     ['<i>x</i> = 3','<span class="bl"><i>x</i> = 3</span>']
   ];
   var T=[
-    'Это уравнение из тетради. Наша цель: все слагаемые с <i class="m">x</i> собрать <b>слева</b>, а просто числа — <b>справа</b>. Мешают <span style="color:#b0182f;font-weight:700">7x</span> справа и <span style="color:#1f6b4f;font-weight:700">+6</span> слева.',
-    '<b>Переносим (правило 1).</b> <span style="color:#b0182f;font-weight:700">7x</span> перешло влево и стало <span style="color:#b0182f;font-weight:700">−7x</span>. <span style="color:#1f6b4f;font-weight:700">+6</span> перешло вправо и стало <span style="color:#1f6b4f;font-weight:700">−6</span>. При переносе знак меняется на противоположный.',
-    '<b>Считаем.</b> Слева <span class="m">3x − 7x = −4x</span>, справа <span class="m">−6 − 6 = −12</span>. Справа пометка: делим обе части на −4.',
-    '<b>Делим обе части на −4 (правило 2).</b> Слева <span class="m">−4x</span>, делённое на −4, это <span class="m">x</span>. Справа −12, делённое на −4, это 3 (минус на минус — плюс). Готово: <b>x = 3</b>.'
+    'Задача: <b>иксы — влево, числа — вправо</b>. Мешают <span style="color:#b0182f;font-weight:700">7x</span> справа и <span style="color:#1f6b4f;font-weight:700">+6</span> слева.',
+    '<b>Переносим.</b> <span style="color:#b0182f;font-weight:700">7x</span> ушло влево и стало <span style="color:#b0182f;font-weight:700">−7x</span>. <span style="color:#1f6b4f;font-weight:700">+6</span> ушло вправо и стало <span style="color:#1f6b4f;font-weight:700">−6</span>.',
+    '<b>Считаем.</b> <span class="m">3x − 7x = −4x</span>, <span class="m">−6 − 6 = −12</span>.',
+    '<b>Делим обе части на −4.</b> Слева остаётся <span class="m">x</span>, справа 3 (минус на минус — плюс). Ответ: <b>x = 3</b>.'
   ];
   function show(){
     box.innerHTML=L.map(function(l,i){ return '<div class="ln'+(i===cur?' cur':i<cur?' past':'')+'">'+(i<=cur?(i===cur?l[1]:l[0]):'&nbsp;')+'</div>'; }).join('');
