@@ -6,94 +6,115 @@
 <link rel="apple-touch-icon" href="../../assets/icon-180.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Тождества и преобразования</title>
+<title>Алгебра 7: тождества</title>
 <link rel="stylesheet" href="../../assets/fonts.css">
 <style>
   :root{
     --bg:#eef2f7; --paper:#ffffff; --ink:#15202e; --muted:#566273; --line:#d5dde8;
     --blue:#1d4f91; --blue-soft:#e3ecf8; --red:#b0182f; --red-soft:#f8e6ea;
     --green:#1f6b4f; --green-soft:#e2f2eb; --gold:#6f550c; --gold-soft:#f5efd9;
-    --grid:#cfdcee;
+    --grid:#cfdcee; --pen:#1d3f8f;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "PT Sans",system-ui,sans-serif}
-  .wrap{max-width:920px;margin:0 auto;padding:0 16px}
+  body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.6 "PT Sans",system-ui,sans-serif}
+  .wrap{max-width:900px;margin:0 auto;padding:0 16px}
   h1,h2,h3{line-height:1.2;margin:0}
-  h2{font-size:clamp(24px,3.6vw,32px);margin-bottom:8px}
-  h3{font-size:21px;margin:22px 0 8px}
+  h2{font-size:clamp(25px,3.8vw,32px);margin-bottom:12px}
+  h3{font-size:21px;margin:26px 0 10px}
   p{margin:0 0 12px}
+  [id]{scroll-margin-top:64px}
   .m{font-family:"PT Serif",Georgia,serif;white-space:nowrap}
-  .m i{font-style:italic}
-  .big{font-family:"PT Serif",Georgia,serif;font-size:24px;text-align:center;margin:14px 0;line-height:1.5}
-  .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;font-size:.85em;line-height:1.1;margin:0 2px}
-  .frac span:first-child{border-bottom:1.5px solid currentColor;padding:0 2px}
-  .c-blue{color:var(--blue)} .c-red{color:var(--red)} .c-green{color:var(--green)}
-
-  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .m i, i.m{font-style:italic}
+  .big{font-family:"PT Serif",Georgia,serif;font-size:28px;text-align:center;margin:12px 0 16px}
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
   nav .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:none}
-  nav a{flex:none;text-decoration:none;color:var(--ink);font-size:14px;font-weight:700;padding:6px 11px;border-radius:7px}
+  nav a{flex:none;text-decoration:none;color:var(--ink);font-size:14px;font-weight:700;padding:8px 11px;border-radius:8px}
   nav a:hover{background:var(--blue-soft);color:var(--blue)}
-
-  header{padding:40px 0 20px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end}
-  header .signs{font-family:"PT Serif",serif;font-size:clamp(44px,8vw,80px);line-height:1;color:var(--blue);white-space:nowrap}
-  header .signs span{color:var(--red)}
-  header h1{font-size:clamp(28px,4.6vw,42px);margin:6px 0 10px}
-  header p{color:var(--muted);max-width:620px;margin:0}
+  header{padding:40px 0 14px}
   .hi{font-family:"PT Serif",serif;font-size:22px;color:var(--blue);margin:0 0 4px}
-  @media (max-width:640px){header{grid-template-columns:1fr}}
-
-  section{background:var(--paper);border-radius:18px;padding:28px 24px;margin:20px 0;box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(21,32,46,.25)}
+  header h1{font-size:clamp(30px,5vw,44px);margin:4px 0 10px}
+  header p{color:var(--muted);max-width:660px;margin:0}
+  .card{background:var(--paper);border-radius:20px;padding:28px 26px 24px;margin:18px 0 22px;box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(21,32,46,.25)}
+  @media (max-width:560px){.card{padding:22px 16px 18px}}
   .tag{display:inline-block;font-weight:700;font-size:14px;color:var(--blue);margin-bottom:6px}
-
-  .rule{background:var(--blue-soft);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .src{color:var(--muted);font-size:16px}
+  .sub{font-weight:400;color:var(--muted);font-size:16px}
+  .task{background:#f3f6fa;border-radius:12px;padding:14px 18px;margin:8px 0 12px}
+  .rule{background:var(--blue-soft);border-radius:12px;padding:14px 18px;margin:12px 0}
   .rule b.t{color:var(--blue)}
-  .rule.red{background:var(--red-soft)} .rule.red b.t{color:var(--red)}
-  .rule.gold{background:var(--gold-soft)} .rule.gold b.t{color:var(--gold)}
-  .rule.book{background:#f3f5f9}
-  .rule.book .src{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
-  .rule.book .f{font-family:"PT Serif",serif;font-size:21px;text-align:center;margin:6px 0 2px}
-  .book{font-size:14px;color:var(--muted)}
-  .rule.book{font-size:17px;color:var(--ink)}
-
+  .trap{background:var(--gold-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+  .trap b.t{color:var(--gold)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+  @media (max-width:620px){.two{grid-template-columns:1fr}}
   .steps{counter-reset:s;list-style:none;padding:0;margin:10px 0}
-  .steps li{counter-increment:s;position:relative;padding:4px 0 8px 40px}
-  .steps li::before{content:counter(s);position:absolute;left:0;top:3px;width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-weight:700;display:grid;place-items:center;font-size:15px}
+  .steps li{counter-increment:s;position:relative;padding:4px 0 8px 42px}
+  .steps li::before{content:counter(s);position:absolute;left:0;top:3px;width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;font-weight:700;display:grid;place-items:center;font-size:15px}
 
-  .two{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center}
-  @media (max-width:700px){.two{grid-template-columns:1fr}}
-  figure{margin:14px 0}
-  svg{display:block;max-width:100%;height:auto;margin:0 auto}
-  figcaption{font-size:14px;color:var(--muted);text-align:center;margin-top:4px}
+  /* страница тетради */
+  .tetrad{position:relative;background-color:#fdfeff;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:22px 22px;
+    border-radius:12px;box-shadow:inset 0 0 0 1px var(--line);padding:30px 18px 14px;margin:12px 0;font-family:"PT Serif",serif;font-style:italic;font-size:20px;line-height:1.55;color:var(--pen)}
+  .tetrad .tl{position:absolute;top:6px;left:12px;font-family:"PT Sans",sans-serif;font-style:normal;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .tetrad .eq{display:block;white-space:nowrap}
+  .tetrad u{text-decoration:none;box-shadow:0 0 0 2px var(--pen);padding:0 6px;border-radius:2px}
+  .tetrad.big-t p{margin:0 0 10px} .tetrad.big-t b{font-style:normal;font-family:"PT Sans",sans-serif}
 
-  /* лаборатории */
-  .lab{background:#f3f6fa;border-radius:14px;padding:18px;margin:14px 0}
-  .lab input[type=range]{width:100%;accent-color:var(--blue);height:28px}
-  #area{max-width:340px;margin-top:8px}
-  .lab .said{text-align:center;margin-top:12px;font-family:"PT Serif",serif;font-size:21px;line-height:1.5}
-  .quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;justify-content:center}
-  .chip{border:1px solid var(--line);background:#fff;border-radius:9px;padding:6px 12px;font:inherit;font-size:15px;cursor:pointer}
-  .chip:hover{border-color:var(--blue);color:var(--blue)}
+  .kinds{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
+  .kinds > div{background:#f3f6fa;border-radius:14px;padding:12px 14px;font-size:16px;line-height:1.5}
+  .kinds b.h{display:block;font-size:17px;color:var(--blue);margin-bottom:4px}
+  .kinds .m{white-space:normal}
+  @media (max-width:760px){.kinds{grid-template-columns:1fr 1fr}}
 
-  .pairs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:12px 0}
-  .num{font-family:"PT Serif",serif;font-size:24px;min-width:84px;min-height:56px;padding:8px 14px;border-radius:12px;border:2px solid var(--line);background:#fff;cursor:pointer;color:var(--ink)}
-  .num:hover{border-color:var(--blue)}
-  .num.sel{border-color:var(--blue);background:var(--blue-soft)}
-  .num.done{border-color:var(--green);background:var(--green-soft);color:var(--green);cursor:default}
-  .pair-msg{text-align:center;font-weight:700;min-height:28px;font-size:18px}
-  .pair-msg.ok{color:var(--green)} .pair-msg.no{color:var(--red)}
+  .lab{background:#f3f6fa;border-radius:16px;padding:16px;margin:16px 0}
+  .lab svg{display:block;width:100%;height:auto;background:#fff;border-radius:12px;margin-top:10px}
+  .rng{display:flex;align-items:center;gap:12px;margin-top:12px;font-family:"PT Serif",serif;font-size:22px}
+  .rng input{flex:1;accent-color:var(--blue);height:32px}
+  .rng b{min-width:34px;text-align:center}
+  .say{background:#fff;border-radius:12px;padding:12px 14px;margin-top:10px;min-height:52px}
+  .say .ok{color:var(--green);font-weight:700} .say .no{color:var(--red);font-weight:700}
 
-  .say{background:var(--gold-soft);border-radius:12px;padding:14px 18px;margin-top:16px}
-  .say h3{margin:0 0 6px;font-size:14px;text-transform:uppercase;letter-spacing:.05em;color:var(--gold)}
-  .say ul{margin:0;padding-left:20px}
+  .solve{background:#fff;border-radius:12px;padding:14px 18px;margin-top:10px;font-family:"PT Serif",serif;font-size:24px;line-height:1.7}
+  .solve .ln{opacity:.35;transition:opacity .25s}
+  .solve .ln.cur{opacity:1}
+  .solve .ln.past{opacity:.7}
+  .solve .r{color:var(--red);font-weight:700} .solve .g{color:var(--green);font-weight:700} .solve .bl{color:var(--blue);font-weight:700}
+  .solve .note{font-family:"PT Sans",sans-serif;font-size:15px;color:var(--muted);margin-left:10px}
+  .ctl{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 
-  .task{font-family:"PT Serif",serif;font-size:18px;background:#f3f6fa;border-radius:12px;padding:12px 16px;margin:8px 0 14px}
-  .task b{font-family:"PT Sans",sans-serif}
-  .ans{display:inline-block;background:var(--green-soft);color:var(--green);font-weight:700;border-radius:8px;padding:2px 10px;font-family:"PT Serif",serif}
-  .calc{font-family:"PT Serif",serif;font-size:19px;background:#f8fafc;border-radius:10px;padding:10px 14px;margin:8px 0;line-height:1.7;overflow-x:auto}
-  .calc .u{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
-  .calc .u.b{text-decoration-color:var(--blue)} .calc .u.r{text-decoration-color:var(--red)}
+  table.chk{border-collapse:collapse;width:100%;margin:10px 0;font-size:17px}
+  .chk th,.chk td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left}
+  .chk th{font-size:14px;color:var(--muted)}
+  .chk .yes{color:var(--green);font-weight:700} .chk .no{color:var(--muted)}
 
+  .yn{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+  .yn .btn.on-ok{background:var(--green);color:#fff} .yn .btn.on-no{background:var(--red);color:#fff}
+  .sum{padding-left:22px} .sum li{margin:6px 0}
+  .short h2{font-size:24px}
+  .three{padding-left:24px;margin:0;font-size:19px} .three li{margin:6px 0}
+  .cap{text-align:center;color:var(--muted);font-size:15px;margin-top:-8px}
+  .big .c-red,.big .c-blue{font-weight:700}
+  .easy{padding-left:22px} .easy li{margin:8px 0}
+  details.more{background:#f3f6fa;border-radius:12px;padding:4px 16px;margin:12px 0}
+  details.more summary{cursor:pointer;font-weight:700;color:var(--blue);min-height:44px;display:flex;align-items:center}
+  details.more[open]{padding-bottom:10px}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+  .vs div{border-radius:12px;padding:12px 14px;font-size:17px}
+  .vs .ok{background:var(--green-soft);color:var(--green)} .vs .no{background:var(--red-soft);color:var(--red)}
+  @media (max-width:620px){.vs{grid-template-columns:1fr}}
+  .moves{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+  .moves > div{background:var(--blue-soft);border-radius:14px;padding:12px 16px;font-size:17px}
+  .moves b.h{display:block;color:var(--blue);font-size:18px;margin-bottom:2px}
+  @media (max-width:620px){.moves{grid-template-columns:1fr}}
+  .found{background:var(--green-soft);border-radius:14px;padding:14px 18px;margin:14px 0 0;animation:pop .35s ease-out}
+  .found p:last-child{margin:0}
+  @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .sol-t{padding-top:16px}
+  .sol-t .row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:14px;align-items:baseline;padding:4px 0;border-bottom:1px dashed #c9d6e8}
+  .sol-t .row:last-child{border-bottom:0}
+  .sol-t .why{font-family:"PT Sans",sans-serif;font-style:normal;font-size:15.5px;line-height:1.4;color:var(--ink)}
+  .sol-t .row .eq:empty + .why{grid-column:1 / -1;color:var(--green);font-weight:700}
+  @media (max-width:620px){.sol-t .row{grid-template-columns:1fr;gap:0}.sol-t .why{margin:0 0 4px}}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding:6px 0 40px}
   /* доска */
   .board{margin:14px 0 10px;border-radius:14px;background:#fff;box-shadow:0 0 0 1px var(--line)}
   .toolbar{display:flex;flex-wrap:wrap;gap:6px;padding:8px;border-bottom:1px solid var(--line);align-items:center}
@@ -125,458 +146,350 @@
   .hidden-sol.show{display:block}
   .sol{margin:0 0 6px}
 
-  footer{text-align:center;color:var(--muted);font-size:14px;padding:6px 0 40px}
+  .btn{background:var(--blue);color:#fff;border:0;border-radius:10px;padding:10px 16px;font:inherit;font-size:16px;font-weight:700;cursor:pointer;min-height:44px}
+  .btn.ghost{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+  .btn:disabled{opacity:.4;cursor:default}
 
-  /* п. 6 */
-  .tables2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:12px 0}
-  .tcard{background:#f3f6fa;border-radius:14px;padding:14px}
-  .tcard h3{margin:0 0 10px;font-size:18px}
-  table.vt{border-collapse:collapse;width:100%;font-family:"PT Serif",serif;font-size:18px;text-align:center;background:#fff;border-radius:10px;overflow:hidden}
-  .vt th{font-size:15px;font-weight:400;color:var(--muted);padding:8px 4px;border-bottom:2px solid var(--line)}
-  .vt td{padding:7px 4px;border-bottom:1px solid var(--line)}
-  .vt td.yes{color:var(--green);font-weight:700;font-size:20px}
-  .vt td.nope{color:var(--red);font-weight:700;font-size:20px;background:var(--red-soft)}
-  .vt tr.fresh td{animation:fresh 1.2s ease-out}
-  @keyframes fresh{from{background:#fff3c4}}
-  .tres{font-weight:700;text-align:center;margin:10px 0 0}
-  .tres.ok{color:var(--green)} .tres.no{color:var(--red)}
-  @media (max-width:640px){.tables2{grid-template-columns:1fr}}
-  .seg{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:10px}
-  .segb{font:inherit;font-family:"PT Serif",serif;font-size:17px;border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;cursor:pointer;min-height:44px}
-  .segb[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:#fff}
-  .sliders{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  .sliders label{display:block}
-  .vs{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-top:12px}
-  .vcard{background:#fff;border-radius:12px;padding:12px;text-align:center}
-  .vname{font-size:22px;color:var(--blue);margin-bottom:4px}
-  .vcalc{font-size:17px}
-  .vsign{font-family:"PT Serif",serif;font-size:48px;font-weight:700;min-width:46px;text-align:center}
-  .vsign.eq{color:var(--green)} .vsign.ne{color:var(--red)}
-  .verdict{text-align:center;font-weight:700;margin-top:10px;font-size:17px}
-  .verdict.ok{color:var(--green)} .verdict.no{color:var(--red)} .verdict.warn{color:var(--gold)}
-  @media (max-width:600px){.vs,.sliders{grid-template-columns:1fr}.vcalc{white-space:normal}}
-  table.ids{border-collapse:collapse;width:100%;font-size:16px}
-  .ids td{padding:8px 10px;border-bottom:1px solid var(--line)}
-  .ids td:first-child{font-size:19px;width:42%}
-  .term{border-radius:7px;padding:1px 6px;white-space:nowrap}
-  .term.t1{background:var(--blue-soft);color:var(--blue)}
-  .term.t2{background:var(--gold-soft);color:var(--gold)}
-  .term.t3{background:var(--green-soft);color:var(--green)}
-  .flip{color:var(--red);font-weight:700;background:var(--red-soft);border-radius:6px;padding:0 4px}
-  .keep{color:var(--green);font-weight:700;background:var(--green-soft);border-radius:6px;padding:0 4px}
-  .ghost{color:#9aa6b6}
-  #likeOut .m{white-space:normal}
+  .pairs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  .pair{background:#fff;border-radius:12px;padding:12px 14px}
+  .pair .pt{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+  .pair .pe{font-size:18px;margin:2px 0 6px}
+  .pair .pv{font-family:"PT Serif",serif;font-size:18px;line-height:1.5;min-height:56px}
+  .pair .ok{color:var(--green);font-weight:700} .pair .no{color:var(--red);font-weight:700}
+  @media (max-width:620px){.pairs{grid-template-columns:1fr}}
+  .cnt{color:var(--muted);font-size:15px;align-self:center}
+  .mul{background:#fff;border-radius:12px;padding:14px 18px;margin-top:10px;font-family:"PT Serif",serif;font-size:24px;line-height:1.7}
+  .mul .hl1{background:#dbe7f7;border-radius:6px;padding:0 4px;color:var(--blue);font-weight:700}
+  .mul .hl2{background:#f8e6ea;border-radius:6px;padding:0 4px;color:var(--red);font-weight:700}
+  .mul .res{display:block;font-size:22px;color:var(--ink)}
+  .gather{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#fff;border-radius:12px;padding:14px;margin-top:10px;min-height:64px;font-family:"PT Serif",serif;font-size:22px}
+  .gather .chip{border-radius:10px;padding:4px 10px;font-weight:700;transition:transform .3s}
+  .gather .v-a{background:#dbe7f7;color:#1d4f91} .gather .v-b{background:#f8e6ea;color:#b0182f} .gather .v-x{background:#dbe7f7;color:#1d4f91} .gather .v-y{background:#f8e6ea;color:#b0182f} .gather .v-{background:#e2f2eb;color:#1f6b4f}
+  .gather .eqs{font-weight:700;padding:0 4px}
+  .arcs{font-size:24px;text-align:center;margin:10px 0 2px;line-height:1.6}
+  .arcs .t1{color:var(--blue);font-weight:700} .arcs .t2{color:var(--red);font-weight:700} .arcs .t3{color:var(--green);font-weight:700}
   .check.expr input{width:220px}
+  .sol-t .row.stack{grid-template-columns:1fr;gap:2px}
+  .sol-t .eq{white-space:normal}
+  .sol-t .row{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}
+  .sol-t .row.stack .why{margin-bottom:6px}
 </style>
 </head>
 <body>
-
 <nav><div class="wrap">
   <a href="../../" style="color:#1d4f91">← Все уроки</a>
-  <a href="#s1">Опыт</a>
-  <a href="#s2">Тождество</a>
-  <a href="#s3">Зачем</a>
-  <a href="#s4">Подобные</a>
-  <a href="#s5">Скобки</a>
-  <a href="#e114">№ 114</a>
-  <a href="#e117">№ 117</a>
-  <a href="#self">Реши сама</a>
+  <a href="#s1">1. Тождество</a>
+  <a href="#s2">2. № 105</a>
+  <a href="#s3">3. Подобные</a>
+  <a href="#s4">4. Скобки</a>
+  <a href="#s5">5. Домашка</a>
+  <a href="#s7">Тренировка</a>
 </div></nav>
 
 <div class="wrap">
-
 <header>
-  <div>
-    <p class="hi">Алиса, привет!</p>
-    <h1>6. Тождества. Тождественные преобразования выражений</h1>
-    <p>Название страшное, а смысл простой. Сначала разберём, что такое тождество. Потом научимся двум главным приёмам: приводить подобные слагаемые и раскрывать скобки. Дальше № 114 и № 117, а в конце две задачи, чтобы ты решила их сама.</p>
-  </div>
-  <div class="signs" aria-hidden="true">a·1<span>=</span>a</div>
+  <p class="hi">Алиса, привет!</p>
+  <h1>Тождества. Тождественные преобразования</h1>
+  <p>Алгебра, п. 6. Классная работа 30 сентября. Страницы в клетку — это то, что записано у вас в тетради.</p>
 </header>
 
+<section class="card short">
+  <h2>Весь урок в трёх фразах</h2>
+  <ol class="three">
+    <li><b>Тождество</b> — равенство, которое верно, какие бы числа ни поставить вместо букв.</li>
+    <li><b>Тождественное преобразование</b> — записать выражение по-другому, но так, чтобы оно осталось равным самому себе при любых буквах. Обычно — короче и проще.</li>
+    <li>Два главных приёма: <b>привести подобные слагаемые</b> и <b>раскрыть скобки</b>.</li>
+  </ol>
+</section>
+
 <!-- ============ 1 ============ -->
-<section id="s1">
-  <span class="tag">Шаг 1 · опыт</span>
-  <h2>Два выражения: совпадают всегда или случайно?</h2>
+<section class="card" id="s1">
+  <span class="tag">Шаг 1</span>
+  <h2>Что такое тождество</h2>
+  <p>Возьмём два выражения: <span class="m">3(<i>x</i> + <i>y</i>)</span> и <span class="m">3<i>x</i> + 3<i>y</i></span>. Подставим <span class="m"><i>x</i> = 5</span>, <span class="m"><i>y</i> = 4</span>:</p>
+  <p class="big" style="font-size:22px">3(5 + 4) = 3·9 = 27 &nbsp;&nbsp; и &nbsp;&nbsp; 3·5 + 3·4 = 15 + 12 = 27</p>
+  <p>Одинаково! А будет ли одинаково при <b>других</b> числах? Проверь сама.</p>
 
-  <h3>Пара 1: <span class="m">3(<i>x</i> + <i>y</i>)</span> и <span class="m">3<i>x</i> + 3<i>y</i></span></h3>
-  <p>Подставим <span class="m"><i>x</i> = 5</span>, <span class="m"><i>y</i> = 4</span>:</p>
-  <div class="calc">3(<i>x</i> + <i>y</i>) = 3 · (5 + 4) = 3 · 9 = <b>27</b><br>3<i>x</i> + 3<i>y</i> = 3 · 5 + 3 · 4 = 15 + 12 = <b>27</b></div>
-  <p>Получилось одно и то же. И так будет <b>с любыми числами</b>. Почему? Посмотри на картинку.</p>
-
-  <figure>
-    <svg viewBox="0 0 600 190" role="img" aria-label="Три корзинки, в каждой x яблок и y груш">
-      <g font-family="PT Serif" font-size="22" text-anchor="middle">
-        <g>
-          <path d="M30 60 h150 l-14 80 h-122 z" fill="#e3ecf8" stroke="#1d4f91" stroke-width="2"/>
-          <text x="105" y="95"><tspan font-style="italic">x</tspan> 🍎</text>
-          <text x="105" y="125"><tspan font-style="italic">y</tspan> 🍐</text>
-        </g>
-        <g>
-          <path d="M225 60 h150 l-14 80 h-122 z" fill="#e3ecf8" stroke="#1d4f91" stroke-width="2"/>
-          <text x="300" y="95"><tspan font-style="italic">x</tspan> 🍎</text>
-          <text x="300" y="125"><tspan font-style="italic">y</tspan> 🍐</text>
-        </g>
-        <g>
-          <path d="M420 60 h150 l-14 80 h-122 z" fill="#e3ecf8" stroke="#1d4f91" stroke-width="2"/>
-          <text x="495" y="95"><tspan font-style="italic">x</tspan> 🍎</text>
-          <text x="495" y="125"><tspan font-style="italic">y</tspan> 🍐</text>
-        </g>
-      </g>
-      <text x="300" y="36" text-anchor="middle" font-family="PT Sans" font-size="17" fill="#15202e">3 одинаковые корзинки. В каждой <tspan font-style="italic">x</tspan> яблок и <tspan font-style="italic">y</tspan> груш</text>
-      <text x="300" y="176" text-anchor="middle" font-family="PT Sans" font-size="16" fill="#566273">Сколько всего фруктов? Можно посчитать двумя способами</text>
-    </svg>
-  </figure>
-
-  <div class="two" style="align-items:stretch">
-    <div class="rule" style="margin:0">
-      <b class="t">Способ 1. По корзинкам</b><br>
-      В одной корзинке <span class="m"><i>x</i> + <i>y</i></span> фруктов, корзинок 3:<br>
-      <span class="m" style="font-size:20px">3(<i>x</i> + <i>y</i>)</span>
+  <div class="lab">
+    <b>Нажимай «Другие числа»</b> и смотри, совпадают ли выражения.
+    <div class="pairs">
+      <div class="pair" id="pairA"><div class="pt">Пара 1</div><div class="pe"><span class="m">3(<i>x</i> + <i>y</i>)</span> и <span class="m">3<i>x</i> + 3<i>y</i></span></div><div class="pv"></div></div>
+      <div class="pair" id="pairB"><div class="pt">Пара 2</div><div class="pe"><span class="m">2<i>x</i> + <i>y</i></span> и <span class="m">2<i>x</i><i>y</i></span></div><div class="pv"></div></div>
     </div>
-    <div class="rule" style="margin:0">
-      <b class="t">Способ 2. Отдельно яблоки и груши</b><br>
-      Всех яблок <span class="m">3<i>x</i></span>, всех груш <span class="m">3<i>y</i></span>:<br>
-      <span class="m" style="font-size:20px">3<i>x</i> + 3<i>y</i></span>
-    </div>
+    <div class="ctl"><button class="btn" id="newNums">Другие числа</button><span class="cnt" id="cnt"></span></div>
   </div>
-  <p style="margin-top:12px">Фрукты одни и те же, мы просто считали их по-разному. Поэтому ответ совпадает <b>всегда</b>, сколько бы яблок и груш ни лежало. В учебнике это сказано так: из распределительного свойства следует, что при любых значениях переменных значения выражений <span class="m">3(<i>x</i> + <i>y</i>)</span> и <span class="m">3<i>x</i> + 3<i>y</i></span> равны.</p>
+  <div class="found" id="found1" hidden>
+    <p><b>Пара 1 совпадает всегда</b>, при любых числах. Поэтому <span class="m">3(<i>x</i> + <i>y</i>) = 3<i>x</i> + 3<i>y</i></span> — это <b>тождество</b>.</p>
+    <p><b>Пара 2</b> иногда совпадает (например, при <span class="m"><i>x</i> = 1</span>, <span class="m"><i>y</i> = 2</span> обе равны 4), но чаще нет. Значит, это не тождество.</p>
+  </div>
 
-  <h3>Пара 2: <span class="m">2<i>x</i> + <i>y</i></span> и <span class="m">2<i>xy</i></span></h3>
-  <p>Подставим <span class="m"><i>x</i> = 1</span>, <span class="m"><i>y</i> = 2</span>:</p>
-  <div class="calc">2<i>x</i> + <i>y</i> = 2 · 1 + 2 = <b>4</b><br>2<i>xy</i> = 2 · 1 · 2 = <b>4</b></div>
-  <p>Тоже совпало! Но попробуем другие числа, <span class="m"><i>x</i> = 3</span>, <span class="m"><i>y</i> = 4</span>:</p>
-  <div class="calc">2<i>x</i> + <i>y</i> = 2 · 3 + 4 = <b>10</b><br>2<i>xy</i> = 2 · 3 · 4 = <b class="c-red">24</b></div>
-  <p>Уже не совпало. Значит, в первый раз совпадение было <b>случайным</b>.</p>
-
-  <div class="rule gold"><b class="t">Итог:</b> первая пара совпадает <b>всегда</b>, вторая — <b>только иногда</b>. Для выражений, которые совпадают всегда, в математике есть специальное название. Оно в следующем шаге.</div>
+  <div class="tetrad"><span class="tl">запись в тетради</span>Тождество — равенство, верное при любых значениях переменных.</div>
+  <div class="tetrad sol-t"><span class="tl">запись в тетради</span>
+    <div class="row"><span class="eq">3a + 3b = 3·(a + b)</span><span class="why">общий множитель 3 вынесли за скобку — это распределительное свойство из п. 5. Верно при любых a и b, значит, это тождество</span></div>
+  </div>
+  <p>Ещё тождества, которые ты уже знаешь: <span class="m"><i>a</i> + <i>b</i> = <i>b</i> + <i>a</i></span>, <span class="m"><i>a</i> · 1 = <i>a</i></span>, <span class="m"><i>a</i> + 0 = <i>a</i></span>. Они верны для любых чисел.</p>
 </section>
 
 <!-- ============ 2 ============ -->
-<section id="s2">
-  <span class="tag">Шаг 2 · определения</span>
-  <h2>Тождественно равные выражения и тождество</h2>
-  <div class="rule book">
-    <span class="src">Определение из учебника</span>
-    Два выражения, значения которых равны при любых значениях переменных, называются <b>тождественно равными</b>.
+<section class="card" id="s2">
+  <span class="tag">Шаг 2</span>
+  <h2>Тождественно равны или нет — № 105</h2>
+  <p>Выражения <b>тождественно равны</b>, если они равны при любых значениях букв. Вот как разбирали в классе:</p>
+  <div class="tetrad sol-t"><span class="tl">запись в тетради · № 105</span>
+    <div class="row"><span class="eq">а) 2a·7b = 14ab</span><span class="why">числа перемножаем: 2·7 = 14, буквы остаются: ab. Равны при любых a и b — тождественно равны</span></div>
+    <div class="row"><span class="eq">б) −2a + 2a = 0</span><span class="why">−2a и 2a — противоположные, вместе дают 0 при любом a — тождественно равны</span></div>
+    <div class="row"><span class="eq">в) x − y ≠ y − x</span><span class="why">например, x = 5, y = 2: 5 − 2 = 3, а 2 − 5 = −3. Не равны — значит, не тождественно равны</span></div>
+    <div class="row"><span class="eq">г) (x − y)² = (y − x)²</span><span class="why">квадрат — это скобка, умноженная сама на себя. Проверим ниже, перемножив скобки</span></div>
   </div>
-  <p>Значит, <span class="m">3(<i>x</i> + <i>y</i>)</span> и <span class="m">3<i>x</i> + 3<i>y</i></span> — тождественно равные, а <span class="m">2<i>x</i> + <i>y</i></span> и <span class="m">2<i>xy</i></span> — <b>не</b> тождественно равные. Чтобы доказать «не равны», хватает одного примера, где значения разные.</p>
-  <p>Если между тождественно равными выражениями поставить знак «=», получится равенство, которое верно всегда:</p>
-  <div class="big">3(<i>x</i> + <i>y</i>) = 3<i>x</i> + 3<i>y</i></div>
-  <div class="rule book">
-    <span class="src">Определение из учебника</span>
-    Равенство, верное при любых значениях переменных, называется <b>тождеством</b>.
+
+  <h3>Почему в г) получилось «равно»</h3>
+  <p>Чтобы умножить скобку на скобку, <b>каждое слагаемое первой скобки умножаем на каждое слагаемое второй</b>.</p>
+  <div class="lab">
+    <b>Нажимай «Дальше»</b> — цветом подсвечено, что на что умножаем.
+    <div class="mul" id="mul"></div>
+    <div class="say" id="mulSay"></div>
+    <div class="ctl"><button class="btn ghost" id="mBack">← Назад</button><button class="btn" id="mNext">Дальше →</button></div>
   </div>
-  <p><b>Тождествами считают и верные числовые равенства</b>, например <span class="m">2 + 3 = 5</span>.</p>
-  <p>Ты уже знаешь много тождеств. Все свойства из прошлого урока — тождества:</p>
-  <div class="big" style="font-size:20px"><i>a</i> + <i>b</i> = <i>b</i> + <i>a</i>, &nbsp; (<i>a</i> + <i>b</i>) + <i>c</i> = <i>a</i> + (<i>b</i> + <i>c</i>),<br><i>ab</i> = <i>ba</i>, &nbsp; (<i>ab</i>)<i>c</i> = <i>a</i>(<i>bc</i>), &nbsp; <i>a</i>(<i>b</i> + <i>c</i>) = <i>ab</i> + <i>ac</i>.</div>
-  <p>И ещё несколько из учебника. Попробуй прочитать их словами:</p>
-  <table class="ids">
-    <tr><td class="m"><i>a</i> + 0 = <i>a</i></td><td>если прибавить ноль, число не изменится</td></tr>
-    <tr><td class="m"><i>a</i> + (−<i>a</i>) = 0</td><td>число плюс противоположное ему даёт ноль</td></tr>
-    <tr><td class="m"><i>a</i> − <i>b</i> = <i>a</i> + (−<i>b</i>)</td><td>вычитание — это сложение с противоположным</td></tr>
-    <tr><td class="m"><i>a</i> · 1 = <i>a</i></td><td>умножение на единицу ничего не меняет</td></tr>
-    <tr><td class="m"><i>a</i> · (−<i>b</i>) = −<i>ab</i></td><td>плюс на минус даёт минус</td></tr>
-    <tr><td class="m">(−<i>a</i>)(−<i>b</i>) = <i>ab</i></td><td>минус на минус даёт плюс</td></tr>
-  </table>
+  <div class="tetrad sol-t"><span class="tl">запись в тетради</span>
+    <div class="row stack"><span class="eq">(x − y)(x − y) = x² − xy − xy + y² = x² − 2xy + y²</span><span class="why">x·x = x², x·(−y) = −xy, (−y)·x = −xy, (−y)·(−y) = y²; потом −xy − xy = −2xy</span></div>
+    <div class="row stack"><span class="eq">(y − x)(y − x) = y² − xy − xy + x² = x² − 2xy + y²</span><span class="why">так же; в конце переставили слагаемые. Получилось то же самое — значит, тождественно равны</span></div>
+  </div>
 </section>
 
 <!-- ============ 3 ============ -->
-<section id="s3">
-  <span class="tag">Шаг 3 · зачем это нужно</span>
-  <h2>Тождественное преобразование</h2>
-  <p>Пример из учебника: найти значение <span class="m"><i>xy</i> − <i>xz</i></span> при <span class="m"><i>x</i> = 2,3; <i>y</i> = 0,8; <i>z</i> = 0,2</span>.</p>
-  <div class="two">
-    <div>
-      <p><b>В лоб — три действия:</b></p>
-      <div class="calc">2,3 · 0,8 − 2,3 · 0,2 =<br>= 1,84 − 0,46 = 1,38</div>
-    </div>
-    <div>
-      <p><b>Хитро — два действия:</b></p>
-      <div class="calc"><i>x</i>(<i>y</i> − <i>z</i>) = 2,3 · (0,8 − 0,2) =<br>= 2,3 · 0,6 = 1,38</div>
-    </div>
+<section class="card" id="s3">
+  <span class="tag">Шаг 3</span>
+  <h2>Приём 1. Приводим подобные слагаемые</h2>
+  <p><b>Подобные слагаемые</b> — у которых <b>одинаковая буквенная часть</b>: <span class="m">3<i>a</i></span> и <span class="m">5<i>a</i></span> подобные (у обоих <i class="m">a</i>), а <span class="m">3<i>a</i></span> и <span class="m">3<i>b</i></span> — нет.</p>
+  <div class="rule"><b class="t">Правило.</b> Чтобы привести подобные слагаемые, складываем числа перед буквой (их называют <b>коэффициентами</b>), а букву оставляем.</div>
+  <div class="tetrad sol-t"><span class="tl">запись в тетради</span>
+    <div class="row"><span class="eq">3a + 3b + 5a = 8a + 3b</span><span class="why">подобные — 3a и 5a: 3 + 5 = 8, получилось 8a. 3b ни с чем не складывается, переписываем</span></div>
   </div>
-  <p>Ответ одинаковый, потому что <span class="m"><i>xy</i> − <i>xz</i></span> и <span class="m"><i>x</i>(<i>y</i> − <i>z</i>)</span> тождественно равны (это снова «вынести за скобку»). Мы <b>заменили выражение на его «близнеца»</b>, который проще считать.</p>
-  <div class="rule book">
-    <span class="src">Как в учебнике</span>
-    Замену одного выражения другим, тождественно равным ему выражением, называют <b>тождественным преобразованием</b> или просто <b>преобразованием</b> выражения.
+
+  <div class="lab">
+    <b>Нажми «Собрать»</b> — одинаковые буквы соберутся вместе.
+    <div class="gather" id="gather"></div>
+    <div class="ctl"><button class="btn" id="gBtn">Собрать</button><button class="btn ghost" id="gNext">Другой пример</button></div>
+    <div class="say" id="gSay"></div>
   </div>
-  <p>Тождественные преобразования делают на основе свойств действий над числами. Самые частые — <b>приведение подобных слагаемых</b> и <b>раскрытие скобок</b>. Это и есть № 114 и № 117.</p>
+
+  <h3>№ 115 — как в классе</h3>
+  <p class="src">Приведите подобные слагаемые. В тетради подобные подчёркнуты одинаково.</p>
+  <div class="tetrad sol-t"><span class="tl">запись в тетради · № 115</span>
+    <div class="row"><span class="eq">а) 13a + 2b − 2a − b = 11a + b</span><span class="why">a: 13 − 2 = 11 → 11a; b: 2 − 1 = 1 → b (единицу перед буквой не пишут)</span></div>
+    <div class="row"><span class="eq">б) 41x − 58x + 6y − y = −17x + 5y</span><span class="why">x: 41 − 58 = −17 → −17x; y: 6 − 1 = 5 → 5y</span></div>
+    <div class="row"><span class="eq">в) −5,1a − 4b − 4,9a + b = −10a − 3b</span><span class="why">a: −5,1 − 4,9 = −10 → −10a; b: −4 + 1 = −3 → −3b</span></div>
+    <div class="row"><span class="eq">г) 7,5x + y − 8,5x − 3,5y = −x − 2,5y</span><span class="why">x: 7,5 − 8,5 = −1 → −x; y: 1 − 3,5 = −2,5 → −2,5y</span></div>
+  </div>
+  <div class="trap"><b class="t">Знак стоит перед слагаемым и «едет» вместе с ним.</b> В б) у 58x знак минус, поэтому считаем 41 − 58, а не 41 + 58.</div>
 </section>
 
 <!-- ============ 4 ============ -->
-<section id="s4">
-  <span class="tag">Шаг 4 · приём 1</span>
-  <h2>Приведение подобных слагаемых</h2>
-  <p><b>Начнём с яблок.</b> 3 яблока − 2 яблока + 4 яблока = 5 яблок. А вот 3 яблока + 2 груши уже не сложишь в «5 чего-то»: так и останется 3 яблока + 2 груши.</p>
-  <p>В алгебре буква — как название фрукта. <span class="m">3<i>a</i></span> — это «3 штуки <i>a</i>». Складывать между собой можно только слагаемые с <b>одинаковыми буквами</b>.</p>
-
-  <div class="two" style="align-items:start">
-    <div class="rule" style="margin:0">
-      <b class="t">Два слова, которые нужно знать:</b><br>
-      <b>Коэффициент</b> — число перед буквой. У <span class="m">5<i>x</i></span> коэффициент 5, у <span class="m">−3<i>x</i></span> коэффициент −3.<br>
-      <b>Буквенная часть</b> — буквы. У <span class="m">5<i>x</i></span> это <span class="m"><i>x</i></span>, у <span class="m">8<i>ab</i></span> это <span class="m"><i>ab</i></span>.
-    </div>
-    <div class="rule gold" style="margin:0">
-      <b class="t">Невидимые единицы:</b><br>
-      Если перед буквой нет числа, коэффициент равен 1: <span class="m"><i>a</i> = 1<i>a</i></span>.<br>
-      Если стоит только минус, коэффициент равен −1: <span class="m">−<i>b</i> = −1<i>b</i></span>.
-    </div>
+<section class="card" id="s4">
+  <span class="tag">Шаг 4</span>
+  <h2>Приём 2. Раскрываем скобки</h2>
+  <p>Если перед скобкой стоит число, <b>умножаем его на каждое слагаемое в скобке</b>. Так в классе:</p>
+  <div class="tetrad sol-t"><span class="tl">запись в тетради</span>
+    <div class="row"><span class="eq">−2(7b − 3c + 5) = −14b + 6c − 10</span><span class="why">−2·7b = −14b; −2·(−3c) = +6c (минус на минус — плюс); −2·5 = −10</span></div>
   </div>
-
-  <div class="rule book">
-    <span class="src">Как в учебнике</span>
-    <b>Подобными слагаемыми</b> называют слагаемые алгебраической суммы, имеющие одинаковую буквенную часть.
+  <div class="arcs">
+    <span class="m">−2(</span><span class="m t1">7<i>b</i></span><span class="m t2"> − 3<i>c</i></span><span class="m t3"> + 5</span><span class="m">)</span>
+    <span class="m">&nbsp;=&nbsp;</span>
+    <span class="m t1">−14<i>b</i></span><span class="m t2"> + 6<i>c</i></span><span class="m t3"> − 10</span>
   </div>
-  <p>В сумме из учебника подобные — <span class="term t1">3<i>a</i></span>, <span class="term t1">−2<i>a</i></span>, <span class="term t1">4<i>a</i></span> (у всех буква <i class="m">a</i>):</p>
-  <div class="big"><span class="term t1">3<i>a</i></span> <span class="term t1">− 2<i>a</i></span> <span class="term t2">+ <i>b</i></span> <span class="term t3">− 2<i>c</i></span> <span class="term t1">+ 4<i>a</i></span></div>
-  <p><span class="m"><i>b</i></span> и <span class="m">−2<i>c</i></span> остаются одни: у них нет «пары».</p>
+  <p class="cap">Одинаковым цветом — что во что превратилось.</p>
 
-  <div class="rule book">
-    <span class="src">Правило из учебника</span>
-    Чтобы привести подобные слагаемые, надо <b>сложить их коэффициенты</b> и результат <b>умножить на общую буквенную часть</b>.
+  <h3>Если перед скобкой просто «+» или «−»</h3>
+  <div class="moves">
+    <div><b class="h">Перед скобкой «+»</b>Скобки убираем, знаки внутри <b>не меняем</b>.<br><span class="m">2<i>a</i> + (<i>b</i> − 3<i>c</i>) = 2<i>a</i> + <i>b</i> − 3<i>c</i></span></div>
+    <div><b class="h">Перед скобкой «−»</b>Скобки убираем, знак <b>каждого</b> слагаемого внутри меняем.<br><span class="m"><i>a</i> − (4<i>b</i> − <i>c</i>) = <i>a</i> − 4<i>b</i> + <i>c</i></span></div>
   </div>
-  <p><b>Пример 1 из учебника.</b> Работаем только с числами перед буквой, а букву просто переписываем:</p>
-  <div class="calc">5<i>x</i> + 2<i>x</i> − 3<i>x</i> = (5 + 2 − 3)<i>x</i> = 4<i>x</i></div>
-  <p>Это то же распределительное свойство, только справа налево: общую букву <i class="m">x</i> вынесли за скобку.</p>
-
-  <div class="lab">
-    <p style="margin:0 0 6px;text-align:center"><b>Тренажёр: нажми «Собрать», и подобные слагаемые соберутся вместе</b></p>
-    <div class="big" id="likeExpr" style="margin:6px 0"></div>
-    <div class="said" id="likeOut"></div>
-    <div class="quick">
-      <button class="chip" id="likeGo">Собрать</button>
-      <button class="chip" id="likeNext">Другой пример</button>
-    </div>
-  </div>
-
-  <div class="rule gold"><b class="t">Помни про «рюкзак» из прошлого урока:</b> знак перед слагаемым — его собственный, он переезжает вместе с ним. А числа без букв подобны друг другу: их тоже складываем между собой.</div>
+  <p class="cap">Минус перед скобкой — как −1, который умножаем на каждое слагаемое. Поэтому все знаки и переворачиваются.</p>
 </section>
 
 <!-- ============ 5 ============ -->
-<section id="s5">
-  <span class="tag">Шаг 5 · приём 2</span>
-  <h2>Раскрытие скобок</h2>
-  <p>Всё зависит от того, <b>какой знак стоит перед скобкой</b>.</p>
-  <div class="two" style="align-items:start">
-    <div class="rule" style="margin:0">
-      <b class="t">Перед скобкой «+»</b><br>
-      Скобки просто стираем. Все знаки внутри <b>остаются как были</b>.
-    </div>
-    <div class="rule red" style="margin:0">
-      <b class="t">Перед скобкой «−»</b><br>
-      Скобки стираем, а <b>каждый</b> знак внутри меняем на противоположный: «+» на «−», «−» на «+».
-    </div>
-  </div>
-  <div class="rule book">
-    <span class="src">Как в учебнике</span>
-    • если перед скобками стоит знак «плюс», то скобки можно опустить, сохранив знак каждого слагаемого, заключённого в скобки;<br>
-    • если перед скобками стоит знак «минус», то скобки можно опустить, изменив знак каждого слагаемого, заключённого в скобки, на противоположный.
-  </div>
-  <p><b>Важно:</b> если у первого числа в скобке не написан знак, значит, там «+». В <span class="m">(4<i>b</i> − <i>c</i>)</span> на самом деле написано <span class="m">(+4<i>b</i> − <i>c</i>)</span>.</p>
-
-  <div class="lab">
-    <p style="margin:0 0 6px;text-align:center"><b>Нажми «Раскрыть» и посмотри, что происходит со знаками</b></p>
-    <div class="seg" style="margin-bottom:8px">
-      <button class="segb" data-br="0" aria-pressed="true">Пример 2: 2a + (b − 3c)</button>
-      <button class="segb" data-br="1" aria-pressed="false">Пример 3: a − (4b − c)</button>
-    </div>
-    <div class="big brx" id="brExpr"></div>
-    <div class="said" id="brSay"></div>
-    <div class="quick"><button class="chip" id="brGo">Раскрыть</button></div>
-  </div>
-
-  <p><b>Пример 2:</b> <span class="m">2<i>a</i> + (<i>b</i> − 3<i>c</i>) = 2<i>a</i> + <i>b</i> − 3<i>c</i></span>. Перед скобкой плюс, знаки не меняем.</p>
-  <p><b>Пример 3:</b> <span class="m"><i>a</i> − (4<i>b</i> − <i>c</i>) = <i>a</i> − 4<i>b</i> + <i>c</i></span>. Перед скобкой минус: у <span class="m">4<i>b</i></span> был невидимый «+», стал «−», а у <span class="m"><i>c</i></span> был «−», стал «+».</p>
-  <p><b>Почему так?</b> Учебник объясняет: минус перед скобкой — это умножение на −1. Каждое число в скобке умножается на −1 (распределительное свойство), а при умножении на −1 знак меняется:</p>
-  <div class="calc"><i>a</i> − (4<i>b</i> − <i>c</i>) = <i>a</i> + (−1)(4<i>b</i> − <i>c</i>) = <i>a</i> + (−4<i>b</i> + <i>c</i>) = <i>a</i> − 4<i>b</i> + <i>c</i></div>
-  <div class="rule gold"><b class="t">Самая частая ошибка:</b> поменять знак только у первого слагаемого, а про остальные забыть. Минус перед скобкой меняет знак у <b>всех</b>!</div>
-
-  <div class="say">
-    <h3>Коротко весь пункт 6</h3>
-    <ul>
-      <li><b>Тождественно равные выражения</b> — их значения равны при любых значениях переменных.</li>
-      <li><b>Тождество</b> — равенство, верное при любых значениях переменных.</li>
-      <li><b>Тождественное преобразование</b> — замена выражения тождественно равным ему.</li>
-      <li><b>Подобные слагаемые</b> — с одинаковой буквенной частью. Приводим так: складываем коэффициенты, букву переписываем.</li>
-      <li><b>Скобки:</b> перед «+» знаки сохраняем, перед «−» меняем у каждого слагаемого.</li>
-    </ul>
-  </div>
+<section class="card" id="s5">
+  <span class="tag">Шаг 5</span>
+  <h2>Домашняя работа: № 114 и № 117</h2>
+  <p>Сначала сравни со своей тетрадью сама, потом открой решение.</p>
+  <h3>№ 114. Приведите подобные слагаемые</h3>
+  <p class="src">а) 5a + 27a − a; &nbsp; б) 12b − 17b − b; &nbsp; в) 6x − 14 − 13x + 26; &nbsp; г) −8 − y + 17 − 10y</p>
+  <button class="btn ghost show-sol" data-for="hw114">Показать решение</button>
+  <div class="hidden-sol" id="hw114"><div class="tetrad sol-t">
+    <div class="row"><span class="eq">а) 5a + 27a − a = 31a</span><span class="why">5 + 27 − 1 = 31 (у «− a» коэффициент −1)</span></div>
+    <div class="row"><span class="eq">б) 12b − 17b − b = −6b</span><span class="why">12 − 17 − 1 = −6</span></div>
+    <div class="row"><span class="eq">в) 6x − 14 − 13x + 26 = −7x + 12</span><span class="why">иксы: 6 − 13 = −7 → −7x; числа: −14 + 26 = 12</span></div>
+    <div class="row"><span class="eq">г) −8 − y + 17 − 10y = 9 − 11y</span><span class="why">числа: −8 + 17 = 9; игреки: −1 − 10 = −11 → −11y</span></div>
+  </div></div>
+  <h3>№ 117. Раскройте скобки</h3>
+  <p class="src">а) x + (b + c + d − m); &nbsp; б) a − (b − c − d)</p>
+  <button class="btn ghost show-sol" data-for="hw117">Показать решение</button>
+  <div class="hidden-sol" id="hw117"><div class="tetrad sol-t">
+    <div class="row"><span class="eq">а) x + (b + c + d − m) = x + b + c + d − m</span><span class="why">перед скобкой «+»: знаки не меняем</span></div>
+    <div class="row"><span class="eq">б) a − (b − c − d) = a − b + c + d</span><span class="why">перед скобкой «−»: меняем каждый знак — b стало −b, −c стало +c, −d стало +d</span></div>
+  </div></div>
 </section>
 
-<!-- ============ 114 ============ -->
-<section id="e114">
-  <span class="tag">Разбор упражнения</span>
-  <h2>№ 114. Приведите подобные слагаемые</h2>
-  <div class="task"><b>114.</b> а) 5<i>a</i> + 27<i>a</i> − <i>a</i>; &nbsp;&nbsp; в) 6<i>x</i> − 14 − 13<i>x</i> + 26.</div>
-  <p>План: <b>1)</b> подчеркнуть подобные одним цветом; <b>2)</b> выписать их коэффициенты <b>вместе со знаками</b>; <b>3)</b> сложить коэффициенты и дописать букву.</p>
+<!-- ============ 7 ============ -->
+<section class="card" id="s7">
+  <span class="tag">Сама</span>
+  <h2>Тренировка</h2>
+  <p>Решай на листе, потом впиши ответ. Пиши как обычно: <span class="m">7b</span>, <span class="m">−5y + 9</span>.</p>
 
-  <h3>а) 5<i>a</i> + 27<i>a</i> − <i>a</i></h3>
-  <ol class="steps">
-    <li>Все три слагаемых с буквой <i class="m">a</i>, значит, все подобные.</li>
-    <li>Коэффициенты: <span class="m">5</span>, <span class="m">27</span> и <span class="m">−1</span> (у <span class="m">−<i>a</i></span> невидимая единица!).</li>
-    <li>Складываем: <span class="m">5 + 27 − 1 = 31</span>.</li>
-  </ol>
-  <div class="calc">5<i>a</i> + 27<i>a</i> − <i>a</i> = (5 + 27 − 1)<i>a</i> = 31<i>a</i></div>
-  <p>Ответ: <span class="ans">31<i>a</i></span></p>
-
-  <h3>в) 6<i>x</i> − 14 − 13<i>x</i> + 26</h3>
-  <ol class="steps">
-    <li>Две группы: слагаемые с <i class="m">x</i> (<span class="term t1">6<i>x</i></span> и <span class="term t1">−13<i>x</i></span>) и числа без букв (<span class="term t2">−14</span> и <span class="term t2">+26</span>).</li>
-    <li>Ставим их рядом, каждое со своим знаком: <span class="m">6<i>x</i> − 13<i>x</i> − 14 + 26</span>.</li>
-    <li>Иксы: <span class="m">6 − 13 = −7</span>, значит, <span class="m">−7<i>x</i></span>. Числа: <span class="m">−14 + 26 = 12</span>.</li>
-  </ol>
-  <div class="calc"><span class="term t1">6<i>x</i></span> <span class="term t2">− 14</span> <span class="term t1">− 13<i>x</i></span> <span class="term t2">+ 26</span> = (6 − 13)<i>x</i> + (−14 + 26) = −7<i>x</i> + 12</div>
-  <p>Ответ: <span class="ans">−7<i>x</i> + 12</span> &nbsp;(можно записать и как <span class="m">12 − 7<i>x</i></span>, это одно и то же)</p>
-  <p class="book">Иксы и числа между собой не складываем: «−7 иксов плюс 12» дальше не упростить, как яблоки с грушами.</p>
-</section>
-
-<!-- ============ 117 ============ -->
-<section id="e117">
-  <span class="tag">Разбор упражнения</span>
-  <h2>№ 117. Раскройте скобки</h2>
-  <div class="task"><b>117.</b> б) <i>a</i> − (<i>b</i> − <i>c</i> − <i>d</i>); &nbsp;&nbsp; г) <i>x</i> + (<i>a</i> − <i>b</i>) − (<i>c</i> + <i>d</i>).</div>
-  <p>План: <b>1)</b> посмотреть на знак <b>перед</b> скобкой; <b>2)</b> если «+», переписать как есть, если «−», перевернуть знак у <b>каждого</b> слагаемого внутри.</p>
-
-  <h3>б) <i>a</i> − (<i>b</i> − <i>c</i> − <i>d</i>)</h3>
-  <ol class="steps">
-    <li>Перед скобкой <b>минус</b>, значит, переворачиваем все знаки внутри.</li>
-    <li>Внутри: <span class="m">+<i>b</i></span> (невидимый плюс), <span class="m">−<i>c</i></span>, <span class="m">−<i>d</i></span>.</li>
-    <li>Переворачиваем: <span class="m">+<i>b</i> → −<i>b</i></span>, <span class="m">−<i>c</i> → +<i>c</i></span>, <span class="m">−<i>d</i> → +<i>d</i></span>.</li>
-  </ol>
-  <div class="calc"><i>a</i> − (<i>b</i> − <i>c</i> − <i>d</i>) = <i>a</i> <span class="flip">−</span> <i>b</i> <span class="flip">+</span> <i>c</i> <span class="flip">+</span> <i>d</i></div>
-  <p>Ответ: <span class="ans"><i>a</i> − <i>b</i> + <i>c</i> + <i>d</i></span></p>
-
-  <h3>г) <i>x</i> + (<i>a</i> − <i>b</i>) − (<i>c</i> + <i>d</i>)</h3>
-  <p>Здесь две скобки, и с каждой разбираемся отдельно:</p>
-  <ol class="steps">
-    <li>Перед <span class="m">(<i>a</i> − <i>b</i>)</span> стоит <b>плюс</b>: переписываем как есть, получается <span class="m">+ <i>a</i> − <i>b</i></span>.</li>
-    <li>Перед <span class="m">(<i>c</i> + <i>d</i>)</span> стоит <b>минус</b>: переворачиваем оба знака, получается <span class="m">− <i>c</i> − <i>d</i></span>.</li>
-  </ol>
-  <div class="calc"><i>x</i> + (<i>a</i> − <i>b</i>) − (<i>c</i> + <i>d</i>) = <i>x</i> + <i>a</i> − <i>b</i> <span class="flip">−</span> <i>c</i> <span class="flip">−</span> <i>d</i></div>
-  <p>Ответ: <span class="ans"><i>x</i> + <i>a</i> − <i>b</i> − <i>c</i> − <i>d</i></span></p>
-  <p class="book">Красным выделены знаки, которые поменялись.</p>
-</section>
-
-<!-- ============ самопроверка ============ -->
-<section id="self">
-  <span class="tag">Реши сама</span>
-  <h2>Две задачи для самопроверки</h2>
-  <p>Алиса, реши в клеточках стилусом, потом впиши ответ в окошко и нажми «Проверить». Ответ пиши как в тетради, например <span class="m">5x − 3</span>. Буквы можно писать и по-русски, и по-английски, порядок слагаемых неважен.</p>
-
-  <h3>Задание 1 <span style="font-weight:400;color:var(--muted);font-size:16px">(похоже на № 114)</span></h3>
-  <div class="task">Приведите подобные слагаемые: а) 9<i>b</i> − 4<i>b</i> + 2<i>b</i>; &nbsp; б) 4<i>y</i> + 15 − 9<i>y</i> − 6.</div>
-  <div class="board" data-board="z1" data-height="440"></div>
-  <div class="check expr" data-answer="7b" data-mode="like" data-hint="Все слагаемые подобные. Сложи коэффициенты 9, −4 и 2.">
-    <label for="a1">а)</label><input id="a1" autocomplete="off" autocapitalize="off" spellcheck="false">
-    <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
-  </div>
-  <div class="check expr" data-answer="-5y+9" data-mode="like" data-hint="Отдельно игреки: 4 − 9. Отдельно числа: 15 − 6.">
-    <label for="a2">б)</label><input id="a2" autocomplete="off" autocapitalize="off" spellcheck="false">
-    <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
-  </div>
+  <h3>Задание 1 <span class="sub">(как № 105)</span></h3>
+  <div class="task">Тождественно ли равны выражения <span class="m"><i>a</i> + <i>a</i> + <i>a</i></span> и <span class="m">3<i>a</i></span>?</div>
+  <div class="yn" data-ok="yes"><button class="btn ghost" data-v="yes">Да</button><button class="btn ghost" data-v="no">Нет</button><span class="fb"></span></div>
   <button class="btn ghost show-sol" data-for="sol1">Показать решение</button>
-  <div class="hidden-sol" id="sol1">
-    <p class="sol"><b>а)</b> <span class="m">9<i>b</i> − 4<i>b</i> + 2<i>b</i> = (9 − 4 + 2)<i>b</i> = 7<i>b</i></span></p>
-    <p class="sol"><b>б)</b> <span class="m">4<i>y</i> + 15 − 9<i>y</i> − 6 = (4 − 9)<i>y</i> + (15 − 6) = −5<i>y</i> + 9</span></p>
-  </div>
+  <div class="hidden-sol" id="sol1"><div class="tetrad sol-t">
+    <div class="row"><span class="eq">a + a + a = 3a</span><span class="why">три раза по a — это 3·a. Верно при любом a</span></div>
+    <div class="row"><span class="eq"></span><span class="why">значит, тождественно равны</span></div>
+  </div></div>
 
-  <h3>Задание 2 <span style="font-weight:400;color:var(--muted);font-size:16px">(похоже на № 117)</span></h3>
-  <div class="task">Раскройте скобки: а) <i>m</i> − (<i>a</i> + <i>b</i> − <i>c</i>); &nbsp; б) <i>x</i> + (<i>y</i> − <i>z</i>) − (<i>p</i> − <i>q</i>).</div>
-  <div class="board" data-board="z2" data-height="440"></div>
-  <div class="check expr" data-answer="m-a-b+c" data-mode="open" data-hint="Перед скобкой минус: поменяй знак у каждого из a, b, c.">
-    <label for="a3">а)</label><input id="a3" autocomplete="off" autocapitalize="off" spellcheck="false">
-    <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
-  </div>
-  <div class="check expr" data-answer="x+y-z-p+q" data-mode="open" data-hint="Первую скобку перепиши как есть, во второй переверни оба знака.">
-    <label for="a4">б)</label><input id="a4" autocomplete="off" autocapitalize="off" spellcheck="false">
+  <h3>Задание 2 <span class="sub">(как № 115)</span></h3>
+  <div class="task">Приведите подобные слагаемые: <span class="m">9<i>b</i> − 4<i>b</i> + 2<i>b</i></span></div>
+  <div class="board" data-board="t2" data-height="240"></div>
+  <div class="check expr" data-answer="7b" data-mode="like" data-hint="Все слагаемые подобные. Сложи числа 9, −4 и 2.">
+    <label for="a2">=</label><input id="a2" autocomplete="off" autocapitalize="off" spellcheck="false">
     <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
   </div>
   <button class="btn ghost show-sol" data-for="sol2">Показать решение</button>
-  <div class="hidden-sol" id="sol2">
-    <p class="sol"><b>а)</b> <span class="m"><i>m</i> − (<i>a</i> + <i>b</i> − <i>c</i>) = <i>m</i> − <i>a</i> − <i>b</i> + <i>c</i></span></p>
-    <p class="sol"><b>б)</b> <span class="m"><i>x</i> + (<i>y</i> − <i>z</i>) − (<i>p</i> − <i>q</i>) = <i>x</i> + <i>y</i> − <i>z</i> − <i>p</i> + <i>q</i></span></p>
+  <div class="hidden-sol" id="sol2"><div class="tetrad sol-t">
+    <div class="row"><span class="eq">9b − 4b + 2b = 7b</span><span class="why">все слагаемые с b — подобные. Числа: 9 − 4 + 2 = 7</span></div>
+  </div></div>
+
+  <h3>Задание 3 <span class="sub">(как № 115)</span></h3>
+  <div class="task">Приведите подобные слагаемые: <span class="m">4<i>y</i> + 15 − 9<i>y</i> − 6</span></div>
+  <div class="board" data-board="t3" data-height="240"></div>
+  <div class="check expr" data-answer="-5y+9" data-mode="like" data-hint="Отдельно игреки: 4 − 9. Отдельно числа: 15 − 6.">
+    <label for="a3">=</label><input id="a3" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
   </div>
+  <button class="btn ghost show-sol" data-for="sol3">Показать решение</button>
+  <div class="hidden-sol" id="sol3"><div class="tetrad sol-t">
+    <div class="row"><span class="eq">4y + 15 − 9y − 6 = −5y + 9</span><span class="why">игреки: 4 − 9 = −5 → −5y; числа: 15 − 6 = 9</span></div>
+  </div></div>
+
+  <h3>Задание 4 <span class="sub">(как −2(7b − 3c + 5))</span></h3>
+  <div class="task">Раскройте скобки: <span class="m">3(2<i>a</i> − <i>b</i> + 4)</span></div>
+  <div class="board" data-board="t4" data-height="240"></div>
+  <div class="check expr" data-answer="6a-3b+12" data-mode="open" data-hint="Умножь 3 на каждое слагаемое: 3·2a, 3·(−b), 3·4.">
+    <label for="a4">=</label><input id="a4" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
+  </div>
+  <button class="btn ghost show-sol" data-for="sol4">Показать решение</button>
+  <div class="hidden-sol" id="sol4"><div class="tetrad sol-t">
+    <div class="row"><span class="eq">3(2a − b + 4) = 6a − 3b + 12</span><span class="why">3·2a = 6a; 3·(−b) = −3b; 3·4 = 12</span></div>
+  </div></div>
+
+  <h3>Задание 5 <span class="sub">(как № 117 б)</span></h3>
+  <div class="task">Раскройте скобки: <span class="m"><i>m</i> − (<i>a</i> + <i>b</i> − <i>c</i>)</span></div>
+  <div class="board" data-board="t5" data-height="240"></div>
+  <div class="check expr" data-answer="m-a-b+c" data-mode="open" data-hint="Перед скобкой минус: поменяй знак у каждого из a, b, c.">
+    <label for="a5">=</label><input id="a5" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span>
+  </div>
+  <button class="btn ghost show-sol" data-for="sol5">Показать решение</button>
+  <div class="hidden-sol" id="sol5"><div class="tetrad sol-t">
+    <div class="row"><span class="eq">m − (a + b − c) = m − a − b + c</span><span class="why">перед скобкой «−»: a стало −a, b стало −b, −c стало +c</span></div>
+  </div></div>
 </section>
 
-<footer>Алгебра, 7 класс · § 2, п. 6 «Тождества. Тождественные преобразования выражений»</footer>
+<footer>Алгебра, 7 класс · § 2 · п. 6 «Тождества. Тождественные преобразования выражений»</footer>
 </div>
 
-
 <script>
-/* ---------- тренажёр подобных слагаемых ---------- */
+/* ---------- пары: совпадают всегда или случайно ---------- */
 (function(){
-  var ex=[
-    [[5,'x'],[2,'x'],[-3,'x']],
-    [[3,'a'],[-2,'a'],[1,'b'],[-2,'c'],[4,'a']],
-    [[7,'y'],[-3,''],[2,'y'],[10,'']],
-    [[-4,'m'],[9,''],[1,'m'],[-12,'']]
+  var btn=document.getElementById('newNums'), A=document.querySelector('#pairA .pv'), B=document.querySelector('#pairB .pv'), cnt=document.getElementById('cnt'), n=0;
+  function mn(v){ return String(v).replace('-','−'); }
+  function show(x,y){
+    var a1=3*(x+y), a2=3*x+3*y, b1=2*x+y, b2=2*x*y;
+    A.innerHTML='x = '+x+', y = '+y+'<br>'+a1+' и '+a2+' — '+(a1===a2?'<span class="ok">равны ✓</span>':'<span class="no">не равны</span>');
+    B.innerHTML='x = '+x+', y = '+y+'<br>'+b1+' и '+b2+' — '+(b1===b2?'<span class="ok">равны ✓</span>':'<span class="no">не равны ✗</span>');
+  }
+  show(5,4);
+  btn.addEventListener('click',function(){
+    var x=1+Math.floor(Math.random()*9), y=1+Math.floor(Math.random()*9); n++;
+    if(n===2){ x=1; y=2; }
+    show(x,y); cnt.textContent='попыток: '+n;
+    if(n>=3) document.getElementById('found1').hidden=false;
+  });
+})();
+
+/* ---------- скобка на скобку ---------- */
+(function(){
+  var box=document.getElementById('mul'), say=document.getElementById('mulSay'), cur=0;
+  var P=[[null,null],[0,0],[0,1],[1,0],[1,1],[null,null]];
+  var R=['','x²','x² − xy','x² − xy − xy','x² − xy − xy + y²','x² − 2xy + y²'];
+  var T=[
+    'Будем умножать <b>каждое</b> слагаемое первой скобки на <b>каждое</b> слагаемое второй. Всего получится 4 произведения.',
+    '<b>x·x = x²</b> — первое из первой скобки на первое из второй.',
+    '<b>x·(−y) = −xy</b> — первое на второе.',
+    '<b>(−y)·x = −xy</b> — второе на первое.',
+    '<b>(−y)·(−y) = y²</b> — второе на второе; минус на минус — плюс.',
+    'Осталось привести подобные: <b>−xy − xy = −2xy</b>. Ответ: <b>x² − 2xy + y²</b>.'
   ];
-  var k=0, done=false;
-  var exprEl=document.getElementById('likeExpr'), outEl=document.getElementById('likeOut');
-  function V(v){ return v ? '<i>'+v+'</i>' : ''; }
-  function coef(c,v){ if(!v) return String(Math.abs(c)); return Math.abs(c)===1 ? '' : String(Math.abs(c)); }
-  function termHTML(c,v,first){
-    var sign = c<0 ? (first?'−':'− ') : (first?'':'+ ');
-    return sign+coef(c,v)+V(v);
-  }
-  function groups(list){
-    var order=[], g={};
-    list.forEach(function(t){ if(!(t[1] in g)){ g[t[1]]=[]; order.push(t[1]); } g[t[1]].push(t[0]); });
-    return {order:order,g:g};
-  }
-  function cls(v,order){ return 't'+(order.indexOf(v)%3+1); }
+  var t=['x','−y'];
+  function br(i,k){ return '('+t.map(function(s,j){ var c=(k!==null&&j===k)?(i===0?'hl1':'hl2'):''; return (j?' ':'')+(c?'<span class="'+c+'">'+s+'</span>':s); }).join('').replace('  ',' ').replace(' −y',' − y').replace('>−y<','>− y<')+')'; }
   function show(){
-    var list=ex[k], G=groups(list);
-    exprEl.innerHTML=list.map(function(t,i){ return '<span class="term '+cls(t[1],G.order)+'">'+termHTML(t[0],t[1],i===0)+'</span>'; }).join(' ');
-    outEl.innerHTML=''; done=false; document.getElementById('likeGo').textContent='Собрать';
+    var p=P[cur];
+    box.innerHTML=br(0,p[0])+br(1,p[1])+(R[cur]?' =<span class="res">'+R[cur]+'</span>':'');
+    say.innerHTML='<b>Шаг '+cur+' из 5.</b> '+T[cur];
+    document.getElementById('mBack').disabled=cur===0; document.getElementById('mNext').disabled=cur===5;
   }
-  function collect(){
-    var list=ex[k], G=groups(list), parts=[], res=[];
-    G.order.forEach(function(v){
-      var cs=G.g[v], sum=cs.reduce(function(a,b){return a+b},0);
-      var inner=cs.map(function(c,i){ return (i===0 ? (c<0?'−':'') : (c<0?' − ':' + '))+Math.abs(c); }).join('');
-      parts.push('<span class="term '+cls(v,G.order)+'">'+(cs.length>1 ? '('+inner+')'+V(v) : termHTML(cs[0],v,true))+'</span>');
-      if(sum!==0) res.push([sum,v]);
-    });
-    var r = res.length ? res.map(function(t,i){ return termHTML(t[0],t[1],i===0); }).join(' ') : '0';
-    outEl.innerHTML='<span class="m">= '+parts.join(' + ').replace(/\+ <span class="term (t\d)">−/g,'− <span class="term $1">')+'</span><br><span class="m">= <b>'+r+'</b></span>';
-    done=true; document.getElementById('likeGo').textContent='Собрано ✓';
-  }
-  document.getElementById('likeGo').addEventListener('click',function(){ if(!done) collect(); });
-  document.getElementById('likeNext').addEventListener('click',function(){ k=(k+1)%ex.length; show(); });
+  document.getElementById('mNext').addEventListener('click',function(){ if(cur<5){cur++;show();} });
+  document.getElementById('mBack').addEventListener('click',function(){ if(cur>0){cur--;show();} });
   show();
 })();
 
-/* ---------- раскрытие скобок ---------- */
+/* ---------- собрать подобные ---------- */
 (function(){
-  var st=[
-    {closed:'2<i>a</i> + (<i>b</i> − 3<i>c</i>)',
-     open:'2<i>a</i> <span class="keep">+</span> <i>b</i> <span class="keep">−</span> 3<i>c</i>',
-     sayC:'Перед скобкой стоит <b>плюс</b>.',
-     sayO:'Скобки стёрли, знаки внутри не изменились (зелёные).'},
-    {closed:'<i>a</i> − (<span class="ghost">+</span>4<i>b</i> − <i>c</i>)',
-     open:'<i>a</i> <span class="flip">−</span> 4<i>b</i> <span class="flip">+</span> <i>c</i>',
-     sayC:'Перед скобкой стоит <b>минус</b>. Серым показан невидимый плюс перед 4<i>b</i>.',
-     sayO:'Скобки стёрли, и <b>каждый</b> знак перевернулся (красные): + стал −, а − стал +.'}
+  var box=document.getElementById('gather'), say=document.getElementById('gSay'), k=0, done=false;
+  var EX=[
+    [[3,'a'],[3,'b'],[5,'a']],
+    [[13,'a'],[2,'b'],[-2,'a'],[-1,'b']],
+    [[7,'x'],[-2,''],[3,'x'],[5,'']]
   ];
-  var k=0, open=false, e=document.getElementById('brExpr'), s=document.getElementById('brSay'), b=document.getElementById('brGo');
-  function show(){
-    var x=st[k];
-    e.innerHTML = open ? x.closed+' = '+x.open : x.closed;
-    s.innerHTML = open ? x.sayO : x.sayC;
-    b.textContent = open ? 'Ещё раз' : 'Раскрыть';
+  function mn(v){ return String(v).replace('-','−'); }
+  function term(c,v,first){ var s=c<0?'−':(first?'':'+'); var a=Math.abs(c); var num=(v&&a===1)?'':a; return (first&&c>0?'':s+' ')+num+v; }
+  function chip(c,v,first){ return '<span class="chip v-'+v+'">'+term(c,v,first)+'</span>'; }
+  function render(){
+    var ex=EX[k];
+    if(!done){ box.innerHTML=ex.map(function(t,i){ return chip(t[0],t[1],i===0); }).join(''); say.textContent='Одинаковым цветом — подобные слагаемые (одинаковая буква).'; return; }
+    var order=[]; ex.forEach(function(t){ if(order.indexOf(t[1])<0) order.push(t[1]); });
+    var grouped=[], res=[], expl=[];
+    order.forEach(function(v){ var g=ex.filter(function(t){return t[1]===v;}); g.forEach(function(t){ grouped.push(t); }); var s=g.reduce(function(a,t){return a+t[0];},0); res.push([s,v]); if(g.length===1){ expl.push(term(g[0][0],v,true)+' — без пары, переписываем'); return; } expl.push((v||'числа')+': '+g.map(function(t,i){return (i&&t[0]>0?'+ ':'')+mn(t[0]);}).join(' ')+' = '+mn(s)); });
+    box.innerHTML=grouped.map(function(t,i){ return chip(t[0],t[1],i===0); }).join('')+'<span class="eqs">=</span>'+res.filter(function(t){return t[0]!==0;}).map(function(t,i){ return chip(t[0],t[1],i===0); }).join('');
+    say.innerHTML='Сложили числа перед одинаковыми буквами. '+expl.join('; ')+'.';
   }
-  b.addEventListener('click',function(){ open=!open; show(); });
-  document.querySelectorAll('.segb[data-br]').forEach(function(btn){
-    btn.addEventListener('click',function(){
-      k=+btn.dataset.br; open=false;
-      document.querySelectorAll('.segb[data-br]').forEach(function(x){ x.setAttribute('aria-pressed', x===btn?'true':'false'); });
-      show();
-    });
-  });
-  show();
+  document.getElementById('gBtn').addEventListener('click',function(){ done=true; render(); });
+  document.getElementById('gNext').addEventListener('click',function(){ k=(k+1)%EX.length; done=false; render(); });
+  render();
 })();
+/* ---------- да / нет ---------- */
+document.querySelectorAll('.yn').forEach(function(box){
+  var fb=box.querySelector('.fb');
+  box.querySelectorAll('button').forEach(function(b){ b.addEventListener('click',function(){
+    box.querySelectorAll('button').forEach(function(x){ x.classList.remove('on-ok','on-no'); });
+    var ok=b.dataset.v===box.dataset.ok; b.classList.add(ok?'on-ok':'on-no');
+    fb.className='fb '+(ok?'ok':'no'); fb.textContent= ok ? 'Верно! 🎉' : 'Проверь ещё раз: подставь число и посчитай обе части.';
+  }); });
+});
+/* ---------- проверка числа ---------- */
+function norm(v){ return parseFloat(String(v).replace(/\\s/g,'').replace(',','.').replace('−','-')); }
+document.querySelectorAll('.check:not(.expr)').forEach(function(box){
+  var inp=box.querySelector('input'), btn=box.querySelector('button'), fb=box.querySelector('.fb'), tries=0;
+  function go(){
+    var v=norm(inp.value);
+    if(isNaN(v)){ fb.className='fb no'; fb.textContent='Впиши число'; return; }
+    if(Math.abs(v-norm(box.dataset.answer))<1e-9){ fb.className='fb ok'; fb.textContent='Верно! 🎉'; inp.style.borderColor='#1f6b4f'; }
+    else { tries++; fb.className='fb no'; inp.style.borderColor='#b0182f'; fb.textContent = tries<2 ? 'Пока нет. Сделай проверку: подставь ответ в уравнение.' : 'Подсказка. '+box.dataset.hint; }
+  }
+  btn.addEventListener('click',go); inp.addEventListener('keydown',function(e){ if(e.key==='Enter') go(); });
+});
+document.querySelectorAll('.show-sol').forEach(function(b){
+  b.addEventListener('click',function(){ var el=document.getElementById(b.dataset.for), on=el.classList.toggle('show'); b.textContent = on ? 'Скрыть решение' : 'Показать решение'; });
+});
 
 /* ---------- проверка ответов-выражений ---------- */
 var CYR={'а':'a','б':'b','в':'b','с':'c','д':'d','е':'e','к':'k','м':'m','н':'n','о':'o','р':'p','т':'t','у':'y','х':'x','з':'z','г':'g'};
@@ -627,12 +540,6 @@ document.querySelectorAll('.check.expr').forEach(function(box){
   }
   btn.addEventListener('click',go);
   inp.addEventListener('keydown',function(e){ if(e.key==='Enter') go(); });
-});
-document.querySelectorAll('.show-sol').forEach(function(b){
-  b.addEventListener('click',function(){
-    var el=document.getElementById(b.dataset.for), on=el.classList.toggle('show');
-    b.textContent = on ? 'Скрыть решение' : 'Показать решение';
-  });
 });
 
 /* ---------- доска для письма стилусом ---------- */
@@ -745,6 +652,7 @@ function Board(root){
   lastW=cv.parentElement.clientWidth; size();
 }
 document.querySelectorAll('.board').forEach(function(b){ new Board(b); });
+
 </script>
 <script>
 try{var v=JSON.parse(localStorage.getItem('uroki-visited')||'{}');v['algebra/p6']=new Date().toISOString().slice(0,10);localStorage.setItem('uroki-visited',JSON.stringify(v));}catch(e){}
