@@ -1,0 +1,751 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="theme-color" content="#1d4f91">
+<link rel="apple-touch-icon" href="../../assets/icon-180.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Алгебра 7: подготовка к КР № 2</title>
+<link rel="stylesheet" href="../../assets/fonts.css">
+<style>
+  :root{
+    --bg:#eef2f7; --paper:#ffffff; --ink:#15202e; --muted:#566273; --line:#d5dde8;
+    --blue:#1d4f91; --blue-soft:#e3ecf8; --red:#b0182f; --red-soft:#f8e6ea;
+    --green:#1f6b4f; --green-soft:#e2f2eb; --gold:#6f550c; --gold-soft:#f5efd9;
+    --grid:#cfdcee; --pen:#1d3f8f;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.6 "PT Sans",system-ui,sans-serif}
+  .wrap{max-width:900px;margin:0 auto;padding:0 16px}
+  h1,h2,h3{line-height:1.2;margin:0}
+  h2{font-size:clamp(25px,3.8vw,32px);margin-bottom:12px}
+  h3{font-size:21px;margin:26px 0 10px}
+  p{margin:0 0 12px}
+  [id]{scroll-margin-top:64px}
+  .m{font-family:"PT Serif",Georgia,serif;white-space:nowrap}
+  .m i, i.m{font-style:italic}
+  .big{font-family:"PT Serif",Georgia,serif;font-size:28px;text-align:center;margin:12px 0 16px}
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:none}
+  nav a{flex:none;text-decoration:none;color:var(--ink);font-size:14px;font-weight:700;padding:8px 11px;border-radius:8px}
+  nav a:hover{background:var(--blue-soft);color:var(--blue)}
+  header{padding:40px 0 14px}
+  .hi{font-family:"PT Serif",serif;font-size:22px;color:var(--blue);margin:0 0 4px}
+  header h1{font-size:clamp(30px,5vw,44px);margin:4px 0 10px}
+  header p{color:var(--muted);max-width:660px;margin:0}
+  .card{background:var(--paper);border-radius:20px;padding:28px 26px 24px;margin:18px 0 22px;box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(21,32,46,.25)}
+  @media (max-width:560px){.card{padding:22px 16px 18px}}
+  .tag{display:inline-block;font-weight:700;font-size:14px;color:var(--blue);margin-bottom:6px}
+  .src{color:var(--muted);font-size:16px}
+  .sub{font-weight:400;color:var(--muted);font-size:16px}
+  .task{background:#f3f6fa;border-radius:12px;padding:14px 18px;margin:8px 0 12px}
+  .rule{background:var(--blue-soft);border-radius:12px;padding:14px 18px;margin:12px 0}
+  .rule b.t{color:var(--blue)}
+  .trap{background:var(--gold-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+  .trap b.t{color:var(--gold)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+  @media (max-width:620px){.two{grid-template-columns:1fr}}
+  .steps{counter-reset:s;list-style:none;padding:0;margin:10px 0}
+  .steps li{counter-increment:s;position:relative;padding:4px 0 8px 42px}
+  .steps li::before{content:counter(s);position:absolute;left:0;top:3px;width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;font-weight:700;display:grid;place-items:center;font-size:15px}
+
+  /* страница тетради */
+  .tetrad{position:relative;background-color:#fdfeff;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:22px 22px;
+    border-radius:12px;box-shadow:inset 0 0 0 1px var(--line);padding:30px 18px 14px;margin:12px 0;font-family:"PT Serif",serif;font-style:italic;font-size:20px;line-height:1.55;color:var(--pen)}
+  .tetrad .tl{position:absolute;top:6px;left:12px;font-family:"PT Sans",sans-serif;font-style:normal;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .tetrad .eq{display:block;white-space:nowrap}
+  .tetrad u{text-decoration:none;box-shadow:0 0 0 2px var(--pen);padding:0 6px;border-radius:2px}
+  .tetrad.big-t p{margin:0 0 10px} .tetrad.big-t b{font-style:normal;font-family:"PT Sans",sans-serif}
+
+  .kinds{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
+  .kinds > div{background:#f3f6fa;border-radius:14px;padding:12px 14px;font-size:16px;line-height:1.5}
+  .kinds b.h{display:block;font-size:17px;color:var(--blue);margin-bottom:4px}
+  .kinds .m{white-space:normal}
+  @media (max-width:760px){.kinds{grid-template-columns:1fr 1fr}}
+
+  .lab{background:#f3f6fa;border-radius:16px;padding:16px;margin:16px 0}
+  .lab svg{display:block;width:100%;height:auto;background:#fff;border-radius:12px;margin-top:10px}
+  .rng{display:flex;align-items:center;gap:12px;margin-top:12px;font-family:"PT Serif",serif;font-size:22px}
+  .rng input{flex:1;accent-color:var(--blue);height:32px}
+  .rng b{min-width:34px;text-align:center}
+  .say{background:#fff;border-radius:12px;padding:12px 14px;margin-top:10px;min-height:52px}
+  .say .ok{color:var(--green);font-weight:700} .say .no{color:var(--red);font-weight:700}
+
+  .solve{background:#fff;border-radius:12px;padding:14px 18px;margin-top:10px;font-family:"PT Serif",serif;font-size:24px;line-height:1.7}
+  .solve .ln{opacity:.35;transition:opacity .25s}
+  .solve .ln.cur{opacity:1}
+  .solve .ln.past{opacity:.7}
+  .solve .r{color:var(--red);font-weight:700} .solve .g{color:var(--green);font-weight:700} .solve .bl{color:var(--blue);font-weight:700}
+  .solve .note{font-family:"PT Sans",sans-serif;font-size:15px;color:var(--muted);margin-left:10px}
+  .ctl{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+
+  table.chk{border-collapse:collapse;width:100%;margin:10px 0;font-size:17px}
+  .chk th,.chk td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left}
+  .chk th{font-size:14px;color:var(--muted)}
+  .chk .yes{color:var(--green);font-weight:700} .chk .no{color:var(--muted)}
+
+  .yn{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+  .yn .btn.on-ok{background:var(--green);color:#fff} .yn .btn.on-no{background:var(--red);color:#fff}
+  .sum{padding-left:22px} .sum li{margin:6px 0}
+  .short h2{font-size:24px}
+  .three{padding-left:24px;margin:0;font-size:19px} .three li{margin:6px 0}
+  .cap{text-align:center;color:var(--muted);font-size:15px;margin-top:-8px}
+  .big .c-red,.big .c-blue{font-weight:700}
+  .easy{padding-left:22px} .easy li{margin:8px 0}
+  details.more{background:#f3f6fa;border-radius:12px;padding:4px 16px;margin:12px 0}
+  details.more summary{cursor:pointer;font-weight:700;color:var(--blue);min-height:44px;display:flex;align-items:center}
+  details.more[open]{padding-bottom:10px}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+  .vs div{border-radius:12px;padding:12px 14px;font-size:17px}
+  .vs .ok{background:var(--green-soft);color:var(--green)} .vs .no{background:var(--red-soft);color:var(--red)}
+  @media (max-width:620px){.vs{grid-template-columns:1fr}}
+  .moves{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+  .moves > div{background:var(--blue-soft);border-radius:14px;padding:12px 16px;font-size:17px}
+  .moves b.h{display:block;color:var(--blue);font-size:18px;margin-bottom:2px}
+  @media (max-width:620px){.moves{grid-template-columns:1fr}}
+  .found{background:var(--green-soft);border-radius:14px;padding:14px 18px;margin:14px 0 0;animation:pop .35s ease-out}
+  .found p:last-child{margin:0}
+  @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .sol-t{padding-top:16px}
+  .sol-t .row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:14px;align-items:baseline;padding:4px 0;border-bottom:1px dashed #c9d6e8}
+  .sol-t .row:last-child{border-bottom:0}
+  .sol-t .why{font-family:"PT Sans",sans-serif;font-style:normal;font-size:15.5px;line-height:1.4;color:var(--ink)}
+  .sol-t .row .eq:empty + .why{grid-column:1 / -1;color:var(--green);font-weight:700}
+  @media (max-width:620px){.sol-t .row{grid-template-columns:1fr;gap:0}.sol-t .why{margin:0 0 4px}}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding:6px 0 40px}
+  /* доска */
+  .board{margin:14px 0 10px;border-radius:14px;background:#fff;box-shadow:0 0 0 1px var(--line)}
+  .toolbar{display:flex;flex-wrap:wrap;gap:6px;padding:8px;border-bottom:1px solid var(--line);align-items:center}
+  .tool{display:inline-flex;align-items:center;gap:6px;border:1px solid transparent;background:#f3f6fa;color:var(--ink);border-radius:9px;padding:8px 12px;font:inherit;font-size:15px;font-weight:700;cursor:pointer;min-height:42px}
+  .tool svg{width:20px;height:20px;margin:0}
+  .tool[aria-pressed=true]{background:var(--blue);color:#fff}
+  .tool:hover{border-color:var(--blue)}
+  .tool .dot{width:14px;height:14px;border-radius:50%;box-shadow:0 0 0 2px #fff}
+  .spacer{flex:1}
+  .grip{display:flex;align-items:center;justify-content:center;gap:10px;height:34px;cursor:ns-resize;touch-action:none;-webkit-user-select:none;user-select:none;
+    background:#f3f6fa;border-top:1px solid var(--line);border-radius:0 0 14px 14px;font-size:13px;color:var(--muted)}
+  .grip span{width:56px;height:6px;border-radius:3px;background:#9fb3cf}
+  .grip:hover span,.grip.drag span{background:var(--blue)}
+  .pen-state{font-size:13px;color:var(--muted);padding:0 6px}
+  .canvas-box{position:relative;overflow:hidden;background-color:#fdfeff;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+  .canvas-box canvas{display:block;width:100%;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:crosshair}
+
+  .check{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0}
+  .check label{font-weight:700;min-width:28px}
+  .check input{font:inherit;font-size:20px;width:140px;padding:8px 12px;border:2px solid var(--line);border-radius:10px;font-family:"PT Serif",serif}
+  .check input:focus{outline:none;border-color:var(--blue)}
+  .btn{background:var(--blue);color:#fff;border:0;border-radius:10px;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer;min-height:44px}
+  .btn:hover{background:#163f75}
+  .btn.ghost{background:#f3f6fa;color:var(--ink)}
+  .fb{font-weight:700;min-height:26px}
+  .fb.ok{color:var(--green)} .fb.no{color:var(--red)}
+  .hidden-sol{display:none;background:#f3f6fa;border-radius:12px;padding:12px 16px;margin-top:8px}
+  .hidden-sol.show{display:block}
+  .sol{margin:0 0 6px}
+
+  .btn{background:var(--blue);color:#fff;border:0;border-radius:10px;padding:10px 16px;font:inherit;font-size:16px;font-weight:700;cursor:pointer;min-height:44px}
+  .btn.ghost{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+  .btn:disabled{opacity:.4;cursor:default}
+
+  .sol-t .eq{white-space:normal}
+  .sol-t .row{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)}
+  .fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;line-height:1.05;margin:0 3px;font-size:.82em}
+  .fr span:first-child{border-bottom:1.5px solid currentColor;padding:0 3px}
+  .task.big{font-size:26px;text-align:center;padding:16px}
+  .calm{color:var(--muted);font-size:16.5px}
+  .kt{border-top:1px solid var(--line);padding:22px 0 8px;margin-top:10px}
+  .kt:first-of-type{border-top:0;margin-top:0;padding-top:4px}
+  .kt h3{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .kt h3 .st{font-size:13px;font-weight:700;border-radius:999px;padding:3px 10px;background:#f3f6fa;color:var(--muted)}
+  .kt h3 .st.s0{background:#e2f2eb;color:var(--green)} .kt h3 .st.s1,.kt h3 .st.s2{background:#e3ecf8;color:var(--blue)} .kt h3 .st.s3{background:#f5efd9;color:var(--gold)}
+  figure.fg{margin:6px 0 12px} .fig{display:block;width:100%;max-width:640px;height:auto;margin:0 auto;background:#fbfcfe;border-radius:12px}
+  .ans{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin:10px 0}
+  .ans label,.ans .lbl{font-weight:700}
+  .ans input{font:inherit;font-size:20px;width:120px;padding:8px 10px;border-radius:10px;border:2px solid var(--line);background:#fff}
+  .ans.multi input{width:84px}
+  .ans .fb{flex-basis:100%;min-height:24px;font-weight:700}
+  .ans .fb.ok{color:var(--green)} .ans .fb.no{color:var(--red)}
+  .ans.pick .btn.on-ok{background:var(--green);color:#fff;box-shadow:none} .ans.pick .btn.on-no{background:var(--red);color:#fff;box-shadow:none}
+  .ladder{margin:6px 0 4px}
+  .ladder .bar{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+  .ladder .bar .btn:disabled{opacity:.4;cursor:not-allowed}
+  .ladder .h{display:none;background:#f3f6fa;border-radius:12px;padding:12px 16px;margin:8px 0;line-height:1.55}
+  .ladder .h.open{display:block}
+  .ladder .h.sol{background:#fff;box-shadow:inset 0 0 0 1px var(--line)}
+  .ladder .h > b:first-child{color:var(--blue)}
+  .why2{margin:10px 0 0;font-size:16.5px}
+  .prog{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:14px 0 4px}
+  .prog a{display:block;text-decoration:none;color:var(--ink);background:#f3f6fa;border-radius:10px;padding:8px 10px;font-size:14.5px;line-height:1.3}
+  .prog a b{display:block;font-size:15px}
+  .prog a.s0{background:#e2f2eb} .prog a.s1,.prog a.s2{background:#e3ecf8} .prog a.s3{background:#f5efd9}
+  .prog .sum{grid-column:1/-1;font-weight:700;font-size:16px;margin-top:4px}
+  .ctl{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a href="../../" style="color:#1d4f91">← Все уроки</a>
+  <a href="#how">Как работать</a>
+  <a href="#v1">Вариант 1</a>
+  <a href="#v2">Вариант 2</a>
+  <a href="#itog">Итог</a>
+</div></nav>
+
+<div class="wrap">
+<header>
+  <h1>Подготовка к контрольной работе № 2</h1>
+  <p>Уравнения и задачи на уравнения. Все задания — из листа, который дал учитель: два варианта, 13 заданий.</p>
+</header>
+
+<section class="card short" id="how">
+  <h2>Как работать</h2>
+  <ol class="three">
+    <li><b>Сначала попробуй сама.</b> Реши на доске стилусом, как в тетради, впиши ответ и нажми «Проверить».</li>
+    <li><b>Застряла — открой подсказку 1.</b> Это только намёк: какую тему вспомнить. Не помогло — открой <b>подсказку 2</b>, она подскажет первый шаг.</li>
+    <li><b>Полное решение</b> — только если совсем никак. Даже тогда потом закрой его и реши задание ещё раз сама.</li>
+  </ol>
+  <p class="calm">Ошибаться здесь можно сколько угодно: ответ можно проверять много раз, и никто не ставит оценку. Наоборот — ошибка здесь лучше, чем ошибка на контрольной.</p>
+  <div class="prog" id="prog"></div>
+</section>
+
+<!-- ================= ВАРИАНТ 1 ================= -->
+<section class="card" id="v1">
+  <span class="tag">Вариант 1</span>
+  <h2>Вариант 1</h2>
+
+  <!-- 1а -->
+  <div class="kt" data-id="v1-1a">
+    <h3>1 а) Решите уравнение</h3>
+    <div class="task m big"><span class="fr"><span>1</span><span>3</span></span><i>x</i> = 12</div>
+    <div class="board" data-board="v1-1a" data-height="220"></div>
+    <div class="ans" data-a="36"><label>x =</label><input inputmode="decimal" autocomplete="off"><button class="btn">Проверить</button><span class="fb" aria-live="polite"></span></div>
+    <div class="ladder">
+      <div class="h" data-n="1"><b>Подсказка 1.</b> Это самое простое — линейное уравнение вида <span class="m"><i>ax</i> = <i>b</i></span> (п. 8). Вспомни, как в нём находят <i class="m">x</i>.</div>
+      <div class="h" data-n="2"><b>Подсказка 2.</b> Здесь <span class="m"><i>a</i> = <span class="fr"><span>1</span><span>3</span></span></span>, <span class="m"><i>b</i> = 12</span>. Значит, 12 нужно разделить на <span class="fr"><span>1</span><span>3</span></span>. А делить на дробь — это умножать на перевёрнутую дробь. Ещё можно рассуждать так: треть числа равна 12. Какое это число?</div>
+      <div class="h sol" data-n="3"><b>Решение.</b>
+        <div class="tetrad sol-t">
+          <div class="row"><span class="eq"><span class="fr"><span>1</span><span>3</span></span>x = 12</span><span class="why">линейное уравнение: a = <sup>1</sup>/<sub>3</sub>, b = 12</span></div>
+          <div class="row"><span class="eq">x = 12 : <span class="fr"><span>1</span><span>3</span></span></span><span class="why">x = b : a</span></div>
+          <div class="row"><span class="eq">x = 12 · 3</span><span class="why">делить на <sup>1</sup>/<sub>3</sub> = умножить на перевёрнутую дробь <sup>3</sup>/<sub>1</sub>, то есть на 3</span></div>
+          <div class="row"><span class="eq">x = 36</span><span class="why">проверка: треть от 36 — это 12 ✓</span></div>
+        </div>
+        <p class="why2"><b>Почему так?</b> <span class="fr"><span>1</span><span>3</span></span>x — это «треть икса». Если треть числа — 12, то всё число в три раза больше.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1б -->
+  <div class="kt" data-id="v1-1b">
+    <h3>1 б) Решите уравнение</h3>
+    <div class="task m big">6<i>x</i> − 10,2 = 0</div>
+    <div class="board" data-board="v1-1b" data-height="220"></div>
+    <div class="ans" data-a="1.7"><label>x =</label><input inputmode="decimal" autocomplete="off"><button class="btn">Проверить</button><span class="fb" aria-live="polite"></span></div>
+    <div class="ladder">
+      <div class="h" data-n="1"><b>Подсказка 1.</b> Сделай уравнение простым, как в п. 7–8: всё, что без <i class="m">x</i>, — в другую часть.</div>
+      <div class="h" data-n="2"><b>Подсказка 2.</b> Перенеси −10,2 вправо. При переносе знак меняется на противоположный. Получится <span class="m">6<i>x</i> = …</span>, а дальше — как в задании 1 а).</div>
+      <div class="h sol" data-n="3"><b>Решение.</b>
+        <div class="tetrad sol-t">
+          <div class="row"><span class="eq">6x − 10,2 = 0</span><span class="why">мешает число −10,2 рядом с иксом</span></div>
+          <div class="row"><span class="eq">6x = 0 + 10,2</span><span class="why">перенесли −10,2 вправо — знак поменялся на +</span></div>
+          <div class="row"><span class="eq">6x = 10,2</span><span class="why">теперь уравнение простое: a = 6, b = 10,2</span></div>
+          <div class="row"><span class="eq">x = 10,2 : 6</span><span class="why">b делим на a</span></div>
+          <div class="row"><span class="eq">x = 1,7</span><span class="why">проверка: 6 · 1,7 = 10,2; 10,2 − 10,2 = 0 ✓</span></div>
+        </div>
+        <p class="why2"><b>Почему меняется знак?</b> Перенос — это когда к обеим частям прибавляют одно и то же. Прибавили 10,2 к обеим частям: слева −10,2 + 10,2 = 0 и число «исчезло», а справа появилось +10,2.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1в -->
+  <div class="kt" data-id="v1-1v">
+    <h3>1 в) Решите уравнение</h3>
+    <div class="task m big">5<i>x</i> − 4,5 = 3<i>x</i> + 2,5</div>
+    <div class="board" data-board="v1-1v" data-height="240"></div>
+    <div class="ans" data-a="3.5"><label>x =</label><input inputmode="decimal" autocomplete="off"><button class="btn">Проверить</button><span class="fb" aria-live="polite"></span></div>
+    <div class="ladder">
+      <div class="h" data-n="1"><b>Подсказка 1.</b> Иксы есть с двух сторон. Вспомни главное правило п. 7: иксы — в одну сторону, числа — в другую.</div>
+      <div class="h" data-n="2"><b>Подсказка 2.</b> Перенеси <span class="m">3<i>x</i></span> влево — станет <span class="m">−3<i>x</i></span>. Перенеси −4,5 вправо — станет +4,5. Слева останется <span class="m">5<i>x</i> − 3<i>x</i></span>, справа — <span class="m">2,5 + 4,5</span>.</div>
+      <div class="h sol" data-n="3"><b>Решение.</b>
+        <div class="tetrad sol-t">
+          <div class="row"><span class="eq">5x − 4,5 = 3x + 2,5</span><span class="why">иксы с обеих сторон</span></div>
+          <div class="row"><span class="eq">5x − 3x = 2,5 + 4,5</span><span class="why">3x перенесли влево (стало −3x), −4,5 вправо (стало +4,5)</span></div>
+          <div class="row"><span class="eq">2x = 7</span><span class="why">5x − 3x = 2x; 2,5 + 4,5 = 7</span></div>
+          <div class="row"><span class="eq">x = 7 : 2</span><span class="why">b делим на a</span></div>
+          <div class="row"><span class="eq">x = 3,5</span><span class="why">проверка: 5 · 3,5 − 4,5 = 13; 3 · 3,5 + 2,5 = 13 ✓</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1г -->
+  <div class="kt" data-id="v1-1g">
+    <h3>1 г) Решите уравнение</h3>
+    <div class="task m big">2<i>x</i> − (6<i>x</i> − 5) = 45</div>
+    <div class="board" data-board="v1-1g" data-height="240"></div>
+    <div class="ans" data-a="-10"><label>x =</label><input inputmode="decimal" autocomplete="off"><button class="btn">Проверить</button><span class="fb" aria-live="polite"></span></div>
+    <div class="ladder">
+      <div class="h" data-n="1"><b>Подсказка 1.</b> Сначала избавься от скобок. Вспомни правило из п. 6 (тождества): что делать, если перед скобкой стоит минус?</div>
+      <div class="h" data-n="2"><b>Подсказка 2.</b> Минус перед скобкой меняет знак у <b>каждого</b> слагаемого в скобке: <span class="m">−(6<i>x</i> − 5) = −6<i>x</i> + 5</span>. Потом сложи иксы: <span class="m">2<i>x</i> − 6<i>x</i></span>.</div>
+      <div class="h sol" data-n="3"><b>Решение.</b>
+        <div class="tetrad sol-t">
+          <div class="row"><span class="eq">2x − (6x − 5) = 45</span><span class="why">мешает скобка с минусом перед ней</span></div>
+          <div class="row"><span class="eq">2x − 6x + 5 = 45</span><span class="why">раскрыли скобку: минус перед ней поменял знаки — было 6x и −5, стало −6x и +5</span></div>
+          <div class="row"><span class="eq">−4x + 5 = 45</span><span class="why">2x − 6x = −4x (2 − 6 = −4)</span></div>
+          <div class="row"><span class="eq">−4x = 45 − 5</span><span class="why">+5 перенесли вправо — стало −5</span></div>
+          <div class="row"><span class="eq">−4x = 40</span><span class="why"></span></div>
+          <div class="row"><span class="eq">x = 40 : (−4)</span><span class="why">b делим на a; a = −4, с минусом!</span></div>
+          <div class="row"><span class="eq">x = −10</span><span class="why">плюс на минус — минус. Проверка: −20 − (−60 − 5) = −20 + 65 = 45 ✓</span></div>
+        </div>
+        <p class="why2"><b>Самая частая ошибка:</b> поменять знак только у первого слагаемого и написать −6x − 5. Минус относится ко всей скобке, значит, меняется знак у всех.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="kt" data-id="v1-2">
+    <h3>2. Задача</h3>
+    <div class="task">Таня в школу сначала едет на автобусе, а потом идёт пешком. Вся дорога у неё занимает 26 мин. Идёт она на 6 мин дольше, чем едет на автобусе. Сколько минут она едет на автобусе?</div>
+    <figure class="fg"><svg class="fig" viewBox="0 0 640 170" role="img" aria-label="Схема: вся дорога 26 минут — автобус и пешком; пешком на 6 минут дольше"><g font-family="PT Sans"><path d="M40 46 q0 -8 8 -8 H312 q8 0 8 -8 q0 8 8 8 H592 q8 0 8 8" fill="none" stroke="#566273" stroke-width="1.8"/><text x="320" y="28" font-size="15" fill="#15202e" text-anchor="middle" font-weight="700">вся дорога — 26 мин</text><rect x="40" y="56" width="220" height="26" rx="4" fill="#e3ecf8" stroke="#1d4f91" stroke-width="1.8"/><text x="150" y="74" font-size="16" fill="#1d4f91" text-anchor="middle" font-weight="700">?</text><rect x="260" y="56" width="220" height="26" rx="4" fill="#e2f2eb" stroke="#1f6b4f" stroke-width="1.8"/><text x="370" y="74" font-size="16" fill="#1f6b4f" text-anchor="middle" font-weight="700">столько же</text><rect x="480" y="56" width="120" height="26" rx="4" fill="#f5efd9" stroke="#6f550c" stroke-width="1.8"/><text x="540" y="74" font-size="16" fill="#6f550c" text-anchor="middle" font-weight="700">6 мин</text><g transform="translate(130 100)"><rect x="0" y="0" width="40" height="22" rx="5" fill="#1d4f91"/><rect x="4" y="4" width="8" height="7" rx="1.5" fill="#fff"/><rect x="15" y="4" width="8" height="7" rx="1.5" fill="#fff"/><rect x="26" y="4" width="10" height="7" rx="1.5" fill="#fff"/><circle cx="10" cy="23" r="4" fill="#15202e"/><circle cx="31" cy="23" r="4" fill="#15202e"/></g><text x="150" y="150" font-size="15" fill="#1d4f91" text-anchor="middle" font-weight="700">на автобусе</text><g transform="translate(420 98)" stroke="#1f6b4f" stroke-width="3" stroke-linecap="round" fill="none"><circle cx="10" cy="3" r="3.5" fill="#1f6b4f" stroke="none"/><path d="M10 8 L9 18 M9 18 L3 27 M9 18 L15 27 M10 11 L3 16 M10 11 L17 15"/></g><text x="430" y="150" font-size="15" fill="#1f6b4f" text-anchor="middle" font-weight="700">пешком — на 6 мин дольше</text><path d="M260 92 V100 M480 92 V100 M600 92 V100" stroke="#566273" stroke-width="1.5"/></g></svg></figure>
+    <div class="board" data-board="v1-2" data-height="260"></div>
+    <div class="ans" data-a="10"><label>на автобусе, мин:</label><input inputmode="decimal" autocomplete="off"><button class="btn">Проверить</button><span class="fb" aria-live="polite"></span></div>
+    <div class="ladder">
+      <div class="h" data-n="1"><b>Подсказка 1.</b> Задача решается уравнением, как в классе: то, что спрашивают, обозначь буквой <i class="m">x</i>.</div>
+      <div class="h" data-n="2"><b>Подсказка 2.</b> Пусть на автобусе Таня едет <i class="m">x</i> мин. Пешком — на 6 мин дольше. Как это записать через <i class="m">x</i>? А вся дорога — это автобус плюс пешком, и это 26 мин.</div>
+      <div class="h sol" data-n="3"><b>Решение.</b>
+        <figure class="fg"><svg class="fig" viewBox="0 0 640 170" role="img" aria-label="Схема: вся дорога 26 минут — автобус и пешком; пешком на 6 минут дольше"><g font-family="PT Sans"><path d="M40 46 q0 -8 8 -8 H312 q8 0 8 -8 q0 8 8 8 H592 q8 0 8 8" fill="none" stroke="#566273" stroke-width="1.8"/><text x="320" y="28" font-size="15" fill="#15202e" text-anchor="middle" font-weight="700">вся дорога — 26 мин</text><rect x="40" y="56" width="220" height="26" rx="4" fill="#e3ecf8" stroke="#1d4f91" stroke-width="1.8"/><text x="150" y="74" font-size="16" fill="#1d4f91" text-anchor="middle" font-weight="700" font-style="italic" font-family="PT Serif">x</text><rect x="260" y="56" width="220" height="26" rx="4" fill="#e2f2eb" stroke="#1f6b4f" stroke-width="1.8"/><text x="370" y="74" font-size="16" fill="#1f6b4f" text-anchor="middle" font-weight="700" font-style="italic" font-family="PT Serif">x</text><rect x="480" y="56" width="120" height="26" rx="4" fill="#f5efd9" stroke="#6f550c" stroke-width="1.8"/><text x="540" y="74" font-size="16" fill="#6f550c" text-anchor="middle" font-weight="700">6</text><g transform="translate(130 100)"><rect x="0" y="0" width="40" height="22" rx="5" fill="#1d4f91"/><rect x="4" y="4" width="8" height="7" rx="1.5" fill="#fff"/><rect x="15" y="4" width="8" height="7" rx="1.5" fill="#fff"/><rect x="26" y="4" width="10" height="7" rx="1.5" fill="#fff"/><circle cx="10" cy="23" r="4" fill="#15202e"/><circle cx="31" cy="23" r="4" fill="#15202e"/></g><text x="150" y="150" font-size="15" fill="#1d4f91" text-anchor="middle" font-weight="700">на автобусе</text><g transform="translate(420 98)" stroke="#1f6b4f" stroke-width="3" stroke-linecap="round" fill="none"><circle cx="10" cy="3" r="3.5" fill="#1f6b4f" stroke="none"/><path d="M10 8 L9 18 M9 18 L3 27 M9 18 L15 27 M10 11 L3 16 M10 11 L17 15"/></g><text x="430" y="150" font-size="15" fill="#1f6b4f" text-anchor="middle" font-weight="700">пешком: x + 6</text><path d="M260 92 V100 M480 92 V100 M600 92 V100" stroke="#566273" stroke-width="1.5"/></g></svg></figure>
+        <div class="tetrad sol-t">
+          <div class="row"><span class="eq">Пусть x мин — на автобусе</span><span class="why">обозначили то, что спрашивают</span></div>
+          <div class="row"><span class="eq">x + 6 мин — пешком</span><span class="why">«на 6 мин дольше» — значит, прибавляем 6</span></div>
+          <div class="row"><span class="eq">x + (x + 6) = 26</span><span class="why">автобус + пешком = вся дорога</span></div>
+          <div class="row"><span class="eq">2x + 6 = 26</span><span class="why">x + x = 2x</span></div>
+          <div class="row"><span class="eq">2x = 20</span><span class="why">+6 перенесли вправо: 26 − 6 = 20</span></div>
+          <div class="row"><span class="eq">x = 10</span><span class="why">20 : 2</span></div>
+          <div class="row"><span class="eq">Ответ: 10 мин</span><span class="why">проверка: автобус 10, пешком 16; 10 + 16 = 26, и 16 на 6 больше 10 ✓</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="kt" data-id="v1-3">
+    <h3>3. Задача</h3>
+    <div class="task">В двух сараях сложено сено, причём в первом сарае сена в 3 раза больше, чем во втором. После того как из первого сарая увезли 20 т сена, а во второй привезли 10 т, в обоих сараях сена стало поровну. Сколько всего тонн сена было в двух сараях первоначально?</div>
+    <figure class="fg"><svg class="fig" viewBox="0 0 640 260" role="img" aria-label="Схема: в первом сарае втрое больше сена, чем во втором; из первого увезли 20 тонн, во второй привезли 10, стало поровну"><g font-family="PT Sans"><path d="M40 40 L140 10 L240 40 Z" fill="#f8e6ea" stroke="#b0182f" stroke-width="2" stroke-linejoin="round"/><rect x="46" y="40" width="188" height="120" fill="#fff" stroke="#b0182f" stroke-width="2"/><rect x="66" y="124" width="148" height="26" rx="5" fill="#f5efd9" stroke="#6f550c" stroke-width="1.5"/><path d="M72 133 h136 M72 141 h136" stroke="#d8c48a" stroke-width="1.2"/><rect x="66" y="96" width="148" height="26" rx="5" fill="#f5efd9" stroke="#6f550c" stroke-width="1.5"/><path d="M72 105 h136 M72 113 h136" stroke="#d8c48a" stroke-width="1.2"/><rect x="66" y="68" width="148" height="26" rx="5" fill="#f5efd9" stroke="#6f550c" stroke-width="1.5"/><path d="M72 77 h136 M72 85 h136" stroke="#d8c48a" stroke-width="1.2"/><text x="140" y="186" font-size="15" fill="#15202e" text-anchor="middle" font-weight="700">1-й сарай</text><text x="140" y="206" font-size="15" fill="#b0182f" text-anchor="middle" font-weight="700">в 3 раза больше</text><path d="M400 40 L500 10 L600 40 Z" fill="#f8e6ea" stroke="#b0182f" stroke-width="2" stroke-linejoin="round"/><rect x="406" y="40" width="188" height="120" fill="#fff" stroke="#b0182f" stroke-width="2"/><rect x="426" y="124" width="148" height="26" rx="5" fill="#f5efd9" stroke="#6f550c" stroke-width="1.5"/><path d="M432 133 h136 M432 141 h136" stroke="#d8c48a" stroke-width="1.2"/><text x="500" y="186" font-size="15" fill="#15202e" text-anchor="middle" font-weight="700">2-й сарай</text><text x="500" y="206" font-size="15" fill="#b0182f" text-anchor="middle" font-weight="700">?</text><path d="M246 96 C276 86 292 70 304 52" fill="none" stroke="#b0182f" stroke-width="2.5"/><path d="M294 54 L305 50 L304 62" fill="none" stroke="#b0182f" stroke-width="2.5"/><text x="320" y="36" font-size="15" fill="#b0182f" text-anchor="middle" font-weight="700">увезли 20 т</text><path d="M336 150 C356 146 376 132 392 118" fill="none" stroke="#1f6b4f" stroke-width="2.5"/><path d="M381 118 L393 117 L390 129" fill="none" stroke="#1f6b4f" stroke-width="2.5"/><text x="320" y="172" font-size="15" fill="#1f6b4f" text-anchor="middle" font-weight="700">привезли 10 т</text><rect x="120" y="222" width="400" height="32" rx="10" fill="#15202e"/><text x="320" y="243" font-size="16" fill="#fff" text-anchor="middle" font-weight="700">после этого — поровну</text></g></svg></figure>
+    <div class="board" data-board="v1-3" data-height="280"></div>
+    <div class="ans" data-a="60"><label>всего было, т:</label><input inputmode="decimal" autocomplete="off"><button class="btn">Проверить</button><span class="fb" aria-live="polite"></span></div>
+    <div class="ladder">
+      <div class="h" data-n="1"><b>Подсказка 1.</b> Обозначь буквой <i class="m">x</i> то, чего меньше, — сено во втором сарае. Всё остальное вырази через <i class="m">x</i>.</div>
+      <div class="h" data-n="2"><b>Подсказка 2.</b> В первом — в 3 раза больше: <span class="m">3<i>x</i></span>. Из первого увезли 20 т — сколько там стало? Во второй привезли 10 т — сколько стало там? «Стало поровну» — значит, эти два выражения равны. Это и есть уравнение. И будь внимательна: спрашивают, сколько было <b>всего</b> и <b>вначале</b>.</div>
+      <div class="h sol" data-n="3"><b>Решение.</b>
+        <figure class="fg"><svg class="fig" viewBox="0 0 640 260" role="img" aria-label="Схема: в первом сарае втрое больше сена, чем во втором; из первого увезли 20 тонн, во второй привезли 10, стало поровну"><g font-family="PT Sans"><path d="M40 40 L140 10 L240 40 Z" fill="#f8e6ea" stroke="#b0182f" stroke-width="2" stroke-linejoin="round"/><rect x="46" y="40" width="188" height="120" fill="#fff" stroke="#b0182f" stroke-width="2"/><rect x="66" y="124" width="148" height="26" rx="5" fill="#f5efd9" stroke="#6f550c" stroke-width="1.5"/><path d="M72 133 h136 M72 141 h136" stroke="#d8c48a" stroke-width="1.2"/><text x="140" y="142" font-size="16" fill="#6f550c" text-anchor="middle" font-weight="700" font-style="italic" font-family="PT Serif">x</text><rect x="66" y="96" width="148" height="26" rx="5" fill="#f5efd9" stroke="#6f550c" stroke-width="1.5"/><path d="M72 105 h136 M72 113 h136" stroke="#d8c48a" stroke-width="1.2"/><text x="140" y="114" font-size="16" fill="#6f550c" text-anchor="middle" font-weight="700" font-style="italic" font-family="PT Serif">x</text><rect x="66" y="68" width="148" height="26" rx="5" fill="#f5efd9" stroke="#6f550c" stroke-width="1.5"/><path d="M72 77 h136 M72 85 h136" stroke="#d8c48a" stroke-width="1.2"/><text x="140" y="86" font-size="16" fill="#6f550c" text-anchor="middle" font-weight="700" font-style="italic" font-family="PT Serif">x</text><text x="140" y="186" font-size="15" fill="#15202e" text-anchor="middle" font-weight="700">1-й сарай</text><text x="140" y="206" font-size="15" fill="#b0182f" text-anchor="middle" font-weight="700" font-style="italic" font-family="PT Serif">3x т</text><path d="M400 40 L500 10 L600 40 Z" fill="#f8e6ea" stroke="#b0182f" stroke-width="2" stroke-linejoin="round"/><rect x="406" y="40" width="188" height="120" fill="#fff" stroke="#b0182f" stroke-width="2"/><rect x="426" y="124" width="148" height="26" rx="5" fill="#f5efd9" stroke="#6f550c" stroke-width="1.5"/><path d="M432 133 h136 M432 141 h136" stroke="#d8c48a" stroke-width="1.2"/><text x="500" y="142" font-size="16" fill="#6f550c" text-anchor="middle" font-weight="700" font-style="italic" font-family="PT Serif">x</text><text x="500" y="186" font-size="15" fill="#15202e" text-anchor="middle" font-weight="700">2-й сарай</text><text x="500" y="206" font-size="15" fill="#b0182f" text-anchor="middle" font-weight="700" font-style="italic" font-family="PT Serif">x т</text><path d="M246 96 C276 86 292 70 304 52" fill="none" stroke="#b0182f" stroke-width="2.5"/><path d="M294 54 L305 50 L304 62" fill="none" stroke="#b0182f" stroke-width="2.5"/><text x="320" y="36" font-size="15" fill="#b0182f" text-anchor="middle" font-weight="700">увезли 20 т</text><path d="M336 150 C356 146 376 132 392 118" fill="none" stroke="#1f6b4f" stroke-width="2.5"/><path d="M381 118 L393 117 L390 129" fill="none" stroke="#1f6b4f" stroke-width="2.5"/><text x="320" y="172" font-size="15" fill="#1f6b4f" text-anchor="middle" font-weight="700">привезли 10 т</text><rect x="120" y="222" width="400" height="32" rx="10" fill="#15202e"/><text x="320" y="243" font-size="16" fill="#fff" text-anchor="middle" font-weight="700">3x − 20  =  x + 10</text></g></svg></figure>
+        <div class="tetrad sol-t">
+          <div class="row"><span class="eq">Пусть x т — во втором</span><span class="why">берём меньшее — так удобнее</span></div>
+          <div class="row"><span class="eq">3x т — в первом</span><span class="why">«в 3 раза больше» — умножаем на 3</span></div>
+          <div class="row"><span class="eq">3x − 20 = x + 10</span><span class="why">в первом стало 3x − 20, во втором x + 10, и это поровну</span></div>
+          <div class="row"><span class="eq">3x − x = 10 + 20</span><span class="why">x влево (стал −x), −20 вправо (стало +20)</span></div>
+          <div class="row"><span class="eq">2x = 30</span><span class="why"></span></div>
+          <div class="row"><span class="eq">x = 15</span><span class="why">во втором было 15 т</span></div>
+          <div class="row"><span class="eq">3 · 15 = 45</span><span class="why">в первом было 45 т</span></div>
+          <div class="row"><span class="eq">45 + 15 = 60</span><span class="why">спрашивают «всего» — складываем</span></div>
+          <div class="row"><span class="eq">Ответ: 60 т</span><span class="why">проверка: 45 − 20 = 25 и 15 + 10 = 25 — поровну ✓</span></div>
+        </div>
+        <p class="why2"><b>Ловушка:</b> многие пишут в ответ 15 — это только второй сарай. Всегда перечитай вопрос перед ответом.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="kt" data-id="v1-4">
+    <h3>4. Решите уравнение</h3>
+    <div class="task m big">7<i>x</i> − (<i>x</i> + 3) = 3(2<i>x</i> − 1)</div>
+    <div class="board" data-board="v1-4" data-height="240"></div>
+    <div class="ans pick" data-a="any"><span class="lbl">Ответ:</span>
+      <button class="btn ghost" data-v="zero">x = 0</button><button class="btn ghost" data-v="none">корней нет</button><button class="btn ghost" data-v="any">корень — любое число</button><span class="fb" aria-live="polite"></span></div>
+    <div class="ladder">
+      <div class="h" data-n="1"><b>Подсказка 1.</b> Раскрой обе скобки (п. 6), а дальше — как обычно. Но приготовься к сюрпризу: вспомни из п. 8, сколько корней бывает у линейного уравнения.</div>
+      <div class="h" data-n="2"><b>Подсказка 2.</b> <span class="m">−(<i>x</i> + 3) = −<i>x</i> − 3</span>, а <span class="m">3(2<i>x</i> − 1) = 6<i>x</i> − 3</span>. Сложи иксы слева. Теперь посмотри внимательно на левую и правую части: что заметила? Что будет, если перенести иксы влево?</div>
+      <div class="h sol" data-n="3"><b>Решение.</b>
+        <div class="tetrad sol-t">
+          <div class="row"><span class="eq">7x − (x + 3) = 3(2x − 1)</span><span class="why">две скобки</span></div>
+          <div class="row"><span class="eq">7x − x − 3 = 6x − 3</span><span class="why">минус перед скобкой поменял знаки; 3 умножили на каждое: 3·2x = 6x, 3·(−1) = −3</span></div>
+          <div class="row"><span class="eq">6x − 3 = 6x − 3</span><span class="why">7x − x = 6x. Обе части одинаковые!</span></div>
+          <div class="row"><span class="eq">6x − 6x = −3 + 3</span><span class="why">переносим как обычно</span></div>
+          <div class="row"><span class="eq">0 · x = 0</span><span class="why">ноль, умноженный на любое число, — это ноль</span></div>
+          <div class="row"><span class="eq">Ответ: корень — любое число</span><span class="why">подставь хоть 5: 35 − 8 = 27 и 3 · 9 = 27 ✓</span></div>
+        </div>
+        <p class="why2"><b>Почему?</b> В п. 8 было: уравнение <span class="m">0<i>x</i> = 0</span> верно при любом <i class="m">x</i>. А вот <span class="m">0<i>x</i> = 7</span> не верно ни при каком <i class="m">x</i> — тогда корней нет. Не бойся такого ответа: учитель специально дал уравнение-сюрприз.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ВАРИАНТ 2 ================= -->
+<section class="card" id="v2">
+  <span class="tag">Вариант 2</span>
+  <h2>Вариант 2</h2>
+
+  <!-- 1а -->
+  <div class="kt" data-id="v2-1a">
+    <h3>1 а) Решите уравнение</h3>
+    <div class="task m big">3<i>x</i> + 2,7 = 0</div>
+    <div class="board" data-board="v2-1a" data-height="220"></div>
+    <div class="ans" data-a="-0.9"><label>x =</label><input inputmode="decimal" autocomplete="off"><button class="btn">Проверить</button><span class="fb" aria-live="polite"></span></div>
+    <div class="ladder">
+      <div class="h" data-n="1"><b>Подсказка 1.</b> Очень похоже на 1 б) из варианта 1: число без <i class="m">x</i> — в другую часть.</div>
+      <div class="h" data-n="2"><b>Подсказка 2.</b> Перенеси +2,7 вправо — станет −2,7. Получится <span class="m">3<i>x</i> = −2,7</span>. Не потеряй минус, когда будешь делить!</div>
+      <div class="h sol" data-n="3"><b>Решение.</b>
+        <div class="tetrad sol-t">
+          <div class="row"><span class="eq">3x + 2,7 = 0</span><span class="why">мешает +2,7</span></div>
+          <div class="row"><span class="eq">3x = −2,7</span><span class="why">+2,7 перенесли вправо — стало −2,7</span></div>
+          <div class="row"><span class="eq">x = −2,7 : 3</span><span class="why">b делим на a</span></div>
+          <div class="row"><span class="eq">x = −0,9</span><span class="why">2,7 : 3 = 0,9; минус на плюс — минус. Проверка: 3 · (−0,9) + 2,7 = −2,7 + 2,7 = 0 ✓</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1б -->
+  <div class="kt" data-id="v2-1b">
+    <h3>1 б) Решите уравнение</h3>
+    <div class="task m big">2<i>x</i> + 7 = 3<i>x</i> − 2(3<i>x</i> − 1)</div>
+    <div class="board" data-board="v2-1b" data-height="260"></div>
+    <div class="ans" data-a="-1"><label>x =</label><input inputmode="decimal" autocomplete="off"><button class="btn">Проверить</button><span class="fb" aria-live="polite"></span></div>
+    <div class="ladder">
+      <div class="h" data-n="1"><b>Подсказка 1.</b> Первым делом — скобка. Перед ней стоит <b>−2</b>. Вспомни из п. 5–6, как умножать число на скобку.</div>
+      <div class="h" data-n="2"><b>Подсказка 2.</b> Умножь −2 на <b>каждое</b> слагаемое в скобке: <span class="m">−2 · 3<i>x</i> = −6<i>x</i></span>, <span class="m">−2 · (−1) = +2</span>. Правая часть станет <span class="m">3<i>x</i> − 6<i>x</i> + 2</span>. Дальше иксы — влево, числа — вправо.</div>
+      <div class="h sol" data-n="3"><b>Решение.</b>
+        <div class="tetrad sol-t">
+          <div class="row"><span class="eq">2x + 7 = 3x − 2(3x − 1)</span><span class="why">мешает скобка</span></div>
+          <div class="row"><span class="eq">2x + 7 = 3x − 6x + 2</span><span class="why">−2 умножили на каждое: −2·3x = −6x, −2·(−1) = +2 (минус на минус — плюс)</span></div>
+          <div class="row"><span class="eq">2x + 7 = −3x + 2</span><span class="why">3x − 6x = −3x</span></div>
+          <div class="row"><span class="eq">2x + 3x = 2 − 7</span><span class="why">−3x влево (стало +3x), +7 вправо (стало −7)</span></div>
+          <div class="row"><span class="eq">5x = −5</span><span class="why"></span></div>
+          <div class="row"><span class="eq">x = −1</span><span class="why">−5 : 5. Проверка: слева 2·(−1) + 7 = 5; справа −3 − 2·(−4) = −3 + 8 = 5 ✓</span></div>
+        </div>
+        <p class="why2"><b>Частая ошибка:</b> забыть, что −2 умножается и на −1 тоже. Тогда получится −2 вместо +2.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1в -->
+  <div class="kt" data-id="v2-1v">
+    <h3>1 в) Решите уравнение</h3>
+    <div class="task m big"><span class="fr"><span>2<i>x</i></span><span>5</span></span> = <span class="fr"><span><i>x</i> − 3</span><span>2</span></span></div>
+    <div class="board" data-board="v2-1v" data-height="240"></div>
+    <div class="ans" data-a="15"><label>x =</label><input inputmode="decimal" autocomplete="off"><button class="btn">Проверить</button><span class="fb" aria-live="polite"></span></div>
+    <div class="ladder">
+      <div class="h" data-n="1"><b>Подсказка 1.</b> Дроби мешают. Вспомни свойство из п. 7: обе части уравнения можно умножить на одно и то же число (не ноль). Как с его помощью убрать знаменатели?</div>
+      <div class="h" data-n="2"><b>Подсказка 2.</b> Нужно число, которое делится и на 5, и на 2. Это 10. Умножь обе части на 10: <span class="m">10 · <span class="fr"><span>2<i>x</i></span><span>5</span></span> = 2 · 2<i>x</i></span>, а справа <span class="m">10 · <span class="fr"><span><i>x</i> − 3</span><span>2</span></span> = 5(<i>x</i> − 3)</span>. Не потеряй скобку!</div>
+      <div class="h sol" data-n="3"><b>Решение.</b>
+        <div class="tetrad sol-t">
+          <div class="row"><span class="eq"><span class="fr"><span>2x</span><span>5</span></span> = <span class="fr"><span>x − 3</span><span>2</span></span></span><span class="why">знаменатели 5 и 2</span></div>
+          <div class="row"><span class="eq">4x = 5(x − 3)</span><span class="why">умножили обе части на 10: 10 : 5 = 2, и 2 · 2x = 4x; 10 : 2 = 5, и 5 · (x − 3)</span></div>
+          <div class="row"><span class="eq">4x = 5x − 15</span><span class="why">раскрыли скобку: 5 · x и 5 · (−3)</span></div>
+          <div class="row"><span class="eq">4x − 5x = −15</span><span class="why">5x перенесли влево — стало −5x</span></div>
+          <div class="row"><span class="eq">−x = −15</span><span class="why">4x − 5x = −1x, то есть −x</span></div>
+          <div class="row"><span class="eq">x = 15</span><span class="why">−15 : (−1) = 15. Проверка: 2·15 : 5 = 6 и (15 − 3) : 2 = 6 ✓</span></div>
+        </div>
+        <p class="why2"><b>Почему скобка?</b> Черта дроби держит весь числитель <span class="m"><i>x</i> − 3</span> вместе. Когда черта исчезает, её роль берёт на себя скобка. Без скобки получится 5x − 3, и это ошибка.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="kt" data-id="v2-2">
+    <h3>2. Задача</h3>
+    <div class="task">В трёх седьмых классах 103 ученика. В 7 «Б» на 4 ученика больше, чем в 7 «А», и на 2 ученика меньше, чем в 7 «В». Сколько учеников в каждом классе?</div>
+    <figure class="fg"><svg class="fig" viewBox="0 0 640 190" role="img" aria-label="Схема: 7 Б на 4 больше 7 А, 7 В на 2 больше 7 Б, всего 103"><g font-family="PT Sans"><text x="108" y="38" font-size="15" fill="#15202e" text-anchor="end" font-weight="700">7 «А»</text><rect x="120" y="20" width="300" height="26" rx="4" fill="#e3ecf8" stroke="#1d4f91" stroke-width="1.8"/><text x="270" y="38" font-size="16" fill="#1d4f91" text-anchor="middle" font-weight="700">?</text><text x="108" y="84" font-size="15" fill="#15202e" text-anchor="end" font-weight="700">7 «Б»</text><rect x="120" y="66" width="300" height="26" rx="4" fill="#e3ecf8" stroke="#1d4f91" stroke-width="1.8"/><rect x="420" y="66" width="44" height="26" rx="4" fill="#f5efd9" stroke="#6f550c" stroke-width="1.8"/><text x="442" y="84" font-size="16" fill="#6f550c" text-anchor="middle" font-weight="700">4</text><text x="108" y="130" font-size="15" fill="#15202e" text-anchor="end" font-weight="700">7 «В»</text><rect x="120" y="112" width="300" height="26" rx="4" fill="#e3ecf8" stroke="#1d4f91" stroke-width="1.8"/><rect x="420" y="112" width="44" height="26" rx="4" fill="#f5efd9" stroke="#6f550c" stroke-width="1.8"/><text x="442" y="130" font-size="16" fill="#6f550c" text-anchor="middle" font-weight="700">4</text><rect x="464" y="112" width="26" height="26" rx="4" fill="#e2f2eb" stroke="#1f6b4f" stroke-width="1.8"/><text x="477" y="130" font-size="16" fill="#1f6b4f" text-anchor="middle" font-weight="700">2</text><path d="M500 20 q10 0 10 10 V62 q0 10 10 10 q-10 0 -10 10 V128 q0 10 -10 10" fill="none" stroke="#566273" stroke-width="1.8"/><text x="522" y="77" font-size="15" fill="#566273" text-anchor="start">всего</text><text x="522" y="97" font-size="18" fill="#15202e" text-anchor="start" font-weight="700">103</text><text x="320" y="176" font-size="14" fill="#566273" text-anchor="middle">«Б» на 4 больше «А»; «В» на 2 больше «Б»</text></g></svg></figure>
+    <div class="board" data-board="v2-2" data-height="280"></div>
+    <div class="ans multi" data-a="31,35,37">
+      <label>7 «А»:</label><input inputmode="decimal" autocomplete="off">
+      <label>7 «Б»:</label><input inputmode="decimal" autocomplete="off">
+      <label>7 «В»:</label><input inputmode="decimal" autocomplete="off">
+      <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span></div>
+    <div class="ladder">
+      <div class="h" data-n="1"><b>Подсказка 1.</b> Обозначь <i class="m">x</i> число учеников в одном классе — удобнее в самом маленьком. Сначала разберись, какой класс самый маленький.</div>
+      <div class="h" data-n="2"><b>Подсказка 2.</b> В 7 «Б» на 4 больше, чем в 7 «А» — значит, «А» меньше «Б». В 7 «Б» на 2 меньше, чем в 7 «В» — значит, «В» больше «Б». Самый маленький — 7 «А». Пусть там <i class="m">x</i>. Тогда в «Б» — <span class="m"><i>x</i> + 4</span>. А в «В» на 2 больше, чем в «Б». Сумма всех трёх классов = 103.</div>
+      <div class="h sol" data-n="3"><b>Решение.</b>
+        <figure class="fg"><svg class="fig" viewBox="0 0 640 190" role="img" aria-label="Схема: 7 Б на 4 больше 7 А, 7 В на 2 больше 7 Б, всего 103"><g font-family="PT Sans"><text x="108" y="38" font-size="15" fill="#15202e" text-anchor="end" font-weight="700">7 «А»</text><rect x="120" y="20" width="300" height="26" rx="4" fill="#e3ecf8" stroke="#1d4f91" stroke-width="1.8"/><text x="270" y="38" font-size="16" fill="#1d4f91" text-anchor="middle" font-weight="700" font-style="italic" font-family="PT Serif">x</text><text x="108" y="84" font-size="15" fill="#15202e" text-anchor="end" font-weight="700">7 «Б»</text><rect x="120" y="66" width="300" height="26" rx="4" fill="#e3ecf8" stroke="#1d4f91" stroke-width="1.8"/><text x="270" y="84" font-size="16" fill="#1d4f91" text-anchor="middle" font-weight="700" font-style="italic" font-family="PT Serif">x</text><rect x="420" y="66" width="44" height="26" rx="4" fill="#f5efd9" stroke="#6f550c" stroke-width="1.8"/><text x="442" y="84" font-size="16" fill="#6f550c" text-anchor="middle" font-weight="700">4</text><text x="108" y="130" font-size="15" fill="#15202e" text-anchor="end" font-weight="700">7 «В»</text><rect x="120" y="112" width="300" height="26" rx="4" fill="#e3ecf8" stroke="#1d4f91" stroke-width="1.8"/><text x="270" y="130" font-size="16" fill="#1d4f91" text-anchor="middle" font-weight="700" font-style="italic" font-family="PT Serif">x</text><rect x="420" y="112" width="44" height="26" rx="4" fill="#f5efd9" stroke="#6f550c" stroke-width="1.8"/><text x="442" y="130" font-size="16" fill="#6f550c" text-anchor="middle" font-weight="700">4</text><rect x="464" y="112" width="26" height="26" rx="4" fill="#e2f2eb" stroke="#1f6b4f" stroke-width="1.8"/><text x="477" y="130" font-size="16" fill="#1f6b4f" text-anchor="middle" font-weight="700">2</text><path d="M500 20 q10 0 10 10 V62 q0 10 10 10 q-10 0 -10 10 V128 q0 10 -10 10" fill="none" stroke="#566273" stroke-width="1.8"/><text x="522" y="77" font-size="15" fill="#566273" text-anchor="start">всего</text><text x="522" y="97" font-size="18" fill="#15202e" text-anchor="start" font-weight="700">103</text><text x="320" y="176" font-size="17" fill="#15202e" text-anchor="middle" font-weight="700" font-style="italic" font-family="PT Serif">x + (x + 4) + (x + 6) = 103</text></g></svg></figure>
+        <div class="tetrad sol-t">
+          <div class="row"><span class="eq">Пусть x — в 7 «А»</span><span class="why">«А» — самый маленький</span></div>
+          <div class="row"><span class="eq">x + 4 — в 7 «Б»</span><span class="why">на 4 больше, чем в «А»</span></div>
+          <div class="row"><span class="eq">x + 6 — в 7 «В»</span><span class="why">в «Б» на 2 меньше, чем в «В», значит, «В» на 2 больше «Б»: (x + 4) + 2</span></div>
+          <div class="row"><span class="eq">x + (x + 4) + (x + 6) = 103</span><span class="why">всего 103 ученика</span></div>
+          <div class="row"><span class="eq">3x + 10 = 103</span><span class="why">x + x + x = 3x; 4 + 6 = 10</span></div>
+          <div class="row"><span class="eq">3x = 93</span><span class="why">103 − 10</span></div>
+          <div class="row"><span class="eq">x = 31</span><span class="why">в 7 «А» 31 ученик</span></div>
+          <div class="row"><span class="eq">31 + 4 = 35; 31 + 6 = 37</span><span class="why">в 7 «Б» и 7 «В»</span></div>
+          <div class="row"><span class="eq">Ответ: 31, 35, 37</span><span class="why">проверка: 31 + 35 + 37 = 103 ✓</span></div>
+        </div>
+        <p class="why2"><b>Ловушка:</b> «на 2 меньше, чем в 7 „В“» — это про «Б». Перевернём: в «В» на 2 <b>больше</b>, чем в «Б». Чтобы не путаться, сравнивай всё с «Б».</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="kt" data-id="v2-3">
+    <h3>3. Решите уравнение</h3>
+    <div class="task m big"><span class="fr"><span>2<i>x</i> − 1</span><span>3</span></span> = <span class="fr"><span><i>x</i> + 5</span><span>8</span></span> − <span class="fr"><span>1 − <i>x</i></span><span>2</span></span></div>
+    <div class="board" data-board="v2-3" data-height="280"></div>
+    <div class="ans" data-a="11"><label>x =</label><input inputmode="decimal" autocomplete="off"><button class="btn">Проверить</button><span class="fb" aria-live="polite"></span></div>
+    <div class="ladder">
+      <div class="h" data-n="1"><b>Подсказка 1.</b> Это задание 1 в) из этого варианта, только дробей больше. Действуй так же: умножь обе части на число, которое делится на все знаменатели.</div>
+      <div class="h" data-n="2"><b>Подсказка 2.</b> Знаменатели 3, 8 и 2. Самое маленькое число, которое делится на все три, — 24. Умножай на 24 <b>каждую</b> дробь: 24 : 3 = 8, 24 : 8 = 3, 24 : 2 = 12. Числители бери в скобки. Осторожно с минусом перед последней дробью!</div>
+      <div class="h sol" data-n="3"><b>Решение.</b>
+        <div class="tetrad sol-t">
+          <div class="row"><span class="eq">8(2x − 1) = 3(x + 5) − 12(1 − x)</span><span class="why">умножили на 24 каждую дробь: числитель × (24 : знаменатель)</span></div>
+          <div class="row"><span class="eq">16x − 8 = 3x + 15 − 12 + 12x</span><span class="why">раскрыли скобки. Последняя: −12 · 1 = −12, −12 · (−x) = +12x</span></div>
+          <div class="row"><span class="eq">16x − 8 = 15x + 3</span><span class="why">3x + 12x = 15x; 15 − 12 = 3</span></div>
+          <div class="row"><span class="eq">16x − 15x = 3 + 8</span><span class="why">15x влево (стало −15x), −8 вправо (стало +8)</span></div>
+          <div class="row"><span class="eq">x = 11</span><span class="why">проверка: (22 − 1) : 3 = 7; (11 + 5) : 8 − (1 − 11) : 2 = 2 − (−5) = 7 ✓</span></div>
+        </div>
+        <p class="why2"><b>Где ошибаются чаще всего:</b> в последней скобке. Перед ней −12, и на −12 умножается и 1, и −x. Минус на минус даёт плюс: +12x.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="kt" data-id="v2-4">
+    <h3>4. Задача</h3>
+    <div class="task">За три дня турист прошёл 90 км. Во второй день он прошёл на 10 км меньше, чем в первый день, а в третий — <span class="fr"><span>4</span><span>5</span></span> того пути, что в первый и второй день вместе. Сколько километров проходил турист каждый день?</div>
+    <figure class="fg"><svg class="fig" viewBox="0 0 640 250" role="img" aria-label="Схема: второй день на 10 км меньше первого, третий день — четыре пятых от первых двух вместе, всего 90 км"><g font-family="PT Sans"><text x="128" y="38" font-size="15" fill="#15202e" text-anchor="end" font-weight="700">1-й день</text><rect x="140" y="20" width="240" height="26" rx="4" fill="#e3ecf8" stroke="#1d4f91" stroke-width="1.8"/><text x="260" y="38" font-size="16" fill="#1d4f91" text-anchor="middle" font-weight="700">?</text><text x="128" y="84" font-size="15" fill="#15202e" text-anchor="end" font-weight="700">2-й день</text><rect x="140" y="66" width="160" height="26" rx="4" fill="#e3ecf8" stroke="#1d4f91" stroke-width="1.8"/><rect x="300" y="66" width="80" height="26" rx="4" fill="#fff" stroke="#b0182f" stroke-width="1.8" stroke-dasharray="5 4"/><text x="340" y="84" font-size="16" fill="#b0182f" text-anchor="middle" font-weight="700">−10 км</text><text x="128" y="130" font-size="15" fill="#566273" text-anchor="end">1-й + 2-й</text><rect x="140" y="112" width="400" height="26" rx="4" fill="#f3f6fa" stroke="#566273" stroke-width="1.5"/><path d="M220 112 v26" stroke="#566273" stroke-width="1.2" stroke-dasharray="3 3"/><path d="M300 112 v26" stroke="#566273" stroke-width="1.2" stroke-dasharray="3 3"/><path d="M380 112 v26" stroke="#566273" stroke-width="1.2" stroke-dasharray="3 3"/><path d="M460 112 v26" stroke="#566273" stroke-width="1.2" stroke-dasharray="3 3"/><text x="340" y="130" font-size="14" fill="#566273" text-anchor="middle">вместе: 5 равных частей</text><text x="128" y="176" font-size="15" fill="#15202e" text-anchor="end" font-weight="700">3-й день</text><rect x="140" y="158" width="320" height="26" rx="4" fill="#e2f2eb" stroke="#1f6b4f" stroke-width="1.8"/><path d="M220 158 v26" stroke="#fff" stroke-width="1.5"/><path d="M300 158 v26" stroke="#fff" stroke-width="1.5"/><path d="M380 158 v26" stroke="#fff" stroke-width="1.5"/><text x="300" y="176" font-size="16" fill="#1f6b4f" text-anchor="middle" font-weight="700">4 части из 5</text><rect x="120" y="208" width="400" height="32" rx="10" fill="#15202e"/><text x="320" y="229" font-size="16" fill="#fff" text-anchor="middle" font-weight="700">все три дня вместе — 90 км</text></g></svg></figure>
+    <div class="board" data-board="v2-4" data-height="300"></div>
+    <div class="ans multi" data-a="30,20,40">
+      <label>1-й день:</label><input inputmode="decimal" autocomplete="off">
+      <label>2-й день:</label><input inputmode="decimal" autocomplete="off">
+      <label>3-й день:</label><input inputmode="decimal" autocomplete="off">
+      <button class="btn">Проверить</button><span class="fb" aria-live="polite"></span></div>
+    <div class="ladder">
+      <div class="h" data-n="1"><b>Подсказка 1.</b> Пусть <i class="m">x</i> км — путь в первый день. Вырази через <i class="m">x</i> второй и третий день, а потом сложи все три дня.</div>
+      <div class="h" data-n="2"><b>Подсказка 2.</b> Второй день — на 10 км меньше: <span class="m"><i>x</i> − 10</span>. Первый и второй вместе: <span class="m"><i>x</i> + (<i>x</i> − 10) = 2<i>x</i> − 10</span>. Третий день — <span class="fr"><span>4</span><span>5</span></span> от этого: <span class="m"><span class="fr"><span>4</span><span>5</span></span>(2<i>x</i> − 10)</span>. Все три дня вместе = 90.</div>
+      <div class="h sol" data-n="3"><b>Решение.</b>
+        <figure class="fg"><svg class="fig" viewBox="0 0 640 250" role="img" aria-label="Схема: второй день на 10 км меньше первого, третий день — четыре пятых от первых двух вместе, всего 90 км"><g font-family="PT Sans"><text x="128" y="38" font-size="15" fill="#15202e" text-anchor="end" font-weight="700">1-й день</text><rect x="140" y="20" width="240" height="26" rx="4" fill="#e3ecf8" stroke="#1d4f91" stroke-width="1.8"/><text x="260" y="38" font-size="16" fill="#1d4f91" text-anchor="middle" font-weight="700" font-style="italic" font-family="PT Serif">x</text><text x="128" y="84" font-size="15" fill="#15202e" text-anchor="end" font-weight="700">2-й день</text><rect x="140" y="66" width="160" height="26" rx="4" fill="#e3ecf8" stroke="#1d4f91" stroke-width="1.8"/><text x="220" y="84" font-size="16" fill="#1d4f91" text-anchor="middle" font-weight="700" font-style="italic" font-family="PT Serif">x − 10</text><rect x="300" y="66" width="80" height="26" rx="4" fill="#fff" stroke="#b0182f" stroke-width="1.8" stroke-dasharray="5 4"/><text x="340" y="84" font-size="16" fill="#b0182f" text-anchor="middle" font-weight="700">−10 км</text><text x="128" y="130" font-size="15" fill="#566273" text-anchor="end">1-й + 2-й</text><rect x="140" y="112" width="400" height="26" rx="4" fill="#f3f6fa" stroke="#566273" stroke-width="1.5"/><path d="M220 112 v26" stroke="#566273" stroke-width="1.2" stroke-dasharray="3 3"/><path d="M300 112 v26" stroke="#566273" stroke-width="1.2" stroke-dasharray="3 3"/><path d="M380 112 v26" stroke="#566273" stroke-width="1.2" stroke-dasharray="3 3"/><path d="M460 112 v26" stroke="#566273" stroke-width="1.2" stroke-dasharray="3 3"/><text x="340" y="130" font-size="16" fill="#566273" text-anchor="middle" font-weight="700" font-style="italic" font-family="PT Serif">2x − 10</text><text x="128" y="176" font-size="15" fill="#15202e" text-anchor="end" font-weight="700">3-й день</text><rect x="140" y="158" width="320" height="26" rx="4" fill="#e2f2eb" stroke="#1f6b4f" stroke-width="1.8"/><path d="M220 158 v26" stroke="#fff" stroke-width="1.5"/><path d="M300 158 v26" stroke="#fff" stroke-width="1.5"/><path d="M380 158 v26" stroke="#fff" stroke-width="1.5"/><text x="300" y="176" font-size="16" fill="#1f6b4f" text-anchor="middle" font-weight="700">⁴⁄₅ (2x − 10)</text><rect x="120" y="208" width="400" height="32" rx="10" fill="#15202e"/><text x="320" y="229" font-size="16" fill="#fff" text-anchor="middle" font-weight="700">x + (x − 10) + ⁴⁄₅(2x − 10) = 90</text></g></svg></figure>
+        <div class="tetrad sol-t">
+          <div class="row"><span class="eq">Пусть x км — 1-й день</span><span class="why">обозначили</span></div>
+          <div class="row"><span class="eq">x − 10 км — 2-й день</span><span class="why">на 10 км меньше</span></div>
+          <div class="row"><span class="eq"><span class="fr"><span>4</span><span>5</span></span>(2x − 10) км — 3-й день</span><span class="why">⁴⁄₅ от первых двух дней вместе: x + x − 10 = 2x − 10</span></div>
+          <div class="row"><span class="eq">x + x − 10 + <span class="fr"><span>4</span><span>5</span></span>(2x − 10) = 90</span><span class="why">всего 90 км</span></div>
+          <div class="row"><span class="eq">2x − 10 + 1,6x − 8 = 90</span><span class="why">раскрыли скобку: ⁴⁄₅ · 2x = 1,6x (8/5 = 1,6); ⁴⁄₅ · 10 = 8</span></div>
+          <div class="row"><span class="eq">3,6x − 18 = 90</span><span class="why">2x + 1,6x = 3,6x; −10 − 8 = −18</span></div>
+          <div class="row"><span class="eq">3,6x = 108</span><span class="why">90 + 18</span></div>
+          <div class="row"><span class="eq">x = 30</span><span class="why">108 : 3,6 = 1080 : 36 = 30</span></div>
+          <div class="row"><span class="eq">30 − 10 = 20; <span class="fr"><span>4</span><span>5</span></span> · 50 = 40</span><span class="why">2-й день 20 км; первые два дня вместе 50 км, третий — 40 км</span></div>
+          <div class="row"><span class="eq">Ответ: 30, 20, 40 км</span><span class="why">проверка: 30 + 20 + 40 = 90 ✓</span></div>
+        </div>
+        <p class="why2"><b>Способ попроще.</b> Пусть первые два дня вместе — это <i class="m">y</i> км. Тогда третий день — <span class="fr"><span>4</span><span>5</span></span><i class="m">y</i>, а всего <span class="m"><i>y</i> + <span class="fr"><span>4</span><span>5</span></span><i>y</i> = <span class="fr"><span>9</span><span>5</span></span><i>y</i> = 90</span>, значит, <span class="m"><i>y</i> = 50</span>. Дальше <span class="m"><i>x</i> + (<i>x</i> − 10) = 50</span>, <span class="m"><i>x</i> = 30</span>. Оба способа верные — выбирай тот, что понятнее.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="card short" id="itog">
+  <h2>Итог</h2>
+  <p>Здесь видно, как ты справилась. Звёздочка — решила сама, без подсказок. Цель к контрольной — побольше звёздочек.</p>
+  <div class="prog" id="prog2"></div>
+  <div class="ctl"><button class="btn ghost" id="krReset">Начать заново</button></div>
+  <p class="calm">Задания, где пришлось открыть решение, реши ещё раз через день, без подсказок. Сначала нажми «Начать заново».</p>
+</section>
+
+<footer>Алгебра, 7 класс · подготовка к контрольной работе № 2 · задания учителя</footer>
+</div>
+
+<script>
+/* ---------- подготовка к КР: проверка, лестница подсказок, прогресс ---------- */
+(function(){
+  var KEY='kr2-state', st={}; try{ st=JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){}
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(st)); }catch(e){} }
+  var LBL=['решила сама ⭐','с подсказкой 1','с подсказкой 2','смотрела решение'];
+  function norm(v){ v=String(v).replace(/\s/g,'').replace(/,/g,'.').replace(/[−–]/g,'-'); var m=v.match(/^(-?\d+(?:\.\d+)?)\/(\d+(?:\.\d+)?)$/); return m? (+m[1])/(+m[2]) : parseFloat(v); }
+  var tasks=[].slice.call(document.querySelectorAll('.kt'));
+  tasks.forEach(function(kt){
+    var id=kt.dataset.id, s=st[id]||(st[id]={open:0,done:false,by:null});
+    var hs=[].slice.call(kt.querySelectorAll('.ladder .h')), lad=kt.querySelector('.ladder');
+    var barEl=document.createElement('div'); barEl.className='bar';
+    var names=['Подсказка 1','Подсказка 2','Полное решение'], btns=names.map(function(n,i){ var b=document.createElement('button'); b.type='button'; b.className='btn ghost'; b.textContent=n; barEl.appendChild(b); b.addEventListener('click',function(){ if(s.open<i+1){ s.open=i+1; save(); paint(); } hs[i].scrollIntoView({behavior:'smooth',block:'nearest'}); }); return b; });
+    lad.insertBefore(barEl,lad.firstChild);
+    var badge=document.createElement('span'); badge.className='st'; kt.querySelector('h3').appendChild(badge);
+    function paint(){
+      hs.forEach(function(h,i){ h.classList.toggle('open',i<s.open); });
+      btns.forEach(function(b,i){ b.disabled = i>s.open || i<s.open; b.style.display = i<s.open ? 'none':''; });
+      if(s.done){ badge.className='st s'+s.by; badge.textContent='✓ '+LBL[s.by]; } else { badge.className='st'; badge.textContent= s.open? 'открыто подсказок: '+Math.min(s.open,2)+(s.open===3?' + решение':'') : 'не решено'; }
+      summary();
+    }
+    function win(){ if(!s.done){ s.done=true; s.by=Math.min(s.open,3); save(); } paint(); }
+    var ans=kt.querySelector('.ans'), fb=ans.querySelector('.fb');
+    if(ans.classList.contains('pick')){
+      [].forEach.call(ans.querySelectorAll('button'),function(b){ b.addEventListener('click',function(){
+        [].forEach.call(ans.querySelectorAll('button'),function(x){ x.classList.remove('on-ok','on-no'); });
+        var ok=b.dataset.v===ans.dataset.a; b.classList.add(ok?'on-ok':'on-no');
+        fb.className='fb '+(ok?'ok':'no'); fb.textContent= ok?'Верно! 🎉':'Пока не так. Раскрой скобки и сравни левую и правую части.';
+        if(ok) win();
+      }); });
+    } else {
+      var inps=[].slice.call(ans.querySelectorAll('input')), want=ans.dataset.a.split(',').map(norm);
+      var go=function(){
+        var got=inps.map(function(i){ return norm(i.value); });
+        if(got.some(isNaN)){ fb.className='fb no'; fb.textContent= inps.length>1?'Впиши все числа':'Впиши число'; return; }
+        var ok=got.every(function(v,k){ return Math.abs(v-want[k])<1e-9; });
+        inps.forEach(function(i,k){ i.style.borderColor= Math.abs(got[k]-want[k])<1e-9 ? '#1f6b4f' : '#b0182f'; });
+        if(ok){ fb.className='fb ok'; fb.textContent='Верно! 🎉'; win(); }
+        else { fb.className='fb no'; fb.textContent= kt.querySelector('.task.big') ? 'Пока не так. Сделай проверку: подставь своё число в уравнение — получаются ли обе части одинаковыми?' : 'Пока не так. Проверь по условию: подходит ли твой ответ ко всем словам задачи?'; }
+      };
+      ans.querySelector('.btn').addEventListener('click',go);
+      inps.forEach(function(i){ i.addEventListener('keydown',function(e){ if(e.key==='Enter') go(); }); });
+    }
+    kt._paint=paint;
+  });
+  function summary(){
+    ['prog','prog2'].forEach(function(pid){
+      var box=document.getElementById(pid); if(!box) return;
+      var self=0, done=0;
+      box.innerHTML=tasks.map(function(kt){
+        var s=st[kt.dataset.id]||{}, name=(kt.dataset.id.indexOf('v1')===0?'В1 · ':'В2 · ')+kt.querySelector('h3').firstChild.textContent.replace(/[.)].*$/,'').trim();
+        if(s.done){ done++; if(s.by===0) self++; }
+        return '<a href="#'+'t-'+kt.dataset.id+'" class="'+(s.done?'s'+s.by:'')+'"><b>'+name+'</b>'+(s.done?LBL[s.by]:'ещё не решено')+'</a>';
+      }).join('')+'<div class="sum">Решено '+done+' из '+tasks.length+', из них сама — '+self+' ⭐</div>';
+    });
+  }
+  tasks.forEach(function(kt){ kt.id='t-'+kt.dataset.id; kt._paint(); });
+  document.getElementById('krReset').addEventListener('click',function(){ if(!confirm('Стереть отметки и начать заново? Записи на досках останутся.')) return; st={}; save(); location.reload(); });
+})();
+/* ---------- доска для письма стилусом ---------- */
+var penSeen=false;
+var ICON={
+  eraser:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20h12"/><path d="M5 15l9-9 5 5-8 8H8z"/></svg>',
+  undo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 010 12h-3"/></svg>',
+  clear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>',
+  more:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>'
+};
+function Board(root){
+  var id=root.dataset.board, key='kr2-board-'+id, self=this;
+  this.h=+root.dataset.height||420; this.strokes=[]; this.tool='pen'; this.color='#1d3f8f';
+  root.innerHTML=
+    '<div class="toolbar">'+
+      '<button class="tool" data-t="pen" data-c="#1d3f8f" aria-pressed="true"><span class="dot" style="background:#1d3f8f"></span>Синяя</button>'+
+      '<button class="tool" data-t="pen" data-c="#c21a33" aria-pressed="false"><span class="dot" style="background:#c21a33"></span>Красная</button>'+
+      '<button class="tool" data-t="eraser" aria-pressed="false">'+ICON.eraser+'Ластик</button>'+
+      '<button class="tool" data-act="undo">'+ICON.undo+'Назад</button>'+
+      '<span class="spacer"></span><span class="pen-state"></span>'+
+      '<button class="tool" data-act="more">'+ICON.more+'Место</button>'+
+      '<button class="tool" data-act="clear">'+ICON.clear+'Стереть всё</button>'+
+    '</div><div class="canvas-box"><canvas></canvas></div>'+
+    '<div class="grip" title="Потяни вниз, чтобы удлинить лист"><span></span>потяни вниз, чтобы удлинить лист<span></span></div>';
+  var cv=root.querySelector('canvas'), ctx=cv.getContext('2d'), state=root.querySelector('.pen-state');
+  try{ var saved=JSON.parse(localStorage.getItem(key)||'null'); if(saved){ this.strokes=saved.s||[]; if(saved.h) this.h=Math.max(240,saved.h); } }catch(e){}
+  function save(){ try{ localStorage.setItem(key,JSON.stringify({s:self.strokes,h:self.h})); }catch(e){} }
+  function showState(){ state.textContent = penSeen ? 'Стилус подключён: ладонь не рисует' : ''; }
+  showState(); document.addEventListener('pen-seen',showState);
+
+  function size(){
+    var w=cv.parentElement.clientWidth, d=window.devicePixelRatio||1;
+    cv.width=Math.round(w*d); cv.height=Math.round(self.h*d); cv.style.height=self.h+'px';
+    ctx.setTransform(d,0,0,d,0,0); redraw();
+  }
+  function seg(st,i){
+    var a=st.p[i-1], b=st.p[i];
+    ctx.strokeStyle=st.c; ctx.lineWidth=(a[2]+b[2])/2;
+    ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.stroke();
+  }
+  function dot(st){ var a=st.p[0]; ctx.fillStyle=st.c; ctx.beginPath(); ctx.arc(a[0],a[1],a[2]/2,0,Math.PI*2); ctx.fill(); }
+  function redraw(){
+    ctx.clearRect(0,0,cv.width,cv.height); ctx.lineCap='round'; ctx.lineJoin='round';
+    self.strokes.forEach(function(st){ if(st.p.length===1) dot(st); for(var i=1;i<st.p.length;i++) seg(st,i); });
+  }
+  function pt(e){
+    var r=cv.getBoundingClientRect(), pr=e.pointerType==='pen' ? (e.pressure||0.5) : 0.5;
+    var w = e.pointerType==='pen' ? 1.2+pr*3.2 : 2.6;
+    return [Math.round((e.clientX-r.left)*10)/10, Math.round((e.clientY-r.top)*10)/10, Math.round(w*10)/10];
+  }
+  function eraseAt(p){
+    var R=14, n=self.strokes.length;
+    self.strokes=self.strokes.filter(function(st){
+      return !st.p.some(function(q){ var dx=q[0]-p[0], dy=q[1]-p[1]; return dx*dx+dy*dy<R*R; });
+    });
+    if(self.strokes.length!==n) redraw();
+  }
+  var active=null, cur=null;
+  cv.addEventListener('pointerdown',function(e){
+    if(e.pointerType==='pen' && !penSeen){ penSeen=true; document.dispatchEvent(new Event('pen-seen')); }
+    if(e.pointerType==='touch' && penSeen) return;
+    if(active!==null) return;
+    e.preventDefault(); try{ cv.setPointerCapture(e.pointerId); }catch(err){} active=e.pointerId;
+    var eraser = self.tool==='eraser' || e.button===5;
+    if(eraser){ cur=null; eraseAt(pt(e)); }
+    else { cur={c:self.color,p:[pt(e)]}; self.strokes.push(cur); ctx.lineCap='round'; dot(cur); }
+  });
+  cv.addEventListener('pointermove',function(e){
+    if(e.pointerId!==active) return;
+    e.preventDefault();
+    var list = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
+    if(!list.length) list=[e];
+    list.forEach(function(ev){
+      var p=pt(ev);
+      if(!cur){ eraseAt(p); return; }
+      var last=cur.p[cur.p.length-1];
+      if(Math.abs(last[0]-p[0])+Math.abs(last[1]-p[1])<0.8) return;
+      cur.p.push(p); seg(cur,cur.p.length-1);
+    });
+  });
+  function end(e){ if(e.pointerId!==active) return; active=null; cur=null; save(); }
+  cv.addEventListener('pointerup',end); cv.addEventListener('pointercancel',end);
+  cv.addEventListener('contextmenu',function(e){ e.preventDefault(); });
+
+  root.querySelectorAll('.tool').forEach(function(b){
+    b.addEventListener('click',function(){
+      if(b.dataset.t){
+        self.tool=b.dataset.t; if(b.dataset.c) self.color=b.dataset.c;
+        root.querySelectorAll('.tool[data-t]').forEach(function(x){ x.setAttribute('aria-pressed', x===b ? 'true':'false'); });
+        cv.style.cursor = self.tool==='eraser' ? 'cell' : 'crosshair';
+      } else if(b.dataset.act==='undo'){ self.strokes.pop(); redraw(); save(); }
+      else if(b.dataset.act==='clear'){ if(self.strokes.length && confirm('Стереть всё, что написано на этом листе?')){ self.strokes=[]; redraw(); save(); } }
+      else if(b.dataset.act==='more'){ self.h+=240; size(); save(); }
+    });
+  });
+  var grip=root.querySelector('.grip'), gy=null, gh=0;
+  grip.addEventListener('pointerdown',function(e){
+    e.preventDefault(); try{ grip.setPointerCapture(e.pointerId); }catch(err){}
+    gy=e.clientY; gh=self.h; grip.classList.add('drag');
+  });
+  grip.addEventListener('pointermove',function(e){
+    if(gy===null) return; e.preventDefault();
+    var nh=Math.max(240, Math.round(gh+e.clientY-gy));
+    if(nh!==self.h){ self.h=nh; size(); }
+  });
+  function gripEnd(){ if(gy===null) return; gy=null; grip.classList.remove('drag'); save(); }
+  grip.addEventListener('pointerup',gripEnd); grip.addEventListener('pointercancel',gripEnd);
+  var lastW=0;
+  window.addEventListener('resize',function(){ var w=cv.parentElement.clientWidth; if(w!==lastW){ lastW=w; size(); } });
+  lastW=cv.parentElement.clientWidth; size();
+}
+document.querySelectorAll('.board').forEach(function(b){ new Board(b); });
+
+</script>
+<style>
+.to-top{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:60;width:52px;height:52px;border:0;border-radius:14px;background:#1d4f91;color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 18px -6px rgba(21,32,46,.45);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s,transform .2s}
+.to-top.show{opacity:1;transform:none;pointer-events:auto}
+.to-top:hover{background:#163f75}
+.to-top:focus-visible{outline:3px solid #9fb9de;outline-offset:2px}
+.to-top svg{width:24px;height:24px}
+@media print{.to-top{display:none}}
+</style>
+<button class="to-top" type="button" aria-label="Наверх" title="Наверх"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+<script>
+(function(){var b=document.querySelector('.to-top');if(!b)return;
+function f(){b.classList.toggle('show',(window.scrollY||document.documentElement.scrollTop)>600);}
+window.addEventListener('scroll',f,{passive:true});f();
+// слева от колонки урока, если там есть место; иначе — в правом нижнем углу
+var col=[].slice.call(document.querySelectorAll('.wrap')).filter(function(w){return !w.closest('nav');})[0];
+function place(){if(!col){return;}var r=col.getBoundingClientRect(),pad=parseFloat(getComputedStyle(col).paddingLeft)||0,x=r.left+pad-14-b.offsetWidth;
+if(x>=12){b.style.left=x+'px';b.style.right='auto';}else{b.style.left='';b.style.right='';}}
+window.addEventListener('resize',place);place();
+b.addEventListener('click',function(){var r=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;window.scrollTo({top:0,behavior:r?'auto':'smooth'});});})();
+</script>
+<script>
+try{var v=JSON.parse(localStorage.getItem('uroki-visited')||'{}');v['algebra/kr2']=new Date().toISOString().slice(0,10);localStorage.setItem('uroki-visited',JSON.stringify(v));}catch(e){}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('../../sw.js',{scope:'../../'}).catch(function(){});}
+</script>
+</body>
+</html>
