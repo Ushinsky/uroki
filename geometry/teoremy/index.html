@@ -298,29 +298,28 @@ function stepper(n,steps,draw){
 
 /* ========== 1. две прямые ========== */
 (function(){
-  var svg=document.getElementById('f1'), O=[300,130];
-  var a1=[60,200],a2=[540,60],b1=[60,60],b2=[540,200], A=[180,165], B=[420,95];
+  var svg=document.getElementById('f1'), O=[230,150], aA=12, B=pt(O,250,aA), b0=58;
   var steps=[
-    {t:'Две прямые <span class="m">a</span> и <span class="m">b</span> пересекаются в точке <span class="m">O</span>. Общая точка у них одна. Может ли их быть <b>две</b>?'},
-    {t:'Предположим, что у двух прямых есть <b>две</b> общие точки — <span class="m">A</span> и <span class="m">B</span>.',w:'Это приём «от противного»: допускаем, что так бывает, и смотрим, что из этого выйдет.'},
-    {t:'Тогда <b>каждая</b> из прямых проходит через точки <span class="m">A</span> и <span class="m">B</span>. Получились бы две разные прямые через одни и те же две точки — смотри красную линию.'},
-    {t:'Но через две точки проходит <b>только одна</b> прямая. Значит, наше предположение неверно: две общие точки у двух прямых быть не может.',w:'Это та самая аксиома: «через любые две точки можно провести прямую, и притом только одну».'},
-    {t:'Вывод: две прямые либо имеют <b>только одну</b> общую точку (пересекаются), либо <b>не имеют</b> общих точек.'}
+    {t:'Две прямые <span class="m">a</span> и <span class="m">b</span> пересекаются в точке <span class="m">O</span> — это их общая точка. Может ли у них быть ещё одна общая точка?'},
+    {t:'Возьмём на прямой <span class="m">a</span> другую точку <span class="m">B</span>. Чтобы <span class="m">B</span> тоже была общей, прямая <span class="m">b</span> должна пройти и через <span class="m">O</span>, и через <span class="m">B</span>. Повернём <span class="m">b</span> вокруг <span class="m">O</span>, пока она не дойдёт до <span class="m">B</span>…',anim:1600},
+    {t:'Получилось: <span class="m">b</span> прошла через <span class="m">B</span>, но при этом <b>легла на прямую a целиком</b>. Это уже не две прямые, а одна и та же.',w:'Так и должно быть по аксиоме: через две точки (O и B) проходит только одна прямая.'},
+    {t:'Значит, у двух <b>разных</b> прямых не может быть двух общих точек. Остаётся два случая: одна общая точка (пересекаются) или ни одной.'}
   ];
-  stepper(1,steps,function(s){
+  stepper(1,steps,function(s,t){
     var h='';
-    if(s<4){
-      h+=L(a1,a2,K.ink,2.5)+T([548,58],'a',{a:'start'});
-      if(s===0){ h+=L(b1,b2,K.ink,2.5)+T([548,212],'b',{a:'start'})+D(O)+T([300,166],'O'); }
-      else{
-        h+=D(A,K.blue,6)+D(B,K.blue,6)+T([176,196],'A',{c:K.blue})+T([426,128],'B',{c:K.blue});
-        if(s>=2) h+='<path d="M110 196 L180 165 Q300 0 420 95 L500 70" fill="none" stroke="'+K.red+'" stroke-width="3" stroke-dasharray="8 6"/>'+T([300,40],'«вторая прямая» через A и B',{sans:1,fs:15,c:K.red});
-        if(s>=3) h+='<g stroke="'+K.red+'" stroke-width="6" stroke-linecap="round"><path d="M282 54 l36 36 M318 54 l-36 36"/></g>';
-      }
+    if(s<3){
+      var bang = s===0 ? b0 : s===1 ? b0+(aA-b0)*t : aA, done = s===2 || (s===1&&t>0.99);
+      h+=L(pt(O,-220,aA),pt(O,380,aA),K.ink,3)+T(pt(O,395,aA),'a',{a:'start'});
+      if(s>=1) h+=D(B,K.red,7)+T([B[0],B[1]+30],'B',{c:K.red});
+      h+=L(pt(O,-200,bang),pt(O,360,bang),done?K.green:K.blue,done?7:3,{op:done?.55:1});
+      if(!done) h+=T(pt(O,375,bang),'b',{a:'start',c:K.blue});
+      if(s===1&&!done) h+=arc(O,70,aA,bang,K.blue,2)+T([300,300],'поворачиваем b вокруг O',{sans:1,fs:15,c:K.blue});
+      h+=D(O)+T([O[0]-6,O[1]+30],'O');
+      if(done) h+='<rect x="150" y="236" width="300" height="30" rx="9" fill="'+K.green+'"/>'+T([300,257],'b совпала с a — это одна прямая',{sans:1,b:1,fs:15,c:'#fff'});
     } else {
       var o=[150,130];
-      h+=L([40,190],[260,70])+L([40,70],[260,190])+D(o)+T([150,230],'одна общая точка',{sans:1,fs:16,b:1,c:K.blue});
-      h+=L([340,95],[560,95])+L([340,165],[560,165])+T([450,230],'нет общих точек',{sans:1,fs:16,b:1,c:K.blue});
+      h+=L([40,190],[260,70],K.ink,3)+L([40,70],[260,190],K.ink,3)+D(o,K.red,6)+T([150,235],'одна общая точка',{sans:1,fs:16,b:1,c:K.blue});
+      h+=L([340,95],[560,95],K.ink,3)+L([340,165],[560,165],K.ink,3)+T([450,235],'ни одной общей точки',{sans:1,fs:16,b:1,c:K.blue});
     }
     svg.innerHTML=h;
   });
@@ -350,57 +349,58 @@ function stepper(n,steps,draw){
 
 /* ========== 3. вертикальные ========== */
 (function(){
-  var svg=document.getElementById('f3'), r=document.getElementById('r3'), out=document.getElementById('l3'), O=[300,135], step=0;
+  var svg=document.getElementById('f3'), r=document.getElementById('r3'), out=document.getElementById('l3'), O=[300,135], step=0, base=18;
   var steps=[
-    {t:'Две прямые пересеклись. Углы <b>1</b> и <b>3</b> — <b>вертикальные</b>: стороны угла 1 продолжают стороны угла 3. Докажем, что они равны.'},
-    {t:'Угол <b>2</b> — <b>смежный</b> с углом 1. По свойству смежных углов (теорема 2): <span class="m">∠1 + ∠2 = 180°</span>, значит, <span class="m">∠1 = 180° − ∠2</span>.'},
-    {t:'Угол <b>2</b> — <b>смежный</b> и с углом 3. Поэтому <span class="m">∠3 + ∠2 = 180°</span>, значит, <span class="m">∠3 = 180° − ∠2</span>.'},
-    {t:'И <span class="m">∠1</span>, и <span class="m">∠3</span> равны одному и тому же: <span class="m">180° − ∠2</span>. Значит, <span class="m">∠1 = ∠3</span>. <b>Вертикальные углы равны.</b>',w:'Так же доказывается, что ∠2 = ∠4: оба равны 180° − ∠1.'}
+    {t:'Две прямые пересеклись, получилось четыре угла. Углы <b>1</b> и <b>3</b> — <b>вертикальные</b> (стороны одного продолжают стороны другого). Углы <b>2</b> и <b>4</b> — тоже вертикальные. Докажем, что вертикальные углы равны — на примере углов 1 и 3.'},
+    {t:'Угол <b>2</b> — <b>смежный</b> с углом 1 (у них общая сторона, а две другие образуют прямую). По теореме 2: <span class="m">∠1 + ∠2 = 180°</span>, значит, <span class="m">∠1 = 180° − ∠2</span>.'},
+    {t:'Угол <b>2</b> — смежный и с углом <b>3</b>. Поэтому <span class="m">∠3 + ∠2 = 180°</span>, значит, <span class="m">∠3 = 180° − ∠2</span>.'},
+    {t:'И <span class="m">∠1</span>, и <span class="m">∠3</span> равны одному и тому же числу <span class="m">180° − ∠2</span>. Значит, <span class="m">∠1 = ∠3</span>. <b>Вертикальные углы равны.</b> Точно так же <span class="m">∠2 = ∠4</span>.',w:'Двигай ползунок: какой бы ни был наклон, числа в углах 1 и 3 одинаковые, в углах 2 и 4 — тоже.'}
   ];
   function draw(s){
     if(s!=null) step=s;
-    var p=+r.value, h=p/2, R=230, on={1:step!==2,2:step===1||step===2,3:step!==1,4:step===0};
-    var s1=[180-h,180+h], s2=[h,180-h], s3=[-h,h], s4=[180+h,360-h];
-    function A(n,sec,rr,c,f){ return on[n]?arc(O,rr,sec[0],sec[1],c,3,f):arc(O,rr,sec[0],sec[1],'#c7cfda',2); }
+    var p=+r.value, R=235, rays=[base,base+p,base+180,base+180+p];
+    var sec={3:[rays[0],rays[1]],2:[rays[1],rays[2]],1:[rays[2],rays[3]],4:[rays[3],rays[0]+360]};
+    var hot={0:[1,3],1:[1,2],2:[2,3],3:[1,3,2,4]}[step];
     var g='';
-    g+=A(1,s1,40,K.blue,K.bs)+A(3,s3,40,K.blue,K.bs)+A(2,s2,30,K.green,K.gs)+A(4,s4,30,K.green,K.gs);
-    g+=L(pt(O,R,180+h),pt(O,R,h),K.ink,2.5)+L(pt(O,R,180-h),pt(O,R,-h),K.ink,2.5)+D(O,K.ink,4);
-    g+=T(pt(O,66,180),'1',{sans:1,b:1,fs:18,c:K.blue})+T(pt(O,66,0),'3',{sans:1,b:1,fs:18,c:K.blue})+T(pt(O,58,90),'2',{sans:1,b:1,fs:18,c:K.green})+T(pt(O,58,270),'4',{sans:1,b:1,fs:18,c:K.green});
+    [1,2,3,4].forEach(function(n){
+      var odd=n%2===1, c=odd?K.blue:K.green, on=hot.indexOf(n)>=0, sc=sec[n];
+      g+=arc(O,44,sc[0],sc[1],c,on?4:2.2,on?(odd?'rgba(29,79,145,.22)':'rgba(31,107,79,.24)'):(odd?'rgba(29,79,145,.07)':'rgba(31,107,79,.08)'));
+    });
+    g+=L(pt(O,-R,base),pt(O,R,base),K.ink,2.5)+L(pt(O,-R,base+p),pt(O,R,base+p),K.ink,2.5)+D(O,K.ink,4);
+    [1,2,3,4].forEach(function(n){
+      var odd=n%2===1, c=odd?K.blue:K.green, sc=sec[n], mid=(sc[0]+sc[1])/2, val=odd?p:180-p;
+      g+=T(pt(O,28,mid),String(n),{sans:1,b:1,fs:15,c:c})+T(pt(O,72,mid),val+'°',{sans:1,b:1,fs:15,c:c});
+    });
     svg.innerHTML=g;
-    out.innerHTML='<b style="color:var(--blue)">∠1 = ∠3 = '+p+'°</b>, <b style="color:var(--green)">∠2 = ∠4 = '+(180-p)+'°</b>';
+    out.innerHTML='<b style="color:var(--blue)">∠1 = ∠3 = '+p+'°</b> · <b style="color:var(--green)">∠2 = ∠4 = '+(180-p)+'°</b>';
   }
   stepper(3,steps,draw); r.addEventListener('input',function(){draw();});
 })();
 
 /* ========== 4. две перпендикулярные к третьей ========== */
 (function(){
-  var svg=document.getElementById('f4'), Y=160, P=[220,Y], Q=[380,Y];
+  var svg=document.getElementById('f4'), Y=160, P=[220,Y], Q=[380,Y], M=[300,24], M1=[300,296];
   var steps=[
-    {t:'Прямые <span class="m">AA₁</span> и <span class="m">BB₁</span> перпендикулярны прямой <span class="m">PQ</span>. Углы 1 и 2 — прямые. Докажем, что эти прямые не пересекаются.'},
-    {t:'Мысленно <b>перегнём рисунок по прямой PQ</b>, чтобы верхняя часть наложилась на нижнюю. Смотри на голубую копию.',anim:1400,w:'Прямые углы 1 и 2 равны, поэтому луч PA ложится точно на луч PA₁, а луч QB — на луч QB₁.'},
-    {t:'Предположим, что прямые <span class="m">AA₁</span> и <span class="m">BB₁</span> всё-таки пересекаются — в точке <span class="m">M</span> (на рисунке они нарочно изогнуты, чтобы встретиться).',w:'Снова приём «от противного».'},
-    {t:'Перегнём рисунок снова. Точка <span class="m">M</span> наложится на точку <span class="m">M₁</span>, которая тоже лежит на обеих прямых.',anim:1400},
-    {t:'Получается, что через две точки <span class="m">M</span> и <span class="m">M₁</span> проходят <b>две</b> прямые. Это невозможно. Значит, прямые <span class="m">AA₁</span> и <span class="m">BB₁</span> <b>не пересекаются</b>.',w:'Опираемся на аксиому: через две точки проходит только одна прямая.'}
+    {t:'Прямые <span class="m">AA₁</span> и <span class="m">BB₁</span> перпендикулярны прямой <span class="m">PQ</span>: углы 1 и 2 прямые. Докажем, что эти прямые не пересекаются.'},
+    {t:'Мысленно <b>перегнём рисунок по прямой PQ</b>: верхняя половина ложится на нижнюю. Смотри на голубую копию.',anim:1400,w:'Углы 1 и 2 прямые, то есть равны. Поэтому луч PA ложится точно на луч PA₁, а луч QB — на луч QB₁.'},
+    {t:'Предположим, что прямые <span class="m">AA₁</span> и <span class="m">BB₁</span> всё-таки пересекаются — где-то вверху, в точке <span class="m">M</span>.',w:'Нарисовать это по-честному нельзя: прямые же не встречаются. Поэтому пересечение показано пунктиром. Это приём «от противного»: допускаем и ищем противоречие.'},
+    {t:'Перегнём рисунок ещё раз. Точка <span class="m">M</span> наложится на точку <span class="m">M₁</span> внизу. Она тоже лежит на обеих прямых: верхние лучи легли на нижние.',anim:1400},
+    {t:'Выходит, через две точки <span class="m">M</span> и <span class="m">M₁</span> проходят <b>две</b> прямые — <span class="m">AA₁</span> и <span class="m">BB₁</span>. Но через две точки проходит только одна прямая. Противоречие! Значит, прямые <b>не пересекаются</b>.',w:'Опираемся на аксиому (и теорему 1).'}
   ];
   function fold(inner,t){ var k=1-2*t; return '<g transform="translate(0 '+Y+') scale(1 '+k.toFixed(3)+') translate(0 '+(-Y)+')" opacity=".9">'+inner+'</g>'; }
   stepper(4,steps,function(s,t){
-    var h='', bent=s>=2&&s<=3;
-    h+=L([40,Y],[560,Y])+T([30,Y+6],'',{})+T([P[0]-18,Y-10],'P',{a:'end'})+T([Q[0]+18,Y-10],'Q',{a:'start'});
-    if(!bent){
-      h+=L([220,40],[220,290])+L([380,40],[380,290]);
-    } else {
-      h+='<path d="M220 290 L220 160 Q220 70 300 44" fill="none" stroke="'+K.ink+'" stroke-width="2.5"/><path d="M380 290 L380 160 Q380 70 300 44" fill="none" stroke="'+K.ink+'" stroke-width="2.5"/>'+D([300,44],K.red,6)+T([300,30],'M',{c:K.red});
-    }
+    var h='';
+    h+=L([40,Y],[560,Y])+T([P[0]-14,Y-12],'P',{a:'end'})+T([Q[0]+14,Y-12],'Q',{a:'start'});
+    h+=L([220,60],[220,280])+L([380,60],[380,280]);
     h+=sq(P,0,14)+sq(P,270,14)+sq(Q,0,14)+sq(Q,270,14);
-    h+=T([232,138],'1',{sans:1,b:1,fs:15,c:K.blue})+T([232,196],'2',{sans:1,b:1,fs:15,c:K.blue});
-    h+=T([206,56],'A',{a:'end'})+T([206,288],'A₁',{a:'end'})+T([394,56],'B',{a:'start'})+T([394,288],'B₁',{a:'start'});
-    if(s===1||s===3){
-      var top = s===1 ? L([220,40],[220,Y],'#5d8fd6',5)+L([380,40],[380,Y],'#5d8fd6',5)+sq(P,0,14,'#5d8fd6')
-                      : '<path d="M220 160 Q220 70 300 44 M380 160 Q380 70 300 44" fill="none" stroke="#5d8fd6" stroke-width="4"/>'+D([300,44],'#5d8fd6',6);
-      h+=fold(top,t);
-      if(s===3&&t>0.98) h+='<path d="M220 160 Q220 250 300 276 M380 160 Q380 250 300 276" fill="none" stroke="'+K.red+'" stroke-width="2.5" stroke-dasharray="7 6"/>'+D([300,276],K.red,6)+T([300,306],'M₁',{c:K.red});
-    }
-    if(s===4) h+='<rect x="140" y="292" width="320" height="26" rx="8" fill="'+K.green+'"/>'+T([300,311],'прямые не пересекаются ✓',{sans:1,b:1,fs:15,c:'#fff'});
+    h+=T([238,140],'1',{sans:1,b:1,fs:15,c:K.blue})+T([238,194],'2',{sans:1,b:1,fs:15,c:K.blue});
+    h+=T([206,72],'A',{a:'end'})+T([206,282],'A₁',{a:'end'})+T([394,72],'B',{a:'start'})+T([394,282],'B₁',{a:'start'});
+    var up= s>=2 ? L([220,60],M,K.red,2.5,{dash:1})+L([380,60],M,K.red,2.5,{dash:1})+D(M,K.red,6) : '';
+    h+=up; if(s>=2) h+=T([M[0]+14,M[1]+6],'M',{a:'start',c:K.red});
+    if(s===1) h+=fold(L([220,60],[220,Y],'#5d8fd6',6)+L([380,60],[380,Y],'#5d8fd6',6)+sq(P,0,14,'#5d8fd6'),t);
+    if(s===3) h+=fold(L([220,60],[220,Y],'#5d8fd6',6)+L([380,60],[380,Y],'#5d8fd6',6)+L([220,60],M,'#5d8fd6',4)+L([380,60],M,'#5d8fd6',4)+D(M,'#5d8fd6',7),t);
+    if(s>=4||(s===3&&t>0.98)) h+=L([220,260],M1,K.red,2.5,{dash:1})+L([380,260],M1,K.red,2.5,{dash:1})+D(M1,K.red,6)+T([M1[0]+14,M1[1]+6],'M₁',{a:'start',c:K.red});
+    if(s===4) h+='<rect x="400" y="8" width="190" height="50" rx="10" fill="'+K.red+'"/>'+T([495,29],'через M и M₁ — две',{sans:1,b:1,fs:14,c:'#fff'})+T([495,48],'прямые? Так нельзя ✗',{sans:1,b:1,fs:14,c:'#fff'});
     svg.innerHTML=h;
   });
 })();
@@ -439,31 +439,34 @@ function stepper(n,steps,draw){
 
 /* ========== 6. перпендикуляр ========== */
 (function(){
-  var svg=document.getElementById('f6'), Y=160, B=[130,Y], A=[340,56], H=[340,Y], A1=[340,264];
-  var far=pt(B,330,ang(B,A)), farM=[far[0],2*Y-far[1]];
+  var svg=document.getElementById('f6'), Y=160, A=[330,62], H=[330,Y], A1=[330,258], K1=[250,Y];
   var steps=[
-    {t:'Дана прямая <span class="m">BC</span> и точка <span class="m">A</span>, которая на ней не лежит. <b>Часть 1:</b> докажем, что из <span class="m">A</span> можно провести перпендикуляр к <span class="m">BC</span>.'},
-    {t:'Проведём луч <span class="m">BA</span>. От луча <span class="m">BC</span> отложим вниз угол <span class="m">MBC</span>, <b>равный</b> углу <span class="m">ABC</span>.',w:'Дужки одинаковые: ∠ABC = ∠MBC.'},
-    {t:'Углы равны, значит, их можно наложить друг на друга. Это как <b>перегнуть рисунок по прямой BC</b>. Точка <span class="m">A</span> наложится на какую-то точку <span class="m">A₁</span> луча <span class="m">BM</span>.',anim:1400},
-    {t:'Соединим <span class="m">A</span> и <span class="m">A₁</span>. Точку пересечения <span class="m">AA₁</span> с прямой <span class="m">BC</span> назовём <span class="m">H</span>. При перегибании луч <span class="m">HA</span> совместился с лучом <span class="m">HA₁</span>, поэтому <span class="m">∠1 = ∠2</span>.'},
-    {t:'Но углы 1 и 2 — <b>смежные</b>, их сумма 180°. Два равных угла с суммой 180° — это по 90°. Значит, <span class="m">AH ⊥ BC</span>: перпендикуляр провести <b>можно</b>.',w:'Теорема 2: сумма смежных углов равна 180°. 180° : 2 = 90°.'},
-    {t:'<b>Часть 2:</b> докажем, что перпендикуляр <b>только один</b>. Предположим, что из <span class="m">A</span> можно провести ещё один перпендикуляр — <span class="m">AH₁</span>.',w:'Опять «от противного».'},
-    {t:'Тогда прямые <span class="m">AH</span> и <span class="m">AH₁</span> обе перпендикулярны прямой <span class="m">BC</span> и при этом <b>пересекаются</b> в точке <span class="m">A</span>. Но по теореме 4 (п. 12) две прямые, перпендикулярные к третьей, не пересекаются. Противоречие! Значит, перпендикуляр только один. <b>Теорема доказана.</b>'}
+    {t:'Дана прямая <span class="m">BC</span> и точка <span class="m">A</span> не на ней. <b>Часть 1:</b> докажем, что из <span class="m">A</span> можно провести перпендикуляр к <span class="m">BC</span>.'},
+    {t:'Представь, что верхняя половина листа — с точкой <span class="m">A</span> — <b>перегибается по прямой BC</b> вниз. Точка <span class="m">A</span> попадёт в какую-то точку <span class="m">A₁</span>.',anim:1600,w:'В учебнике это сделано так: проводят луч BA и откладывают угол MBC, равный углу ABC. Равные углы совмещаются наложением, поэтому A ложится на точку A₁ луча BM. Это и есть «перегибание по BC».'},
+    {t:'Соединим точки <span class="m">A</span> и <span class="m">A₁</span>. Отрезок пересёк прямую <span class="m">BC</span> в точке <span class="m">H</span>. У точки <span class="m">H</span> получились два угла: <b>угол 1</b> сверху и <b>угол 2</b> снизу.'},
+    {t:'Перегнём ещё раз: при сгибе луч <span class="m">HA</span> ложится на луч <span class="m">HA₁</span>, поэтому <b>угол 1 ложится точно на угол 2</b>. Значит, <span class="m">∠1 = ∠2</span>.',anim:1400},
+    {t:'Углы 1 и 2 — <b>смежные</b>, их сумма 180° (теорема 2). Они ещё и равны — значит, каждый 180° : 2 = <b>90°</b>. Отрезок <span class="m">AH</span> — перпендикуляр к <span class="m">BC</span>. Провести его <b>можно</b>.'},
+    {t:'<b>Часть 2:</b> перпендикуляр только один. Предположим, что из <span class="m">A</span> есть <b>ещё один</b> перпендикуляр — <span class="m">AK</span>.',w:'Снова «от противного».'},
+    {t:'Тогда две прямые <span class="m">AH</span> и <span class="m">AK</span> обе перпендикулярны <span class="m">BC</span> — и при этом <b>пересекаются</b> в точке <span class="m">A</span>. Но по теореме 4 две прямые, перпендикулярные к третьей, не пересекаются. Противоречие! Значит, перпендикуляр <b>только один</b>. <b>Теорема доказана.</b>'}
   ];
+  function flip(inner,t){ var k=1-2*t; return '<g transform="translate(0 '+Y+') scale(1 '+k.toFixed(3)+') translate(0 '+(-Y)+')">'+inner+'</g>'; }
   stepper(6,steps,function(s,t){
-    var h=L([40,Y],[570,Y])+T([B[0]-6,Y+28],'B',{a:'end'})+T([560,Y-12],'C',{a:'end'});
-    var aBA=ang(B,A);
-    if(s>=1){
-      h+=L(B,far,K.ink,2.5)+arc(B,42,0,aBA,K.green,3);
-      h+=L(B,farM,K.ink,2.5,{dash:s<3})+arc(B,48,-aBA,0,K.green,3)+T([farM[0]+6,farM[1]+6],'M',{a:'start'});
+    var h='';
+    if(s===1){ h+=flip('<rect x="40" y="20" width="520" height="140" fill="rgba(93,143,214,.16)" stroke="#5d8fd6" stroke-width="2" stroke-dasharray="6 5"/>'+D(A,'#5d8fd6',7),t); }
+    if(s===0) h+='<rect x="40" y="20" width="520" height="140" fill="rgba(93,143,214,.08)"/>';
+    h+=L([40,Y],[560,Y],K.ink,3)+T([60,Y+28],'B',{a:'start'})+T([548,Y+28],'C',{a:'end'});
+    if(s>=1&&(s>1||t>0.98)) h+=D(A1,K.red,6)+T([A1[0]+14,A1[1]+8],'A₁',{a:'start',c:K.red});
+    if(s>=2){ h+=L(A,A1,K.red,3)+D(H,K.ink)+T([H[0]-12,H[1]+28],'H',{a:'end'}); }
+    if(s>=2&&s<=4){
+      var c1='rgba(29,79,145,.25)';
+      h+=arc(H,38,0,90,K.blue,3,c1)+T(pt(H,58,45),'1',{sans:1,b:1,fs:17,c:K.blue});
+      h+=arc(H,38,270,360,K.green,3,'rgba(31,107,79,.2)')+T(pt(H,58,-45),'2',{sans:1,b:1,fs:17,c:K.green});
+      if(s===3) h+=flip(arc(H,38,0,90,'#5d8fd6',4,'rgba(93,143,214,.35)'),t);
     }
-    if(s===2){ var k=1-2*t; h+='<g transform="translate(0 '+Y+') scale(1 '+k.toFixed(3)+') translate(0 '+(-Y)+')">'+L(B,far,'#5d8fd6',5)+D(A,'#5d8fd6',7)+'</g>'; if(t>0.98) h+=D(A1,K.red,6)+T([A1[0]+16,A1[1]+6],'A₁',{a:'start',c:K.red}); }
-    if(s>=3){ h+=L(A,A1,K.red,3)+D(A1,K.ink)+T([A1[0]+16,A1[1]+6],'A₁',{a:'start'})+D(H,K.ink)+T([H[0]-12,H[1]+26],'H',{a:'end'});
-      if(s===3) h+=arc(H,26,0,90,K.blue,3)+arc(H,30,270,360,K.blue,3); h+=T([H[0]+36,H[1]-22],'1',{sans:1,b:1,fs:15,c:K.blue})+T([H[0]+36,H[1]+36],'2',{sans:1,b:1,fs:15,c:K.blue}); }
-    if(s>=4) h+=sq(H,0,16,K.green)+sq(H,270,16,K.green);
-    if(s>=5){ var H1=[250,Y]; h+=L(A,[220,Y+40],K.red,3,{dash:1})+D(H1,K.red)+T([H1[0]-10,H1[1]+26],'H₁',{a:'end',c:K.red}); }
-    if(s>=6) h+='<rect x="40" y="14" width="250" height="50" rx="10" fill="'+K.red+'"/>'+T([165,35],'AH и AH₁ пересеклись в A —',{sans:1,b:1,fs:14,c:'#fff'})+T([165,54],'а по теореме 4 так нельзя ✗',{sans:1,b:1,fs:14,c:'#fff'});
-    h+=D(A,K.ink)+T([A[0]+14,A[1]-6],'A',{a:'start'});
+    if(s>=4){ h+=sq(H,0,18,K.green)+sq(H,270,18,K.green); if(s===4) h+=T([440,110],'90°',{sans:1,b:1,fs:18,c:K.green})+T([440,222],'90°',{sans:1,b:1,fs:18,c:K.green}); }
+    if(s>=5){ h+=L(A,pt(A,150,ang(A,K1)),K.red,3,{dash:1})+D(K1,K.red)+T([K1[0]-10,K1[1]+28],'K',{a:'end',c:K.red}); }
+    if(s>=6) h+='<rect x="40" y="10" width="250" height="50" rx="10" fill="'+K.red+'"/>'+T([165,31],'AH и AK пересеклись в A —',{sans:1,b:1,fs:14,c:'#fff'})+T([165,50],'а по теореме 4 так нельзя ✗',{sans:1,b:1,fs:14,c:'#fff'});
+    h+=D(A,K.ink,5)+T([A[0]+14,A[1]-4],'A',{a:'start'});
     svg.innerHTML=h;
   });
 })();
