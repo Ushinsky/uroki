@@ -164,6 +164,23 @@
   .kinds3 b.h{display:block;font-size:17px;color:var(--blue);margin-bottom:4px}
   @media (max-width:700px){.kinds3{grid-template-columns:1fr}}
   .lab svg{background:#fff}
+  /* Светлая тема учебного кабинета */
+  :root{--bg:#fafafa;--paper:#fff;--ink:#132238;--muted:#455c72;--line:#d9e2eb;--blue:#1d568d;--blue-soft:#eaf3fb;--grid:#d4dfed}
+  nav{background:rgba(255,255,255,.98);border-bottom:1px solid #dce5ec}
+  nav a{font-size:15px;padding:10px 12px}
+  nav a:focus-visible,.btn:focus-visible,.tool:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid #d67235;outline-offset:3px}
+  header{margin-top:26px;padding:30px 30px 32px;border-radius:16px;background:#e5f1f9}
+  header h1{font-size:clamp(32px,5vw,46px);letter-spacing:-.02em;max-width:720px}
+  header p{font-size:17px;color:#38526c}
+  .card{border-radius:16px;padding:30px 30px 26px;margin:18px 0 24px;box-shadow:0 5px 22px rgba(34,58,82,.08)}
+  .card.short{background:#fff4ed;box-shadow:none}
+  .tag{color:#ad4b24;font-size:15px;margin-bottom:8px}
+  .rule{background:#eaf3fb;padding:18px 20px}
+  .lab,.task,details.more,.hidden-sol,.slots>div,.kinds>div,.kinds3>div{background:#f3f6f8}
+  .tetrad{border-radius:12px;box-shadow:inset 0 0 0 1px #d4deeb}
+  .btn{border-radius:9px}.btn.ghost{background:#fff}
+  @media (max-width:620px){header{margin-top:16px;padding:24px 18px}.card{padding:24px 18px 20px}.sol-t .row{grid-template-columns:1fr;gap:0}.sol-t .why{margin:0 0 4px}}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.found{animation:none}.solve .ln{transition:none}}
 </style>
 </head>
 <body>

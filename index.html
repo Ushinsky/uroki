@@ -11,148 +11,130 @@
 <link rel="apple-touch-icon" href="assets/icon-180.png">
 <link rel="stylesheet" href="assets/fonts.css">
 <style>
-  :root{--bg:#eef2f7;--paper:#fff;--ink:#15202e;--muted:#566273;--line:#d5dde8;--blue:#1d4f91;--blue-soft:#e3ecf8;--red:#b0182f;--green:#1f6b4f;--green-soft:#e2f2eb}
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "PT Sans",system-ui,sans-serif}
-  .wrap{max-width:900px;margin:0 auto;padding:0 16px}
-  header{padding:44px 0 18px}
-  .hi{font-family:"PT Serif",serif;font-size:22px;color:var(--blue);margin:0 0 2px}
-  h1{font-size:clamp(32px,6vw,52px);line-height:1.05;margin:0 0 10px}
-  .lead{color:var(--muted);margin:0;max-width:600px}
-  .tabs{display:flex;flex-wrap:wrap;gap:6px;margin:20px 0 4px;padding:5px;background:#dfe6ef;border-radius:14px;width:fit-content;max-width:100%}
-  .tab{appearance:none;border:0;background:transparent;color:var(--ink);border-radius:10px;padding:10px 16px;font:700 16px/1.2 "PT Sans",system-ui,sans-serif;cursor:pointer;min-height:44px}
-  .tab:hover{background:rgba(255,255,255,.6)}
-  .tab[aria-selected="true"]{background:var(--blue);color:#fff;box-shadow:0 2px 8px -3px rgba(29,79,145,.6)}
-  .tab:focus-visible{outline:3px solid #9fb9de;outline-offset:2px}
-  .tab .c{font-weight:400;opacity:.75;margin-left:6px;font-size:14px}
-  .subj[hidden]{display:none}
-  @media (max-width:560px){.tabs{width:100%}.tab{flex:1 1 auto;padding:10px 10px}}
-  .subj{background:var(--paper);border-radius:20px;padding:20px 20px 12px;margin:16px 0 20px;box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(21,32,46,.25);scroll-margin-top:16px}
-  .sh{display:flex;align-items:center;gap:14px;margin-bottom:8px}
-  .gl{flex:none;width:52px;height:52px;border-radius:14px;background:var(--ink);color:#fff;display:grid;place-items:center;font-family:"PT Serif",serif;font-weight:700;font-size:20px}
-  .sh h2{margin:0;font-size:26px;line-height:1.1}
-  .sh p{margin:2px 0 0;color:var(--muted);font-size:15px}
-  .les{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink);padding:14px 4px;border-top:1px solid var(--line);min-height:60px}
-  .les:hover .tt{color:var(--blue)}
-  .num{flex:none;min-width:92px;font-weight:700;color:var(--blue);font-size:15px}
-  .tt{flex:1;font-size:18px;font-weight:700;line-height:1.3}
-  .tt small{display:block;font-weight:400;font-size:14.5px;color:var(--muted);margin-top:2px}
-  .st{flex:none;display:flex;gap:6px;align-items:center}
-  .st i{font-style:normal;font-size:13px;font-weight:700;border-radius:999px;padding:3px 10px}
-  .new{background:#f8e6ea;color:var(--red)}
-  .seen:empty{display:none}
-  .seen{background:var(--green-soft);color:var(--green)}
-  @media (max-width:560px){.les{flex-wrap:wrap;gap:4px 12px}.num{min-width:0}.tt{flex-basis:100%;order:3}}
-  .tip{color:var(--muted);font-size:14.5px;text-align:center;padding:4px 0 36px}
+:root{color-scheme:light;--ink:#182b3a;--muted:#4e6170;--line:#d9e3e6;--accent:#195d72}
+*{box-sizing:border-box}body{margin:0;background:#f4f8f8;color:var(--ink);font:17px/1.5 "PT Sans",system-ui,sans-serif}.wrap{max-width:1220px;margin:auto;padding:0 24px}header{padding:32px 0 0}.mast{display:flex;align-items:baseline;gap:18px;border-bottom:1px solid var(--line);padding-bottom:20px}.mast strong{font-size:19px}.mast span{color:var(--muted);font-size:15px}.intro{padding:35px 0 24px}h1{font-size:clamp(32px,4vw,48px);line-height:1.1;margin:0 0 8px}.lead{color:var(--muted);margin:0}.tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:0 0 30px}.tab{font:700 19px/1.2 "PT Sans",system-ui,sans-serif;text-align:left;color:var(--ink);cursor:pointer;min-height:145px;border:2px solid transparent;border-radius:12px;padding:14px;background-color:#e3f0f2;background-image:url('assets/subjects.webp');background-size:500% auto;background-repeat:no-repeat;background-position:var(--pos) bottom;display:flex;flex-direction:column;justify-content:space-between}.tab:nth-child(1){--pos:0%}.tab:nth-child(2){--pos:25%}.tab:nth-child(3){--pos:50%}.tab:nth-child(4){--pos:75%}.tab:nth-child(5){--pos:100%}.tab:hover{border-color:#91b9c1}.tab[aria-selected="true"]{border-color:#195d72}.tab:focus-visible,.quarter:focus-visible,.les:focus-visible{outline:3px solid #b06229;outline-offset:3px}.tab .c{font-size:14px;font-weight:400;color:#334f5a}.catalog-head{display:flex;align-items:end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin:0 0 14px}.catalog-head h2{margin:0;font-size:25px}.quarters{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.quarters span{font-size:15px;color:var(--muted);margin-right:5px}.quarter{border:1px solid #b7ced3;border-radius:7px;background:#fff;color:#244553;font:700 15px "PT Sans",system-ui,sans-serif;padding:9px 14px;cursor:pointer;min-height:42px}.quarter[aria-pressed="true"]{background:#195d72;color:white;border-color:#195d72}.subj[hidden],.les[hidden],.empty[hidden]{display:none}.subj{background:#fff;border:1px solid var(--line);border-radius:12px;padding:24px 28px;margin-bottom:20px}.sh{display:flex;align-items:center;gap:14px;margin-bottom:14px}.gl{font-family:"PT Serif",serif;font-size:19px;font-weight:700;color:#195d72}.sh h2{font-size:25px;line-height:1.1;margin:0}.sh p{color:var(--muted);font-size:15px;margin:4px 0 0}.les{display:flex;align-items:center;gap:18px;text-decoration:none;color:var(--ink);padding:16px 4px;border-top:1px solid var(--line);min-height:65px}.les:hover{background:#f3f9fa}.num{width:98px;flex:none;font-size:15px;color:#195d72;font-weight:700}.tt{flex:1;font-size:18px;font-weight:700;line-height:1.3}.tt small{display:block;font-size:15px;color:var(--muted);font-weight:400;margin-top:3px}.st{font-size:13px;color:#286342}.st i{font-style:normal}.st i+i:not(:empty){margin-left:8px}.new{color:#9a4026}.empty{padding:20px 0;color:var(--muted);border-top:1px solid var(--line)}.tip{color:var(--muted);font-size:14px;padding:2px 0 32px}::selection{background:#c4e4e8;color:#182b3a}@media(max-width:800px){.tabs{grid-template-columns:repeat(3,minmax(0,1fr))}.tab{min-height:135px}}@media(max-width:520px){.wrap{padding:0 16px}.mast{gap:10px;flex-wrap:wrap}.intro{padding:27px 0 20px}.tabs{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.tab{min-height:125px;font-size:17px}.catalog-head{align-items:start;flex-direction:column;gap:10px}.quarters{gap:5px}.quarters span{width:100%}.quarter{padding:8px 12px}.subj{padding:20px 16px}.les{gap:4px 10px;flex-wrap:wrap}.num{width:auto}.tt{flex-basis:100%;order:3}.st{margin-left:auto}.tip{line-height:1.5}}
+
+/* Учебный кабинет: композиция согласованного макета */
+.subject-name{align-self:flex-start;max-width:100%;padding:5px 9px;background:rgba(255,255,255,.86);border-radius:7px;text-shadow:none;overflow-wrap:anywhere}.tab{justify-content:flex-start}
+body{background:#fafafa;color:#101d31}.wrap{max-width:1480px;padding:0 24px}header{padding:0}.mast{height:68px;padding:0;align-items:center;border-bottom:0}.mast strong{font-size:23px;color:#132643}.mast span{font-size:16px;color:#3d5875}.intro{min-height:205px;padding:39px 32px;background:#cfe5f6 url('assets/hero.webp') center 55%/cover no-repeat;border-radius:12px}.intro h1{font-size:clamp(36px,4.5vw,62px);letter-spacing:-.025em}.intro .lead{font-size:clamp(17px,1.7vw,23px);color:#243d58;max-width:600px}.tabs{gap:12px;margin:14px 0 26px}.tab{min-height:155px;padding:18px;background-image:url('assets/subjects.webp');background-size:500% auto;background-position:var(--pos) bottom;border:3px solid #fff;border-radius:15px;color:#172235;font-size:clamp(17px,1.6vw,23px);box-shadow:0 3px 12px rgba(35,71,100,.08);text-shadow:0 1px 2px rgba(255,255,255,.75)}.tab .c{font-size:14px;color:#263a4d;font-weight:700}.tab[aria-selected="true"]{border-color:#e7693b}.tab:hover{border-color:#e7693b}.catalog-head{margin:0;padding:22px 28px 16px;background:white;border-radius:14px 14px 0 0;border-bottom:1px solid #dce6ef}.catalog-head h2{font-size:26px}.subj{margin:0 0 22px;border:0;border-radius:0 0 14px 14px;padding:20px 28px 25px;box-shadow:0 5px 18px rgba(34,72,105,.07)}.sh{margin-bottom:16px}.sh h2{font-size:26px}.gl{color:#d65427;background:#fff0e7;border-radius:10px;padding:8px 12px}.les{padding:15px 5px}.tt{color:#174e88}.les:hover .tt{color:#123963;text-decoration:underline}.quarter[aria-pressed="true"]{background:#1c5b98;border-color:#1c5b98}.quarter{border-color:#b8cce0;color:#254a70}.tip{padding-top:4px}
+@media(max-width:800px){.tabs{grid-template-columns:repeat(3,minmax(0,1fr))}.intro{min-height:180px}.tab{min-height:145px}}
+@media(max-width:520px){.wrap{padding:0 14px}.mast{height:58px}.mast strong{font-size:19px}.intro{padding:25px 20px;min-height:165px;background-position:62% center}.intro h1{font-size:34px;max-width:240px}.intro .lead{font-size:16px;max-width:245px;color:#152d44}.tabs{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0 20px}.tab{min-height:125px;padding:12px;font-size:18px}.catalog-head{padding:20px 17px 15px}.subj{padding:19px 17px 22px}.catalog-head h2{font-size:23px}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
-  <h1>Уроки 7 класса</h1>
-  <p class="lead">Все уроки в одном месте. Выбери предмет, потом тему. Открытые уроки отмечаются галочкой.</p>
-  <div class="tabs" role="tablist" aria-label="Предметы"><button class="tab" role="tab" type="button" id="tab-algebra" aria-controls="algebra" aria-selected="false" data-s="algebra">Алгебра<span class="c">6</span></button><button class="tab" role="tab" type="button" id="tab-geometry" aria-controls="geometry" aria-selected="false" data-s="geometry">Геометрия<span class="c">3</span></button><button class="tab" role="tab" type="button" id="tab-history" aria-controls="history" aria-selected="false" data-s="history">История<span class="c">4</span></button><button class="tab" role="tab" type="button" id="tab-geography" aria-controls="geography" aria-selected="false" data-s="geography">География<span class="c">2</span></button><button class="tab" role="tab" type="button" id="tab-physics" aria-controls="physics" aria-selected="false" data-s="physics">Физика<span class="c">1</span></button></div>
+  <div class="mast"><strong>Уроки 7 класса</strong><span>Учебный кабинет Алисы Ушинской</span></div>
+  <div class="intro"><h1>Уроки 7 класса</h1>
+  <p class="lead">Все уроки в одном месте. Выбери предмет, потом тему. Открытые уроки отмечаются галочкой.</p></div>
+  <div class="tabs" role="tablist" aria-label="Предметы"><button class="tab" role="tab" type="button" id="tab-algebra" aria-controls="algebra" aria-selected="false" data-s="algebra"><span class="subject-name">Алгебра</span></button><button class="tab" role="tab" type="button" id="tab-geometry" aria-controls="geometry" aria-selected="false" data-s="geometry"><span class="subject-name">Геометрия</span></button><button class="tab" role="tab" type="button" id="tab-history" aria-controls="history" aria-selected="false" data-s="history"><span class="subject-name">История</span></button><button class="tab" role="tab" type="button" id="tab-geography" aria-controls="geography" aria-selected="false" data-s="geography"><span class="subject-name">География</span></button><button class="tab" role="tab" type="button" id="tab-physics" aria-controls="physics" aria-selected="false" data-s="physics"><span class="subject-name">Физика</span></button></div>
 </header>
+<div class="catalog-head"><h2>Темы и задания</h2><div class="quarters" role="group" aria-label="Четверть"><span>Четверть</span><button type="button" class="quarter" data-q="1" aria-pressed="true">1</button><button type="button" class="quarter" data-q="2" aria-pressed="false">2</button><button type="button" class="quarter" data-q="3" aria-pressed="false">3</button><button type="button" class="quarter" data-q="4" aria-pressed="false">4</button></div></div>
 <section class="subj" id="algebra" role="tabpanel" aria-labelledby="tab-algebra">
   <div class="sh"><span class="gl">a+b</span><div><h2>Алгебра</h2><p>Алгебра, 7 класс</p></div></div>
   <div class="list">
-    <a class="les" href="algebra/p4/" data-key="algebra/p4">
+    <a class="les" href="algebra/p4/" data-key="algebra/p4" data-quarter="1">
       <span class="num">п. 4</span>
       <span class="tt">Сравнение значений выражений<small>№ 85, 86</small></span>
       <span class="st"><i class="seen"></i></span>
     </a>
-    <a class="les" href="algebra/p5/" data-key="algebra/p5">
+    <a class="les" href="algebra/p5/" data-key="algebra/p5" data-quarter="1">
       <span class="num">п. 5</span>
       <span class="tt">Свойства действий над числами<small>№ 91, 96</small></span>
       <span class="st"><i class="seen"></i></span>
     </a>
-    <a class="les" href="algebra/p6/" data-key="algebra/p6">
+    <a class="les" href="algebra/p6/" data-key="algebra/p6" data-quarter="1">
       <span class="num">п. 6</span>
       <span class="tt">Тождества. Тождественные преобразования выражений<small>№ 105, 115 · дом. № 114, 117</small></span>
       <span class="st"><i class="seen"></i></span>
     </a>
-    <a class="les" href="algebra/p7/" data-key="algebra/p7">
+    <a class="les" href="algebra/p7/" data-key="algebra/p7" data-quarter="1">
       <span class="num">п. 7</span>
       <span class="tt">Уравнение и его корни<small>§ 3 · № 130, 131, 134</small></span>
       <span class="st"><i class="seen"></i></span>
     </a>
-    <a class="les" href="algebra/p8/" data-key="algebra/p8">
+    <a class="les" href="algebra/p8/" data-key="algebra/p8" data-quarter="1">
       <span class="num">п. 8</span>
       <span class="tt">Линейное уравнение с одной переменной<small>№ 145–148</small></span>
       <span class="st"><i class="seen"></i></span>
     </a>
-    <a class="les" href="algebra/kr2/" data-key="algebra/kr2">
+    <a class="les" href="algebra/kr2/" data-key="algebra/kr2" data-quarter="1">
       <span class="num">КР № 2</span>
       <span class="tt">Подготовка к контрольной работе № 2<small>уравнения и задачи · 13 заданий с подсказками</small></span>
       <span class="st"><i class="seen"></i></span>
     </a>
   </div>
+  <p class="empty" hidden>В этой четверти пока нет уроков по этому предмету.</p>
 </section><section class="subj" id="geometry" role="tabpanel" aria-labelledby="tab-geometry">
   <div class="sh"><span class="gl">△</span><div><h2>Геометрия</h2><p>Атанасян, 7–9 класс</p></div></div>
   <div class="list">
-    <a class="les" href="geometry/gl1-povtorenie/" data-key="geometry/gl1-povtorenie">
+    <a class="les" href="geometry/gl1-povtorenie/" data-key="geometry/gl1-povtorenie" data-quarter="1">
       <span class="num">Глава I</span>
       <span class="tt">Повторение: начальные геометрические сведения<small>13 тем, тесты</small></span>
       <span class="st"><i class="seen"></i></span>
     </a>
-    <a class="les" href="geometry/gl2-p1/" data-key="geometry/gl2-p1">
+    <a class="les" href="geometry/gl2-p1/" data-key="geometry/gl2-p1" data-quarter="1">
       <span class="num">Глава II, § 1</span>
       <span class="tt">Треугольник. Первый признак равенства треугольников<small>№ 95, 96, 98, 99</small></span>
       <span class="st"><i class="seen"></i></span>
     </a>
-    <a class="les" href="geometry/teoremy/" data-key="geometry/teoremy">
+    <a class="les" href="geometry/teoremy/" data-key="geometry/teoremy" data-quarter="1">
       <span class="num">Теоремы</span>
       <span class="tt">Аксиома и все теоремы до п. 16<small>с доказательствами по шагам</small></span>
       <span class="st"><i class="new">новое</i><i class="seen"></i></span>
     </a>
   </div>
+  <p class="empty" hidden>В этой четверти пока нет уроков по этому предмету.</p>
 </section><section class="subj" id="history" role="tabpanel" aria-labelledby="tab-history">
   <div class="sh"><span class="gl">XVI</span><div><h2>История</h2><p>История Нового времени, 7 класс</p></div></div>
   <div class="list">
-    <a class="les" href="history/p5-6/" data-key="history/p5-6">
+    <a class="les" href="history/p5-6/" data-key="history/p5-6" data-quarter="1">
       <span class="num">§ 5–6</span>
       <span class="tt">Абсолютизм. Реформация и Контрреформация<small>Лютер, Мюнцер, кальвинизм</small></span>
       <span class="st"><i class="seen"></i></span>
     </a>
-    <a class="les" href="history/p8/" data-key="history/p8">
+    <a class="les" href="history/p8/" data-key="history/p8" data-quarter="1">
       <span class="num">§ 8</span>
       <span class="tt">Испания<small>Карл V, Филипп II, упадок</small></span>
       <span class="st"><i class="seen"></i></span>
     </a>
-    <a class="les" href="history/p10/" data-key="history/p10">
+    <a class="les" href="history/p10/" data-key="history/p10" data-quarter="1">
       <span class="num">§ 10</span>
       <span class="tt">Франция: становление абсолютизма<small>Ришельё, Людовик XIV, тест по тетради</small></span>
       <span class="st"><i class="seen"></i></span>
     </a>
-    <a class="les" href="history/p11/" data-key="history/p11">
+    <a class="les" href="history/p11/" data-key="history/p11" data-quarter="1">
       <span class="num">§ 11</span>
       <span class="tt">Англия в XVI — начале XVII в.<small>Генрих VIII, Елизавета I, Стюарты, тест по тетради</small></span>
       <span class="st"><i class="seen"></i></span>
     </a>
   </div>
+  <p class="empty" hidden>В этой четверти пока нет уроков по этому предмету.</p>
 </section><section class="subj" id="geography" role="tabpanel" aria-labelledby="tab-geography">
   <div class="sh"><span class="gl">🌍</span><div><h2>География</h2><p>«Полярная звезда», 7 класс</p></div></div>
   <div class="list">
-    <a class="les" href="geography/p10-11/" data-key="geography/p10-11">
+    <a class="les" href="geography/p10-11/" data-key="geography/p10-11" data-quarter="1">
       <span class="num">§ 10–11</span>
       <span class="tt">Земная кора на карте. Природные ресурсы земной коры</span>
       <span class="st"><i class="seen"></i></span>
     </a>
-    <a class="les" href="geography/okeany/" data-key="geography/okeany">
+    <a class="les" href="geography/okeany/" data-key="geography/okeany" data-quarter="1">
       <span class="num">§ 24–25</span>
       <span class="tt">Доля каждого океана в Мировом океане<small>круговая диаграмма</small></span>
       <span class="st"><i class="seen"></i></span>
     </a>
   </div>
+  <p class="empty" hidden>В этой четверти пока нет уроков по этому предмету.</p>
 </section><section class="subj" id="physics" role="tabpanel" aria-labelledby="tab-physics">
   <div class="sh"><span class="gl">⚛</span><div><h2>Физика</h2><p>Перышкин, 7 класс</p></div></div>
   <div class="list">
-    <a class="les" href="physics/p9-11/" data-key="physics/p9-11">
+    <a class="les" href="physics/p9-11/" data-key="physics/p9-11" data-quarter="1">
       <span class="num">§ 9–11</span>
       <span class="tt">Броуновское движение. Диффузия. Притяжение и отталкивание молекул<small>живые схемы</small></span>
       <span class="st"><i class="seen"></i></span>
     </a>
   </div>
+  <p class="empty" hidden>В этой четверти пока нет уроков по этому предмету.</p>
 </section>
 <p class="tip">На планшете: меню браузера → «Добавить на главный экран». После первого открытия уроки работают и без интернета.</p>
 </div>
@@ -161,6 +143,10 @@ try{var v=JSON.parse(localStorage.getItem('uroki-visited')||'{}');
 document.querySelectorAll('.les').forEach(function(a){var d=v[a.dataset.key];if(d){var s=a.querySelector('.seen');s.textContent='✓ открыт '+d.slice(8,10)+'.'+d.slice(5,7);}});}catch(e){}
 (function(){
   var tabs=[].slice.call(document.querySelectorAll('.tab')), ids=tabs.map(function(t){return t.dataset.s;});
+  var quarter=1;
+  function filter(){document.querySelectorAll('.subj').forEach(function(panel){var count=0;panel.querySelectorAll('.les').forEach(function(a){var visible=Number(a.dataset.quarter)===quarter;a.hidden=!visible;if(visible)count++;});panel.querySelector('.empty').hidden=count>0;});}
+  document.querySelectorAll('.quarter').forEach(function(b){b.addEventListener('click',function(){quarter=Number(b.dataset.q);document.querySelectorAll('.quarter').forEach(function(x){x.setAttribute('aria-pressed',x===b);});filter();});});
+  filter();
   function show(id,focus){
     if(ids.indexOf(id)<0) id=ids[0];
     tabs.forEach(function(t){var on=t.dataset.s===id;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;if(on&&focus)t.focus();});
