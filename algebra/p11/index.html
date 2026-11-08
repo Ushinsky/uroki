@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="ru"><head>
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="theme-color" content="#1d4f91">
+<link rel="apple-touch-icon" href="../../assets/icon-180.png"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Алгебра 7: числовые промежутки</title><link rel="stylesheet" href="../../assets/fonts.css"><style>
+  :root{
+    --bg:#eef2f7; --paper:#ffffff; --ink:#15202e; --muted:#566273; --line:#d5dde8;
+    --blue:#1d4f91; --blue-soft:#e3ecf8; --red:#b0182f; --red-soft:#f8e6ea;
+    --green:#1f6b4f; --green-soft:#e2f2eb; --gold:#6f550c; --gold-soft:#f5efd9;
+    --grid:#cfdcee; --pen:#1d3f8f;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.6 "PT Sans",system-ui,sans-serif}
+  .wrap{max-width:900px;margin:0 auto;padding:0 16px}
+  h1,h2,h3{line-height:1.2;margin:0}
+  h2{font-size:clamp(25px,3.8vw,32px);margin-bottom:12px}
+  h3{font-size:21px;margin:26px 0 10px}
+  p{margin:0 0 12px}
+  [id]{scroll-margin-top:64px}
+  .m{font-family:"PT Serif",Georgia,serif;white-space:nowrap}
+  .m i, i.m{font-style:italic}
+  .big{font-family:"PT Serif",Georgia,serif;font-size:28px;text-align:center;margin:12px 0 16px}
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:none}
+  nav a{flex:none;text-decoration:none;color:var(--ink);font-size:14px;font-weight:700;padding:8px 11px;border-radius:8px}
+  nav a:hover{background:var(--blue-soft);color:var(--blue)}
+  header{padding:40px 0 14px}
+  .hi{font-family:"PT Serif",serif;font-size:22px;color:var(--blue);margin:0 0 4px}
+  header h1{font-size:clamp(30px,5vw,44px);margin:4px 0 10px}
+  header p{color:var(--muted);max-width:660px;margin:0}
+  .card{background:var(--paper);border-radius:20px;padding:28px 26px 24px;margin:18px 0 22px;box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(21,32,46,.25)}
+  @media (max-width:560px){.card{padding:22px 16px 18px}}
+  .tag{display:inline-block;font-weight:700;font-size:14px;color:var(--blue);margin-bottom:6px}
+  .src{color:var(--muted);font-size:16px}
+  .sub{font-weight:400;color:var(--muted);font-size:16px}
+  .task{background:#f3f6fa;border-radius:12px;padding:14px 18px;margin:8px 0 12px}
+  .rule{background:var(--blue-soft);border-radius:12px;padding:14px 18px;margin:12px 0}
+  .rule b.t{color:var(--blue)}
+  .trap{background:var(--gold-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+  .trap b.t{color:var(--gold)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+  @media (max-width:620px){.two{grid-template-columns:1fr}}
+  .steps{counter-reset:s;list-style:none;padding:0;margin:10px 0}
+  .steps li{counter-increment:s;position:relative;padding:4px 0 8px 42px}
+  .steps li::before{content:counter(s);position:absolute;left:0;top:3px;width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;font-weight:700;display:grid;place-items:center;font-size:15px}
+
+  /* страница тетради */
+  .tetrad{position:relative;background-color:#fdfeff;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:22px 22px;
+    border-radius:12px;box-shadow:inset 0 0 0 1px var(--line);padding:30px 18px 14px;margin:12px 0;font-family:"PT Serif",serif;font-style:italic;font-size:20px;line-height:1.55;color:var(--pen)}
+  .tetrad .tl{position:absolute;top:6px;left:12px;font-family:"PT Sans",sans-serif;font-style:normal;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .tetrad .eq{display:block;white-space:nowrap}
+  .tetrad u{text-decoration:none;box-shadow:0 0 0 2px var(--pen);padding:0 6px;border-radius:2px}
+  .tetrad.big-t p{margin:0 0 10px} .tetrad.big-t b{font-style:normal;font-family:"PT Sans",sans-serif}
+
+  .kinds{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
+  .kinds > div{background:#f3f6fa;border-radius:14px;padding:12px 14px;font-size:16px;line-height:1.5}
+  .kinds b.h{display:block;font-size:17px;color:var(--blue);margin-bottom:4px}
+  .kinds .m{white-space:normal}
+  @media (max-width:760px){.kinds{grid-template-columns:1fr 1fr}}
+
+  .lab{background:#f3f6fa;border-radius:16px;padding:16px;margin:16px 0}
+  .lab svg{display:block;width:100%;height:auto;background:#fff;border-radius:12px;margin-top:10px}
+  .rng{display:flex;align-items:center;gap:12px;margin-top:12px;font-family:"PT Serif",serif;font-size:22px}
+  .rng input{flex:1;accent-color:var(--blue);height:32px}
+  .rng b{min-width:34px;text-align:center}
+  .say{background:#fff;border-radius:12px;padding:12px 14px;margin-top:10px;min-height:52px}
+  .say .ok{color:var(--green);font-weight:700} .say .no{color:var(--red);font-weight:700}
+
+  .solve{background:#fff;border-radius:12px;padding:14px 18px;margin-top:10px;font-family:"PT Serif",serif;font-size:24px;line-height:1.7}
+  .solve .ln{opacity:.35;transition:opacity .25s}
+  .solve .ln.cur{opacity:1}
+  .solve .ln.past{opacity:.7}
+  .solve .r{color:var(--red);font-weight:700} .solve .g{color:var(--green);font-weight:700} .solve .bl{color:var(--blue);font-weight:700}
+  .solve .note{font-family:"PT Sans",sans-serif;font-size:15px;color:var(--muted);margin-left:10px}
+  .ctl{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+
+  table.chk{border-collapse:collapse;width:100%;margin:10px 0;font-size:17px}
+  .chk th,.chk td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left}
+  .chk th{font-size:14px;color:var(--muted)}
+  .chk .yes{color:var(--green);font-weight:700} .chk .no{color:var(--muted)}
+
+  .yn{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+  .yn .btn.on-ok{background:var(--green);color:#fff} .yn .btn.on-no{background:var(--red);color:#fff}
+  .sum{padding-left:22px} .sum li{margin:6px 0}
+  .short h2{font-size:24px}
+  .three{padding-left:24px;margin:0;font-size:19px} .three li{margin:6px 0}
+  .cap{text-align:center;color:var(--muted);font-size:15px;margin-top:-8px}
+  .big .c-red,.big .c-blue{font-weight:700}
+  .easy{padding-left:22px} .easy li{margin:8px 0}
+  details.more{background:#f3f6fa;border-radius:12px;padding:4px 16px;margin:12px 0}
+  details.more summary{cursor:pointer;font-weight:700;color:var(--blue);min-height:44px;display:flex;align-items:center}
+  details.more[open]{padding-bottom:10px}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+  .vs div{border-radius:12px;padding:12px 14px;font-size:17px}
+  .vs .ok{background:var(--green-soft);color:var(--green)} .vs .no{background:var(--red-soft);color:var(--red)}
+  @media (max-width:620px){.vs{grid-template-columns:1fr}}
+  .moves{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+  .moves > div{background:var(--blue-soft);border-radius:14px;padding:12px 16px;font-size:17px}
+  .moves b.h{display:block;color:var(--blue);font-size:18px;margin-bottom:2px}
+  @media (max-width:620px){.moves{grid-template-columns:1fr}}
+  .found{background:var(--green-soft);border-radius:14px;padding:14px 18px;margin:14px 0 0;animation:pop .35s ease-out}
+  .found p:last-child{margin:0}
+  @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .sol-t{padding-top:16px}
+  .sol-t .row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:14px;align-items:baseline;padding:4px 0;border-bottom:1px dashed #c9d6e8}
+  .sol-t .row:last-child{border-bottom:0}
+  .sol-t .why{font-family:"PT Sans",sans-serif;font-style:normal;font-size:15.5px;line-height:1.4;color:var(--ink)}
+  .sol-t .row .eq:empty + .why{grid-column:1 / -1;color:var(--green);font-weight:700}
+  @media (max-width:620px){.sol-t .row{grid-template-columns:1fr;gap:0}.sol-t .why{margin:0 0 4px}}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding:6px 0 40px}
+  /* доска */
+  .board{margin:14px 0 10px;border-radius:14px;background:#fff;box-shadow:0 0 0 1px var(--line)}
+  .toolbar{display:flex;flex-wrap:wrap;gap:6px;padding:8px;border-bottom:1px solid var(--line);align-items:center}
+  .tool{display:inline-flex;align-items:center;gap:6px;border:1px solid transparent;background:#f3f6fa;color:var(--ink);border-radius:9px;padding:8px 12px;font:inherit;font-size:15px;font-weight:700;cursor:pointer;min-height:42px}
+  .tool svg{width:20px;height:20px;margin:0}
+  .tool[aria-pressed=true]{background:var(--blue);color:#fff}
+  .tool:hover{border-color:var(--blue)}
+  .tool .dot{width:14px;height:14px;border-radius:50%;box-shadow:0 0 0 2px #fff}
+  .spacer{flex:1}
+  .grip{display:flex;align-items:center;justify-content:center;gap:10px;height:34px;cursor:ns-resize;touch-action:none;-webkit-user-select:none;user-select:none;
+    background:#f3f6fa;border-top:1px solid var(--line);border-radius:0 0 14px 14px;font-size:13px;color:var(--muted)}
+  .grip span{width:56px;height:6px;border-radius:3px;background:#9fb3cf}
+  .grip:hover span,.grip.drag span{background:var(--blue)}
+  .pen-state{font-size:13px;color:var(--muted);padding:0 6px}
+  .canvas-box{position:relative;overflow:hidden;background-color:#fdfeff;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+  .canvas-box canvas{display:block;width:100%;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:crosshair}
+
+  .check{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0}
+  .check label{font-weight:700;min-width:28px}
+  .check input{font:inherit;font-size:20px;width:140px;padding:8px 12px;border:2px solid var(--line);border-radius:10px;font-family:"PT Serif",serif}
+  .check input:focus{outline:none;border-color:var(--blue)}
+  .btn{background:var(--blue);color:#fff;border:0;border-radius:10px;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer;min-height:44px}
+  .btn:hover{background:#163f75}
+  .btn.ghost{background:#f3f6fa;color:var(--ink)}
+  .fb{font-weight:700;min-height:26px}
+  .fb.ok{color:var(--green)} .fb.no{color:var(--red)}
+  .hidden-sol{display:none;background:#f3f6fa;border-radius:12px;padding:12px 16px;margin-top:8px}
+  .hidden-sol.show{display:block}
+  .sol{margin:0 0 6px}
+
+  .btn{background:var(--blue);color:#fff;border:0;border-radius:10px;padding:10px 16px;font:inherit;font-size:16px;font-weight:700;cursor:pointer;min-height:44px}
+  .btn.ghost{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+  .btn:disabled{opacity:.4;cursor:default}
+
+  .sol-t .eq{white-space:normal}
+  .sol-t .row{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)}
+  .fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;line-height:1.05;margin:0 3px;font-size:.82em}
+  .fr span:first-child{border-bottom:1.5px solid currentColor;padding:0 3px}
+  .slots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+  .slots > div{background:#f3f6fa;border-radius:14px;padding:12px;text-align:center}
+  .slots small{display:block;font-size:15px;margin-top:4px}
+  .big2{font-size:24px}
+  @media (max-width:620px){.slots{grid-template-columns:1fr}}
+  .kinds3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+  .kinds3 > div{background:#f3f6fa;border-radius:14px;padding:12px 14px;font-size:16px;line-height:1.5}
+  .kinds3 b.h{display:block;font-size:17px;color:var(--blue);margin-bottom:4px}
+  @media (max-width:700px){.kinds3{grid-template-columns:1fr}}
+  .lab svg{background:#fff}
+  /* Светлая тема учебного кабинета */
+  :root{--bg:#fafafa;--paper:#fff;--ink:#132238;--muted:#455c72;--line:#d9e2eb;--blue:#1d568d;--blue-soft:#eaf3fb;--grid:#d4dfed}
+  nav{background:rgba(255,255,255,.98);border-bottom:1px solid #dce5ec}
+  nav a{font-size:15px;padding:10px 12px}
+  nav a:focus-visible,.btn:focus-visible,.tool:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid #d67235;outline-offset:3px}
+  header{margin-top:26px;padding:30px 30px 32px;border-radius:16px;background:#e5f1f9}
+  header h1{font-size:clamp(32px,5vw,46px);letter-spacing:-.02em;max-width:720px}
+  header p{font-size:17px;color:#38526c}
+  .card{border-radius:16px;padding:30px 30px 26px;margin:18px 0 24px;box-shadow:0 5px 22px rgba(34,58,82,.08)}
+  .card.short{background:#fff4ed;box-shadow:none}
+  .tag{color:#ad4b24;font-size:15px;margin-bottom:8px}
+  .rule{background:#eaf3fb;padding:18px 20px}
+  .lab,.task,details.more,.hidden-sol,.slots>div,.kinds>div,.kinds3>div{background:#f3f6f8}
+  .tetrad{border-radius:12px;box-shadow:inset 0 0 0 1px #d4deeb}
+  .btn{border-radius:9px}.btn.ghost{background:#fff}
+  @media (max-width:620px){header{margin-top:16px;padding:24px 18px}.card{padding:24px 18px 20px}.sol-t .row{grid-template-columns:1fr;gap:0}.sol-t .why{margin:0 0 4px}}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.found{animation:none}.solve .ln{transition:none}}
+
+:root{--bg:#fafafa}.numberline{display:block;width:100%;height:auto;background:#fff;border-radius:10px;margin:12px 0;max-height:115px}.numberline text{font: 21px PT Sans,system-ui,sans-serif;fill:#15202e}.taskfigure{display:flex;align-items:center;gap:12px;padding:8px 12px;background:#f5f8fa;border-radius:12px;margin:10px 0}.taskfigure .numberline{margin:0;flex:1;min-width:0}.example{padding:4px 0 12px}.example ol{padding-left:24px}.example li{margin:8px 0}.result{font-weight:700;color:#1d4f91}.example h3{margin-top:20px}.more summary:focus-visible{outline:3px solid #d67235;outline-offset:2px}@media(max-width:620px){.taskfigure{padding:7px}.numberline text{font-size:24px}}
+.answer-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.answer-fields label{display:flex;gap:8px;align-items:center;font-weight:700}.answer-fields input{min-width:0;width:100%;border:2px solid #c4d2df;border-radius:8px;padding:10px;font:inherit;background:#fff;color:#132238}.answer-fields input:focus-visible{outline:3px solid #d67235;outline-offset:2px}@media(max-width:520px){.answer-fields{grid-template-columns:1fr}}</style><style>html body{background:#fafafa}</style>
+</head><body><nav><div class="wrap">
+  <a href="../../" style="color:#1d4f91">← Все уроки</a><a href="#idea">1. Промежутки</a><a href="#types">2. Виды</a><a href="#rays">3. Лучи</a><a href="#distance">4. Расстояние</a><a href="#examples">5. Примеры</a><a href="#practice">№ 248</a></div></nav><main class="wrap"><header><h1>Числовые промежутки</h1><p>Алгебра, § 4, пункт 11. Разберём рисунки на координатной прямой и научимся записывать их неравенствами.</p></header>
+<section class="card short"><h2>Самое главное</h2><ol class="three"><li>Выделенная часть прямой показывает подходящие числа.</li><li>Закрашенная точка означает «число входит»; пустой кружок — «не входит».</li><li>Читаем границы слева направо и выбираем знаки неравенства.</li></ol></section>
+<section class="card" id="idea"><span class="tag">Шаг 1</span><h2>Что показывает промежуток</h2><p>На координатной прямой числа растут слева направо. Если <span class="m">a &lt; b</span>, то точка <span class="m">a</span> расположена левее <span class="m">b</span>. Число <span class="m">x</span> между ними больше <span class="m">a</span> и меньше <span class="m">b</span>.</p><svg class="numberline" viewBox="0 0 620 95" role="img" aria-label="Выделены точки между a и b, сами точки a и b не входят"><line x1="35" y1="48" x2="590" y2="48" stroke="#8795a4" stroke-width="2"/><path d="M590 43l10 5-10 5" fill="none" stroke="#8795a4" stroke-width="2"/><line x1="115" y1="48" x2="510" y2="48" stroke="#1d4f91" stroke-width="7" stroke-linecap="round"/><circle cx="115" cy="48" r="6" fill="#fff" stroke="#1d4f91" stroke-width="3"/><circle cx="510" cy="48" r="6" fill="#fff" stroke="#1d4f91" stroke-width="3"/><text x="115" y="82" text-anchor="middle">a</text><text x="510" y="82" text-anchor="middle">b</text></svg><div class="rule"><b>Пустой кружок</b> — граница не входит: знак &lt; или &gt;.<br><b>Закрашенная точка</b> — граница входит: знак ≤ или ≥.</div><p>Например, для чисел между 1 и 4: <span class="m">1 &lt; x &lt; 4</span>. Число 2 подходит, а 1 и 4 не входят.</p></section>
+<section class="card" id="types"><span class="tag">Шаг 2</span><h2>Отрезок, интервал и полуинтервалы</h2><p>Пусть <span class="m">a &lt; b</span>. Различие — входят ли концы.</p><div class="rule"><b>Отрезок:</b> <span class="m">a ≤ x ≤ b</span>; запись <span class="m">[a; b]</span>. Оба конца входят.</div><div class="rule"><b>Интервал:</b> <span class="m">a &lt; x &lt; b</span>; запись <span class="m">(a; b)</span>. Оба конца не входят.</div><div class="rule"><b>Полуинтервалы:</b> <span class="m">a ≤ x &lt; b</span> записывают <span class="m">[a; b)</span>; <span class="m">a &lt; x ≤ b</span> записывают <span class="m">(a; b]</span>. Входит только конец у квадратной скобки.</div><p>Отрезки, интервалы и полуинтервалы называют числовыми промежутками.</p></section>
+<section class="card" id="rays"><span class="tag">Шаг 3</span><h2>Когда промежуток продолжается в одну сторону</h2><p>Вправо от числа <span class="m">a</span> расположены числа больше него. Влево — меньше него.</p><svg class="numberline" viewBox="0 0 620 95" role="img" aria-label="Луч вправо от a, точка a включена"><line x1="35" y1="48" x2="590" y2="48" stroke="#8795a4" stroke-width="2"/><path d="M590 43l10 5-10 5" fill="none" stroke="#8795a4" stroke-width="2"/><line x1="115" y1="48" x2="580" y2="48" stroke="#1d4f91" stroke-width="7" stroke-linecap="round"/><circle cx="115" cy="48" r="6" fill="#1d4f91" stroke="#1d4f91" stroke-width="3"/><text x="115" y="82" text-anchor="middle">a</text></svg><p><span class="m">x ≥ a</span> — луч вправо, точка <span class="m">a</span> входит; <span class="m">x &gt; a</span> — точка не входит. В учебнике они названы соответственно замкнутым и открытым лучом.</p><svg class="numberline" viewBox="0 0 620 95" role="img" aria-label="Луч влево от a, точка a не включена"><line x1="35" y1="48" x2="590" y2="48" stroke="#8795a4" stroke-width="2"/><path d="M590 43l10 5-10 5" fill="none" stroke="#8795a4" stroke-width="2"/><line x1="38" y1="48" x2="510" y2="48" stroke="#1d4f91" stroke-width="7" stroke-linecap="round"/><circle cx="510" cy="48" r="6" fill="#fff" stroke="#1d4f91" stroke-width="3"/><text x="510" y="82" text-anchor="middle">a</text></svg><p>Для луча влево: <span class="m">x ≤ a</span>, если точка входит, и <span class="m">x &lt; a</span>, если не входит.</p></section>
+<section class="card" id="distance"><span class="tag">Шаг 4</span><h2>Расстояние между двумя точками</h2><p>Это тоже часть пункта 11. Расстояние от точки с координатой <span class="m">x</span> до нуля равно <span class="m">|x|</span>. Для точек <span class="m">A(a)</span> и <span class="m">B(b)</span> учебник даёт формулу:</p><div class="rule"><b>Расстояние:</b> <span class="m">AB = |b − a|</span>. Модуль нужен, чтобы расстояние оставалось неотрицательным.</div><details class="more"><summary>Почему получается эта формула</summary><p>Пусть <span class="m">A(a)</span> левее <span class="m">B(b)</span>, то есть <span class="m">a &lt; b</span>. Учебник рассматривает три случая:</p><ol><li><b>Обе точки правее нуля:</b> <span class="m">AB = OB − OA = b − a</span>.</li><li><b>Точки по разные стороны от нуля:</b> <span class="m">AB = OA + OB = −a + b = b − a</span>.</li><li><b>Обе точки левее нуля:</b> <span class="m">AB = OA − OB = −a − (−b) = b − a</span>.</li></ol><p>Если A правее B, расстояние равно <span class="m">a − b</span>. Поэтому в обоих случаях его можно записать как <span class="m">|b − a|</span>.</p></details><article class="example"><h3>Пример 1. Точки по разные стороны от нуля</h3><svg class="numberline" viewBox="0 0 620 95" role="img" aria-label="Точки с координатами минус два и три"><line x1="35" y1="48" x2="590" y2="48" stroke="#8795a4" stroke-width="2"/><path d="M590 43l10 5-10 5" fill="none" stroke="#8795a4" stroke-width="2"/><line x1="115" y1="48" x2="510" y2="48" stroke="#1d4f91" stroke-width="7" stroke-linecap="round"/><circle cx="115" cy="48" r="6" fill="#1d4f91" stroke="#1d4f91" stroke-width="3"/><circle cx="510" cy="48" r="6" fill="#1d4f91" stroke="#1d4f91" stroke-width="3"/><text x="115" y="82" text-anchor="middle">−2</text><text x="510" y="82" text-anchor="middle">3</text></svg><ol><li>Находим разность координат: 3 − (−2) = 5.</li><li>Берём модуль: |5| = 5.</li></ol><p class="result">Ответ: <span class="m">5</span></p></article><article class="example"><h3>Пример 2. Обе точки слева от нуля</h3><svg class="numberline" viewBox="0 0 620 95" role="img" aria-label="Точки с координатами минус пять и минус два"><line x1="35" y1="48" x2="590" y2="48" stroke="#8795a4" stroke-width="2"/><path d="M590 43l10 5-10 5" fill="none" stroke="#8795a4" stroke-width="2"/><line x1="115" y1="48" x2="510" y2="48" stroke="#1d4f91" stroke-width="7" stroke-linecap="round"/><circle cx="115" cy="48" r="6" fill="#1d4f91" stroke="#1d4f91" stroke-width="3"/><circle cx="510" cy="48" r="6" fill="#1d4f91" stroke="#1d4f91" stroke-width="3"/><text x="115" y="82" text-anchor="middle">−5</text><text x="510" y="82" text-anchor="middle">−2</text></svg><ol><li>Находим разность: −2 − (−5) = 3.</li><li>Берём модуль: |3| = 3.</li></ol><p class="result">Ответ: <span class="m">3</span></p></article></section>
+<section class="card" id="examples"><span class="tag">Шаг 5</span><h2>Как выполнить задание вроде № 248</h2><p>Нужно записать неравенство по выделенному промежутку. Сначала смотри, где выделение; затем проверь каждую точку на его границе.</p><article class="example"><h3>Пример 1. Две границы</h3><svg class="numberline" viewBox="0 0 620 95" role="img" aria-label="От минус четырёх, не включая, до трёх, включая"><line x1="35" y1="48" x2="590" y2="48" stroke="#8795a4" stroke-width="2"/><path d="M590 43l10 5-10 5" fill="none" stroke="#8795a4" stroke-width="2"/><line x1="115" y1="48" x2="510" y2="48" stroke="#1d4f91" stroke-width="7" stroke-linecap="round"/><circle cx="115" cy="48" r="6" fill="#fff" stroke="#1d4f91" stroke-width="3"/><circle cx="510" cy="48" r="6" fill="#1d4f91" stroke="#1d4f91" stroke-width="3"/><text x="115" y="82" text-anchor="middle">−4</text><text x="510" y="82" text-anchor="middle">3</text></svg><ol><li>Слева −4. Пустой кружок: −4 не входит. Значит, <span class="m">−4 &lt; x</span>.</li><li>Справа 3. Закрашенная точка: 3 входит. Значит, <span class="m">x ≤ 3</span>.</li><li>Соединяем: сначала левое число, затем x, затем правое число.</li></ol><p class="result">Ответ: <span class="m">−4 &lt; x ≤ 3</span></p></article><article class="example"><h3>Пример 2. Луч влево</h3><svg class="numberline" viewBox="0 0 620 95" role="img" aria-label="Луч влево от двух, точка два не входит"><line x1="35" y1="48" x2="590" y2="48" stroke="#8795a4" stroke-width="2"/><path d="M590 43l10 5-10 5" fill="none" stroke="#8795a4" stroke-width="2"/><line x1="38" y1="48" x2="510" y2="48" stroke="#1d4f91" stroke-width="7" stroke-linecap="round"/><circle cx="510" cy="48" r="6" fill="#fff" stroke="#1d4f91" stroke-width="3"/><text x="510" y="82" text-anchor="middle">2</text></svg><ol><li>Выделены числа левее 2: они меньше двух.</li><li>Кружок пустой, поэтому само число 2 не входит.</li></ol><p class="result">Ответ: <span class="m">x &lt; 2</span></p></article><div class="trap"><b>Не перепутай:</b> в записи <span class="m">−4 &lt; x ≤ 3</span> знак возле −4 относится к левой точке, знак возле 3 — к правой.</div></section>
+<section class="card" id="practice"><span class="tag">Самостоятельно</span><h2>№ 248</h2><p>Задайте неравенством числовой промежуток, изображённый на рисунке. Запиши четыре ответа на доске или в тетради.</p><div class="taskfigure"><b>а)</b><svg class="numberline" viewBox="0 0 620 95" role="img" aria-label="От минус пяти, не включая, до минус двух, включая"><line x1="35" y1="48" x2="590" y2="48" stroke="#8795a4" stroke-width="2"/><path d="M590 43l10 5-10 5" fill="none" stroke="#8795a4" stroke-width="2"/><line x1="115" y1="48" x2="510" y2="48" stroke="#1d4f91" stroke-width="7" stroke-linecap="round"/><circle cx="115" cy="48" r="6" fill="#fff" stroke="#1d4f91" stroke-width="3"/><circle cx="510" cy="48" r="6" fill="#1d4f91" stroke="#1d4f91" stroke-width="3"/><text x="115" y="82" text-anchor="middle">−5</text><text x="510" y="82" text-anchor="middle">−2</text></svg></div><div class="taskfigure"><b>б)</b><svg class="numberline" viewBox="0 0 620 95" role="img" aria-label="Луч влево от минус трёх, не включая минус три"><line x1="35" y1="48" x2="590" y2="48" stroke="#8795a4" stroke-width="2"/><path d="M590 43l10 5-10 5" fill="none" stroke="#8795a4" stroke-width="2"/><line x1="38" y1="48" x2="510" y2="48" stroke="#1d4f91" stroke-width="7" stroke-linecap="round"/><circle cx="510" cy="48" r="6" fill="#fff" stroke="#1d4f91" stroke-width="3"/><text x="510" y="82" text-anchor="middle">−3</text></svg></div><div class="taskfigure"><b>в)</b><svg class="numberline" viewBox="0 0 620 95" role="img" aria-label="От минус ноль целых пяти десятых до семи целых двух десятых, обе границы входят"><line x1="35" y1="48" x2="590" y2="48" stroke="#8795a4" stroke-width="2"/><path d="M590 43l10 5-10 5" fill="none" stroke="#8795a4" stroke-width="2"/><line x1="115" y1="48" x2="510" y2="48" stroke="#1d4f91" stroke-width="7" stroke-linecap="round"/><circle cx="115" cy="48" r="6" fill="#1d4f91" stroke="#1d4f91" stroke-width="3"/><circle cx="510" cy="48" r="6" fill="#1d4f91" stroke="#1d4f91" stroke-width="3"/><text x="115" y="82" text-anchor="middle">−0,5</text><text x="510" y="82" text-anchor="middle">7,2</text></svg></div><div class="taskfigure"><b>г)</b><svg class="numberline" viewBox="0 0 620 95" role="img" aria-label="От минус пяти до минус одной целой семи десятых, границы не входят"><line x1="35" y1="48" x2="590" y2="48" stroke="#8795a4" stroke-width="2"/><path d="M590 43l10 5-10 5" fill="none" stroke="#8795a4" stroke-width="2"/><line x1="115" y1="48" x2="510" y2="48" stroke="#1d4f91" stroke-width="7" stroke-linecap="round"/><circle cx="115" cy="48" r="6" fill="#fff" stroke="#1d4f91" stroke-width="3"/><circle cx="510" cy="48" r="6" fill="#fff" stroke="#1d4f91" stroke-width="3"/><text x="115" y="82" text-anchor="middle">−5</text><text x="510" y="82" text-anchor="middle">−1,7</text></svg></div><h3>Запиши ответы</h3><p>Можно напечатать неравенства или записать их на доске ниже.</p><div class="answer-fields"><label>а) <input type="text" data-answer="а" autocomplete="off" placeholder="Неравенство" aria-label="Ответ а)"></label><label>б) <input type="text" data-answer="б" autocomplete="off" placeholder="Неравенство" aria-label="Ответ б)"></label><label>в) <input type="text" data-answer="в" autocomplete="off" placeholder="Неравенство" aria-label="Ответ в)"></label><label>г) <input type="text" data-answer="г" autocomplete="off" placeholder="Неравенство" aria-label="Ответ г)"></label></div><h3>Место для решения</h3><p class="src">Можно писать мышью или стилусом; запись сохраняется в этом браузере.</p><div class="board" data-board="task248" data-height="420"></div><details class="more"><summary>Открыть ответы после решения</summary><p>а) <span class="m">−5 &lt; x ≤ −2</span></p><p>б) <span class="m">x &lt; −3</span></p><p>в) <span class="m">−0,5 ≤ x ≤ 7,2</span></p><p>г) <span class="m">−5 &lt; x &lt; −1,7</span></p></details><p>Проверь: у пустого кружка строгий знак, у закрашенной точки — знак с равенством.</p></section><footer>Алгебра · § 4 · пункт 11</footer></main><script>/* ---------- доска для письма стилусом ---------- */
+var penSeen=false;
+var ICON={
+  eraser:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20h12"/><path d="M5 15l9-9 5 5-8 8H8z"/></svg>',
+  undo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 010 12h-3"/></svg>',
+  clear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>',
+  more:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>'
+};
+function Board(root){
+  var id=root.dataset.board, key='alg11-board-'+id, self=this;
+  this.h=+root.dataset.height||420; this.strokes=[]; this.tool='pen'; this.color='#1d3f8f';
+  root.innerHTML=
+    '<div class="toolbar">'+
+      '<button class="tool" data-t="pen" data-c="#1d3f8f" aria-pressed="true"><span class="dot" style="background:#1d3f8f"></span>Синяя</button>'+
+      '<button class="tool" data-t="eraser" aria-pressed="false">'+ICON.eraser+'Ластик</button>'+
+      '<button class="tool" data-act="undo">'+ICON.undo+'Назад</button>'+
+      '<span class="spacer"></span><span class="pen-state"></span>'+
+      '<button class="tool" data-act="more">'+ICON.more+'Место</button>'+
+      '<button class="tool" data-act="clear">'+ICON.clear+'Стереть всё</button>'+
+    '</div><div class="canvas-box"><canvas></canvas></div>'+
+    '<div class="grip" title="Потяни вниз, чтобы удлинить лист"><span></span>потяни вниз, чтобы удлинить лист<span></span></div>';
+  var cv=root.querySelector('canvas'), ctx=cv.getContext('2d'), state=root.querySelector('.pen-state');
+  try{ var saved=JSON.parse(localStorage.getItem(key)||'null'); if(saved){ this.strokes=saved.s||[]; if(saved.h) this.h=Math.max(240,saved.h); } }catch(e){}
+  function save(){ try{ localStorage.setItem(key,JSON.stringify({s:self.strokes,h:self.h})); }catch(e){} }
+  function showState(){ state.textContent = penSeen ? 'Стилус подключён: ладонь не рисует' : ''; }
+  showState(); document.addEventListener('pen-seen',showState);
+
+  function size(){
+    var w=cv.parentElement.clientWidth, d=window.devicePixelRatio||1;
+    cv.width=Math.round(w*d); cv.height=Math.round(self.h*d); cv.style.height=self.h+'px';
+    ctx.setTransform(d,0,0,d,0,0); redraw();
+  }
+  function seg(st,i){
+    var a=st.p[i-1], b=st.p[i];
+    ctx.strokeStyle=st.c; ctx.lineWidth=(a[2]+b[2])/2;
+    ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.stroke();
+  }
+  function dot(st){ var a=st.p[0]; ctx.fillStyle=st.c; ctx.beginPath(); ctx.arc(a[0],a[1],a[2]/2,0,Math.PI*2); ctx.fill(); }
+  function redraw(){
+    ctx.clearRect(0,0,cv.width,cv.height); ctx.lineCap='round'; ctx.lineJoin='round';
+    self.strokes.forEach(function(st){ if(st.p.length===1) dot(st); for(var i=1;i<st.p.length;i++) seg(st,i); });
+  }
+  function pt(e){
+    var r=cv.getBoundingClientRect(), pr=e.pointerType==='pen' ? (e.pressure||0.5) : 0.5;
+    var w = e.pointerType==='pen' ? 1.2+pr*3.2 : 2.6;
+    return [Math.round((e.clientX-r.left)*10)/10, Math.round((e.clientY-r.top)*10)/10, Math.round(w*10)/10];
+  }
+  function eraseAt(p){
+    var R=14, n=self.strokes.length;
+    self.strokes=self.strokes.filter(function(st){
+      return !st.p.some(function(q){ var dx=q[0]-p[0], dy=q[1]-p[1]; return dx*dx+dy*dy<R*R; });
+    });
+    if(self.strokes.length!==n) redraw();
+  }
+  var active=null, cur=null;
+  cv.addEventListener('pointerdown',function(e){
+    if(e.pointerType==='pen' && !penSeen){ penSeen=true; document.dispatchEvent(new Event('pen-seen')); }
+    if(e.pointerType==='touch' && penSeen) return;
+    if(active!==null) return;
+    e.preventDefault(); try{ cv.setPointerCapture(e.pointerId); }catch(err){} active=e.pointerId;
+    var eraser = self.tool==='eraser' || e.button===5;
+    if(eraser){ cur=null; eraseAt(pt(e)); }
+    else { cur={c:self.color,p:[pt(e)]}; self.strokes.push(cur); ctx.lineCap='round'; dot(cur); }
+  });
+  cv.addEventListener('pointermove',function(e){
+    if(e.pointerId!==active) return;
+    e.preventDefault();
+    var list = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
+    if(!list.length) list=[e];
+    list.forEach(function(ev){
+      var p=pt(ev);
+      if(!cur){ eraseAt(p); return; }
+      var last=cur.p[cur.p.length-1];
+      if(Math.abs(last[0]-p[0])+Math.abs(last[1]-p[1])<0.8) return;
+      cur.p.push(p); seg(cur,cur.p.length-1);
+    });
+  });
+  function end(e){ if(e.pointerId!==active) return; active=null; cur=null; save(); }
+  cv.addEventListener('pointerup',end); cv.addEventListener('pointercancel',end);
+  cv.addEventListener('contextmenu',function(e){ e.preventDefault(); });
+
+  root.querySelectorAll('.tool').forEach(function(b){
+    b.addEventListener('click',function(){
+      if(b.dataset.t){
+        self.tool=b.dataset.t; if(b.dataset.c) self.color=b.dataset.c;
+        root.querySelectorAll('.tool[data-t]').forEach(function(x){ x.setAttribute('aria-pressed', x===b ? 'true':'false'); });
+        cv.style.cursor = self.tool==='eraser' ? 'cell' : 'crosshair';
+      } else if(b.dataset.act==='undo'){ self.strokes.pop(); redraw(); save(); }
+      else if(b.dataset.act==='clear'){ if(self.strokes.length && confirm('Стереть всё, что написано на этом листе?')){ self.strokes=[]; redraw(); save(); } }
+      else if(b.dataset.act==='more'){ self.h+=240; size(); save(); }
+    });
+  });
+  var grip=root.querySelector('.grip'), gy=null, gh=0;
+  grip.addEventListener('pointerdown',function(e){
+    e.preventDefault(); try{ grip.setPointerCapture(e.pointerId); }catch(err){}
+    gy=e.clientY; gh=self.h; grip.classList.add('drag');
+  });
+  grip.addEventListener('pointermove',function(e){
+    if(gy===null) return; e.preventDefault();
+    var nh=Math.max(240, Math.round(gh+e.clientY-gy));
+    if(nh!==self.h){ self.h=nh; size(); }
+  });
+  function gripEnd(){ if(gy===null) return; gy=null; grip.classList.remove('drag'); save(); }
+  grip.addEventListener('pointerup',gripEnd); grip.addEventListener('pointercancel',gripEnd);
+  var lastW=0;
+  window.addEventListener('resize',function(){ var w=cv.parentElement.clientWidth; if(w!==lastW){ lastW=w; size(); } });
+  lastW=cv.parentElement.clientWidth; size();
+}
+document.querySelectorAll('.board').forEach(function(b){ new Board(b); });
+</script><script>(function(){document.querySelectorAll('[data-answer]').forEach(function(input){var key='algebra-p11-248-'+input.dataset.answer;try{input.value=localStorage.getItem(key)||'';}catch(e){}input.addEventListener('input',function(){try{localStorage.setItem(key,input.value);}catch(e){}});});})();</script><style>
+.to-top{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:60;width:52px;height:52px;border:0;border-radius:14px;background:#1d4f91;color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 18px -6px rgba(21,32,46,.45);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s,transform .2s}
+.to-top.show{opacity:1;transform:none;pointer-events:auto}
+.to-top:hover{background:#163f75}
+.to-top:focus-visible{outline:3px solid #9fb9de;outline-offset:2px}
+.to-top svg{width:24px;height:24px}
+@media print{.to-top{display:none}}
+</style>
+<button class="to-top" type="button" aria-label="Наверх" title="Наверх"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+<script>
+(function(){var b=document.querySelector('.to-top');if(!b)return;
+function f(){b.classList.toggle('show',(window.scrollY||document.documentElement.scrollTop)>600);}
+window.addEventListener('scroll',f,{passive:true});f();
+// слева от колонки урока, если там есть место; иначе — в правом нижнем углу
+var col=[].slice.call(document.querySelectorAll('.wrap')).filter(function(w){return !w.closest('nav');})[0];
+function place(){if(!col){return;}var r=col.getBoundingClientRect(),pad=parseFloat(getComputedStyle(col).paddingLeft)||0,x=r.left+pad-14-b.offsetWidth;
+if(x>=12){b.style.left=x+'px';b.style.right='auto';}else{b.style.left='';b.style.right='';}}
+window.addEventListener('resize',place);place();
+b.addEventListener('click',function(){var r=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;window.scrollTo({top:0,behavior:r?'auto':'smooth'});});})();
+</script>
+<script>
+try{var v=JSON.parse(localStorage.getItem('uroki-visited')||'{}');v['algebra/p11']=new Date().toISOString().slice(0,10);localStorage.setItem('uroki-visited',JSON.stringify(v));}catch(e){}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('../../sw.js',{scope:'../../'}).catch(function(){});}
+</script>
+</body>
+</html>
