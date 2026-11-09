@@ -29,7 +29,7 @@ body{background:#fafafa;color:#101d31}.wrap{max-width:1480px;padding:0 24px}head
   <p class="lead">Все уроки в одном месте. Выбери предмет, потом тему. Открытые уроки отмечаются галочкой.</p></div>
   <div class="tabs" role="tablist" aria-label="Предметы"><button class="tab" role="tab" type="button" id="tab-algebra" aria-controls="algebra" aria-selected="false" data-s="algebra"><span class="subject-name">Алгебра</span></button><button class="tab" role="tab" type="button" id="tab-geometry" aria-controls="geometry" aria-selected="false" data-s="geometry"><span class="subject-name">Геометрия</span></button><button class="tab" role="tab" type="button" id="tab-history" aria-controls="history" aria-selected="false" data-s="history"><span class="subject-name">История</span></button><button class="tab" role="tab" type="button" id="tab-geography" aria-controls="geography" aria-selected="false" data-s="geography"><span class="subject-name">География</span></button><button class="tab" role="tab" type="button" id="tab-physics" aria-controls="physics" aria-selected="false" data-s="physics"><span class="subject-name">Физика</span></button></div>
 </header>
-<div class="catalog-head"><h2>Темы и задания</h2><div class="quarters" role="group" aria-label="Четверть"><span>Четверть</span><button type="button" class="quarter" data-q="1" aria-pressed="true">1</button><button type="button" class="quarter" data-q="2" aria-pressed="false">2</button><button type="button" class="quarter" data-q="3" aria-pressed="false">3</button><button type="button" class="quarter" data-q="4" aria-pressed="false">4</button></div></div>
+  <div class="catalog-head"><h2>Темы и задания</h2><div class="quarters" role="group" aria-label="Четверть"><span>Четверть</span><button type="button" class="quarter" data-q="1" aria-pressed="false">1</button><button type="button" class="quarter" data-q="2" aria-pressed="true">2</button><button type="button" class="quarter" data-q="3" aria-pressed="false">3</button><button type="button" class="quarter" data-q="4" aria-pressed="false">4</button></div></div>
 <section class="subj" id="algebra" role="tabpanel" aria-labelledby="tab-algebra">
   <div class="sh"><span class="gl">a+b</span><div><h2>Алгебра</h2><p>Алгебра, 7 класс</p></div></div>
   <div class="list">
@@ -61,6 +61,11 @@ body{background:#fafafa;color:#101d31}.wrap{max-width:1480px;padding:0 24px}head
     <a class="les" href="algebra/p11/" data-key="algebra/p11" data-quarter="2">
       <span class="num">п. 11</span>
       <span class="tt">Числовые промежутки<small>§ 4 · № 248</small></span>
+      <span class="st"><i class="seen"></i></span>
+    </a>
+    <a class="les" href="algebra/p11-variant/" data-key="algebra/p11-variant" data-quarter="2">
+      <span class="num">п. 11</span>
+      <span class="tt">Числовые промежутки — другой вариант урока<small>§ 4 · № 248 · интерактивные кружки</small></span>
       <span class="st"><i class="new">новое</i><i class="seen"></i></span>
     </a>
     <a class="les" href="algebra/kr2/" data-key="algebra/kr2" data-quarter="1">
@@ -148,7 +153,7 @@ try{var v=JSON.parse(localStorage.getItem('uroki-visited')||'{}');
 document.querySelectorAll('.les').forEach(function(a){var d=v[a.dataset.key];if(d){var s=a.querySelector('.seen');s.textContent='✓ открыт '+d.slice(8,10)+'.'+d.slice(5,7);}});}catch(e){}
 (function(){
   var tabs=[].slice.call(document.querySelectorAll('.tab')), ids=tabs.map(function(t){return t.dataset.s;});
-  var quarter=1;
+  var quarter=2;
   function filter(){document.querySelectorAll('.subj').forEach(function(panel){var count=0;panel.querySelectorAll('.les').forEach(function(a){var visible=Number(a.dataset.quarter)===quarter;a.hidden=!visible;if(visible)count++;});panel.querySelector('.empty').hidden=count>0;});}
   document.querySelectorAll('.quarter').forEach(function(b){b.addEventListener('click',function(){quarter=Number(b.dataset.q);document.querySelectorAll('.quarter').forEach(function(x){x.setAttribute('aria-pressed',x===b);});filter();});});
   filter();
