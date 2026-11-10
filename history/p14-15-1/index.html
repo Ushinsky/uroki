@@ -1,110 +1,129 @@
-<!doctype html>
-<html lang="ru">
-<head>
+<!DOCTYPE html>
+<html lang="ru"><head>
 <link rel="manifest" href="../../manifest.webmanifest">
 <meta name="theme-color" content="#1d4f91">
-<link rel="apple-touch-icon" href="../../assets/icon-180.png">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>История 7: государственный интерес</title>
-<link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="apple-touch-icon" href="../../assets/icon-180.png"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>История 7: Государственный интерес (§ 14–15, п. 1)</title>
 <style>
-:root{color-scheme:light;--bg:#fafafa;--paper:#fff;--ink:#15202e;--muted:#566273;--line:#d5dde8;--accent:#a84732;--accent-soft:#f8ede8;--green:#27654b;--green-soft:#e8f2eb;--sand:#f5f1e8}
+:root{color-scheme:light;--bg:#fafafa;--paper:#fff;--ink:#15202e;--muted:#566273;--line:#d5dde8;--accent:#a84732;--accent-soft:#f8ede8;--note:#f3f6f7;--sand:#f5f1e8;--green:#27654b;--green-soft:#e8f2eb;--red:#a84035;--red-soft:#fbebe8}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:19px/1.68 "PT Serif",Georgia,serif}
-.wrap{max-width:860px;margin:auto;padding:0 18px}h1,h2,h3,nav,.ui,aside,button{font-family:"PT Sans",system-ui,sans-serif}h1,h2,h3{line-height:1.2;margin:0}p{margin:0 0 16px}[id]{scroll-margin-top:72px}
-nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}nav .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:7px;padding-bottom:7px;scrollbar-width:none}nav a{flex:none;text-decoration:none;color:var(--ink);font-size:14px;font-weight:700;padding:8px 11px;border-radius:8px}nav a:hover{background:var(--accent-soft)}nav a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-header{padding:38px 0 15px}.eyebrow{font:700 15px/1.3 "PT Sans",system-ui,sans-serif;color:var(--accent);margin:0 0 8px}h1{font-size:clamp(33px,5vw,48px);margin:0 0 14px}.lead{font-size:21px;line-height:1.52;max-width:750px}.source{font:15px/1.5 "PT Sans",system-ui,sans-serif;color:var(--muted)}
-.ch{background:var(--paper);border-radius:20px;padding:30px 32px 28px;margin:18px 0 24px;box-shadow:0 1px 0 var(--line),0 11px 28px -20px rgba(21,32,46,.25)}.ch h2{font-size:clamp(26px,4vw,34px);margin:0 0 19px}.ch h3{font-size:21px;margin:27px 0 11px}.step{font:700 14px/1.3 "PT Sans",system-ui,sans-serif;color:var(--accent);margin-bottom:5px}
-.hook{background:var(--sand);border-radius:14px;padding:19px 21px;font:700 21px/1.45 "PT Sans",system-ui,sans-serif;margin:18px 0}.answer-line{background:var(--green-soft);border-radius:12px;padding:15px 18px;margin:17px 0}.answer-line b{color:var(--green)}
-.reading{display:grid;grid-template-columns:minmax(0,1fr) 200px;gap:20px;align-items:start}.reading p:last-child{margin-bottom:0}aside{background:#f3f6f7;border-radius:12px;padding:14px 15px;color:#354956;font-size:15px;line-height:1.48}aside b{display:block;color:var(--accent);font-size:16px;margin-bottom:5px}aside p{margin:0}
-.flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;align-items:stretch;margin:22px 0;font:16px/1.38 "PT Sans",system-ui,sans-serif}.flow>div{background:#f3f6f7;border-radius:11px;padding:13px 14px}.flow b{display:block;font-size:17px;margin-bottom:5px}.flow .arrow{display:none}.caption{font:15px/1.5 "PT Sans",system-ui,sans-serif;color:var(--muted);margin:8px 0 18px}
-.case{background:var(--accent-soft);border-radius:13px;padding:17px 19px;margin:19px 0}.case h3{margin:0 0 8px}.case p:last-child{margin:0}.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}.two>div{background:#f3f6f7;border-radius:12px;padding:15px 17px;font:17px/1.5 "PT Sans",system-ui,sans-serif}.two b{display:block;font-size:18px;margin-bottom:4px}
-.balance{gap:25px}.balance>div{position:relative}.balance>div:first-child{background:var(--accent-soft)}.balance>div:last-child{background:var(--green-soft)}.balance>div:not(:last-child)::after{content:"→";position:absolute;right:-23px;top:50%;transform:translateY(-50%);color:#7d8e98;font-size:23px}
-.check{background:var(--sand);border-radius:14px;padding:18px 20px;margin:18px 0;font:17px/1.5 "PT Sans",system-ui,sans-serif}.check b{display:block;font-size:19px;margin-bottom:8px}.choices{display:flex;gap:8px;flex-wrap:wrap}.choices button{border:1px solid #aebcc4;background:#fff;color:var(--ink);border-radius:8px;padding:9px 13px;font:700 16px "PT Sans",system-ui,sans-serif;min-height:44px;cursor:pointer}.choices button:hover{border-color:var(--accent);background:var(--accent-soft)}.feedback{min-height:27px;margin:10px 0 0;font-size:16px}.feedback.ok{color:var(--green)}.feedback.try{color:#8a3d2c}
-.q{font:700 18px/1.5 "PT Sans",system-ui,sans-serif;margin:24px 0 10px}.response{background:#f3f6f7;border-radius:12px;padding:16px 18px;margin:0 0 17px}.response p:last-child{margin:0}.limit{font:15px/1.48 "PT Sans",system-ui,sans-serif;color:var(--muted)}footer{text-align:center;padding:8px 0 45px;font:14px/1.5 "PT Sans",system-ui,sans-serif;color:var(--muted)}
-@media(max-width:680px){.reading{grid-template-columns:1fr;gap:7px}.flow{grid-template-columns:1fr}.balance>div:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-26px;transform:translateX(-50%)}.two{grid-template-columns:1fr}.ch{padding:23px 19px}.lead{font-size:19px}}
-@media print{nav{display:none}.ch{box-shadow:none;border:1px solid var(--line);break-inside:avoid}}
-</style>
+nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}nav .wrap{max-width:980px;margin:auto;padding:7px 18px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}nav a{flex:none;text-decoration:none;color:var(--ink);font:700 14px/1.5 "PT Sans",system-ui,sans-serif;padding:8px 11px;border-radius:8px}nav a:hover{background:var(--accent-soft)}nav a:focus-visible,button:focus-visible,.diagram:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+main{max-width:860px;margin:auto;padding:24px 18px 64px}.lesson-head{padding:21px 0 11px}h1,h2,h3,.k,.lead,aside,button,.mem,.say,.cols,.fl,.q,.fb,#sc{font-family:"PT Sans",system-ui,sans-serif}h1,h2,h3{line-height:1.22;margin:0}h1{font-size:clamp(33px,5vw,48px);margin:6px 0 15px}h2{font-size:clamp(26px,4vw,34px);margin:0 0 18px}h3{font-size:21px;margin:27px 0 11px}p{margin:0 0 16px}[id]{scroll-margin-top:72px}
+.k{font-size:15px;font-weight:700;color:var(--accent);margin:0 0 6px}.lead{color:#3c5060;font-size:20px;line-height:1.55;max-width:720px}
+section{background:var(--paper);border-radius:20px;padding:30px 32px 28px;margin:19px 0 25px;box-shadow:0 1px 0 var(--line),0 11px 28px -20px rgba(21,32,46,.25)}
+.row{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:21px;align-items:start}.row>div{min-width:0}aside{font-size:15px;line-height:1.5}aside p{background:var(--note);border-radius:10px;padding:12px 13px;margin:0 0 9px}aside b{color:var(--accent)}
+.say{background:var(--sand);border-radius:13px;padding:16px 19px;margin:18px 0;font-size:17px;line-height:1.55}.say ol{margin:8px 0 0}.mem{background:var(--green-soft);border-radius:12px;padding:15px 18px;margin:20px 0;font-size:16px;line-height:1.5}.mem>b:first-child{color:var(--green)}.mem ul{margin:6px 0 0}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0;font-size:16px;line-height:1.48}.c{min-width:0;background:var(--note);border-radius:11px;padding:14px 15px}.c b{display:block;font-size:17px;margin-bottom:4px}.c.t{background:var(--accent-soft)}
+.diagram{width:100%;margin:17px 0}.diagram svg{display:block;width:100%;max-width:560px;height:auto;margin:0}.diagram svg text{fill:var(--ink);font:600 13px "PT Sans",system-ui,sans-serif}.diagram svg .f{fill:#f8ede8;stroke:var(--accent);stroke-width:2}.diagram svg .l{stroke:#4f6170;stroke-width:3;fill:none}.diagram svg .d{fill:var(--accent)}.mobile-scheme{display:none}
+.fl{display:grid;grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr);gap:6px;align-items:stretch;margin:13px 0;font:16px/1.5 "PT Sans",system-ui,sans-serif}.fl3{grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr) 30px minmax(0,1fr)}.fl .a{align-self:center;text-align:center;font-size:22px;color:var(--accent)}
+ol,ul{padding-left:1.3em}li{margin:.38em 0}
+button{font-size:16px;font-weight:700;cursor:pointer;border:1px solid #b7c4cb;background:#fff;color:var(--ink);border-radius:8px;padding:10px 13px;margin:5px 5px 5px 0;text-align:left;min-height:44px}button:hover{background:var(--accent-soft);border-color:var(--accent)}button.ok{border-color:var(--green);background:var(--green-soft)}button.bad{border-color:var(--red);background:var(--red-soft)}
+.q{border-top:1px solid var(--line);padding-top:14px;margin-top:14px;font-size:17px;line-height:1.5}.q:first-child{border-top:0;padding-top:0}.q b{display:inline-block;margin-bottom:7px}.fb{font-size:15px;min-height:23px;margin:4px 0}.y{color:var(--green);font-weight:700}.n{color:var(--red);font-weight:700}.ans{background:var(--note);border-radius:12px;padding:18px 20px;margin:17px 0}.ans h3{margin:0 0 11px}.ans p:last-child,.ans ol:last-child{margin-bottom:0}
+@media(max-width:750px){.row{grid-template-columns:1fr;gap:7px}aside{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}aside p{margin:0}}
+@media(max-width:560px){main{padding:18px 14px 56px}.lesson-head{padding:13px 3px 5px}section{padding:23px 19px}.lead{font-size:18px}aside{grid-template-columns:1fr}.fl,.fl3{grid-template-columns:1fr}.fl .a{transform:rotate(90deg);line-height:1;margin:-3px 0}.diagram{display:none}.mobile-scheme{display:grid;gap:9px;margin:18px 0;font:16px/1.45 "PT Sans",system-ui,sans-serif}.mobile-scheme>div{background:var(--accent-soft);border-radius:11px;padding:13px 15px}.mobile-scheme>div:last-child{background:var(--green-soft)}.mobile-scheme b{display:block;font-size:17px}.mobile-scheme .a{text-align:center;font-size:22px;line-height:1;color:var(--accent)}.ans{padding:15px 16px}}
+@media print{nav{display:none}section{box-shadow:none;border:1px solid var(--line);break-inside:avoid}}
+</style><link rel="stylesheet" href="../../assets/fonts.css">
 <style>html body{background:#fafafa}</style>
-</head>
-<body>
+</head><body>
 <nav><div class="wrap">
-  <a href="../../" style="color:#1d4f91">← Все уроки</a>
-  <a href="#start">Начало</a><a href="#s1">Суверенитет</a><a href="#s2">Интересы</a><a href="#s3">Дипломатия</a><a href="#s4">Гроций</a><a href="#answers">Два вопроса</a>
-</div></nav>
-<main class="wrap">
-<header>
-  <p class="eyebrow">История Нового времени · § 14–15 · только пункт 1</p>
-  <h1>Государственный интерес</h1>
-  <p class="lead">Почему страны, которые расходились в вере, могли стать союзниками? И почему вчерашний союз завтра мог распасться? Разберёмся по шагам.</p>
-  <p class="source">По учебнику «История Нового времени», 7 класс, с. 136–138. Объяснения ниже — пересказ, а не цитата.</p>
-</header>
+  <a href="../../" style="color:#1d4f91">← Все уроки</a><a href="#s0">Начало</a><a href="#s1">Суверенитет</a><a href="#s2">Интересы</a><a href="#s3">Дипломатия</a><a href="#s4">Гроций</a><a href="#s5">Проверь себя</a><a href="#s6">Два вопроса</a></div></nav>
+<main>
+<header class="lesson-head"><p class="k">§ 14–15 · Международные отношения в XVI–XVII вв.</p>
+<h1>Пункт 1. Государственный интерес</h1>
+<p class="lead">Сегодня разберёмся, почему в XVI–XVII вв. вчерашние друзья-государства могли стать врагами, а вчерашние враги — союзниками, и что значит мудрёное слово «суверенитет». Заметки на полях объясняют трудные слова.</p></header>
 
-<section class="ch" id="start">
-  <p class="step">Перед началом</p><h2>Загадка: вера или выгода?</h2>
-  <p>Испания считала поддержку католической веры важной частью своей политики. Но учебник приводит неожиданный случай: ради ослабления Франции Испания была готова поддержать гугенотов — французских протестантов. Франция, в свою очередь, ради собственной выгоды заключала союзы с протестантскими странами и даже с мусульманами.</p>
-  <div class="hook">Как понять такой выбор, если смотреть только на религию?</div>
-  <p>Ответ появится, когда мы разберём новую для того времени идею — <b>государственный интерес</b>. Пока запомни загадку: в политике страны всё чаще смотрели на то, что им полезно именно сейчас.</p>
-</section>
+<section id="s0"><h2>Загадка параграфа</h2>
+<p><b>Что изменили в международных отношениях система равновесия сил и политика интересов государства?</b> Проще: как страны следили, чтобы никто не стал слишком сильным, и как каждая думала о своей выгоде. В этом уроке — первая половина ответа (пункт 1).</p>
+<div class="say"><b>Весь урок в трёх фразах.</b><ol>
+<li>После раскола церкви (Реформации) никто уже не мечтает об одной общей христианской империи. Каждое государство теперь само себе хозяин. Это называют суверенитетом.</li>
+<li>Главным для государства становится его собственная выгода. Учебник называет это государственным интересом. Поэтому союзы стали временными.</li>
+<li>Важными стали послы, то есть люди, которые ведут дела с другими странами. А голландец Гуго Гроций написал книгу о правилах для мира и войны.</li></ol></div></section>
 
-<section class="ch" id="s1">
-  <p class="step">Шаг 1</p><h2>Государства решают сами</h2>
-  <div class="reading"><div>
-    <p>В Средние века существовала идея единой христианской империи. После религиозного раскола, связанного с Реформацией, эта идея постепенно отмирала. Государства всё яснее видели себя отдельными и самостоятельными.</p>
-    <p>Учебник называет это представлением о <b>национальном суверенитете</b>: государство воспринимается как самостоятельное, не зависящее ни от папы римского, ни от императора.</p>
-  </div><aside><b>На полях · суверенитет</b><p>Верховная власть государства. Здесь важно слово «самостоятельно»: решения о других странах принимает само государство.</p></aside></div>
-  <div class="flow" aria-label="Как менялось управление внешней политикой"><div><b>Раньше</b>Влиятельные аристократы могли самостоятельно воевать и договариваться с другими странами.</div><div><b>Власть монарха крепнет</b>Государь берёт в свои руки дипломатию и ведение войн.</div><div><b>Теперь</b>Самовольные действия аристократа в отношениях с другой страной могли посчитать государственной изменой.</div></div>
-  <p class="caption">Это схема объяснения по тексту учебника, а не отдельное историческое событие.</p>
-  <p>Получается важный поворот: за отношения с соседями отвечает верховная власть государства. Договоры и войны становятся делом страны, а не личной инициативой её подданных.</p>
-</section>
+<section id="s1"><div class="row"><div>
+<h2>1. Больше нет «главного над всеми»</h2>
+<p>В XVI–XVII вв. (это называют ранним Новым временем) страны стали вести себя друг с другом совсем не так, как в Средние века. Причины — <b>абсолютизм</b> (когда король правит сам и ничем не ограничен) и <b>Реформация</b> (раскол церкви: от католиков отделились протестанты).</p>
+<p>Раньше многие мечтали, что все христиане будут жить в одной огромной империи. После раскола церкви эта мечта постепенно уходит. Начинаются войны католиков с протестантами. Раньше воевали в основном за власть между королевскими семьями (династиями). Теперь причиной войн стала ещё и <b>вера</b>.</p>
+<p>Главная новость: появляется идея <b>суверенитета</b>, то есть верховной власти государства. Проще говоря, <b>каждое государство само себе хозяин</b>. Ни папа римский, ни император ему не указ.</p>
+<div class="diagram"><svg viewBox="0 0 560 175" role="img" aria-label="Было: одна империя над странами. Стало: каждая страна сама по себе"><text x="10" y="18">БЫЛО (мечта)</text><text x="300" y="18">СТАЛО</text>
+<path class="f" d="M30 85Q140 5 250 85Z"/><text x="140" y="68" text-anchor="middle">единая империя</text>
+<g class="f"><circle cx="60" cy="125" r="22"/><circle cx="120" cy="125" r="22"/><circle cx="180" cy="125" r="22"/><circle cx="240" cy="125" r="22"/>
+<circle cx="330" cy="105" r="24"/><circle cx="400" cy="125" r="24"/><circle cx="470" cy="105" r="24"/></g>
+<text x="400" y="165" text-anchor="middle">у каждой страны своя верховная власть</text><text x="150" y="165" text-anchor="middle">все под одним началом</text></svg></div><div class="mobile-scheme"><div><b>БЫЛО (мечта)</b>Единая империя: все под одним началом.</div><span class="a" aria-hidden="true">↓</span><div><b>СТАЛО</b>У каждой страны своя верховная власть.</div></div>
+<p>Меняется и то, кто решает дела с другими странами. Теперь это делают <b>короли</b>: отправляют послов на переговоры (это называется <b>дипломатией</b>), заключают союзы, объявляют войны. Всё это вместе называют <b>внешней политикой</b>. Знатным людям (аристократам) так делать нельзя. Если вельможа сам начнёт воевать или договариваться с другой страной, его могут обвинить в <b>государственной измене</b>, то есть в предательстве государства.</p>
+<div class="mem"><b>Запомни:</b><ul><li>Реформация → мечта об общей христианской империи отмирает.</li><li>Суверенитет: государство само себе хозяин, над ним нет ни папы, ни императора.</li><li>Всё, что касается других стран (союзы, договоры, войны), решает только монарх.</li></ul></div>
+</div><aside>
+<p><b>Раннее Новое время</b> — XVI–XVII вв.</p><p><b>Абсолютизм</b> — власть монарха ничем не ограничена.</p><p><b>Реформация</b> — движение за обновление церкви; от католиков отделились протестанты.</p><p><b>Династия</b> — королевская семья, в которой власть передаётся по наследству.</p><p><b>Суверенитет</b> — верховная власть государства.</p><p><b>Дипломатия</b> — отношения между государствами через послов.</p><p><b>Внешняя политика</b> — как государство ведёт себя с другими странами: союзы, договоры, войны.</p><p><b>Измена</b> — предательство своей страны.</p>
+</aside></div></section>
 
-<section class="ch" id="s2">
-  <p class="step">Шаг 2</p><h2>Что государству выгодно?</h2>
-  <p>Войны не перестали быть религиозными или связанными с династиями — правящими семьями. Но к этим причинам добавились новые споры: за торговлю, колонии и другие экономические ресурсы. Пример из учебника — во второй половине XVII века Англия трижды воевала с Голландией, оспаривая её торговое владычество на морях.</p>
-  <div class="reading"><div>
-    <p>Всё чаще правители ориентировались на <b>государственный интерес</b> — то, что они считали полезным для своей страны. У разных государств интересы были разными и могли меняться.</p>
-    <p>Вернись к загадке. Испания могла поддержать противников своей веры, если это ослабляло Францию. Франция могла искать союзников среди стран другой веры, если такой союз ей помогал. Это не означает, что вера перестала иметь значение: учебник говорит, что она по-прежнему влияла на политику.</p>
-  </div><aside><b>На полях · интерес</b><p>Здесь речь о цели государства во внешней политике: например, ослабить соперника или защитить торговлю. Это не оценка того, справедлива ли такая цель.</p></aside></div>
-  <div class="answer-line"><b>Главный вывод.</b> Если интерес менялся, союз тоже мог измениться. Поэтому мир и союз стали рассматривать как временные, а смену союзника — прежде всего с практической точки зрения.</div>
-  <div class="check" id="quick"><b>Проверь, уловила ли ты смысл</b><p>Почему, по учебнику, Испания была готова поддержать гугенотов?</p><div class="choices"><button type="button" data-correct="false">Потому что забыла о религии</button><button type="button" data-correct="true">Чтобы ослабить Францию</button></div><p class="feedback" role="status" aria-live="polite"></p></div>
-</section>
+<section id="s2"><div class="row"><div>
+<h2>2. Воюют не за веру, а за выгоду</h2>
+<p>Появляются войны нового типа — <b>за богатство</b>: за выгодную торговлю и за земли за морем (их называют колониями). Позже таких войн будет всё больше. Например, во второй половине XVII в. <b>Англия трижды воевала с Голландией</b>. Голландия тогда была главной по торговле на морях, а Англия с этим спорила и воевала, чтобы отнять у неё первенство.</p>
+<p>Раньше короли часто объясняли войны и договоры верой. Теперь всё реже. «Честь» и «репутация» (что о тебе думают другие) ещё важны, но главным становится другое — <b>государственный интерес</b>.</p>
+<div class="say"><b>Простыми словами:</b> государственный интерес — это польза и благо самого государства. Главный вопрос теперь: «Что выгодно моей стране?» Вера, дружба и старые обещания отходят на второй план.</div>
+<h3>Два примера из учебника</h3>
+<p>Выгода у каждой страны своя, поэтому и поступали они по-разному. Читай слева направо: что страна считала главным → что она сделала ради выгоды.</p>
+<div class="fl"><div class="c"><b>Испания</b>Главным для неё была защита католической веры.</div><div class="a">→</div><div class="c"><b>Но ради выгоды…</b>чтобы ослабить Францию, она помогала <b>гугенотам</b> (протестантам во Франции).</div></div>
+<div class="fl"><div class="c"><b>Франция</b>Для неё главной была своя выгода.</div><div class="a">→</div><div class="c"><b>Поэтому…</b>она заключала союзы с протестантскими странами и даже с мусульманами.</div></div>
+<h3>Что из этого следует</h3>
+<div class="fl fl3"><div class="c t"><b>1.</b> Сегодня союз с этой страной выгоден</div><div class="a">→</div><div class="c t"><b>2.</b> Завтра выгода стала другой</div><div class="a">→</div><div class="c t"><b>3.</b> Союзника меняют. Смотрят: «выгодно или нет?», а не «хорошо или плохо?»</div></div>
+<p>Поэтому любой мир и любой союз считали <b>временными</b>.</p>
+<div class="mem"><b>Запомни:</b><ul><li>Новые войны — за торговлю и колонии (Англия против Голландии).</li><li>Государственный интерес важнее веры.</li><li>Союзы временные.</li></ul></div>
+</div><aside>
+<p><b>Колония</b> — земля за морем, которую захватило и держит под своей властью другое государство.</p><p><b>Гугеноты</b> — протестанты во Франции.</p><p><b>Репутация</b> — мнение окружающих о тебе.</p>
+</aside></div></section>
 
-<section class="ch" id="s3">
-  <p class="step">Шаг 3</p><h2>Зачем нужны послы и равновесие</h2>
-  <p>Когда государства стали вести собственную политику и заключать меняющиеся союзы, особенно важной стала <b>дипломатия</b>. С конца XV века посольства становились постоянными. Правители и министры обменивались письмами с дипломатами: давали инструкции и получали сведения. Послов воспринимали как представителей государей; их представление при дворе превращалось в долгую церемонию.</p>
-  <div class="reading"><div><p>В XVI–XVII веках отношения между странами всё чаще представляли как <b>единую систему</b>. Если одно государство слишком усиливалось, другие могли объединиться против него. Так они стремились вернуть <b>равновесие сил</b>.</p></div><aside><b>На полях · дипломатия</b><p>Отношения государств через послов, письма, переговоры и соглашения. Посол передавал волю своего государя и собирал сведения.</p></aside></div>
-  <div class="flow balance" aria-label="Схема равновесия сил"><div><b>Одна держава</b>Усиливается.</div><div><b>Другие страны</b>Могут объединиться против неё.</div><div><b>Цель</b>Восстановить равновесие сил.</div></div>
-  <p class="caption">Схема передаёт правило из учебника, а не конкретную войну.</p>
-  <p>Поэтому правителю было важно думать не только о нынешнем противнике. Его действия могли повлиять на то, кто окажется союзником или противником позже. Эту мысль учебник поясняет выдержкой из книги историка Д. Крокстона.</p>
-</section>
+<section id="s3"><div class="row"><div>
+<h2>3. Дипломаты и весы сил</h2>
+<p>Сильно вырастает роль <b>дипломатии</b>, то есть умения вести дела с другими странами через послов. С конца XV в. посольства становятся <b>постоянными</b>: посол живёт и работает в чужой стране, а не приезжает один раз. Король и министры всё время пишут ему письма: дают указания и получают новости. Послы выступали от имени своего государя. Когда нового посла представляли королю, это была сложная церемония на много часов.</p>
+<p>В XVI–XVII вв. отношения между странами начинают видеть как <b>единую систему</b>, где всё связано. Важен <b>баланс сил</b>, то есть равновесие, как на весах. Если одно государство становится слишком сильным, остальные объединяются против него и так возвращают равновесие.</p>
+<div class="diagram"><svg viewBox="0 0 560 150" role="img" aria-label="Весы: сильное государство и союз остальных"><text x="10" y="16">Одно сильнее всех</text><text x="300" y="16">Остальные объединились</text>
+<path class="l" d="M30 108L250 68"/><path class="d" d="M125 130L140 98L155 130Z"/><circle class="f" cx="55" cy="84" r="24"/>
+<path class="l" d="M300 90H540"/><path class="d" d="M405 130L420 98L435 130Z"/><circle class="f" cx="330" cy="66" r="24"/><g class="f"><circle cx="475" cy="72" r="14"/><circle cx="505" cy="72" r="14"/></g></svg></div><div class="mobile-scheme"><div><b>Одно сильнее всех</b></div><span class="a" aria-hidden="true">↓</span><div><b>Остальные объединились</b></div></div>
+<h3>Точка зрения: Д. Крокстон</h3>
+<p>Вот что здесь сказано простыми словами:</p><ul><li>Государства понимали, что живут в системе, где участвуют многие страны.</li><li>Государства могли быть не согласны с принципами суверенитета и невмешательства (не лезть в дела других стран). Но на практике им приходилось признавать, что другие государства существуют.</li><li>Поэтому нельзя было действовать только по-своему и не думать, что скажут остальные: они могли поменять союзников и выступить против тебя.</li><li>Важно было не только как ты справишься с врагом сейчас, но и как это повлияет на то, <b>кто станет твоим врагом или другом потом</b>.</li></ul>
+<div class="mem"><b>Запомни:</b><ul><li>Послы живут в чужих странах постоянно и говорят от имени своего государя.</li><li>Баланс сил: сильному противостоит объединение остальных.</li></ul></div>
+</div><aside>
+<p><b>Посол</b> — представитель государя в другой стране.</p><p><b>Баланс сил</b> — равновесие, когда ни одно государство не сильнее всех остальных вместе.</p><p><b>Невмешательство</b> — не лезть в дела другой страны.</p>
+</aside></div></section>
 
-<section class="ch" id="s4">
-  <p class="step">Шаг 4</p><h2>Гроций: есть ли правила между странами?</h2>
-  <p>Новая система отношений заставляла задуматься: если государства самостоятельны и могут воевать, существуют ли правила, которые должны соблюдать все? Голландский юрист и государственный деятель <b>Гуго Гроций</b> попытался ответить на этот вопрос в книге «О праве войны и мира». Учебник называет его основоположником теории международного права.</p>
-  <div class="reading"><div><p>Гроций опирался на идею <b>естественного права</b>, связанного с разумом и стремлением людей жить в мире друг с другом. Он различал также божественное право и законы, установленные людьми. Международное право, по его объяснению, возникает из соглашений между государствами.</p></div><aside><b>На полях · естественное право</b><p>У Гроция — право, которое следует из природы человека, разума и здравого смысла, а не из решения отдельного правителя.</p></aside></div>
-  <div class="two"><div><b>Война в ответ на нарушение права</b>Например, ответ на нападение другого государства Гроций считал справедливым.</div><div><b>Захватническая война</b>Такую войну Гроций считал несправедливой.</div></div>
-  <p>Он не утверждал, что всякая война недопустима. Но настаивал: <b>даже во время войны надо соблюдать правовые нормы</b>. Также Гроций выступал за свободу мореплавания.</p>
-  <div class="answer-line"><b>Не смешивай две идеи.</b> «Государству выгодно» объясняет поведение правителя. «Это соответствует праву?» — другой вопрос, который ставил Гроций.</div>
-</section>
+<section id="s4"><div class="row"><div>
+<h2>4. Гуго Гроций: правила для мира и войны</h2>
+<p>В это время появляются первые попытки понять, как устроен новый мир. Самая известная — книга голландского юриста (человека, который разбирается в законах) и государственного деятеля <b>Гуго Гроция</b> «О праве войны и мира» (<b>1625 г.</b>). Его считают основоположником (то есть «отцом») теории международного права. Это наука о том, по каким правилам должны жить друг с другом страны.</p>
+<p>Гроций опирался на <b>естественное право</b>: правила, которые идут от природы, разума и здравого смысла. Ведь людям естественно хотеть жить в мире друг с другом. Именно это удерживает их от грабежей и других преступлений. Бывает и <b>божественное</b> право, и <b>человеческое</b>.</p>
+<div class="cols"><div class="c"><b>Естественное</b>идёт от разума и здравого смысла</div><div class="c"><b>Божественное</b>право от Бога</div><div class="c"><b>Человеческое</b>законы, которые люди придумывают сами, в своих интересах. Сюда относится и <b>международное право</b>: правила, о которых страны договариваются между собой</div></div>
+<h3>Какие бывают войны по Гроцию</h3>
+<p>Войны вообще Гроций не отвергал. Но он требовал, чтобы и на войне соблюдались правила.</p>
+<div class="cols"><div class="c"><b class="y">Справедливая</b>это война в ответ на нарушение правил, например когда на государство напали</div><div class="c"><b class="n">Несправедливая</b>захватническая: нападают, чтобы захватить чужое</div></div>
+<p>Ещё Гроций выступал за <b>свободу мореплавания</b>: чтобы корабли всех стран могли свободно плавать по морям.</p>
+<div class="mem"><b>Запомни:</b><ul><li>1625 г. — «О праве войны и мира»; Гроций — основоположник теории международного права.</li><li>Войны делятся на справедливые и несправедливые; правила нужны и на войне.</li></ul></div>
+</div><aside>
+<p><b>Право</b> — свод законов и правил.</p><p><b>Международное право</b> — правила для отношений между странами.</p>
+</aside></div></section>
 
-<section class="ch" id="answers">
-  <p class="step">В конце урока</p><h2>Два вопроса из учебника</h2>
-  <p class="q">1. Используя дополнительные источники, проанализируйте, в какой мере взгляды Гроция соответствовали распространённому в его время пониманию теории и практики международных отношений.</p>
-  <div class="response"><p><b>Короткий ответ:</b> частично. Его мысль о соглашениях между самостоятельными государствами соответствовала возросшей роли дипломатии. Но требование соблюдать право даже на войне расходилось с описанной в учебнике практикой: государства воевали за выгоду и меняли союзы, когда менялись интересы. Поэтому взгляды Гроция можно назвать попыткой установить правила для этой практики, а не её точным описанием.</p><p class="limit">Это вывод только по данному пункту учебника; дополнительные источники не использованы по условию урока.</p></div>
-  <p class="q">2. Как возникновение представлений о национальном суверенитете повлияло на международные отношения?</p>
-  <div class="response"><p><b>Короткий ответ:</b> государства стали считать себя самостоятельными и не зависящими от папы римского или императора. Монархи взяли в свои руки войны и переговоры с другими странами. Поэтому отношения всё больше строились между отдельными государствами, их интересами, договорами и союзами.</p></div>
-</section>
-<footer>§ 14–15, пункт 1 · Государственный интерес · Учебник, с. 136–138</footer>
+<section id="s5"><h2>Проверь себя</h2><div id="quiz"></div><p id="sc" class="lead"></p></section>
+
+<section id="s6"><h2>Два вопроса учебника: мои ответы</h2>
+<p class="lead">Сначала попробуй ответить сама, потом сравни. Ответы опираются только на учебник. Вопрос про «дополнительные источники» можно углубить, если их добавить.</p>
+<div class="ans"><h3>1. Насколько взгляды Гроция совпадали с тем, как в его время жили страны?</h3>
+<p><b>Отчасти.</b></p><p><span class="y">Что было похоже.</span> Гроций не был против войн вообще, как и короли того времени. Он считал, что международное право — это договорённости, которые государства заключают между собой. А мир как раз состоял из самостоятельных государств.</p>
+<p><span class="n">Что было не похоже.</span> На деле каждая страна думала о своей выгоде, союзы были временными, а союзников меняли по расчёту, а не по совести. Гроций же хотел правил даже на войне и делил войны на справедливые и несправедливые. Он был за свободу мореплавания, а Англия в это время воевала с Голландией за первенство в морской торговле.</p>
+<p><b>Итог:</b> Гроций описал новый мир и предложил ему правила, но жизнь часто шла по-другому.</p></div>
+<div class="ans"><h3>2. Как идея суверенитета повлияла на отношения между странами?</h3>
+<ol><li>Исчезла мечта об одной общей христианской империи. У государств больше нет «начальника» в лице папы или императора.</li><li>Дела с другими странами стали делом одного монарха. Знатные люди не могут сами воевать и договариваться: это измена. Значит, отношения теперь между государствами, а не между отдельными вельможами.</li><li>Выросла роль послов, а отношения стали единой системой, где все следят друг за другом и за балансом сил.</li><li>Каждое государство само себе хозяин и думает о своей выгоде, поэтому союзы временные. Даже тем, кому суверенитет не нравился, пришлось признавать, что рядом есть другие государства, и считаться с ними.</li></ol></div></section>
 </main>
 <script>
-document.querySelectorAll('#quick button').forEach(function(button){button.addEventListener('click',function(){
-  var feedback=document.querySelector('#quick .feedback');
-  var correct=button.dataset.correct==='true';
-  feedback.className='feedback '+(correct?'ok':'try');
-  feedback.textContent=correct?'Верно. Испания хотела ослабить Францию — это пример государственного интереса.':'В учебнике сказано, что поддержка католической веры оставалась важной. Посмотри, какую пользу Испания рассчитывала получить.';
-});});
-</script>
-<style>
+var Q=[["Что отмирает после Реформации?",["мечта о единой всемирной христианской империи","власть монархов","дипломатия"],0,"Верно: после раскола эта идея постепенно отмирает."],
+["Суверенитет — это…",["подчинение папе римскому","верховная власть: государство самостоятельно и не зависит ни от папы, ни от императора","союз католиков"],1,"Верховная власть и самостоятельность государства."],
+["Что теперь могли счесть государственной изменой?",["торговлю с соседями","когда знатный человек сам воюет или заводит отношения с другими странами","строительство кораблей"],1,"Внешняя политика стала делом монарха."],
+["Как относились к смене союзника при государственном интересе?",["с практической, а не моральной точки зрения","как к предательству веры","как к ошибке посла"],0,"Интерес мог поменяться, поэтому любой союз считали временным."],
+["Что такое баланс сил?",["все государства одинаково богаты","когда одно усилилось, остальные объединяются против него","один монарх правит всеми"],1,"Так восстанавливают равновесие."],
+["Какую войну Гроций считал справедливой?",["любую захватническую","начатую в ответ на нарушение права, например на нападение","только религиозную"],1,"Захватнические войны он считал несправедливыми."]];
+var s=0,a=0,qz=document.getElementById('quiz');
+Q.forEach(function(q,i){var d=document.createElement('div');d.className='q';d.innerHTML='<b>'+(i+1)+'. '+q[0]+'</b><br>';var fb=document.createElement('div');fb.className='fb';var done=0;
+q[1].forEach(function(t,j){var b=document.createElement('button');b.textContent=t;b.onclick=function(){if(done)return;done=1;a++;if(j==q[2]){s++;b.className='ok';fb.innerHTML='<span class="y">Верно.</span> '+q[3]}else{b.className='bad';d.querySelectorAll('button')[q[2]].className='ok';fb.innerHTML='<span class="n">Не совсем.</span> '+q[3]}
+document.getElementById('sc').textContent='Правильных ответов: '+s+' из '+a+' (всего '+Q.length+')'};d.appendChild(b)});d.appendChild(fb);qz.appendChild(d)});
+</script><style>
 .to-top{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:60;width:52px;height:52px;border:0;border-radius:14px;background:#1d4f91;color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 18px -6px rgba(21,32,46,.45);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s,transform .2s}
 .to-top.show{opacity:1;transform:none;pointer-events:auto}
 .to-top:hover{background:#163f75}
