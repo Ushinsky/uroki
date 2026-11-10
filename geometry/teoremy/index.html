@@ -487,7 +487,7 @@ function stepper(n,steps,draw){
 function f(){b.classList.toggle('show',(window.scrollY||document.documentElement.scrollTop)>600);}
 window.addEventListener('scroll',f,{passive:true});f();
 // слева от колонки урока, если там есть место; иначе — в правом нижнем углу
-var col=[].slice.call(document.querySelectorAll('.wrap')).filter(function(w){return !w.closest('nav');})[0];
+var col=[].slice.call(document.querySelectorAll('.wrap')).filter(function(w){return !w.closest('nav');})[0] || document.querySelector('main');
 function place(){if(!col){return;}var r=col.getBoundingClientRect(),pad=parseFloat(getComputedStyle(col).paddingLeft)||0,x=r.left+pad-14-b.offsetWidth;
 if(x>=12){b.style.left=x+'px';b.style.right='auto';}else{b.style.left='';b.style.right='';}}
 window.addEventListener('resize',place);place();
